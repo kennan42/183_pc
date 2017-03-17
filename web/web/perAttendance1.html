@@ -1,0 +1,1598 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>个人考勤</title>
+
+		<meta name="description" content="with draggable and editable events" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+<style>
+	.sidebarFont{
+		font-size:1.3em
+	}
+	
+	.bg-white{
+		background-color:yellow;
+	}
+	.numberShow{
+		wdth:100%;
+		text-align:right;
+		background-color:white;
+		float:none; !important;
+	}
+	.mark-yellow{
+		background-color:#FFFF99;
+	}
+	.mark-green{
+		background-color:#66FF99;
+	}
+</style>
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/fullcalendar.css" />
+		<link rel="stylesheet" href="./assets/css/chosen.css" />
+		<link rel="stylesheet" href="./assets/css/datepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-timepicker.css" />
+		<link rel="stylesheet" href="./assets/css/daterangepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-datetimepicker.css" />
+		<link rel="stylesheet" href="./assets/css/colorpicker.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		<link rel="stylesheet" href="./mycss/common.css" type="text/css" />
+<style type="text/css">
+.divcss5_list_title{background:#eeeeee; border:1px solid #cccccc; padding:1em;}
+.divcss5_list_content{padding:1em;}
+#tinybox{position:absolute; display:none; padding:10px; background:#ffffff url(image/preload.gif) no-repeat 50% 50%; border:10px solid #e3e3e3; z-index:2000;}
+#tinymask{position:absolute; display:none; top:0; left:0; height:100%; width:100%; background:#000000; z-index:1500;}
+#tinycontent{background:#ffffff; font-size:1.1em;}
+
+#n{margin:10px auto; width:920px; border:1px solid #CCC;font-size:12px; line-height:30px;}
+#n{ padding:0 4px; color:#333}
+</style>
+		<script src="./myjs/backup.js"></script>
+		<script src="./myjs/lexus.js"></script>
+		<script src="./myjs/tinybox.js"></script>
+	</head>
+	
+	
+	<body class="no-skin" style="font-family: "Microsoft YaHei" ! important;" >
+		<div id="navbar" class="navbar navbar-default" style="background-color:#0099CC" >
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand">
+						<img src="./assets/imagesu5_normal.png"/>
+						<small>
+							天信
+					   <small>
+					</a>
+				</div>
+				
+				
+                <div class="navbar-buttons navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<li class="dropdown-header">
+									<i class="ace-icon fa fa-envelope-o"></i>
+									5 Messages
+								</li>
+
+								<li class="dropdown-content">
+									<ul class="dropdown-menu dropdown-navbar">
+										<li>
+											<a href="#">
+												<img src="./assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Alex:</span>
+														Ciao sociis natoque penatibus et auctor ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>a moment ago</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<img src="./assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Susan:</span>
+														Vestibulum id ligula porta felis euismod ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>20 minutes ago</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<img src="./assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Bob:</span>
+														Nullam quis risus eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>3:15 pm</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<img src="./assets/avatars/avatar2.png" class="msg-photo" alt="Kate's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Kate:</span>
+														Ciao sociis natoque eget urna mollis ornare ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>1:33 pm</span>
+													</span>
+												</span>
+											</a>
+										</li>
+
+										<li>
+											<a href="#">
+												<img src="./assets/avatars/avatar5.png" class="msg-photo" alt="Fred's Avatar" />
+												<span class="msg-body">
+													<span class="msg-title">
+														<span class="blue">Fred:</span>
+														Vestibulum id penatibus et auctor  ...
+													</span>
+
+													<span class="msg-time">
+														<i class="ace-icon fa fa-clock-o"></i>
+														<span>10:09 am</span>
+													</span>
+												</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+
+								<li class="dropdown-footer">
+									<a href="inbox.html">
+										See all messages
+										<i class="ace-icon fa fa-arrow-right"></i>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<!-- #section:basics/navbar.user_menu -->
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="./assets/avatars/user.jpg" alt="Jason's Photo" />
+								<span class="user-info">
+									<small>管理员</small>
+									
+								</span>
+
+								<i class="ace-icon fa fa-caret-down"></i>
+							</a>
+
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="#">
+										<i class="ace-icon fa fa-cog"></i>
+										设置
+									</a>
+								</li>
+
+								<li>
+									<a href="profile.html">
+										<i class="ace-icon fa fa-user"></i>
+										个人信息
+									</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="#">
+										<i class="ace-icon fa fa-power-off"></i>
+										登录
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<!-- /section:basics/navbar.user_menu -->
+					</ul>
+				</div>
+			</div>
+		</div>
+
+			
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						
+							<li class="active">员工自助</li>
+							<li class="active">个人考勤</li>
+						    <li class="active">考勤信息</li>
+						
+					</ul>
+					<div class="nav-search" id="nav-search">
+						<form class="form-search">
+						<div class="row">
+															<div class="col-xs-5 col-sm-3" style="float:right;">
+																<!-- #section:plugins/date-time.datepicker -->
+																<div class="input-group">
+																	<input onchange="searchCal(this.value)" class="form-control date-picker" id="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd" />
+																	<span class="input-group-addon">
+																		<i class="fa fa-calendar bigger-110"></i>
+																	</span>
+																</div>
+															</div>
+														</div>
+						</form>
+					</div>
+
+					
+				</div>
+				<div class="page-content">
+					
+					<div class="ace-settings-container" id="ace-settings-container">
+						<div class="ace-settings-box clearfix" id="ace-settings-box">
+							<div class="pull-left width-50">
+								<!-- #section:settings.skins -->
+								<div class="ace-settings-item">
+									<div class="pull-left">
+										<select id="skin-colorpicker" class="hide">
+											<option data-skin="no-skin" value="#438EB9">#438EB9</option>
+											<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+											<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+											<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+										</select>
+									</div>
+									<span>&nbsp; Choose Skin</span>
+								</div>
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+									<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+								</div>
+
+								<!-- /section:settings.navbar -->
+
+								<!-- #section:settings.sidebar -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+									<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+								</div>
+
+								<!-- /section:settings.sidebar -->
+
+								<!-- #section:settings.breadcrumbs -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+									<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+								</div>
+
+								<!-- /section:settings.breadcrumbs -->
+
+								<!-- #section:settings.rtl -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+									<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+								</div>
+
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+									<label class="lbl" for="ace-settings-add-container">
+										Inside
+										<b>.container</b>
+									</label>
+								</div>
+
+								<!-- /section:settings.container -->
+							</div><!-- /.pull-left -->
+
+							<div class="pull-left width-50">
+								<!-- #section:basics/sidebar.options -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" />
+									<label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+								</div>
+
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" />
+									<label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+								</div>
+
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" />
+									<label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+								</div>
+
+								<!-- /section:basics/sidebar.options -->
+							</div><!-- /.pull-left -->
+						</div><!-- /.ace-settings-box -->
+					</div><!-- /.ace-settings-container -->
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area" style="border:1px solid #F5F5F5; border-radius:3px 3px 3px 3px;">
+					
+					<!-- /section:settings.box -->
+					
+					
+						<!-- #section:basics/content.breadcrumbs -->
+				
+                 <div class="row">
+							<div class="col-xs-12">
+							
+								<div class="row">
+									<div class="col-sm-11">
+										<div class="space"></div>
+                                        <div id="calendar" class="fc fc-ltr">
+                                            <table class="fc-header" style="width:100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="fc-header-left" style="text-align:center">
+                                                        	
+                                                            <span class="fc-button fc-button-prev fc-state-default fc-corner-left" unselectable="on" onclick="preMonth()">
+                                                            	<span class="fc-icon fc-icon-left-single-arrow"></span>
+															</span>　
+															<span class="fc-header-title"><h2 id="dateTitle"></h2></span>　
+                                                            <span class="fc-button fc-button-next fc-state-default fc-corner-right" unselectable="on" onclick="nextMonth()">
+                                                            	<span class="fc-icon fc-icon-right-single-arrow"></span>
+															</span>
+                                                            <!--span class="fc-header-space"></span-->
+                                                           
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="fc-content">
+                                                <div class="fc-view fc-view-month fc-grid" unselectable="on">
+                                                    <div class="fc-event-container" style="position:absolute;z-index:8;top:0;left:0">
+                                                        
+                                                    </div>
+                                                    <table class="fc-border-separate" style="width:100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr class="fc-first fc-last">
+                                                                <th class="fc-day-header fc-sun fc-widget-header fc-first" style="width: 140px;">
+                                                                    Sun
+                                                                </th>
+                                                                <th class="fc-day-header fc-mon fc-widget-header" style="width: 140px;">
+                                                                    Mon
+                                                                </th>
+                                                                <th class="fc-day-header fc-tue fc-widget-header" style="width: 140px;">
+                                                                    Tue
+                                                                </th>
+                                                                <th class="fc-day-header fc-wed fc-widget-header" style="width: 140px;">
+                                                                    Wed
+                                                                </th>
+                                                                <th class="fc-day-header fc-thu fc-widget-header" style="width: 140px;">
+                                                                    Thu
+                                                                </th>
+                                                                <th class="fc-day-header fc-fri fc-widget-header" style="width: 140px;">
+                                                                    Fri
+                                                                </th>
+                                                                <th class="fc-day-header fc-sat fc-widget-header fc-last" style="width: 140px;">
+                                                                    Sat
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="calTbody">
+                                                           </tbody>
+                                                    </table>
+                                                    <div class="fc-cell-overlay" style="position: absolute; z-index: 3; top: 222px; left: 480px; width: 140px; height: 101px; display: none;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+									</div>
+								</div>
+
+								
+							</div>
+						</div>
+				
+
+			</div>			
+			<!-- /.page-content-area -->
+	</div><!-- /.page-content -->
+	
+	<div style="display:none" id="innerT">
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+		
+
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+					<div class="ace-settings-container" id="ace-settings-container">
+						
+						
+						
+
+						<div class="ace-settings-box clearfix" id="ace-settings-box">
+							<div class="pull-left width-50">
+								<!-- #section:settings.skins -->
+								<div class="ace-settings-item">
+									<div class="pull-left">
+										<select id="skin-colorpicker" class="hide">
+											<option data-skin="no-skin" value="#438EB9">#438EB9</option>
+											<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+											<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+											<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+										</select>
+									</div>
+									<span>&nbsp; Choose Skin</span>
+								</div>
+
+								<!-- /section:settings.skins -->
+
+								<!-- #section:settings.navbar -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+									<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+								</div>
+
+								<!-- /section:settings.navbar -->
+
+								<!-- #section:settings.sidebar -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+									<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+								</div>
+
+								<!-- /section:settings.sidebar -->
+
+								<!-- #section:settings.breadcrumbs -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+									<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+								</div>
+
+								<!-- /section:settings.breadcrumbs -->
+
+								<!-- #section:settings.rtl -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+									<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+								</div>
+
+								<!-- /section:settings.rtl -->
+
+								<!-- #section:settings.container -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+									<label class="lbl" for="ace-settings-add-container">
+										Inside
+										<b>.container</b>
+									</label>
+								</div>
+
+								<!-- /section:settings.container -->
+							</div><!-- /.pull-left -->
+
+							<div class="pull-left width-50">
+								<!-- #section:basics/sidebar.options -->
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-hover" />
+									<label class="lbl" for="ace-settings-hover"> Submenu on Hover</label>
+								</div>
+
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-compact" />
+									<label class="lbl" for="ace-settings-compact"> Compact Sidebar</label>
+								</div>
+
+								<div class="ace-settings-item">
+									<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-highlight" />
+									<label class="lbl" for="ace-settings-highlight"> Alt. Active Item</label>
+								</div>
+
+								<!-- /section:basics/sidebar.options -->
+							</div><!-- /.pull-left -->
+						</div><!-- /.ace-settings-box -->
+					</div><!-- /.ace-settings-container -->
+
+					<!-- /section:settings.box -->
+					
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1>
+								个人考勤
+								<small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									<span id="thisdate">2014-6-12</span>
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								
+								
+							
+							<div class="widget-box" style="">
+						<div class="widget-header">
+							<h4 class="widget-title" id=>异常信息</h4>
+                           </div>
+						 <div class="widget-body">
+						 	<div class="widget-main" id="errorInfo_no" style="display:none"></div>
+							<div class="widget-main" id="errorInfo" style="" >
+				
+				 <div id="errList" >
+                 
+				 </div>
+				<div id="buqianDiv">
+					
+					
+<ul style="font-size: 18px; list-style-type: none;">
+ <li><span style="color: #93B9D6">补签信息</span></li> 
+<li style="margin-top:8px"><span>日工作安排 </span><span style=" margin-left: 10px;" id="bq_dws"></span></li>
+
+<li style="margin-top:8px">
+	<span style="margin-left: -15px;">当日刷卡数据 </span>
+	<span style="margin-left:8px ;" id="bq_clock"> </span>
+</li>
+    
+<li style="margin-top:8px" id="bq_jilu">
+	<!--span style="margin-left: 20px;">补签记录 </span-->
+<div style="border-bottom:1px solid #DAD1D1;margin-top:20px"></div>
+	
+</li>
+
+   
+<li style="margin-top:8px">
+	<span style="margin-left: 20px;">刷卡类型</span>
+	<span style=" margin-left: 10px;">
+		<select id="dakaType">
+			<option value="P10" selected="true" onclick="setBQLS('dakaType','P10')">上班</option>
+			<option value="P20" onclick="setBQLS('dakaType','P20')">下班</option>
+		</select>
+	</span> 
+	
+
+	
+</li>
+
+<li style="margin-top: 15px;">
+	<span style="margin-left: 3px">补签卡时间</span>
+	<span style=" margin-left: 10px;">
+	<select id="hour">
+		<option value="00" selected="true">00</option>
+		<option value="01" onclick="setBQLS('hour','01')">01</option>
+		<option value="02" onclick="setBQLS('hour','02')">02</option>
+		<option value="03" onclick="setBQLS('hour','03')">03</option>
+		<option value="04" onclick="setBQLS('hour','04')">04</option>
+		<option value="05" onclick="setBQLS('hour','05')">05</option>
+		<option value="06" onclick="setBQLS('hour','06')">06</option>
+		<option value="07" onclick="setBQLS('hour','07')">07</option>
+		<option value="08" onclick="setBQLS('hour','08')">08</option>
+		<option value="09" onclick="setBQLS('hour','09')">09</option>
+		<option value="10" onclick="setBQLS('hour','10')">10</option>
+		<option value="11" onclick="setBQLS('hour','11')">11</option>
+		<option value="12" onclick="setBQLS('hour','12')">12</option>
+		<option value="13" onclick="setBQLS('hour','13')">13</option>
+		<option value="14" onclick="setBQLS('hour','14')">14</option>
+		<option value="15" onclick="setBQLS('hour','15')">15</option>
+		<option value="16" onclick="setBQLS('hour','16')">16</option>
+		<option value="17" onclick="setBQLS('hour','17')">17</option>
+		<option value="18" onclick="setBQLS('hour','18')">18</option>
+		<option value="19" onclick="setBQLS('hour','19')">19</option>
+		<option value="20" onclick="setBQLS('hour','20')">20</option>
+		<option value="21" onclick="setBQLS('hour','21')">21</option>
+		<option value="22" onclick="setBQLS('hour','22')">22</option>
+		<option value="23" onclick="setBQLS('hour','23')">23</option>
+		<option value="24" onclick="setBQLS('hour','24')">24</option>
+	</select>
+	<span>:</span>
+	<select id="minute">
+		<option value="00" onclick="setBQLS('minute','00')">00</option>
+		<option value="01" onclick="setBQLS('minute','01')">01</option>
+		<option value="02" onclick="setBQLS('minute','02')">02</option>
+		<option value="03" onclick="setBQLS('minute','03')">03</option>
+		<option value="04" onclick="setBQLS('minute','04')">04</option>
+		<option value="05" onclick="setBQLS('minute','05')">05</option>
+		<option value="06" onclick="setBQLS('minute','06')">06</option>
+		<option value="07" onclick="setBQLS('minute','07')">07</option>
+		<option value="08" onclick="setBQLS('minute','08')">08</option>
+		<option value="09" onclick="setBQLS('minute','09')">09</option>
+		<option value="10" onclick="setBQLS('minute','10')">10</option>
+		<option value="11" onclick="setBQLS('minute','11')">11</option>
+		<option value="12" onclick="setBQLS('minute','12')">12</option>
+		<option value="13" onclick="setBQLS('minute','13')">13</option>
+		<option value="14" onclick="setBQLS('minute','14')">14</option>
+		<option value="15" onclick="setBQLS('minute','15')">15</option>
+		<option value="16" onclick="setBQLS('minute','16')">16</option>
+		<option value="17" onclick="setBQLS('minute','17')">17</option>
+		<option value="18" onclick="setBQLS('minute','18')">18</option>
+		<option value="19" onclick="setBQLS('minute','19')">19</option>
+		<option value="20" onclick="setBQLS('minute','20')">20</option>
+		<option value="21" onclick="setBQLS('minute','21')">21</option>
+		<option value="22" onclick="setBQLS('minute','22')">22</option>
+		<option value="23" onclick="setBQLS('minute','23')">23</option>
+		<option value="24" onclick="setBQLS('minute','24')">24</option>
+		<option value="25" onclick="setBQLS('minute','25')">25</option>
+		<option value="26" onclick="setBQLS('minute','26')">26</option>
+		<option value="27" onclick="setBQLS('minute','27')">27</option>
+		<option value="28" onclick="setBQLS('minute','28')">28</option>
+		<option value="29" onclick="setBQLS('minute','29')">29</option>
+		<option value="30" onclick="setBQLS('minute','30')">30</option>
+		<option value="31" onclick="setBQLS('minute','31')">31</option>
+		<option value="32" onclick="setBQLS('minute','32')">32</option>
+		<option value="33" onclick="setBQLS('minute','33')">33</option>
+		<option value="34" onclick="setBQLS('minute','34')">34</option>
+		<option value="35" onclick="setBQLS('minute','35')">35</option>
+		<option value="36" onclick="setBQLS('minute','36')">36</option>
+		<option value="37" onclick="setBQLS('minute','37')">37</option>
+		<option value="38" onclick="setBQLS('minute','38')">38</option>
+		<option value="39" onclick="setBQLS('minute','39')">39</option>
+		<option value="40" onclick="setBQLS('minute','40')">40</option>
+		<option value="41" onclick="setBQLS('minute','41')">41</option>
+		<option value="42" onclick="setBQLS('minute','42')">42</option>
+		<option value="43" onclick="setBQLS('minute','43')">43</option>
+		<option value="44" onclick="setBQLS('minute','44')">44</option>
+		<option value="45" onclick="setBQLS('minute','45')">45</option>
+		<option value="46" onclick="setBQLS('minute','46')">46</option>
+		<option value="47" onclick="setBQLS('minute','47')">47</option>
+		<option value="48" onclick="setBQLS('minute','48')">48</option>
+		<option value="49" onclick="setBQLS('minute','49')">49</option>
+		<option value="50" onclick="setBQLS('minute','50')">50</option>
+		<option value="51" onclick="setBQLS('minute','51')">51</option>
+		<option value="52" onclick="setBQLS('minute','52')">52</option>
+		<option value="53" onclick="setBQLS('minute','53')">53</option>
+		<option value="54" onclick="setBQLS('minute','54')">54</option>
+		<option value="55" onclick="setBQLS('minute','55')">55</option>
+		<option value="56" onclick="setBQLS('minute','56')">56</option>
+		<option value="57" onclick="setBQLS('minute','57')">57</option>
+		<option value="58" onclick="setBQLS('minute','58')">58</option>
+		<option value="59" onclick="setBQLS('minute','59')">59</option>
+		
+	</select>
+	</span>
+
+	
+
+	
+</li>
+
+
+
+
+
+
+
+
+
+
+
+<li style="margin-top:8px">
+	<span style="margin-left: 3px;">补签卡事由</span>
+	<span style=" margin-left: 10px;">
+	<select id="bqyy">
+		<option>
+		</option>
+</select>
+</span> 
+<span  style="margin-left:35px">
+	<button class="btn btn-info" onclick="submitClock()" type="button" style=" padding: 4px 14px 4px 14px" id="bqbtn">
+	<i class="ace-icon fa fa-check bigger-110"></i>
+		确定
+	</button>
+	
+</span>	
+
+	
+</li>
+  </ul>
+					
+					
+					
+					
+					
+					
+					
+				</div>
+				
+				
+				 <!--ul style="font-size:18px">  
+				   <li style="list-style-type:none"><div>当日刷卡数据： 08:25-16:20</div></li>
+				   <li style="list-style-type:none"><div style="color:#669FC7">异常信息1</div></li>
+				   <li style="list-style-type:none"><div>异常类型：早退</div></li>
+				
+				   <div class="wysiwyg-editor" id="" contenteditable="true" style="border:1px solid #CCCCCC;height:70px"></div>
+				   
+				   <div class=" " style=" text-align:end; margin-top:20px; width:40px">
+				 
+				   <button class="btn btn-info" type="button">
+												
+											提交
+										</button>
+				   
+				   </div>
+				 </ul--> 
+				
+				 
+				 <!--ul style="font-size:18px">  
+				  <li style="list-style-type:none"><div style="color:#669FC7">异常信息1</div></li>
+				   <li style="list-style-type:none"><div>异常类型：早退</div></li>
+				
+				   <div class="wysiwyg-editor" id="" contenteditable="true" style="border:1px solid #CCCCCC;height:70px"></div>
+				   
+				   <div class=" " style=" text-align:end; margin-top:20px;width:40px">
+				 
+				   <button class="btn btn-info" type="button">
+												
+											提交
+										</button>
+				   
+				   </div>
+				 </ul--> 
+		    </div>
+        </div>
+	  </div>
+							
+							
+							
+		<div class="col-xs-6">
+				
+				 
+			<div class="widget-box ui-sortable-handle " style=" width:100%;margin-top:12px;float:left;margin-left:px;">
+											<div class="widget-header" style="text-align:center;">
+												<h5 class="widget-title">排班信息</h5>
+
+												<!-- #section:custom/widget-box.toolbar -->
+												
+
+												<!-- /section:custom/widget-box.toolbar -->
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main" id="paibanDiv">
+													
+													<ul style="font-size:18px">
+													
+													
+													<li style="list-style-type:none"><div id="paiban_riqi" style="margin-left:35px">日期：2014-6-12 星期一</div></li>
+				   
+				                                    <li style="list-style-type:none"><div id="paiban_anpai">工作安排：常白班</div></li>
+													  <li style="list-style-type:none"><div id="paiban_shijian">工作时间： 08:25-16:20</div></li>
+													
+													  <li style="list-style-type:none"><div id="paiban_xiuxi">休息时间： 08:25-16:20</div></li>
+													
+											
+													 
+													
+													
+													
+												</ul>	
+													
+												</div>
+											</div>
+										</div>	  
+				  
+				  
+				  <div class="widget-box ui-sortable-handle" style="width:100%;margin-top:12px;float:left;margin-left:px;display:none" id="chailvDiv">
+											<div class="widget-header" style="text-align:center;">
+												<h5 class="widget-title">差旅信息</h5>
+
+												<!-- #section:custom/widget-box.toolbar -->
+												
+
+												<!-- /section:custom/widget-box.toolbar -->
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main" id="chailvList">
+													
+													<ul style="font-size:18px">
+													
+													
+													
+													<li style="list-style-type:none">日期：2014-6-12 星期一</li>
+				   
+				                                    <li style="list-style-type:none"><div>工作安排：常白班</div></li>
+													  <li style="list-style-type:none"><div>工作时间： 08:25-16:20</div></li>
+													
+													  <li style="list-style-type:none"><div>休息时间： 08:25-16:20</div></li>
+													
+											
+													 
+													 
+													 
+													
+													
+													
+												</ul>	
+													
+												</div>
+											</div>
+										</div>	
+				
+				   
+				  
+				
+</div>					
+							
+		<div class="col-xs-6">		
+		<div class="widget-box ui-sortable-handle" style=" width:100%;margin-top:12px;float:right;" id="xiujiaDiv">
+											<div class="widget-header" style="text-align:center;">
+												<h5 class="widget-title">休假信息</h5>
+
+												<!-- #section:custom/widget-box.toolbar -->
+												
+
+												<!-- /section:custom/widget-box.toolbar -->
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main" id="xiujiaList">
+												</div>
+											</div>
+											
+		
+										</div>	 			
+						
+							
+							
+							
+							
+							
+							
+							<div class="widget-box ui-sortable-handle" style=" width:100%;margin-top:12px;float:right;" id="jiabanDiv">
+											<div class="widget-header" style="text-align:center;">
+												<h5 class="widget-title">加班信息</h5>
+
+												<!-- #section:custom/widget-box.toolbar -->
+												
+
+												<!-- /section:custom/widget-box.toolbar -->
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main" id="jiabanList">
+													
+													
+													
+												</div>
+											</div>
+										</div>
+							
+					</div>		
+							
+
+
+								
+							<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div>
+	</div>
+</div><!-- /.main-content -->
+
+	<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+		
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+		
+		<!-- page specific plugin scripts -->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/date-time/moment.min.js"></script>
+		<script src="./assets/js/fullcalendar.min.js"></script>
+		<script src="./assets/js/bootbox.min.js"></script>
+		<script src="./assets/js/jquery.easypiechart.min.js"></script>
+		<script src="./assets/js/jquery.sparkline.min.js"></script>
+		<script src="./assets/js/flot/jquery.flot.min.js"></script>
+		<script src="./assets/js/flot/jquery.flot.pie.min.js"></script>
+		<script src="./assets/js/flot/jquery.flot.resize.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+
+
+				$('#id-disable-check').on('click', function() {
+					var inp = $('#form-input-readonly').get(0);
+					if(inp.hasAttribute('disabled')) {
+						inp.setAttribute('readonly' , 'true');
+						inp.removeAttribute('disabled');
+						inp.value="This text field is readonly!";
+					}
+					else {
+						inp.setAttribute('disabled' , 'disabled');
+						inp.removeAttribute('readonly');
+						inp.value="This text field is disabled!";
+					}
+				});
+			
+			
+				$('.chosen-select').chosen({allow_single_deselect:true}); 
+				//resize the chosen on window resize
+			
+				$(window)
+				.off('resize.chosen')
+				.on('resize.chosen', function() {
+					$('.chosen-select').each(function() {
+						 var $this = $(this);
+						 $this.next().css({'width': $this.parent().width()});
+					})
+				}).trigger('resize.chosen');
+			
+			
+				$('#chosen-multiple-style').on('click', function(e){
+					var target = $(e.target).find('input[type=radio]');
+					var which = parseInt(target.val());
+					if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+					 else $('#form-field-select-4').removeClass('tag-input-style');
+				});
+			
+			
+				$('[data-rel=tooltip]').tooltip({container:'body'});
+				$('[data-rel=popover]').popover({container:'body'});
+				
+				$('textarea[class*=autosize]').autosize({append: "\n"});
+				$('textarea.limited').inputlimiter({
+					remText: '%n character%s remaining...',
+					limitText: 'max allowed : %n.'
+				});
+			
+				$.mask.definitions['~']='[+-]';
+				$('.input-mask-date').mask('99/99/9999');
+				$('.input-mask-phone').mask('(999) 999-9999');
+				$('.input-mask-eyescript').mask('~9.99 ~9.99 999');
+				$(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
+			
+			
+			
+				$( "#input-size-slider" ).css('width','200px').slider({
+					value:1,
+					range: "min",
+					min: 1,
+					max: 8,
+					step: 1,
+					slide: function( event, ui ) {
+						var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
+						var val = parseInt(ui.value);
+						$('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
+					}
+				});
+			
+				$( "#input-span-slider" ).slider({
+					value:1,
+					range: "min",
+					min: 1,
+					max: 12,
+					step: 1,
+					slide: function( event, ui ) {
+						var val = parseInt(ui.value);
+						$('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
+					}
+				});
+			
+			
+				
+				//"jQuery UI Slider"
+				//range slider tooltip example
+				$( "#slider-range" ).css('height','200px').slider({
+					orientation: "vertical",
+					range: true,
+					min: 0,
+					max: 100,
+					values: [ 17, 67 ],
+					slide: function( event, ui ) {
+						var val = ui.values[$(ui.handle).index()-1] + "";
+			
+						if( !ui.handle.firstChild ) {
+							$("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>")
+							.prependTo(ui.handle);
+						}
+						$(ui.handle.firstChild).show().children().eq(1).text(val);
+					}
+				}).find('a').on('blur', function(){
+					$(this.firstChild).hide();
+				});
+				
+				
+				$( "#slider-range-max" ).slider({
+					range: "max",
+					min: 1,
+					max: 10,
+					value: 2
+				});
+				
+				$( "#slider-eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
+					// read initial values from markup and remove that
+					var value = parseInt( $( this ).text(), 10 );
+					$( this ).empty().slider({
+						value: value,
+						range: "min",
+						animate: true
+						
+					});
+				});
+				
+				$("#slider-eq > span.ui-slider-purple").slider('disable');//disable third item
+			
+				
+				$('#id-input-file-1 , #id-input-file-2').ace_file_input({
+					no_file:'No File ...',
+					btn_choose:'Choose',
+					btn_change:'Change',
+					droppable:false,
+					onchange:null,
+					thumbnail:false //| true | large
+					//whitelist:'gif|png|jpg|jpeg'
+					//blacklist:'exe|php'
+					//onchange:''
+					//
+				});
+				//pre-show a file name, for example a previously selected file
+				//$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
+			
+			
+				$('#id-input-file-3').ace_file_input({
+					style:'well',
+					btn_choose:'Drop files here or click to choose',
+					btn_change:null,
+					no_icon:'ace-icon fa fa-cloud-upload',
+					droppable:true,
+					thumbnail:'small'//large | fit
+					//,icon_remove:null//set null, to hide remove/reset button
+					/**,before_change:function(files, dropped) {
+						//Check an example below
+						//or examples/file-upload.html
+						return true;
+					}*/
+					/**,before_remove : function() {
+						return true;
+					}*/
+					,
+					preview_error : function(filename, error_code) {
+						//name of the file that failed
+						//error_code values
+						//1 = 'FILE_LOAD_FAILED',
+						//2 = 'IMAGE_LOAD_FAILED',
+						//3 = 'THUMBNAIL_FAILED'
+						//alert(error_code);
+					}
+			
+				}).on('change', function(){
+					//console.log($(this).data('ace_input_files'));
+					//console.log($(this).data('ace_input_method'));
+				});
+				
+			
+				//dynamically change allowed formats by changing allowExt && allowMime function
+				$('#id-file-format').removeAttr('checked').on('change', function() {
+					var whitelist_ext, whitelist_mime;
+					var btn_choose
+					var no_icon
+					if(this.checked) {
+						btn_choose = "Drop images here or click to choose";
+						no_icon = "ace-icon fa fa-picture-o";
+			
+						whitelist_ext = ["jpeg", "jpg", "png", "gif" , "bmp"];
+						whitelist_mime = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"];
+					}
+					else {
+						btn_choose = "Drop files here or click to choose";
+						no_icon = "ace-icon fa fa-cloud-upload";
+						
+						whitelist_ext = null;//all extensions are acceptable
+						whitelist_mime = null;//all mimes are acceptable
+					}
+					var file_input = $('#id-input-file-3');
+					file_input
+					.ace_file_input('update_settings',
+					{
+						'btn_choose': btn_choose,
+						'no_icon': no_icon,
+						'allowExt': whitelist_ext,
+						'allowMime': whitelist_mime
+					})
+					file_input.ace_file_input('reset_input');
+					
+					file_input
+					.off('file.error.ace')
+					.on('file.error.ace', function(e, info) {
+						//console.log(info.file_count);//number of selected files
+						//console.log(info.invalid_count);//number of invalid files
+						//console.log(info.error_list);//a list of errors in the following format
+						
+						//info.error_count['ext']
+						//info.error_count['mime']
+						//info.error_count['size']
+						
+						//info.error_list['ext']  = [list of file names with invalid extension]
+						//info.error_list['mime'] = [list of file names with invalid mimetype]
+						//info.error_list['size'] = [list of file names with invalid size]
+						
+						
+						/**
+						if( !info.dropped ) {
+							//perhapse reset file field if files have been selected, and there are invalid files among them
+							//when files are dropped, only valid files will be added to our file array
+							e.preventDefault();//it will rest input
+						}
+						*/
+						
+						
+						//if files have been selected (not dropped), you can choose to reset input
+						//because browser keeps all selected files anyway and this cannot be changed
+						//we can only reset file field to become empty again
+						//on any case you still should check files with your server side script
+						//because any arbitrary file can be uploaded by user and it's not safe to rely on browser-side measures
+					});
+				
+				});
+			
+				$('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+				.on('change', function(){
+					//alert(this.value)
+				});
+				$('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'ace-icon fa fa-caret-up', icon_down:'ace-icon fa fa-caret-down'});
+				$('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'ace-icon fa fa-plus smaller-75', icon_down:'ace-icon fa fa-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+				//$('#spinner1').ace_spinner('disable').ace_spinner('value', 11);
+				//or
+				//$('#spinner1').closest('.ace-spinner').spinner('disable').spinner('enable').spinner('value', 11);//disable, enable or change value
+				//$('#spinner1').closest('.ace-spinner').spinner('value', 0);//reset to 0
+			
+			
+				//datepicker plugin
+				//link
+				$('.date-picker').datepicker({
+					autoclose: true,
+					showDays: false,
+					todayHighlight: true
+				})
+				//show datepicker when clicking on the icon
+				.next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+			
+				//or change it into a date range picker
+				$('.input-daterange').datepicker({autoclose:true});
+			
+			
+				//to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
+				$('input[name=date-range-picker]').daterangepicker({
+					'applyClass' : 'btn-sm btn-success',
+					'cancelClass' : 'btn-sm btn-default',
+					locale: {
+						applyLabel: 'Apply',
+						cancelLabel: 'Cancel',
+					}
+				})
+				.prev().on(ace.click_event, function(){
+					$(this).next().focus();
+				});
+			
+			
+				$('#timepicker1').timepicker({
+					minuteStep: 1,
+					showSeconds: true,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+				$('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+			
+				$('#colorpicker1').colorpicker();
+			
+				$('#simple-colorpicker-1').ace_colorpicker();
+				//$('#simple-colorpicker-1').ace_colorpicker('pick', 2);//select 2nd color
+				//$('#simple-colorpicker-1').ace_colorpicker('pick', '#fbe983');//select #fbe983 color
+				//var picker = $('#simple-colorpicker-1').data('ace_colorpicker')
+				//picker.pick('red', true);//insert the color if it doesn't exist
+			
+			
+				$(".knob").knob();
+				
+				
+				var tag_input = $('#form-field-tags');
+				try{
+					tag_input.tag(
+					  {
+						placeholder:tag_input.attr('placeholder'),
+						//enable typeahead by specifying the source array
+						source: ace.vars['US_STATES'],//defined in ace.js >> ace.enable_search_ahead
+						/**
+						//or fetch data from database, fetch those that match "query"
+						source: function(query, process) {
+						  $.ajax({url: 'remote_source.php?q='+encodeURIComponent(query)})
+						  .done(function(result_items){
+							process(result_items);
+						  });
+						}
+						*/
+					  }
+					)
+			
+					//programmatically add a new
+					var $tag_obj = $('#form-field-tags').data('tag');
+					$tag_obj.add('Programmatically Added');
+				}
+				catch(e) {
+					//display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+					tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
+					//$('#form-field-tags').autosize({append: "\n"});
+				}
+				
+				
+				//////////
+				
+				//typeahead.js
+				//example taken from plugin's page at: https://twitter.github.io/typeahead.js/examples/
+				var substringMatcher = function(strs) {
+					return function findMatches(q, cb) {
+						var matches, substringRegex;
+					 
+						// an array that will be populated with substring matches
+						matches = [];
+					 
+						// regex used to determine if a string contains the substring `q`
+						substrRegex = new RegExp(q, 'i');
+					 
+						// iterate through the pool of strings and for any string that
+						// contains the substring `q`, add it to the `matches` array
+						$.each(strs, function(i, str) {
+							if (substrRegex.test(str)) {
+								// the typeahead jQuery plugin expects suggestions to a
+								// JavaScript object, refer to typeahead docs for more info
+								matches.push({ value: str });
+							}
+						});
+			
+						cb(matches);
+					}
+				 }
+			
+				 $('input.typeahead').typeahead({
+					hint: true,
+					highlight: true,
+					minLength: 1
+				 }, {
+					name: 'states',
+					displayKey: 'value',
+					source: substringMatcher(ace.vars['US_STATES'])
+				 });
+					
+			
+			
+				/////////
+				$('#modal-form input[type=file]').ace_file_input({
+					style:'well',
+					btn_choose:'Drop files here or click to choose',
+					btn_change:null,
+					no_icon:'ace-icon fa fa-cloud-upload',
+					droppable:true,
+					thumbnail:'large'
+				})
+				
+				//chosen plugin inside a modal will have a zero width because the select element is originally hidden
+				//and its width cannot be determined.
+				//so we set the width after modal is show
+				$('#modal-form').on('shown.bs.modal', function () {
+					$(this).find('.chosen-container').each(function(){
+						$(this).find('a:first-child').css('width' , '210px');
+						$(this).find('.chosen-drop').css('width' , '210px');
+						$(this).find('.chosen-search input').css('width' , '200px');
+					});
+				})
+				/**
+				//or you can activate the chosen plugin after modal is shown
+				//this way select element becomes visible with dimensions and chosen works as expected
+				$('#modal-form').on('shown', function () {
+					$(this).find('.modal-chosen').chosen();
+				})
+				*/
+
+	
+	
+	
+	//lexus 日历events加载开始
+	//全局设置json方式提交数据submit_2_3_1
+	var thisYear = new Date().getFullYear();
+	var lastMonth = new Date().getMonth();
+	var thisMonth = new Date().getMonth() + 1;
+	var daysEachMon = [31,28,31,30,31,30,31,31,30,31,30,31];//每个月的天数
+	daysEachMon[1] = (0==thisYear%4 && (thisYear%100!=0 || thisYear%400==0)) ? 29 : 28; //闰年二月为29天
+	var thisDate = {year:thisYear,month:thisMonth,daysCount:daysEachMon[lastMonth]};
+	
+	localStorage.thisDate = JSON.stringify(thisDate);
+	$('#dateTitle').html(thisYear+'年'+thisMonth+'月');
+	$.ajaxSetup({ contentType: 'application/json' }); 
+	submit_2_3_1(thisDate);
+	//lexus 日历events加载结束
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+});
+
+
+
+		</script>	
+		<script>
+function preMonth(){
+	var thisDate = JSON.parse(localStorage.thisDate);
+	var thisY = thisDate.year;
+	var thisM = thisDate.month;
+	var preM = thisM == 1 ? 12 : thisM - 1;
+	var preY = thisM == 1 ? thisY - 1 : thisY;
+	$('#dateTitle').html(preY+'年'+preM+'月');
+	thisDate.year = preY;
+	thisDate.month = preM;
+	thisDate.p_begDate = getMonth1(thisDate);
+	thisDate.p_endDate = getMonth2(thisDate);
+	localStorage.thisDate = JSON.stringify(thisDate);
+	submit_2_3_1(thisDate);
+}	
+
+function nextMonth(){
+	var thisDate = JSON.parse(localStorage.thisDate);
+	var thisY = thisDate.year;
+	var thisM = thisDate.month;
+	if(thisY == new Date().getFullYear() && thisM == new Date().getMonth()+1){
+		alert('已显示当前月');
+		return;
+	}
+	
+	var nextM = thisM == 12 ? 1 : (thisM + 1);
+	var nextY = thisM == 12 ? thisY + 1 : thisY;
+	$('#dateTitle').html(nextY+'年'+nextM+'月');
+	thisDate.year = nextY;
+	thisDate.month = nextM;
+	thisDate.p_begDate = getMonth1(thisDate);
+	thisDate.p_endDate = getMonth2(thisDate);
+	localStorage.thisDate = JSON.stringify(thisDate);
+	submit_2_3_1(thisDate);
+}	
+
+var sDate1 = '';
+function searchCal(sDate){
+	if( sDate1 != sDate && sDate != ''){
+
+		sDate1 = sDate;
+		var thisDate = JSON.parse(localStorage.thisDate);
+		
+		if(thisDate.year == sDate.split('-')[0] && thisDate.month == parseInt(sDate.split('-')[1])){
+			return;
+		}
+		var sDateArr = sDate.split('-');
+		thisDate.year = sDateArr[0];
+		thisDate.month = parseInt(sDateArr[1]);
+		$('#dateTitle').html(sDateArr[0]+'年'+parseInt(sDateArr[1])+'月');
+		thisDate.p_begDate = getMonth1(thisDate);
+		thisDate.p_endDate = getMonth2(thisDate);
+		localStorage.thisDate = JSON.stringify(thisDate);
+		submit_2_3_1(thisDate);
+	}
+	
+}
+
+function openDetail(datum,status){
+	//alert(11);
+	if(datum != '0'){
+		 localStorage.setItem("dakaType","P10");
+		  localStorage.setItem("hour","00");
+		   localStorage.setItem("minute","00");
+		    localStorage.setItem("bqyy","9001");
+		
+		localStorage.datum = datum;
+		//请求个人考勤详情数据并浮窗显示
+		$('#thisdate').html(datum);
+		
+		$.ajaxSetup({async:false});
+		
+		
+		//if(undefined != status && status != '3'){
+			//status3考勤异常(迟到、早退不算）
+			//submit_3_3_1 刷卡信息
+			submit_3_3_1(formatDate(datum));
+			//显示补签卡
+			
+		//}else{
+			//考勤异常信息
+			submit_3_4_4(formatDate(datum));
+		//}
+		//初始化补签卡原因
+		submit_3_4_5('QKYY');
+		//考勤排班信息
+		submit_3_4_1(formatDate(datum));
+		//考勤请假信息  
+		submit_3_4_2(formatDate(datum));
+		//考勤差旅信息
+		//submit_3_4_3(formatDate(datum));
+		//考勤加班信息
+		submit_3_4_6(formatDate(datum));
+		
+		$.ajaxSetup({async:true});
+		
+		
+		
+		
+		
+		
+		TINY.box.show('perAttDetail.html',1,1000,800,1);
+		$('#tinybox').html($('#innerT').html());
+	}
+	
+}
+
+
+
+//提交补签卡
+function submitClock(){
+	var dakaType = localStorage.getItem("dakaType");
+	var lTime = localStorage.getItem("hour") + '' + localStorage.getItem("minute") + '00';
+	var bqyy = localStorage.getItem("bqyy");
+	
+	if(dakaType == '' || lTime == '' || bqyy == ''){
+		alert('请填写必要字段');
+	}else{
+		//alert(bqyy);
+				submit_6_3_1(dakaType,lTime,bqyy,localStorage.datum);
+	}
+}
+
+
+//设置补签数据缓存
+function setBQLS(lsName,lsValue){
+	localStorage.setItem(lsName,lsValue);
+}
+
+
+function test111(){
+	alert($("#dakaType").find("option:selected").val());
+}
+		</script>
+		
+		
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+	<!------------------------------------------------------------------------------------------------------------------------------------>
+
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="../assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/chosen.jquery.min.js"></script>
+		<script src="./assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-timepicker.min.js"></script>
+		
+		<script src="./assets/js/date-time/daterangepicker.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-datetimepicker.min.js"></script>
+		<script src="./assets/js/bootstrap-colorpicker.min.js"></script>
+		<script src="./assets/js/jquery.knob.min.js"></script>
+		<script src="./assets/js/jquery.autosize.min.js"></script>
+		<script src="./assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+		<script src="./assets/js/jquery.maskedinput.min.js"></script>
+		<script src="./assets/js/bootstrap-tag.min.js"></script>
+		<script src="./assets/js/typeahead.jquery.min.js"></script>
+
+	
+
+		<!-- inline scripts related to this page -->
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+
+
+
+
+	</body>
+</html>

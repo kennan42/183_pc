@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>已处理</title>
+
+		<meta name="description" content="Common UI Features &amp; Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+     
+        <!---css---->
+        <link rel="stylesheet" type="text/css" href="./assets/css/new/newcss.css">
+        
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+<link rel="stylesheet" href="./assets/css/datepicker.css" />
+		<!-- text fonts -->
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+        
+
+		
+       <script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js?v=20141224"></script>
+		<script src="./myjs/lexus.js?v=20141224"></script>
+
+
+		<script>
+			
+					function CloseGritter(obj){
+	$(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+		$(obj).parents(".gritter-item-wrapper").remove();
+	});
+}
+function WindowClose(){
+	window.close();
+}
+			
+			//显示详情
+			function showCon(conId){
+				$('#content'+conId).toggle();
+			}
+			
+			//翻页
+			function changePage(flag){
+				var pageNow = $('#pageNow').html();
+				var pageAll = $('#pageAll').html();
+				if(flag == '1'){
+					if(pageNow == '1'){
+						return;
+					}
+					//第一页
+					changeDo('1');
+				}
+				
+				if(flag == '2'){
+					if(pageNow == '1'){
+						return;
+					}
+					pageNow = parseInt(pageNow)-1;
+					changeDo(pageNow);
+				}
+				
+				if(flag == '3'){
+					if(parseInt(pageNow) >= parseInt(pageAll)){
+						return;
+					}
+					pageNow = parseInt(pageNow)+1;
+					changeDo(pageNow);
+				}
+				
+				if(flag == '4'){
+					if(parseInt(pageNow) >= parseInt(pageAll)){
+						return;
+					}
+					
+					changeDo(pageAll);
+				}
+			}
+			
+			//翻页操作
+			function changeDo(pageNo){
+				var lsPageSize = parseInt(localStorage.spPageSize?localStorage.spPageSize:spPageSize);
+					var listJSON = submit_11_1(localStorage.pernrBase?localStorage.pernrBase:'','1',$('#begD').val(),$('#endD').val());
+					if(listJSON.status == '-1'){
+						//layer.alert('列表获取异常',8);
+						$.gritter.add({
+							title: '列表请求提示',
+							text: '列表获取异常',
+							class_name: 'gritter-error'
+						});
+					}else if(listJSON.status == '-2'){
+							// layer.alert('请勿擅自修改请求信息，您的本次操作已被记录',8,function(){
+							// 	window.close();
+							// });
+							// return;
+							var unique_id = $.gritter.add({
+									title: '系统警告提示',
+									text: '请勿擅自修改请求信息，您的本次操作已被记录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+									sticky: true,
+									time: '',
+									class_name: 'gritter-info gritter-center'
+								});
+								return;
+						}else{
+						var kaoqinCount = $('#kaoqinCount').html();
+						var pageAll = parseInt(kaoqinCount)%lsPageSize == 0?parseInt(kaoqinCount)/lsPageSize:(parseInt(kaoqinCount/lsPageSize)+1);
+						$('#pageAll').html(pageAll);
+						$('#pageNow').html(pageNo);
+						var listArr = listJSON.WF_P2011.item;
+						var listArr1 = [];
+						var temp_detail;
+						var temp_per_detail;
+						
+						for(var i=(parseInt(pageNo)-1)*lsPageSize;i<lsPageSize*parseInt(pageNo);i++){
+							if(listArr[i] == undefined){
+								//return;
+								break;
+							}
+							temp_detail = submit_11_2(localStorage.pernrBase?localStorage.pernrBase:'','1',listArr[i].FORM_ID,listArr[i].XH);
+							
+							temp_per_detail = submit_5_3(listArr[i].PERNR);
+							if (temp_per_detail.status == '-1') {
+								listArr1.push(temp_detail.WF_P2011.item[0]);
+							}
+							else {
+								listArr1.push($.extend(temp_detail.WF_P2011.item[0],temp_per_detail.EASY_TAB.item[0],{CLRQ:checkNoChar(listArr[i].ZCLDATE)}));
+							}
+							
+						}
+						//显示列表和详情
+						localStorage.removeItem("waErrorListsArr");
+						localStorage.setItem("waErrorListsArr",JSON.stringify(listArr1));
+						
+						var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7;padding:0;">'
+										+'<div id="id-message-list-navbar" class="message-navbar clearfix">'
+										+'<div class="message-item message-unread">'
+										+'<div class="messagebar-item-left hide">'
+										+'<label class="inline middle">'
+										+'<input type="checkbox" id="id-toggle-all" class="ace" />'
+										+'<span class="lbl"></span>'
+										+'</label>'
+										+'&nbsp;'
+										+'<div class="inline position-relative">'
+										+'<a href="#" data-toggle="dropdown" class="dropdown-toggle">'
+										+'<i class="ace-icon fa fa-caret-down bigger-125 middle"></i>'
+										+'</a>'
+										+'<ul class="dropdown-menu dropdown-lighter dropdown-100">'
+										+'<li>'
+										+'<a id="id-select-message-all" href="#">全选</a>'
+										+'</li>'
+										+'<li>'
+										+'<a id="id-select-message-none" href="#">全部取消</a>'
+										+'</li>'
+										+'<li class="divider"></li>'
+										+'<li>'
+										+'<a id="id-select-message-unread" href="#">未读的</a>'
+										+'</li>'
+										+'<li>'
+										+'<a id="id-select-message-read" href="#">已读的</a>'
+										+'</li>'
+										+'</ul>'
+										+'</div>'
+										+'</div>'
+										+'<span class="sender" style="padding-left:30px;width:16%;">申请人</span>'
+										+'<span class="sender">补签类型</span>'
+										+'<span class="sender">补签时间</span>'
+										+'<span class="summary">补签事由</span>'
+										+'<span class="sender" style="width:14%;">审批状态</span>'
+										+'<div class="messagebar-item-right">'
+										+'<div class="inline position-relative">'
+										+'<a href="#" data-toggle="dropdown" class="dropdown-toggle">处理日期 &nbsp;'
+										+'</a>'
+										+'</div>'
+										+'</div>'
+										+'</div>'
+										+'<div>'
+										+'<div class="nav-search minimized hide">'
+										+'<form class="form-search">'
+										+'<span class="input-icon">'
+										+'<input type="text" autocomplete="off" class="input-small nav-search-input" placeholder="Search inbox ..." />'
+										+'<i class="ace-icon fa fa-search nav-search-icon"></i>'
+										+'</span>'
+										+'</form>'
+										+'</div>'
+										+'</div>'
+										+'</div>'
+										+'</div>';
+						
+						var vaTimeShow = '';
+						var spStatus = '';
+						for(var k in listArr1){
+							if(checkNoChar(listArr1[k].SP_STATUS) == '0'){
+								spStatus = '审批中';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '1'){
+								spStatus = '同意(未写入HR)';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '2'){
+								spStatus = '同意(已写入HR)';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '3'){
+								spStatus = '拒绝';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '9'){
+								spStatus = '取消';
+							}
+							
+							vaListStr += '<div class="message-item message-unread" style="padding:0;" >'
+							+'<div style="padding:12px 12px 14px;"  onclick="showCon(\''+k+'\')">'
+							+'<label class="hide" style="position:absolute;">'
+							+'<input type="checkbox" class="ace">'
+							+'<span class="lbl"></span>'
+							+'</label>'
+							+'<i class="message-star ace-icon fa fa-star orange2  hide"></i>'
+							+'<span class="sender blue" style="padding-left:30px;width:16%;">'+checkNoChar(listArr1[k].NACHN)+'</span>'
+							+'<span class="sender blue">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</span>'
+							+'<span class="sender" title="'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</span>'
+							+'<span class="summary">'
+							+'<span class="text" title="'+checkNoChar(listArr1[k].GTEXT)+'">'+checkNoChar(listArr1[k].GTEXT)+'</span>'
+							+'</span>'
+							+'<span class="sender" style="width:14%;" title="'+spStatus+'">'+spStatus+'</span>'
+							+'<span class="time" title="'+checkNoChar(listArr1[k].CLRQ)+'">'+checkNoChar(listArr1[k].CLRQ)+'</span>'
+							+'</div>'
+							//下面是详情部分
+							
+							
+							
+							+'<div class="message-content" id="content'+k+'" style="display:none">'
+							+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+							+'<div style="background-color: rgb(241, 241, 241);" class="widget-header widget-header-small collapsed">'
+							+'<span class="blue bigger-125 widget-title"> 基本信息 </span>'
+							+'</div>'
+							+'<div><div class="widget-main"><div class="message-header">'
+							+'<table class="table  text-center"><tbody>'
+							+'<tr><td class="text-right grey" width="30%">申请人</td>'
+							+'<td class="text-left" width="70%">'+checkNoChar(listArr1[k].NACHN)+' '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td></tr>'
+							+'<tr><td class="text-right grey">部门</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].BUMEN)+'</td></tr>'
+							+'<tr><td class="text-right grey">岗位</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].PLSTX)+'</td></tr>'
+							+'<tr><td class="text-right grey">补签类型</td>'
+							+'<td class="text-left">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</td></tr>'
+							+'<tr><td class="text-right grey">补签时间</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</td></tr>'
+							+'<tr><td class="text-right grey">补签事由</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].GTEXT)+'</td></tr>'
+							+'<tr><td class="text-right grey">详细说明</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].REASON)+'</td></tr>'
+							+'<tr><td class="text-right grey">审批状态</td>'
+							+'<td class="text-left">'+spStatus+'</td></tr>'
+							+'<tr><td class="text-right grey">审批意见</td>'
+                            +'<td class="text-left">'+checkNoChar(listArr1[k].SP_MESSAGE)+'</td></tr>'
+							+'</tbody></table>'
+							+'</div></div></div></div>'
+							+'</div></div>';
+						}
+						$('#message-list').html(vaListStr);
+						
+					}
+			}
+			
+		//选择显示时间段
+			function changeShowD(flag){
+				if(flag == '90'){
+					$('#showD').html('90天内');
+					$('#selfDate').hide();
+					$('#begD').val(getbeg90());
+					$('#endD').val(getToday8());
+					$('#id-date-picker-1').val('');
+					$('#id-date-picker-2').val('');
+					changeView(getbeg90(),getToday8());
+				}else if(flag == '30'){
+					$('#showD').html('30天内');
+					$('#selfDate').hide();
+					$('#begD').val(getbeg30());
+					$('#endD').val(getToday8());
+					$('#id-date-picker-1').val('');
+					$('#id-date-picker-2').val('');
+					changeView(getbeg30(),getToday8());
+				}else{
+					//自定义
+					$('#selfDate').show();
+					$('#showD').html('自定义时间段');
+				}
+			}
+			
+			function changeView(begD, endD){
+				$('#begD').val(begD);
+				$('#endD').val(endD);
+				var lsPageSize = parseInt(localStorage.spPageSize?localStorage.spPageSize:10);
+				var waVacationListsJSON = submit_8_7(localStorage.pernrBase?localStorage.pernrBase:'',1,10,begD,endD);
+				if(waVacationListsJSON.status == '0'){
+					var vacationCount = waVacationListsJSON.output.totalCount;
+					$('#xiujiaCount').html(vacationCount);
+					
+					//var pageAll = parseInt(vacationCount)%10 == 0?parseInt(vacationCount)/10:(parseInt(vacationCount/10)+1);
+					//$('#pageAll').html(pageAll);
+					
+					//$('#pageNow').html('1');
+				}
+				
+				//2获取加班和考勤异常待办条数
+				var jiabanCountJSON = submit_4_9(localStorage.pernrBase?localStorage.pernrBase:'','1',begD,endD);
+				if(jiabanCountJSON.status == '0'){
+					var jiabanCount = checkNoChar(jiabanCountJSON.E_2005);
+					var kaoqinCount = checkNoChar(jiabanCountJSON.E_2011);
+					$('#jiabanCount').html(jiabanCount?jiabanCount:'');
+					$('#kaoqinCount').html(kaoqinCount?kaoqinCount:'');
+					var pageAll = parseInt(kaoqinCount)%lsPageSize == 0?parseInt(kaoqinCount)/lsPageSize:(parseInt(kaoqinCount/lsPageSize)+1);
+					$('#pageAll').html(pageAll);
+					
+					$('#pageNow').html('1');
+				}
+				
+				//3获取待办考勤的列表和详情
+				if($('#kaoqinCount').html() != ''){
+					var listJSON = submit_11_1(localStorage.pernrBase?localStorage.pernrBase:'','1',begD,endD);
+					if(listJSON.status == '-1'){
+						//layer.alert('列表获取异常',8);
+						$.gritter.add({
+							title: '列表请求提示',
+							text: '列表获取异常',
+							class_name: 'gritter-error'
+						});
+					}else if(listJSON.status == '-2'){
+							// layer.alert('请勿擅自修改请求信息，您的本次操作已被记录',8,function(){
+							// 	window.close();
+							// });
+							// return;
+							var unique_id = $.gritter.add({
+									title: '系统警告提示',
+									text: '请勿擅自修改请求信息，您的本次操作已被记录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+									sticky: true,
+									time: '',
+									class_name: 'gritter-info gritter-center'
+								});
+								return;
+						}else{
+						var listArr = listJSON.WF_P2011.item;
+						var listArr1 = [];
+						var temp_detail;
+						var temp_per_detail;
+						
+						for(var i=0;i<lsPageSize;i++){
+							if(listArr[i] == undefined){
+								//return;
+								break;
+							}
+							temp_detail = submit_11_2(localStorage.pernrBase?localStorage.pernrBase:'','1',listArr[i].FORM_ID,listArr[i].XH);
+							
+							temp_per_detail = submit_5_3(listArr[i].PERNR);
+							listArr1.push($.extend(temp_detail.WF_P2011.item[0],temp_per_detail.EASY_TAB.item[0],{CLRQ:checkNoChar(listArr[i].ZCLDATE)}));
+						}
+						//显示列表和详情
+						localStorage.removeItem("waErrorListsArr");
+						localStorage.setItem("waErrorListsArr",JSON.stringify(listArr1));
+						
+						//构建列表
+						
+						var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7;padding:0;">'
+										+'<div id="id-message-list-navbar" class="message-navbar clearfix">'
+										+'<div class="message-item message-unread">'
+										+'<div class="messagebar-item-left hide">'
+										+'<label class="inline middle">'
+										+'<input type="checkbox" id="id-toggle-all" class="ace" />'
+										+'<span class="lbl"></span>'
+										+'</label>'
+										+'&nbsp;'
+										+'<div class="inline position-relative">'
+										+'<a href="#" data-toggle="dropdown" class="dropdown-toggle">'
+										+'<i class="ace-icon fa fa-caret-down bigger-125 middle"></i>'
+										+'</a>'
+										+'<ul class="dropdown-menu dropdown-lighter dropdown-100">'
+										+'<li>'
+										+'<a id="id-select-message-all" href="#">全选</a>'
+										+'</li>'
+										+'<li>'
+										+'<a id="id-select-message-none" href="#">全部取消</a>'
+										+'</li>'
+										+'<li class="divider"></li>'
+										+'<li>'
+										+'<a id="id-select-message-unread" href="#">未读的</a>'
+										+'</li>'
+										+'<li>'
+										+'<a id="id-select-message-read" href="#">已读的</a>'
+										+'</li>'
+										+'</ul>'
+										+'</div>'
+										+'</div>'
+										+'<span class="sender" style="padding-left:30px;width:16%;">申请人</span>'
+										+'<span class="sender">补签类型</span>'
+										+'<span class="sender">补签时间</span>'
+										+'<span class="summary">补签事由</span>'
+										+'<span class="sender" style="width:14%;">审批状态</span>'
+										+'<div class="messagebar-item-right">'
+										+'<div class="inline position-relative">'
+										+'<a href="#" data-toggle="dropdown" class="dropdown-toggle">处理日期 &nbsp;'
+										+'</a>'
+										+'</div>'
+										+'</div>'
+										+'</div>'
+										+'<div>'
+										+'<div class="nav-search minimized hide">'
+										+'<form class="form-search">'
+										+'<span class="input-icon">'
+										+'<input type="text" autocomplete="off" class="input-small nav-search-input" placeholder="Search inbox ..." />'
+										+'<i class="ace-icon fa fa-search nav-search-icon"></i>'
+										+'</span>'
+										+'</form>'
+										+'</div>'
+										+'</div>'
+										+'</div>'
+										+'</div>';
+						
+						var vaTimeShow = '';
+						var spStatus = '';
+						for(var k in listArr1){
+							if(checkNoChar(listArr1[k].SP_STATUS) == '0'){
+								spStatus = '审批中';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '1'){
+								spStatus = '同意(未写入HR)';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '2'){
+								spStatus = '同意(已写入HR)';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '3'){
+								spStatus = '拒绝';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '9'){
+								spStatus = '取消';
+							}
+							
+							vaListStr += '<div class="message-item message-unread" style="padding:0;" >'
+							+'<div style="padding:12px 12px 14px;"  onclick="showCon(\''+k+'\')">'
+							+'<label class="hide" style="position:absolute;">'
+							+'<input type="checkbox" class="ace">'
+							+'<span class="lbl"></span>'
+							+'</label>'
+							+'<i class="message-star ace-icon fa fa-star orange2  hide"></i>'
+							+'<span class="sender blue" style="padding-left:30px;width:16%;">'+checkNoChar(listArr1[k].NACHN)+'</span>'
+							+'<span class="sender blue">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</span>'
+							+'<span class="sender" title="'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</span>'
+							+'<span class="summary">'
+							+'<span class="text" title="'+checkNoChar(listArr1[k].GTEXT)+'">'+checkNoChar(listArr1[k].GTEXT)+'</span>'
+							+'</span>'
+							+'<span class="sender" style="width:14%;" title="'+spStatus+'">'+spStatus+'</span>'
+							+'<span class="time" title="'+checkNoChar(listArr1[k].CLRQ)+'">'+checkNoChar(listArr1[k].CLRQ)+'</span>'
+							+'</div>'
+							//下面是详情部分
+							
+							
+							
+							+'<div class="message-content" id="content'+k+'" style="display:none">'
+							+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+							+'<div style="background-color: rgb(241, 241, 241);" class="widget-header widget-header-small collapsed">'
+							+'<span class="blue bigger-125 widget-title"> 基本信息 </span>'
+							+'</div>'
+							+'<div><div class="widget-main"><div class="message-header">'
+							+'<table class="table  text-center"><tbody>'
+							+'<tr><td class="text-right grey" width="30%">申请人</td>'
+							+'<td class="text-left" width="70%">'+checkNoChar(listArr1[k].NACHN)+' '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td></tr>'
+							+'<tr><td class="text-right grey">部门</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].BUMEN)+'</td></tr>'
+							+'<tr><td class="text-right grey">岗位</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].PLSTX)+'</td></tr>'
+							+'<tr><td class="text-right grey">补签类型</td>'
+							+'<td class="text-left">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</td></tr>'
+							+'<tr><td class="text-right grey">补签时间</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</td></tr>'
+							+'<tr><td class="text-right grey">补签事由</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].GTEXT)+'</td></tr>'
+							+'<tr><td class="text-right grey">详细说明</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].REASON)+'</td></tr>'
+							+'<tr><td class="text-right grey">审批状态</td>'
+							+'<td class="text-left">'+spStatus+'</td></tr>'
+							+'<tr><td class="text-right grey">审批意见</td>'
+                            +'<td class="text-left">'+checkNoChar(listArr1[k].SP_MESSAGE)+'</td></tr>'
+							+'</tbody></table>'
+							+'</div></div></div></div>'
+							+'</div></div>';
+						}
+						$('#message-list').html(vaListStr);
+						
+					}
+				}
+			}
+			
+			//自定义时间段
+			function calRange(){
+				var begD = $('#id-date-picker-1').val();
+				var endD = $('#id-date-picker-2').val();
+				if(begD.length<10 || endD.length<10){
+					return;
+				}
+				if(parseInt(begD.replace(/-/g,'')) > parseInt(endD.replace(/-/g,''))){
+					return;
+				}
+				
+				$('#begD').val(begD.replace(/-/g,''));
+				$('#endD').val(endD.replace(/-/g,''));
+				changeView(begD.replace(/-/g,''),endD.replace(/-/g,''));
+			}
+			
+			function changePageSize(pagesize){
+				var lsPageSize = localStorage.spPageSize;
+				if(parseInt(pagesize) == parseInt(lsPageSize)){
+					return;
+				}
+				//按新size加载列表
+				localStorage.removeItem('spPageSize');
+				localStorage.setItem('spPageSize',pagesize);
+				changeDo(1);
+			}
+		</script>
+		<!---这是列表的js--->
+        <!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($){
+				var localCookie = document.cookie;
+			var cookie_user = '';
+			if(localCookie.length > 0 && localCookie.indexOf('userid')>-1){
+				localCookie = localCookie.split(';');
+				for(var lc in localCookie){
+					if(localCookie[lc].indexOf('userid=')>-1){
+						cookie_user = localCookie[lc];
+						break;
+					}
+				} 
+				
+				if(cookie_user == ''){
+					// layer.alert('无法获取信息，请重新登录',8,function(){
+					// 	window.close();
+					// });
+					var unique_id = $.gritter.add({
+						title: '系统警告信息提示',
+						text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+				}else{
+					cookie_user = trim(cookie_user).substring(7);
+					localStorage.removeItem('pernrBase');
+					localStorage.setItem('pernrBase',cookie_user);
+					$('#thisPer').html(cookie_user);
+				}
+			}else{
+				// layer.alert('无法获取信息，请重新登录',8,function(){
+				// 		window.close();
+				// 	});
+				var unique_id = $.gritter.add({
+						title: '系统警告信息提示',
+						text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+			}
+			
+			var mydate = $('#id-date-picker-1')[0];
+ if(mydate.type !== 'date') {//if browser doesn't support "date" input
+    $(mydate).datepicker({
+      autoclose: true,
+					todayHighlight: true
+    })
+ }
+ var mydate1 = $('#id-date-picker-2')[0];
+ if(mydate1.type !== 'date') {//if browser doesn't support "date" input
+    $(mydate1).datepicker({
+      autoclose: true,
+					todayHighlight: true
+    })
+ }
+				//handling tabs and loading/displaying relevant messages and forms
+				//not needed if using the alternative view, as described in docs
+				
+				
+				
+				//页面初始化
+$.ajaxSetup({
+	contentType: 'application/json',
+	async:false,
+	error:function(){
+		//alert(errMsg1);
+		var unique_id = $.gritter.add({
+				title: '系统警告信息提示',
+				text: '' + errMsg1 + '<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+				sticky: true,
+				time: '',
+				class_name: 'gritter-info gritter-center'
+			});
+	},
+	timeout:timeout
+ });
+ 
+ 				if(localStorage.spPageSize == 10){
+					$("#pageSelect option[value='10'").attr("selected", true)
+				}else if(localStorage.spPageSize == 100){
+					$("#pageSelect option[value='100'").attr("selected", true)
+				}else if(localStorage.spPageSize == 50){
+					$("#pageSelect option[value='50'").attr("selected", true)
+				}else{
+					$("#pageSelect option[value='20'").attr("selected", true)
+				}
+				
+				var lsPageSize = parseInt(localStorage.spPageSize?localStorage.spPageSize:spPageSize);
+				//1获取休假待办列表和条数
+				$('#begD').val(getbeg30());
+				$('#endD').val(getToday8());
+				var waVacationListsJSON = submit_8_7(localStorage.pernrBase?localStorage.pernrBase:'',1,spPageSize,getbeg30(),getToday8());
+				if(waVacationListsJSON.status == '0'){
+					var vacationCount = waVacationListsJSON.output.totalCount;
+					$('#xiujiaCount').html(vacationCount);
+					
+					//var pageAll = parseInt(vacationCount)%10 == 0?parseInt(vacationCount)/10:(parseInt(vacationCount/10)+1);
+					//$('#pageAll').html(pageAll);
+					
+					//$('#pageNow').html('1');
+				}
+				
+				//2获取加班和考勤异常待办条数
+				var jiabanCountJSON = submit_4_9(localStorage.pernrBase?localStorage.pernrBase:'','1',getbeg30(),getToday8());
+				if(jiabanCountJSON.status == '0'){
+					var jiabanCount = checkNoChar(jiabanCountJSON.E_2005);
+					var kaoqinCount = checkNoChar(jiabanCountJSON.E_2011);
+					$('#jiabanCount').html(jiabanCount?jiabanCount:'');
+					$('#kaoqinCount').html(kaoqinCount?kaoqinCount:'');
+					var pageAll = parseInt(kaoqinCount)%lsPageSize == 0?parseInt(kaoqinCount)/lsPageSize:(parseInt(kaoqinCount/lsPageSize)+1);
+					$('#pageAll').html(pageAll);
+					
+					$('#pageNow').html('1');
+				}
+				
+				//3获取待办考勤的列表和详情
+				if($('#kaoqinCount').html() != ''){
+					var listJSON = submit_11_1(localStorage.pernrBase?localStorage.pernrBase:'','1',getbeg30(),getToday8());
+					if(listJSON.status == '-1'){
+						//layer.alert('列表获取异常',8);
+						$.gritter.add({
+							title: '列表请求提示',
+							text: '列表获取异常',
+							class_name: 'gritter-error'
+						});
+					}else if(listJSON.status == '-2'){
+							// layer.alert('请勿擅自修改请求信息，您的本次操作已被记录',8,function(){
+							// 	window.close();
+							// });
+							// return;
+							var unique_id = $.gritter.add({
+									title: '系统警告提示',
+									text: '请勿擅自修改请求信息，您的本次操作已被记录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+									sticky: true,
+									time: '',
+									class_name: 'gritter-info gritter-center'
+								});
+								return;
+						}else{
+						var listArr = listJSON.WF_P2011.item;
+						var listArr1 = [];
+						var temp_detail;
+						var temp_per_detail;
+						
+						for(var i=0;i<lsPageSize;i++){
+							if(listArr[i] == undefined){
+								//return;
+								break;
+							}
+							temp_detail = submit_11_2(localStorage.pernrBase?localStorage.pernrBase:'','1',listArr[i].FORM_ID,listArr[i].XH);
+							
+							temp_per_detail = submit_5_3(listArr[i].PERNR);
+							listArr1.push($.extend(temp_detail.WF_P2011.item[0],temp_per_detail.EASY_TAB.item[0],{CLRQ:checkNoChar(listArr[i].ZCLDATE)}));
+						}
+						//显示列表和详情
+						localStorage.removeItem("waErrorListsArr");
+						localStorage.setItem("waErrorListsArr",JSON.stringify(listArr1));
+						
+						//构建列表
+						
+						var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7;padding:0;">'
+										+'<div id="id-message-list-navbar" class="message-navbar clearfix">'
+										+'<div class="message-item message-unread">'
+										+'<div class="messagebar-item-left hide">'
+										+'<label class="inline middle">'
+										+'<input type="checkbox" id="id-toggle-all" class="ace" />'
+										+'<span class="lbl"></span>'
+										+'</label>'
+										+'&nbsp;'
+										+'<div class="inline position-relative">'
+										+'<a href="#" data-toggle="dropdown" class="dropdown-toggle">'
+										+'<i class="ace-icon fa fa-caret-down bigger-125 middle"></i>'
+										+'</a>'
+										+'<ul class="dropdown-menu dropdown-lighter dropdown-100">'
+										+'<li>'
+										+'<a id="id-select-message-all" href="#">全选</a>'
+										+'</li>'
+										+'<li>'
+										+'<a id="id-select-message-none" href="#">全部取消</a>'
+										+'</li>'
+										+'<li class="divider"></li>'
+										+'<li>'
+										+'<a id="id-select-message-unread" href="#">未读的</a>'
+										+'</li>'
+										+'<li>'
+										+'<a id="id-select-message-read" href="#">已读的</a>'
+										+'</li>'
+										+'</ul>'
+										+'</div>'
+										+'</div>'
+										+'<span class="sender" style="padding-left:30px;width:16%;">申请人</span>'
+										+'<span class="sender">补签类型</span>'
+										+'<span class="sender">补签时间</span>'
+										+'<span class="summary">补签事由</span>'
+										+'<span class="sender" style="width:14%;">审批状态</span>'
+										+'<div class="messagebar-item-right">'
+										+'<div class="inline position-relative">'
+										+'<a href="#" data-toggle="dropdown" class="dropdown-toggle">处理日期 &nbsp;'
+										+'</a>'
+										+'</div>'
+										+'</div>'
+										+'</div>'
+										+'<div>'
+										+'<div class="nav-search minimized hide">'
+										+'<form class="form-search">'
+										+'<span class="input-icon">'
+										+'<input type="text" autocomplete="off" class="input-small nav-search-input" placeholder="Search inbox ..." />'
+										+'<i class="ace-icon fa fa-search nav-search-icon"></i>'
+										+'</span>'
+										+'</form>'
+										+'</div>'
+										+'</div>'
+										+'</div>'
+										+'</div>';
+						var vaTimeShow = '';
+						var spStatus = '';
+						for(var k in listArr1){
+							if(checkNoChar(listArr1[k].SP_STATUS) == '0'){
+								spStatus = '审批中';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '1'){
+								spStatus = '同意(未写入HR)';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '2'){
+								spStatus = '同意(已写入HR)';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '3'){
+								spStatus = '拒绝';
+							}else if(checkNoChar(listArr1[k].SP_STATUS) == '9'){
+								spStatus = '取消';
+							}
+							vaListStr += '<div class="message-item message-unread" style="padding:0;" >'
+							+'<div style="padding:12px 12px 14px;"  onclick="showCon(\''+k+'\')">'
+							+'<label class="hide" style="position:absolute;">'
+							+'<input type="checkbox" class="ace">'
+							+'<span class="lbl"></span>'
+							+'</label>'
+							+'<i class="message-star ace-icon fa fa-star orange2  hide"></i>'
+							+'<span class="sender blue" style="padding-left:30px;width:16%;">'+checkNoChar(listArr1[k].NACHN)+'</span>'
+							+'<span class="sender blue">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</span>'
+							+'<span class="sender" title="'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</span>'
+							+'<span class="summary">'
+							+'<span class="text" title="'+checkNoChar(listArr1[k].GTEXT)+'">'+checkNoChar(listArr1[k].GTEXT)+'</span>'
+							+'</span>'
+							+'<span class="sender" style="width:14%;" title="'+spStatus+'">'+spStatus+'</span>'
+							+'<span class="time" title="'+checkNoChar(listArr1[k].CLRQ)+'">'+checkNoChar(listArr1[k].CLRQ)+'</span>'
+							+'</div>'
+							//下面是详情部分
+							
+							
+							
+							+'<div class="message-content" id="content'+k+'" style="display:none">'
+							+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+							+'<div style="background-color: rgb(241, 241, 241);" class="widget-header widget-header-small collapsed">'
+							+'<span class="blue bigger-125 widget-title"> 基本信息 </span>'
+							+'</div>'
+							+'<div><div class="widget-main"><div class="message-header">'
+							+'<table class="table  text-center"><tbody>'
+							+'<tr><td class="text-right grey" width="30%">申请人</td>'
+							+'<td class="text-left" width="70%">'+checkNoChar(listArr1[k].NACHN)+' '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td></tr>'
+							+'<tr><td class="text-right grey">部门</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].BUMEN)+'</td></tr>'
+							+'<tr><td class="text-right grey">岗位</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].PLSTX)+'</td></tr>'
+							+'<tr><td class="text-right grey">补签类型</td>'
+							+'<td class="text-left">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</td></tr>'
+							+'<tr><td class="text-right grey">补签时间</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</td></tr>'
+							+'<tr><td class="text-right grey">补签事由</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].GTEXT)+'</td></tr>'
+							+'<tr><td class="text-right grey">详细说明</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].REASON)+'</td></tr>'
+							+'<tr><td class="text-right grey">审批状态</td>'
+							+'<td class="text-left">'+spStatus+'</td></tr>'
+							+'<tr><td class="text-right grey">审批意见</td>'
+                            +'<td class="text-left">'+checkNoChar(listArr1[k].SP_MESSAGE)+'</td></tr>'
+							+'</tbody></table>'
+							+'</div></div></div></div>'
+							+'</div></div>';
+						}
+						$('#message-list').html(vaListStr);
+						
+					}
+				}
+				
+				
+				
+				
+				
+				
+			
+			});
+		</script>
+        <!---这是列表的js结束--->
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+		<script src="./assets/js/bootstrap-tag.min.js"></script>
+        <script >
+        	//===========================点击展开关闭效果====================================
+		function openShutManager(oSourceObj,oTargetObj,shutAble,oOpenTip,oShutTip){
+		var sourceObj = typeof oSourceObj == "string" ? document.getElementById(oSourceObj) : oSourceObj;
+		var targetObj = typeof oTargetObj == "string" ? document.getElementById(oTargetObj) : oTargetObj;
+		var openTip = oOpenTip || "";
+		var shutTip = oShutTip || "";
+		if(targetObj.style.display!="none"){
+		   if(shutAble) return;
+		   targetObj.style.display="none";
+		   if(openTip  &&  shutTip){
+			sourceObj.innerHTML = shutTip; 
+		   }
+		} else {
+		   targetObj.style.display="block";
+		   if(openTip  &&  shutTip){
+			sourceObj.innerHTML = openTip; 
+		   }
+		}
+		}
+        </script>
+        <!---单选-->
+        <script>
+        	function a_click(o){
+			   var as=o.parentNode.getElementsByTagName('li');
+			   for(var i=0;i<as.length;i++){
+				  as[i].style.backgroundColor='';
+			   }
+			   o.style.backgroundColor='#F5F7FA';
+			}
+        </script>
+
+        <style type="text/css">
+		.breadcrumb>li+li:before{color:#fff;}
+		.page-header{border-bottom:solid 1px #438eb9;}
+		.nav-tabs>li>a{padding: 14px 26px 14px 18px;font-family:"Microsoft YaHei";font-size: 16px;position:relative;}
+		.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover{
+			color:#48768E;border-color:#c5d0dc #c5d0dc transparent;border-top:2px solid #4c8fbd;background-color:#F1F5FA;z-index:1;line-height:18px;margin-top:-1px;box-shadow:0 -2px 3px 0 rgba(0,0,0,.15);
+		}
+		.nav-tabs>li>a span.badge{position:absolute;top:2px;right:2px;}
+
+
+		.inbox-tabs.nav-tabs.tab-size-bigger>li{position:relative;}
+		.inbox-tabs.nav-tabs.tab-size-bigger>li.li-new-mail>a{padding:0;border:none;}
+		.message-item .sender{margin:0;width:13%;padding:0 6px 0 20px;}
+		.message-list-container{font-size:14px;color:#585858;}
+		.message-item.message-unread .sender{color:#585858;}
+		.message-item .summary{width:30%;max-width:none;min-width:0;margin-left:0;padding-left:30px;}
+		.message-item.message-unread .summary .text{color:#585858;}
+		.message-item.message-unread .time{color:#585858;}
+		.message-item .time{text-align:right;width:8%;}
+		.message-item{cursor:pointer;}
+		.message-item .summary .text:hover{text-decoration:none;}
+		.inbox-tabs.nav-tabs.tab-size-bigger>li a span.badge{position:absolute;top:1px;right:1px;}
+		#id-message-list-navbar .message-item{border:none;background:none;}
+		#id-message-list-navbar .message-item:hover{border:none;background:none;}
+		.message-item.message-unread .summary{font-weight:700;}
+		.message-navbar{padding:5px 0px;text-align:left;}
+		.message-item.message-unread .sender,.message-item.message-unread .summary,.message-item.message-unread .time,.message-item.message-unread .summary .text{font-weight:normal;}
+		.message-item .message-content{margin-top:0px; }
+        </style>
+	</head>
+
+	<body class="no-skin">
+		<div class="main-container " style=" overflow:hidden;">
+				
+				
+            <!-- #section:basics/navbar.layout -->
+            <div class="main-content " style="">
+				<div class="breadcrumbs" id="breadcrumbs" style="background:#438eb9;">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon white"></i>
+							<a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+						</li>
+
+						<li>
+							<a href="#" class="white">统一待办</a>
+						</li>
+					</ul><!-- /.breadcrumb -->
+
+					<!-- /section:basics/content.searchbox -->
+				</div>
+				<div class="page-content">
+				<div class="page-content-area">
+						<div class="page-header">
+							<input type="hidden" id="begD" value="">
+							<input type="hidden" id="endD" value="">
+							<h1 style="font-family:Microsoft YaHei ! important;">
+								考勤异常已处理
+								<!--small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									自定义内容
+								</small-->
+								<div class="btn-group" style="float:right;">
+									<div class="col-sm-10" id="selfDate" style="display:none">
+										<div class="col-sm-2" style="width:204px">
+											<div class="input-group">
+												<input class="form-control date-picker" onpropertychange="calRange()" id="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd">
+												<span class="input-group-addon">
+													<i class="fa fa-calendar bigger-110 blue"></i>
+												</span>
+											</div>
+										</div>
+										<label class="col-sm-1" style="width:10px;margin-right:10px;margin-top:10px">至</label>
+										<div class="col-sm-2" style="width:204px">
+											<div class="input-group">
+												<input class="form-control date-picker" id="id-date-picker-2" type="text" data-date-format="yyyy-mm-dd" onpropertychange="calRange()">
+												<span class="input-group-addon">
+													<i class="fa fa-calendar bigger-110 blue"></i>
+												</span>
+											</div>
+										</div>
+										</div>
+										<div class="col-sm-2">
+												<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+													<span id="showD">30天内</span>
+													<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+												</button>
+
+												<ul class="dropdown-menu">
+													<li>
+														<a href="###" onclick="changeShowD('90')">90天内</a>
+													</li>
+
+													<li>
+														<a href="###" onclick="changeShowD('30')">30天内</a>
+													</li>
+
+													<li>
+														<a href="###" onclick="changeShowD('00')">自定义</a>
+													</li>
+												</ul>
+												</div>
+											</div>
+							</h1>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-xs-12">
+										<!-- #section:pages/inbox -->
+										<div class="tabbable">
+
+											<ul class="nav nav-tabs padding-16">
+												<li>
+													<a href="javascript:void(0);" onclick="window.location.href='/web/aaVacation.html'">
+														<span>
+															<i class="orange ace-icon glyphicon glyphicon-cog bigger-110"></i>
+																休假
+														</span>
+														<span class="badge badge-pink" id="xiujiaCount"></span>
+													</a>
+												</li>
+												<li>
+													<a href="javascript:void(0);" onclick="window.location.href='/web/aaOvertime.html'">
+														<span>
+															<i class="orange ace-icon fa fa-location-arrow bigger-125"></i>
+																加班
+														</span>
+														<span class="badge badge-pink" id="jiabanCount"></span>
+													</a>
+												</li>
+												<li class="active">
+													<a href="javascript:void(0);">
+														<span>
+															<i class="green ace-icon fa fa-pencil bigger-125"></i>
+																考勤异常
+														</span>
+														<span class="badge badge-pink" id="kaoqinCount"></span>
+													</a>
+												</li>
+												<li>
+													<span id="thisPer" style="color:white;padding:0 10px"></span>
+												</li>
+											</ul>
+
+											<div class="tab-content no-border no-padding">
+												<div id="inbox" class="tab-pane in active">
+													<div class="message-container tabbable-content">
+														<!-- #section:pages/inbox.navbar -->
+														
+
+														<div class="message-list-container">
+															<div class="message-list" id="message-list">
+
+																
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- #section:pages/inbox.message-footer -->
+                                            <div class="message-footer clearfix">
+                                                <!--div class="pull-left"> 共<span id="pageAll">0</span>页 </div-->
+            									<label style="margin-top:4px;">
+															<span style="float:left;padding:4px 0 0 0">每页显示</span>
+															<span style="float:left;margin:0 10px">
+															<select name="sample-table-2_length" aria-controls="sample-table-2" class="form-control input-sm" id="pageSelect">
+																<option value="10" onclick="changePageSize('10')">
+																	10
+																</option>
+																<option value="20" onclick="changePageSize('20')">
+																	20
+																</option>
+																<option value="50" onclick="changePageSize('50')">
+																	50
+																</option>
+																<option value="100" onclick="changePageSize('100')">
+																	100
+																</option>
+															</select>
+															</span>
+															<span style="float:left;padding:4px 0 0 0">条</span>
+														</label>
+                                                <div class="pull-right">
+                                                    <div class="inline middle">  </div>
+            
+                                                    &nbsp; &nbsp;
+                                                    <ul class="pagination middle">
+                                                        <li >
+                                                            <a href="###" onclick="changePage('1')">
+                                                                <i class="ace-icon fa fa-step-backward middle"></i>
+                                                            </a>
+                                                        </li>
+            
+                                                        <li>
+                                                            <a href="###" onclick="changePage('2')">
+                                                                <i class="ace-icon fa fa-caret-left bigger-140 middle"></i>
+                                                            </a>
+                                                        </li>
+            
+                                                        <li>
+                                                           <span id="pageNow" style="padding-right:0">1</span><span style="padding:3px 0 0 0;margin:0">/</span><span id="pageAll" style="padding-left:0">1</span>
+                                                        </li>
+            
+                                                        <li>
+                                                            <a href="###" onclick="changePage('3')">
+                                                                <i class="ace-icon fa fa-caret-right bigger-140 middle"></i>
+                                                            </a>
+                                                        </li>
+            
+                                                        <li>
+                                                            <a href="###" onclick="changePage('4')">
+                                                                <i class="ace-icon fa fa-step-forward middle"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                    	</div>
+                    </div>
+				</div>
+			</div>	
+		
+		<script src="./assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '.'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+		<script type="text/javascript">
+			jQuery(function($){
+				$('#inbox-tabs a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+					var currentTab = $(e.target).data('target');
+					if(currentTab == 'write') {
+						Inbox.show_form();
+					}
+					else if(currentTab == 'inbox') {
+						Inbox.show_list();
+					}
+				})
+			
+			
+				
+				//basic initializations
+				$('.message-list .message-item input[type=checkbox]').removeAttr('checked');
+				$('.message-list').on('click', '.message-item input[type=checkbox]' , function() {
+					$(this).closest('.message-item').toggleClass('selected');
+					if(this.checked) Inbox.display_bar(1);//display action toolbar when a message is selected
+					else {
+						Inbox.display_bar($('.message-list input[type=checkbox]:checked').length);
+						//determine number of selected messages and display/hide action toolbar accordingly
+					}		
+				});
+			
+			
+				//check/uncheck all messages
+				$('#id-toggle-all').removeAttr('checked').on('click', function(){
+					if(this.checked) {
+						Inbox.select_all();
+					} else Inbox.select_none();
+				});
+				
+				//select all
+				$('#id-select-message-all').on('click', function(e) {
+					e.preventDefault();
+					Inbox.select_all();
+				});
+				
+				//select none
+				$('#id-select-message-none').on('click', function(e) {
+					e.preventDefault();
+					Inbox.select_none();
+				});
+				
+				//select read
+				$('#id-select-message-read').on('click', function(e) {
+					e.preventDefault();
+					Inbox.select_read();
+				});
+			
+				//select unread
+				$('#id-select-message-unread').on('click', function(e) {
+					e.preventDefault();
+					Inbox.select_unread();
+				});
+			
+				/////////
+			
+				//display first message in a new area
+				$('.message-list .message-item:eq(0) .text').on('click', function() {
+					//show the loading icon
+					$('.message-container').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+					
+					$('.message-inline-open').removeClass('message-inline-open').find('.message-content').remove();
+			
+					var message_list = $(this).closest('.message-list');
+			
+					$('#inbox-tabs a[href="#inbox"]').parent().removeClass('active');
+					//some waiting
+					setTimeout(function() {
+			
+						//hide everything that is after .message-list (which is either .message-content or .message-form)
+						message_list.next().addClass('hide');
+						$('.message-container').find('.message-loading-overlay').remove();
+			
+						//close and remove the inline opened message if any!
+			
+						//hide all navbars
+						$('.message-navbar').addClass('hide');
+						//now show the navbar for single message item
+						$('#id-message-item-navbar').removeClass('hide');
+			
+						//hide all footers
+						$('.message-footer').addClass('hide');
+						//now show the alternative footer
+						$('.message-footer-style2').removeClass('hide');
+						
+						
+						//move .message-content next to .message-list and hide .message-list
+						$('.message-content').removeClass('hide').insertAfter(message_list.addClass('hide'));
+			
+						//add scrollbars to .message-body
+						$('.message-content .message-body').ace_scroll({
+							size: 150,
+							mouseWheelLock: true,
+							styleClass: 'scroll-visible'
+						});
+			
+					}, 500 + parseInt(Math.random() * 500));
+				});
+			
+			
+				//display second message right inside the message list
+				var waVacationListsArr = JSON.parse(localStorage.getItem("waVacationListsArr"));
+				var vaTimeShow = '';
+			
+				//back to message list
+				$('.btn-back-message-list').on('click', function(e) {
+					
+					e.preventDefault();
+					$('#inbox-tabs a[href="#inbox"]').tab('show');
+				});
+			
+			
+			
+				//hide message list and display new message form
+				/**
+				$('.btn-new-mail').on('click', function(e){
+					e.preventDefault();
+					Inbox.show_form();
+				});
+				*/
+			
+			
+			
+			
+				var Inbox = {
+					//displays a toolbar according to the number of selected messages
+					display_bar : function (count) {
+						if(count == 0) {
+							$('#id-toggle-all').removeAttr('checked');
+							$('#id-message-list-navbar .message-toolbar').addClass('hide');
+							$('#id-message-list-navbar .message-infobar').removeClass('hide');
+						}
+						else {
+							$('#id-message-list-navbar .message-infobar').addClass('hide');
+							$('#id-message-list-navbar .message-toolbar').removeClass('hide');
+						}
+					}
+					,
+					select_all : function() {
+						var count = 0;
+						$('.message-item input[type=checkbox]').each(function(){
+							this.checked = true;
+							$(this).closest('.message-item').addClass('selected');
+							count++;
+						});
+						
+						$('#id-toggle-all').get(0).checked = true;
+						
+						Inbox.display_bar(count);
+					}
+					,
+					select_none : function() {
+						$('.message-item input[type=checkbox]').removeAttr('checked').closest('.message-item').removeClass('selected');
+						$('#id-toggle-all').get(0).checked = false;
+						
+						Inbox.display_bar(0);
+					}
+					,
+					select_read : function() {
+						$('.message-unread input[type=checkbox]').removeAttr('checked').closest('.message-item').removeClass('selected');
+						
+						var count = 0;
+						$('.message-item:not(.message-unread) input[type=checkbox]').each(function(){
+							this.checked = true;
+							$(this).closest('.message-item').addClass('selected');
+							count++;
+						});
+						Inbox.display_bar(count);
+					}
+					,
+					select_unread : function() {
+						$('.message-item:not(.message-unread) input[type=checkbox]').removeAttr('checked').closest('.message-item').removeClass('selected');
+						
+						var count = 0;
+						$('.message-unread input[type=checkbox]').each(function(){
+							this.checked = true;
+							$(this).closest('.message-item').addClass('selected');
+							count++;
+						});
+						
+						Inbox.display_bar(count);
+					}
+				}
+			
+				//show message list (back from writing mail or reading a message)
+				Inbox.show_list = function() {
+					$('.message-navbar').addClass('hide');
+					$('#id-message-list-navbar').removeClass('hide');
+			
+					$('.message-footer').addClass('hide');
+					$('.message-footer:not(.message-footer-style2)').removeClass('hide');
+			
+					$('.message-list').removeClass('hide').next().addClass('hide');
+					//hide the message item / new message window and go back to list
+				}
+			
+				//show write mail form
+				Inbox.show_form = function() {
+					if($('.message-form').is(':visible')) return;
+					if(!form_initialized) {
+						initialize_form();
+					}
+					
+					
+					var message = $('.message-list');
+					$('.message-container').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+					
+					setTimeout(function() {
+						message.next().addClass('hide');
+						
+						$('.message-container').find('.message-loading-overlay').remove();
+						
+						$('.message-list').addClass('hide');
+						$('.message-footer').addClass('hide');
+						$('.message-form').removeClass('hide').insertAfter('.message-list');
+						
+						$('.message-navbar').addClass('hide');
+						$('#id-message-new-navbar').removeClass('hide');
+						
+						
+						//reset form??
+						$('.message-form .wysiwyg-editor').empty();
+					
+						$('.message-form .ace-file-input').closest('.file-input-container:not(:first-child)').remove();
+						$('.message-form input[type=file]').ace_file_input('reset_input');
+						
+						$('.message-form').get(0).reset();
+						
+					}, 300 + parseInt(Math.random() * 300));
+				}
+			
+			
+			
+			
+				var form_initialized = false;
+				function initialize_form() {
+					if(form_initialized) return;
+					form_initialized = true;
+					
+					//intialize wysiwyg editor
+					$('.message-form .wysiwyg-editor').ace_wysiwyg({
+						toolbar:
+						[
+							'bold',
+							'italic',
+							'strikethrough',
+							'underline',
+							null,
+							'justifyleft',
+							'justifycenter',
+							'justifyright',
+							null,
+							'createLink',
+							'unlink',
+							null,
+							'undo',
+							'redo'
+						]
+					}).prev().addClass('wysiwyg-style1');
+			
+			
+			
+					//file input
+					$('.message-form input[type=file]').ace_file_input()
+					.closest('.ace-file-input')
+					.addClass('width-90 inline')
+					.wrap('<div class="form-group file-input-container"><div class="col-sm-7"></div></div>');
+			
+					//Add Attachment
+					//the button to add a new file input
+					$('#id-add-attachment')
+					.on('click', function(){
+						var file = $('<input type="file" name="attachment[]" />').appendTo('#form-attachments');
+						file.ace_file_input();
+						
+						file.closest('.ace-file-input')
+						.addClass('width-90 inline')
+						.wrap('<div class="form-group file-input-container"><div class="col-sm-7"></div></div>')
+						.parent().append('<div class="action-buttons pull-right col-xs-1">\
+							<a href="#" data-action="delete" class="middle">\
+								<i class="ace-icon fa fa-trash-o red bigger-130 middle"></i>\
+							</a>\
+						</div>')
+						.find('a[data-action=delete]').on('click', function(e){
+							//the button that removes the newly inserted file input
+							e.preventDefault();
+							$(this).closest('.file-input-container').hide(300, function(){ $(this).remove() });
+						});
+					});
+				}//initialize_form
+			
+				//turn the recipient field into a tag input field!
+				/**	
+				var tag_input = $('#form-field-recipient');
+				try { 
+					tag_input.tag({placeholder:tag_input.attr('placeholder')});
+				} catch(e) {}
+			
+			
+				//and add form reset functionality
+				$('#id-message-form').on('reset', function(){
+					$('.message-form .message-body').empty();
+					
+					$('.message-form .ace-file-input:not(:first-child)').remove();
+					$('.message-form input[type=file]').ace_file_input('reset_input_ui');
+			
+					var val = tag_input.data('value');
+					tag_input.parent().find('.tag').remove();
+					$(val.split(',')).each(function(k,v){
+						tag_input.before('<span class="tag">'+v+'<button class="close" type="button">&times;</button></span>');
+					});
+				});
+				*/
+			});
+
+		</script>
+    </body>
+</html>

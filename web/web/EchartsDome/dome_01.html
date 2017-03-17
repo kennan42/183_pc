@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="../assets/css/chosen.css" />
+        <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+        <link rel="stylesheet" href="../assets/css/jquery.gritter.css" /> 
+        <!-- text fonts -->
+        <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="../assets/css/ace.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <!-- inline styles related to this page -->
+        <!-- ace settings handler -->
+        <script src="../assets/js/ace-extra.min.js"></script>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lte IE 8]>
+            <script src="../assets/js/html5shiv.js">
+            </script>
+            <script src="../assets/js/respond.min.js">
+            </script>
+        <![endif]-->
+        <title>
+            EchartsDome
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <script src="../assets/js/jquery.min.js"></script>
+    </head>
+    
+    <body class="no-skin">
+        <div id="main" style="height:600px;"></div>
+
+        <div id="main_01" style="height:600px;"></div>
+        <!------------------------------------------------------------------------------------------->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <!-- <![endif]-->
+        <!--[if IE]>
+            <script type="text/javascript">
+                window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+            </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <!-- page specific plugin scripts -->
+        <script src="../assets/js/bootstrap-tag.min.js"></script>
+        <script src="../assets/js/jquery.hotkeys.min.js"></script>
+        <script src="../assets/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="../assets/js/jquery-ui.custom.min.js"></script>
+        <script src="../assets/js/chosen.jquery.min.js"></script>
+        <script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="../assets/js/jquery.slimscroll.min.js"></script>
+        <!-- ace scripts -->
+        <script src="../assets/js/ace-elements.min.js"></script>
+        <script src="../assets/js/ace.min.js"></script>
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            //初始化
+            jQuery(function($) {
+
+            });
+        </script>
+        <link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+        <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+        <script type="text/javascript">ace.vars['base'] = '..';</script>
+        <script src="../assets/js/ace/ace.onpage-help.js"></script>
+        <script src="../docs/assets/js/rainbow.js"></script>
+        <script src="../docs/assets/js/language/generic.js"></script>
+        <script src="../docs/assets/js/language/html.js"></script>
+        <script src="../docs/assets/js/language/css.js"></script>
+        <script src="../docs/assets/js/language/javascript.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../myjs/backupNew.js"></script>
+        <script src="../myjs/gys.js"></script>
+        <script src="../myjs/lexus.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+        <script src="../myjs/GSP.js"></script>
+        <script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+        <script src="../assets/js/spin.min.js"></script>
+
+
+        <!--EchartsDome图表-->
+        <script src="../myjs/echarts/echarts.js"></script>
+        <script type="text/javascript">
+            // Step:3 conifg ECharts's path, link to echarts.js from current page.
+            // Step:3 为模块加载器配置echarts的路径，从当前页面链接到echarts.js，定义所需图表路径
+            require.config({
+                paths: {
+                    echarts: '../myjs/echarts'
+                }
+            });
+            
+            // Step:4 require echarts and use it in the callback.
+            // Step:4 动态加载echarts然后在回调函数中开始使用，注意保持按需加载结构定义图表路径
+            require(
+                [
+                    'echarts',
+                    'echarts/chart/bar',
+                    'echarts/chart/line',
+                    'echarts/chart/pie',
+                    'echarts/chart/funnel'
+                ],
+                function (ec) {
+                    //--- 折柱 ---
+                    var myChart = ec.init(document.getElementById('main'));
+                    myChart.setOption({
+                        tooltip : {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data:['蒸发量','降水量']
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {show: true, type: ['line', 'bar']},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : true,
+                        xAxis : [
+                            {
+                                type : 'category',
+                                data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                            }
+                        ],
+                        yAxis : [
+                            {
+                                type : 'value',
+                                splitArea : {show : true}
+                            }
+                        ],
+                        series : [
+                            {
+                                name:'蒸发量',
+                                type:'bar',
+                                data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+                            },
+                            {
+                                name:'降水量',
+                                type:'bar',
+                                data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+                            }
+                        ]
+                    });
+
+                    //--- 饼图 ---
+                    var myChart2 = ec.init(document.getElementById('main_01'));
+                    myChart2.setOption({
+                        title : {
+                            text: '某站点用户访问来源',
+                            subtext: '纯属虚构',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient : 'vertical',
+                            x : 'left',
+                            data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+                        },
+                        toolbox: {
+                            show : true,
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                magicType : {
+                                    show: true, 
+                                    type: ['pie', 'funnel'],
+                                    option: {
+                                        funnel: {
+                                            x: '25%',
+                                            width: '50%',
+                                            funnelAlign: 'left',
+                                            max: 1548
+                                        }
+                                    }
+                                },
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        calculable : true,
+                        series : [
+                            {
+                                name:'访问来源',
+                                type:'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:[
+                                    {value:335, name:'直接访问'},
+                                    {value:310, name:'邮件营销'},
+                                    {value:234, name:'联盟广告'},
+                                    {value:135, name:'视频广告'},
+                                    {value:1548, name:'搜索引擎'}
+                                ]
+                            }
+                        ]
+                    });
+                }
+            );
+            </script>
+    </body>
+</html>

@@ -1,0 +1,397 @@
+<title>工单详情 - IT服务工作台</title>
+
+<div id="breadcrumbs" class="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong>
+            <a href="index.html">
+                首页
+            </a>
+        </li>
+        <li> <a href="index.html#page/works-list">工单管理</a></li>
+        <li class="active">工单详情</li>
+    </ul>
+</div>
+
+<div class="main-container" >
+    <div class="main-content">
+        <div class="page-content">
+            <!-- /section:settings.box -->
+            <div class="page-content-area">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-box">
+                            <div class="widget-header widget-header-blue widget-header-flat">
+                                <h4 class="widget-title lighter">工单详情</h4>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <div id="fuelux-wizard" data-target="#step-container">
+                                        <ul class="wizard-steps">
+                                            <li data-target="#step1" class="active">
+                                                <span class="step">1</span>
+                                                <span class="title">待受理</span>
+                                            </li>
+
+                                            <li data-target="#step2">
+                                                <span class="step">2</span>
+                                                <span class="title">已取消</span>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <hr />
+
+                                    <div style="margin:0 56px;" class="row ">
+                                        <div class="col-xs-12">
+                                            <div style="padding: 20px 0 10px 0;border-bottom: 1px solid #e5e5e5;" class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="row cf"><img style="margin-top: -5px;" src="../contents/img/left.png">用户信息</div>
+                                                    <div style="font-size: 12px; margin: 5px 0;" class="row">
+                                                        <div class="col-xs-2">
+                                                            <div class="row">工号：<span id="workCode"></span></div>
+                                                        </div>
+                                                        <div class="col-xs-2">
+                                                            <div class="row">姓名：<span id="userName"></span></div>
+                                                        </div>
+                                                        <div class="col-xs-3">
+                                                            <div class="row">联系方式：<span id="cellPhone"></span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="font-size: 12px; margin: 5px 0;" class="row">
+                                                        <div class="col-xs-4">
+                                                            <div class="row">公司：<span id="company"></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="row">部门：<span id="departmentName"></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="row">职务：<span id="jobTitle"></span></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin:0 56px;" class="row">
+                                        <div class="col-xs-12">
+                                            <div style="padding: 20px 0 10px 0;border-bottom: 1px solid #e5e5e5;" class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="row cf"><img style="margin-top: -5px;" src="../contents/img/left.png">工单信息</div>
+                                                    <div style="font-size: 12px; margin: 5px 0;" class="row">问题标题：<a href="#"> <span style=" color: #3e93ed;" id="quesContent"></span></a></div>
+                                                    <div style="font-size: 12px; margin: 5px 0;" class="row">
+                                                        <div class="col-xs-3">
+                                                            <div class="row">工单编号：<span id="quesWorkCode"></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="row">工单状态：<span id="quesStateIt"></span></div>
+                                                        </div>
+                                                        <div class="col-xs-4">
+                                                            <div class="row">提交时间：<span id="raiseDatetime"></span></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row " style="font-size: 12px; margin: 5px 0;">
+                                                        <div class="col-xs-10" >
+                                                            <div class="row">
+                                                                <span style="float: left;">问题分类：</span>
+                                                                <span id="quesAppend">
+                                                                    <!--<span class="bg-img2">系统问题</span>-->
+                                                                    <!--<span class="bg-img2">服务申请</span>-->
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row " style="font-size: 12px; margin: 5px 0;">
+                                                        <div class="col-xs-10" >
+                                                            <div class="row">
+                                                                <span style="float: left;">所属系统：</span>
+                                                                 <span id="belongAppend">
+                                                                    <!--<span class="bg-img2">系统问题</span>-->
+                                                                    <!--<span class="bg-img2">服务申请</span>-->
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin:0 56px;" class="row">
+                                        <div class="col-xs-12">
+                                            <div style="padding: 20px 0 10px 0;" class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="row cf"><img style="margin-top: -5px;" src="../contents/img/left.png">沟通记录</div>
+                                                    <div style="padding:5px 0 0 14px;font-size: 12px;" class="row">
+                                                        <div class="col-xs-12">
+                                                            <div class="row">
+                                                                <img style="padding-right: 10px; margin-top: -6px;" src="../contents/img/a-6.png">
+                                                                <span style="color:#333">问题描述：</span>
+                                                                <span style="color:#333" id="quesDetail"></span>
+                                                            </div>
+                                                            <div style="margin: 0 0 0 15px; color: #ced1d6;" class="row">
+                                                                <span id="raiseDatetimedetail"></span>
+                                                            </div>
+                                                            <div style="margin: 0 0 0 15px;" class="row" id="quesPicDetail">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row bg-c1" id="subQuesInfoDiv">
+                                                        <div class="col-xs-12">
+                                                            <div class="row b-2"><img src="../contents/img/a-8.png"></div>
+                                                            <!--循环-->
+                                                            <div id="subQuesInfos">
+                                                            </div>
+                                                            <!--循环end-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin:0 56px;">
+                                        <div class="col-xs-12">
+                                            <div class="row" style="padding: 20px 0 0px 0;border-bottom: 1px solid #e5e5e5;">
+                                                <div class="col-xs-12">
+                                                    <div class="row a-1">
+                                                        <div class="col-xs-12" id="replyAppend">
+                                                            <!--循环end-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!--用户信息,工单信息,不需要放在step里-->
+                                    <div class="step-content pos-rel" id="step-container">
+
+                                        <div class="step-pane active" id="step1">
+                                            <div class="page-content-area">
+                                                <div style="margin:0 48px;" class="row">
+                                                    <div class="col-xs-12">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="step-pane" id="step2">
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                </div><!-- /.widget-main -->
+                            </div>
+                        </div>
+
+                        <div id="modal-wizard" class="modal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header" data-target="#modal-step-contents">
+                                        <ul class="wizard-steps">
+                                            <li data-target="#modal-step1" class="active">
+                                                <span class="step">1</span>
+                                                <span class="title">Validation states</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="modal-body step-content" id="modal-step-contents">
+                                        <div class="step-pane active" id="modal-step1">
+                                            <div class="center">
+                                                <h4 class="blue">Step 1</h4>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer wizard-actions">
+                                        <button class="btn btn-sm btn-prev">
+                                            <i class="ace-icon fa fa-arrow-left"></i>
+                                            Prev
+                                        </button>
+
+                                        <button class="btn btn-success btn-sm btn-next" data-last="Finish">
+                                            Next
+                                            <i class="ace-icon fa fa-arrow-right icon-on-right"></i>
+                                        </button>
+
+                                        <button class="btn btn-danger btn-sm pull-left" data-dismiss="modal">
+                                            <i class="ace-icon fa fa-times"></i>
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content-area -->
+        </div><!-- /.page-content -->
+    </div><!-- /.main-content -->
+
+</div><!-- /.main-container -->
+
+
+<!--配置信息(问题cid,所属系统cid,回答cid,工单状态)-->
+<input type="hidden" id="quesLableCids" value=""/>
+<input type="hidden" id="belongSystypeCids" value=""/>
+<input type="hidden" id="answerCid" value=""/>
+<input type="hidden" id="quesStateItMark" value=""/>
+
+<!--业务审批人级数-->
+<input type="hidden" id="approveLevel" value="1"/>
+<input type="hidden" id="userSearchLevel" value="1"/>
+
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function($) {
+        Load_Data(0);
+        //加载数据
+        function Load_Data(param) {
+            var data = "{";
+            data += "\"quesCid\":\"" + getUrlParam("quesCid") + "\",";
+            data += "\"userWorkCode\":\"" + currentUser.userWorkCode + "\"";
+            data += "}";
+
+            $.ajax({
+                type:"POST",
+                url:it_service_url.QueryQuesDetail,
+                contentType: "application/json; charset=utf-8",
+                data: data,
+                async:false,
+                success:function(result){
+                    var newDate = new Date();
+                    //用户信息
+                    $("#workCode").html(result.resultJson.raiserUserWorkCode);
+                    $("#userName").html(result.resultJson.userName);
+
+                    //工单信息
+                    $("#quesContent").html(result.resultJson.quesContent);
+                    $("#quesDetail").html(result.resultJson.quesContent);
+                    $("#quesWorkCode").html(result.resultJson.quesWorkCode);
+                    $("#quesStateIt").html(getEnums(result.resultJson.quesStateIt));
+                    $("#raiseDatetime").html(getLocalTime(result.resultJson.raiseDatetime));
+                    $("#raiseDatetimedetail").html(getLocalTime(result.resultJson.raiseDatetime));
+
+                    //沟通记录(追问)
+                    if(result.resultJson.subQuesInfos==null)
+                    {
+                        $("#subQuesInfoDiv").hide();
+                    }
+                    else{
+                        for(var i in result.resultJson.subQuesInfos) {
+                            $("#subQuesInfos").empty();
+                            if(result.resultJson.subQuesInfos[i].subQuesContent!="")
+                            {
+                                var appendStr="";
+                                appendStr+="<div class=\"row\"><div class=\"col-xs-12\"><div class=\"row a-3\">追问：</div>";
+                                appendStr+=" <div class=\"row a-4\">"+result.resultJson.subQuesInfos[i].subQuesContent+"</div></div></div>";
+                                $("#subQuesInfos").append(appendStr);
+                            }
+                        }
+                    }
+                    //附件
+                    LoadPic(result,"#quesPicDetail");
+
+                    //步骤跳转
+                    var wizard = $('#fuelux-wizard').data('wizard');
+                    if(param == 0) {
+                        wizard.currentStep = result.resultJson.quesStateIt;
+                    }
+                    else{
+                        wizard.currentStep = param;
+                    }
+                    wizard.setState();
+                }
+            });
+        }
+
+        //获取员工信息
+        getUserByCode($("#workCode").html(),appendUser);
+        function appendUser(result){
+            $("#cellPhone").html(result.ET_ZHR_ALL_INFO.item[0].ZZ_TEL);
+            $("#company").html(result.ET_ZHR_ALL_INFO.item[0].BUTXT);
+            $("#departmentName").html(result.ET_ZHR_ALL_INFO.item[0].ZZ_JG1T);
+            $("#jobTitle").html(result.ET_ZHR_ALL_INFO.item[0].PLSTX);
+        }
+
+    })
+</script>
+
+<!--显示配置-->
+<script type="text/javascript">
+    jQuery(function($) {
+        //step跳转
+        var $validation = false;
+        $('#fuelux-wizard')
+                .ace_wizard({
+                    step:2 //optional argument. wizard will jump to step "2" at first
+                })
+                .on('change' , function(e, info){
+                    if(info.step == 1 && $validation) {
+                        if(!$('#validation-form').valid()) return false;
+                    }
+                })
+                .on('finished', function(e) {
+                    bootbox.dialog({
+                        message: "Thank you! Your information was successfully saved!",
+                        buttons: {
+                            "success" : {
+                                "label" : "OK",
+                                "className" : "btn-sm btn-primary"
+                            }
+                        }
+                    });
+                }).on('stepclick', function(e){
+                    //e.preventDefault();//this will prevent clicking and selecting steps
+                });
+
+        $('#skip-validation').removeAttr('checked').on('click', function(){
+            $validation = this.checked;
+            if(this.checked) {
+                $('#sample-form').hide();
+                $('#validation-form').removeClass('hide');
+            }
+            else {
+                $('#validation-form').addClass('hide');
+                $('#sample-form').show();
+            }
+        })
+        $(".ajax-loading-overlay").hide();
+
+
+        //chosen
+        $('.chosen-select').chosen({allow_single_deselect:true});
+        $(window)
+                .off('resize.chosen')
+                .on('resize.chosen', function() {
+                    $('.chosen-select').each(function() {
+                        var $this = $(this);
+                        $this.next().css({'width': $this.parent().width()});
+                    })
+                }).trigger('resize.chosen');
+
+        $('#chosen-multiple-style').on('click', function(e){
+            var target = $(e.target).find('input[type=radio]');
+            var which = parseInt(target.val());
+            if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+            else $('#form-field-select-4').removeClass('tag-input-style');
+        });
+    });
+</script>

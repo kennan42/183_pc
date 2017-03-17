@@ -1,0 +1,547 @@
+<title>工单列表 - IT服务工作台</title>
+
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">工单列表</h3>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row" style="text-align: center; border-bottom: 1px solid #e5e5e5; margin-bottom: 10px;">
+                    <div class="col-xs-2"><a class="c-29" href="index.html#page/works-list">
+                        <div class="row bianju">
+                            <div class="col-xs-12">
+                                <div class="row"><img src="../contents/img/b-1.png"></div>
+                                <div class="row" style="padding: 3px 0; font-size: 15px;">待受理工单</div>
+                                <div class="row">(<span id="waitQuesNum"></span>件)</div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-xs-2"><a class="c-29" href="index.html#page/works-list-handling">
+                        <div class="row bianju">
+                            <div class="col-xs-12">
+                                <div class="row"><img src="../contents/img/b-2.png"></div>
+                                <div class="row" id="handlingQuesReplyDiv">
+                                    <div class="bg-img1"><strong id="handlingQuesReplyNum"></strong></div>
+                                </div>
+                                <div class="row" style="padding: 3px 0; font-size: 15px;">处理中工单</div>
+                                <div class="row">(<span id="handlingQuesNum"></span>件)</div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-xs-2"><a class="c-29" href="javascript:;">
+                        <div class="row bianju b3b-3e93ed">
+                            <div class="col-xs-12">
+                                <div class="row"><img src="../contents/img/b-3-1.png"></div>
+                                <div class="row" id="myQuesReplyDiv">
+                                    <div class="bg-img1"><strong id="myQuesReplyNum"></strong></div>
+                                </div>
+                                <div class="row" style="padding: 3px 0; font-size: 15px;">我的工单</div>
+                                <div class="row">(<span id="myQuesNum"></span>件)</div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-xs-2"><a class="c-29" href="index.html#page/works-list-all">
+                        <div class="row bianju">
+                            <div class="col-xs-12">
+                                <div class="row"><img src="../contents/img/b-4.png"></div>
+                                <div class="row" style="padding: 3px 0; font-size: 15px;">全部工单</div>
+                                <div class="row">(<span id="allQuesNum"></span>件)</div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-xs-2"><a class="c-29" href="index.html#page/works-list-exec">
+                        <div class="row bianju">
+                            <div class="col-xs-12">
+                                <div class="row"><img src="../contents/img/b-5.png"></div>
+                                <div class="row" style="padding: 3px 0; font-size: 15px;">异常工单</div>
+                                <div class="row">(<span id="exceQuesNum"></span>件)</div>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                </div>
+
+
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form role="form" class="form-horizontal">
+                        <!-- #section:elements.form -->
+                        <div style="margin-top: 10px; margin-bottom: 5px;" class="form-group">
+                            <label for="form-field-1" class="col-sm-1 control-label no-padding-right">工单编号：</label>
+
+                            <div class="col-sm-1">
+                                <div class="row"><input type="text" class="col-xs-10 col-sm-12" placeholder="" id="quesCode">
+                                </div>
+                            </div>
+                            <label for="form-field-1" class="col-sm-2 control-label no-padding-right">关键词检索：</label>
+
+                            <div class="col-sm-1">
+                                <div class="row"><input type="text" class="col-xs-10 col-sm-12" placeholder="" id="quesContent">
+                                </div>
+                            </div>
+                            <label for="form-field-1" class="col-sm-1 control-label no-padding-right">提出人：</label>
+
+                            <div class="col-sm-1">
+                                <div class="row"><input type="text" class="col-xs-10 col-sm-12" placeholder="" id="quesRaiserName">
+                                </div>
+                            </div>
+                            <label for="form-field-1" class="col-sm-1 control-label no-padding-right">提出时间：</label>
+
+                            <div class="col-sm-4">
+                                <!-- #section:elements.form.input-icon -->
+                                <div class="row">
+                                    <div style="width: 41%; float:left;" class="input-group input-group-sm">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="quesRaiserBeginTime" class="form-control date-picker" placeholder="开始时间" value="">
+									     <span class="input-group-addon">
+										  <i class="fa fa-calendar bigger-110"></i>
+									    </span>
+                                    </div>
+                                    <span style="float: left;padding-top: 5px;">-</span>
+
+                                    <div style="width: 41%; float:left;" class="input-group input-group-sm">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="quesRaiserEndTime" class="form-control date-picker" placeholder="结束时间" value="">
+									      <span class="input-group-addon">
+										   <i class="fa fa-calendar bigger-110"></i>
+									      </span>
+                                    </div>
+                                </div>
+                                <!-- /section:elements.form.input-icon -->
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px; margin-bottom: 5px;" class="form-group">
+                            <label for="form-field-1" class="col-sm-1 control-label no-padding-right">受理人：</label>
+
+                            <div class="col-sm-1">
+                                <div class="row"><input type="text" class="col-xs-10 col-sm-12" placeholder="" id="quesAccepterName">
+                                </div>
+                            </div>
+                            <label for="form-field-1" class="col-sm-2 control-label no-padding-right">受理时间：</label>
+
+                            <div class="col-sm-4">
+                                <!-- #section:elements.form.input-icon -->
+                                <div class="row">
+                                    <div style="width: 41%; float:left;" class="input-group input-group-sm">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="quesAcceptBeginTime" class="form-control date-picker" placeholder="开始时间" value="">
+									     <span class="input-group-addon">
+										  <i class="fa fa-calendar bigger-110"></i>
+									    </span>
+                                    </div>
+                                    <span style="float: left;padding-top: 5px;">-</span>
+
+                                    <div style="width: 41%; float:left;" class="input-group input-group-sm">
+                                        <input type="text" data-date-format="yyyy-mm-dd" id="quesAcceptEndTime" class="form-control date-picker" placeholder="结束时间" value="">
+									      <span class="input-group-addon">
+										   <i class="fa fa-calendar bigger-110"></i>
+									      </span>
+                                    </div>
+                                </div>
+                                <!-- /section:elements.form.input-icon -->
+                            </div>
+                        </div>
+
+                        <hr/>
+                        <div style="margin-bottom: 5px;" class="form-group">
+                            <label for="form-field-1" class="col-sm-2 control-label no-padding-right">问题分类：</label>
+
+                            <div class="col-sm-10">
+                                <div id="quesTypeAppend"  style="line-height: 30px;" class="row">
+                                    <a style="color:#3e93ed;"  data-id="" class="a quesType">全部</a>
+                                </div>
+                            </div>
+                            <input type="hidden" id="quesTypeCid" value="">
+                        </div>
+
+                        <div style="margin-bottom: 5px;" class="form-group">
+                            <label for="form-field-1" class="col-sm-2 control-label no-padding-right">所属系统：</label>
+
+                            <div class="col-sm-10">
+                                <div style="line-height: 30px;" class="row" id="sysTypeAppend">
+                                    <a style="color:#3e93ed;" data-id="" class="a sysType">全部</a>
+                                </div>
+                                <input type="hidden" id="belongSysTypeCid" value="">
+                            </div>
+                        </div>
+
+                        <!--<div style="margin-bottom: 5px;" class="form-group">-->
+                            <!--<label for="form-field-1" class="col-sm-2 control-label no-padding-right">转业务审批：</label>-->
+                            <!--<div class="col-sm-10">-->
+                                <!--<div style="line-height: 30px;" class="row">-->
+                                    <!--<a style="color:#3e93ed;" class="a TurnApprove" data-id="0">全部</a>-->
+                                    <!--<a class="a TurnApprove" data-id="1">是</a>-->
+                                    <!--<a class="a TurnApprove" data-id="2">否</a>-->
+                                <!--</div>-->
+                                <!--<input type="hidden" id="turnApproveBusi" value=""/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div style="margin-bottom: 5px;" class="form-group">-->
+                            <!--<label for="form-field-1" class="col-sm-2 control-label no-padding-right">转二线工程师：</label>-->
+                            <!--<div class="col-sm-10">-->
+                                <!--<div style="line-height: 30px;" class="row">-->
+                                    <!--<a style="color:#3e93ed;" class="a TurnSub" data-id="0">全部</a>-->
+                                    <!--<a class="a TurnSub" data-id="1">是</a>-->
+                                    <!--<a class="a TurnSub" data-id="2">否</a></div>-->
+                            <!--</div>-->
+                            <!--<input type="hidden" id="turnSubMaster" value=""/>-->
+                        <!--</div>-->
+                    </form>
+                </div>
+
+
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-xs-12">
+                        <div class="col-xs-10"></div>
+                        <div class="col-xs-2">
+                            <a  id="search" class="btn btn-success dropdown-toggle" href="javascript:;">搜索</a>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+
+                <div class="table-header">
+                    全部工单列表
+                </div>
+                <div>
+                    <table id="customers_list_table" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th >序号</th>
+                            <th >工单编号</th>
+                            <th >问题内容</th>
+                            <th >提出人</th>
+                            <th >提出时间</th>
+                            <th >受理人</th>
+                            <th >工单状态</th>
+                            <th >受理时长</th>
+                            <th >操作</th>
+                        </tr>
+                        </thead>
+                    </table>
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="dataTables_info" id="sample-table-2_info" role="status" aria-live="polite">共 <span id="totalnum"></span> 条数据</div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="dataTables_paginate paging_simple_numbers" id="sample-table-2_paginate">
+                                <ul class="pagination" id="paginations">
+                                </ul>
+                            </div>
+                        </div>
+                        <input type="hidden" id="currentpage" value="1" />
+                        <input type="hidden" id="pageCount" value="1" />
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+  </div>
+</div>
+
+<script type="text/javascript">
+            var scripts = [null, "../assets/js/jquery.dataTables.min.js", "../assets/js/jquery.dataTables.bootstrap.js", null];
+            ace.load_ajax_scripts(scripts, function() {
+                //inline scripts related to this page
+
+                //列表头查询
+                $.ajax({
+                    type:"POST",
+                    url:it_service_url.QueryWorkBillHead,
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"userWorkCode": '+currentUser.userWorkCode+'}',
+                    success:function(result){
+                        $("#waitQuesNum").html(result.resultJson.waitQuesNum)
+                        $("#handlingQuesNum").html(result.resultJson.handlingQuesNum)
+                        $("#myQuesNum").html(result.resultJson.myQuesNum)
+                        $("#allQuesNum").html(result.resultJson.allQuesNum)
+                        $("#exceQuesNum").html(result.resultJson.exceQuesNum)
+                        if(result.resultJson.handlingQuesReplyNum<=0){
+                            $("#handlingQuesReplyDiv").hide();
+                        }
+                        if(result.resultJson.myQuesReplyNum<=0){
+                            $("#myQuesReplyDiv").hide();
+                        }
+                        $("#handlingQuesReplyNum").html(result.resultJson.handlingQuesReplyNum);
+                        $("#myQuesReplyNum").html(result.resultJson.myQuesReplyNum);
+                    }
+                });
+
+                //全部工单列表
+                jQuery(function ($) {
+                    Load_Data();
+                });
+
+                //搜索
+                $("#search").click(function(){
+                    if($("#quesRaiserBeginTime").val()>$("#quesRaiserEndTime").val()){
+                        AlertTips("开始时间不能大于结束时间");
+                        return false;
+                    }
+                    if($("#quesAcceptBeginTime").val()>$("#quesAcceptEndTime").val()){
+                        AlertTips("开始时间不能大于结束时间");
+                        return false;
+                    }
+                    $("#currentpage").val(1);
+                    Load_Data();
+                });
+
+                //选择分页
+                $("#paginations").click(function(){
+                    if(parseInt($("#currentpage").val())>0 && parseInt($("#pageCount").val()) >= parseInt($("#currentpage").val())) {
+                        Load_Data();
+                    }
+                });
+
+                //加载数据
+                function Load_Data()
+                {
+                    workSearch.titleType=3;
+                    workSearch.quesCode=$("#quesCode").val();
+                    workSearch.quesContent=$("#quesContent").val();
+                    workSearch.quesRaiserName=$("#quesRaiserName").val();
+                    if($("#quesRaiserBeginTime").val()==""){
+                        workSearch.quesRaiserBeginTime = null;
+                    }
+                    else{
+                        workSearch.quesRaiserBeginTime=$("#quesRaiserBeginTime").val();
+                    }
+                    if($("#quesRaiserEndTime").val()==""){
+                        workSearch.quesRaiserEndTime = null;
+                    }
+                    else{
+                        workSearch.quesRaiserEndTime=$("#quesRaiserEndTime").val();
+                    }
+                    workSearch.quesAccepterWorkCode=currentUser.userWorkCode;
+                    workSearch.quesAccepterName=$("#quesAccepterName").val();
+                    if($("#quesAcceptBeginTime").val()==""){
+                        workSearch.quesAcceptBeginTime = null;
+                    }
+                    else{
+                        workSearch.quesAcceptBeginTime=$("#quesAcceptBeginTime").val();
+                    }
+                    if($("#quesAcceptEndTime").val()==""){
+                        workSearch.quesAcceptEndTime = null;
+                    }
+                    else{
+                        workSearch.quesAcceptEndTime=$("#quesAcceptEndTime").val();
+                    }
+                  //  workSearch.quesAcceptEndTime=$("#quesAcceptEndTime").val();
+                    workSearch.sysTypeCid=$("#quesTypeCid").val();
+                    workSearch.belongSysTypeCid=$("#belongSysTypeCid").val();
+                    workSearch.turnApproveBusi="";
+                    workSearch.turnSubMaster="";
+                    workSearch.pageNum=$("#currentpage").val();
+                    workSearch.pageSize=10;
+                    var data=JSON.stringify(workSearch);
+
+                    //console.log(data);
+                    var table;
+                    $.ajax({
+                        type: "POST",
+                        url: it_service_url.WorkBillMainList,
+                        data: data,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                            $('#customers_list_table tbody').empty();
+
+                           // console.log(result);
+                            if(result.resultJson!=null){
+                                //分页
+                                var pageCount=parseInt(result.resultJson.totalNum/result.resultJson.pageSize) + 1;
+                                setPage(document.getElementById("paginations"),pageCount,result.resultJson.pageNum);
+                                $("#totalnum").html(result.resultJson.totalNum);
+                                $("#currentpage").val(result.resultJson.pageNum);
+                                $("#pageCount").val(pageCount);
+                                $("#customers_list_table_info").hide();
+                            }
+                            else{
+                                var pageCount=0;
+                                setPage(document.getElementById("paginations"),pageCount,0);
+                                $("#totalnum").html(0);
+                                $("#currentpage").val(0);
+                                $("#pageCount").val(pageCount);
+                                $("#customers_list_table_info").hide();
+                            }
+
+                            table = $('#customers_list_table').dataTable({
+                                destroy: true,
+                                paging: false,
+                                bAutoWidth: false,
+                                "bSort": false,
+                                "oLanguage": {
+                                    "sSearch": "搜索",
+                                    "sLengthMenu": "每页显示 _MENU_ 条记录",
+                                    "sZeroRecords": "抱歉， 没有找到",
+                                    "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                                    "sInfoEmpty": "没有数据",
+                                    "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                                    "oPaginate": {
+                                        "sFirst": "首页",
+                                        "sPrevious": "前一页",
+                                        "sNext": "后一页",
+                                        "sLast": "尾页"
+                                    },
+                                    "sZeroRecords": "没有检索到数据"
+                                },
+                                "data": result.resultJson.list,
+                                "columns": [
+                                    {
+                                        "mData": null,
+                                        "bSortable": false,
+                                        "mRender": function (o) {
+                                            if(o.redNoticeStaffState==2){
+                                                return o.indexNo+'<span style="color: #ff0000; float: right; font-size: 10px;">NEW</span>';
+                                            }
+                                            else{
+                                                return o.indexNo;
+                                            }
+                                        }
+                                    },
+                                    {"data": "quesCode"},
+                                    {"data": "quesContent"},
+                                    {"data": "quesRaiserName"},
+                                    {
+                                        "mData": null,
+                                        "bSortable": false,
+                                        "mRender": function (o) {
+                                            return getLocalTime(o.raiserDatetime);
+                                        }
+                                    },
+                                    {"data": "accepterName"},
+                                    {"data": "quesStateItName"},
+                                    {"data": "handleTimeLong"},
+                                    {
+                                        "mData": null,
+                                        "bSortable": false,
+                                        "mRender": function (o) {
+                                            if(o.quesStateIt==6){
+                                                if(o.quesAccepterWorkCode==null){
+                                                    return '<a href=' + it_service_common.adminUrl + '/admin/index.html?quesCid=' + o.quesCid + '#page/works-detail-cancel1>查看详情</a>';
+                                                }
+                                                else{
+                                                    return '<a href=' + it_service_common.adminUrl + '/admin/index.html?quesCid=' + o.quesCid + '#page/works-detail-cancel2>查看详情</a>';
+                                                }
+                                            }
+                                            else{
+                                                return '<a href=' + it_service_common.adminUrl + '/admin/index.html?quesCid=' + o.quesCid + '#page/works-detail>查看详情</a>';
+                                            }
+                                        }
+                                    }
+                                ]
+                            });
+
+                            $('#customers_list_table tbody').on('click', 'tr', function () {
+                                $(".it-service-highlight").each(function(){
+                                    $(this).removeClass('it-service-highlight');
+                                });
+                                $(this).toggleClass('it-service-highlight');
+                            });
+
+                            $('#button').click(function () {
+                                alert(table.rows('.it-service-highlight').data().length + ' row(s) it-service-highlight');
+                            });
+
+                            $("#customers_list_table_info").remove();
+
+                        }
+                    });
+                }
+
+
+                Load_Data_Select();
+                //加载选择条件
+                function Load_Data_Select()
+                {
+                    //问题分类
+                    $.ajax({
+                        type: "POST",
+                        url: it_service_url.quesTypeList,
+                        data: '{"quesTypeState": "1"}',
+                        async:false,
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                            for(var i in result.resultJson)
+                            {
+                                var appendstr='<a class="a quesType" data-id='+result.resultJson[i].quesTypeCid+' >'+result.resultJson[i].quesTypeName+'</a>';
+                                $("#quesTypeAppend").append(appendstr);
+                            }
+                        }
+                    });
+
+                    //所属系统
+                    $.ajax({
+                        type: "POST",
+                        url: it_service_url.BelongSysTypeList,
+                        data: '{"belongSystypeState": "1"}',
+                        contentType: "application/json; charset=utf-8",
+                        success: function (result) {
+                            for(var i in result.resultJson)
+                            {
+                                var appendstr='<a class="a sysType" data-id='+result.resultJson[i].belongSystypeCid+' >'+result.resultJson[i].belongSystypeName+'</a>';
+                                $("#sysTypeAppend").append(appendstr);
+                            }
+                        }
+                    });
+                }
+
+
+                $("body").on("click",".quesType",function(){
+                    $("#quesTypeCid").val($(this).data("id"));
+                    $(".quesType").each(function(){
+                        $(this).attr("style","");
+                    });
+                    $(this).attr("style","color:rgb(62, 147, 237);");
+                });
+
+                $("body").on("click",".sysType",function(){
+                    $("#belongSysTypeCid").val($(this).data("id"));
+                    $(".sysType").each(function(){
+                        $(this).attr("style","");
+                    });
+                    $(this).attr("style","color:rgb(62, 147, 237);");
+                });
+
+
+                $(".TurnApprove").click(function(){
+                    var type=$(this).data("id");
+                    $("#turnApproveBusi").val(type);
+                    $(".TurnApprove").each(function(){
+                        $(this).attr("style","");
+                    });
+                    $(this).attr("style","color:rgb(62, 147, 237);");
+                });
+
+                $(".TurnSub").click(function(){
+                    var type=$(this).data("id");
+                    $("#turnSubMaster").val(type);
+                    $(".TurnSub").each(function(){
+                        $(this).attr("style","");
+                    });
+                    $(this).attr("style","color:rgb(62, 147, 237);");
+                });
+
+
+                //datetimepicker
+                $('.date-picker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true,
+                    language: 'zh-CN'
+                });
+                $('.input-daterange').datepicker({autoclose:true});
+
+                //breadcrumbs
+                $("#breadcrumbs").empty();
+                $("#breadcrumbs").append('<ul class="breadcrumb"> <li> ' +
+                '<img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong> <a href="index.html">首页 </a> </li> ' +
+                '<li> <a href="index.html#page/works-list">工单管理</a></li> <li class="active">我的工单</li> </ul>');
+
+            });
+        </script>

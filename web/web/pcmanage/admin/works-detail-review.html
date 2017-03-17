@@ -1,0 +1,1051 @@
+<title>质量评估详情 - IT服务工作台</title>
+
+<!--内容-->
+<div class="main-container">
+  <div class="main-content">
+    <div class="page-content">
+        <!-- /section:settings.box -->
+        <div class="page-content-area">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="widget-box">
+                        <div class="widget-header widget-header-blue widget-header-flat">
+                            <h4 class="widget-title lighter">质量评估详情</h4>
+                        </div>
+
+                        <div class="widget-body">
+
+
+                            <div style="margin:0 56px;" class="row">
+                                <div class="col-xs-12">
+                                    <div style="padding: 20px 0 10px 0;border-bottom: 1px solid #e5e5e5;" class="row">
+                                        <div class="col-xs-12">
+                                            <div class="row cf"><img style="margin-top: -5px;" src="../contents/img/left.png">工单信息</div>
+                                            <div style="font-size: 12px; margin: 5px 0;" class="row">
+
+
+                                               <div class="col-xs-4">
+                                                <div class="row">问题标题：<a href="javascript:;"> <span style=" color: #3e93ed;" id="quesContent"></span></a></div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <div class="row">工时：<span id="gongshi"></span></div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <div class="row">基础分：<span id="jichufen"></span></div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <div class="row">提出人:<span id="createUser"></span></div>
+                                            </div>
+
+                                        </div>
+                                        <div style="font-size: 12px; margin: 5px 0;" class="row">
+                                            <div class="col-xs-4">
+                                                <div class="row">工单编号：<span id="quesWorkCode"></span></div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <div class="row">工单状态：<span id="quesStateIt"></span></div>
+                                            </div>
+                                            <div class="col-xs-5">
+                                                <div class="row">提交时间：<span id="raiseDatetime"></span></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row " style="font-size: 12px; margin: 5px 0;">
+                                            <div class="col-xs-10" >
+                                                <div class="row">
+                                                    <span style="float: left;">问题分类：</span>
+                                                    <span id="quesAppend" ></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row " style="font-size: 12px; margin: 5px 0;">
+                                            <div class="col-xs-10" >
+                                                <div class="row">
+                                                    <span style="float: left;">问题来源：</span>
+                                                    <span id="tagAppend" ></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row " style="font-size: 12px; margin: 5px 0;">
+                                            <div class="col-xs-10" >
+                                                <div class="row">
+                                                    <span style="float: left;">所属系统：</span>
+                                                    <span id="belongAppend"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size: 12px; margin: 5px 0;" >
+                                            <div class="col-xs-4">
+                                                <div class="row">
+                                                    <span style="float: left;margin-top: 7px;">添加人员：</span>
+                                                    <div class="col-sm-6">
+                                                        <div class="row">
+                                                           <div class="input-group">
+                                                            <input id="userSearchInput" type="text"
+                                                            class="form-control"/>
+                                                            <span class="input-group-addon" id="userSearch">
+                                                                <i class="fa fa-search bigger-110"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <div class="row">
+                                                <span>备注:</span>
+                                                <input type="text" id="remark"></input>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div style="margin:0 56px;" class="row">
+                        <div class="col-xs-12">
+                            <div style="padding: 20px 0 10px 0;" class="row">
+                                <div class="col-xs-12" id="userlist">
+                                    <div class="row cf"><img style="margin-top: -5px;" src="../contents/img/left.png">处理人员</div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!--用户信息,工单信息,不需要放在step里-->
+                    <div class="step-content pos-rel" id="step-container">
+
+                        <div class="step-pane active" id="step1">
+                            <div class="page-content-area">
+                                <div style="margin:0 48px;" class="row">
+                                    <div class="col-xs-12">
+
+                                        <div style="text-align: center; margin-top: 80px;" class="row">
+                                        <a href="javascript:;" id="save"><img src="../contents/img/c-8.jpg" style="padding: 0 5px;"></a>
+                                            <a href="javascript:;" id="myslove"><img src="../contents/img/a-7.png" style="padding: 0 5px;"></a>
+                                            <a href="javascript:;" id="quesConfirm" style="display: none;"><img  id="quesConfirmDiv" src="../contents/img/c-5.jpg" style="padding: 0 5px;"></a>
+                                            <!--  <a href="javascript:;" id="userConfirm" ><img  id="userConfirmDiv" src="../contents/img/c-5-1.jpg" style="padding: 0 5px;"></a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                    <hr />
+                </div><!-- /.widget-main -->
+            </div>
+        </div>
+
+
+
+    </div><!-- /.col -->
+</div><!-- /.row -->
+</div><!-- /.page-content-area -->
+</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<!--所属系统选择-->
+<div class="modal fade" id="modalSysInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="nav-fff7">
+            <div class="nav-title">维护工单信息</div>
+            <div class="nav-title2">
+                <div class="div1">
+                    <div class="nav-span1">问题分类：</div>
+                    <div style="float: left;" id="quesdiv1">
+                    </div>
+                </div>
+                <div class="div2" >
+                    <div class="nav-span1" class="nav-span1">所属系统：</div>
+                    <div  style="float: left;" id="sysdiv1">
+                    </div>
+                </div>
+                <div class="div3">
+                    <div style="float: left;"><span class="nav-span2">预计反馈时间：</span>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="date-timepicker1">
+                            <span class="input-group-addon"><i class="fa fa-clock-o bigger-110"></i></span>
+                        </div>
+                    </div>
+                    <div class="nav-tbd">
+                        <div style="width: 92px; float: left;">同步到天知道：</div>
+                        <label>
+                           <input type="checkbox" id="updateToQuesBarCheck" class="ace">
+                           <span class="lbl" style="padding-left: 10px;">是</span>
+                       </label>
+                       <input type="hidden" id="updateToQuesBar" value="1"/>
+                   </div>
+               </div>
+           </div>
+           <div class="nav-title4">
+            <div style="float: right;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="modalSysInfoSubmit" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<!--员工查询-->
+<div class="modal" id="modalUser" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="nav-title">
+                <h4 class="modal-title" id="myModalLabel">员工信息查询</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                     <table>
+                         <thead>
+                          <tr><th style="width: 80px;">工号</th><th style="width: 80px;">姓名</th><th style="width: 100px;">部门</th><th style="width: 80px;">操作</th></tr>
+                      </thead>
+                      <tbody id="userAppend">
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" id="userBtnClose" >关闭</button>
+    </div>
+</div>
+</div>
+</div>
+
+<!--确认已解决-->
+<div class="modal" id="modalSlove" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 500px;margin: 0 auto; ">
+            <div class="nav-title">
+                <h4 class="modal-title" >确认工单已解决</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-6">
+                         确认后，该工单将不能修改和处理!
+                     </div>
+                     <div class="col-md-2"></div>
+                 </div>
+             </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="sloveBtnClose" >取消</button>
+            <button type="button" class="btn btn-primary" id="sloveBtnSubmit" >确认已解决</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<!--当前步骤-->
+<input type="hidden" id="quesStateIts" value="1"/>
+
+<!--配置信息(问题cid,所属系统cid,回答cid,工单状态)-->
+<input type="hidden" id="quesLableCids" value=""/>
+<input type="hidden" id="belongSystypeCids" value=""/>
+<input type="hidden" id="tagCids" value=""/>
+<input type="hidden" id="answerCid" value=""/>
+<input type="hidden" id="quesStateItMark" value=""/>
+
+<!--业务审批人级数-->
+<input type="hidden" id="approveLevel" value="1"/>
+<input type="hidden" id="userSearchLevel" value="1"/>
+<!--弹窗层级-->
+<input type="hidden" id="modalType" value="0"/>
+<!--添加时的业务审批-->
+<input type="hidden" id="modalTypeProcess" value="0"/>
+<input type="hidden" id="modalTypeIt" value="0"/>
+
+<!--业务处理-->
+<script type="text/javascript">
+    jQuery(function($) {
+        //权限
+//        if(currentUser.userType==1){
+//            $("#quesConfirm").show();
+//        }
+//        else{
+//            $("#quesConfirm").hide();
+//        }
+
+//        $(".modalClose").click(function(){
+//            mouseOver(this);
+//        })
+//
+       // Load_Data_Select();
+       // alert(getUrlParam("pagenum"))
+
+       $("#stepClick").click(function(){
+         return false;
+     });
+
+       Load_Data(0);
+        //加载数据
+        function Load_Data(param) {
+            var data = "{";
+            data += "\"quesCid\":\"" + getUrlParam("quesCid") + "\",";
+            data += "\"userWorkCode\":\"" + currentUser.userWorkCode + "\"";
+            data += "}";
+
+            $.ajax({
+                type:"POST",
+                url:it_service_url.QueryQuesDetail,
+                contentType: "application/json; charset=utf-8",
+                data: data,
+                async:false,
+                success:function(result){
+
+                    //信息展示
+                    $("#cellPhone").html(result.resultJson.cellPhone);
+                    $("#departmentName").html(result.resultJson.departmentName);
+                    $("#jobTitle").html(result.resultJson.jobTitle);
+                    $("#remark").val(result.resultJson.remark);
+                    //问题分类，系统分类展示
+                    quesSysAppends(result);
+
+                    //用于问题回复
+                    if(result.resultJson.answerObj!=null){
+                        $("#answerCid").val(result.resultJson.answerObj[0].replyCid);
+                    }
+
+                    //同步到天知道
+                    // if(result.resultJson.sysType!=null) {
+                    //     if(result.resultJson.sysType==1 || result.resultJson.sysType==2) {
+                    //         $("#asyncKonws").attr("checked","checked");
+                    //         document.getElementById("asyncKonws").checked=true;
+                    //     }
+                    //     else{
+                    //         $("#asyncKonws").attr("checked",false);
+                    //     }
+                    // }
+
+                    //预计反馈时间
+                    var newDate = new Date();
+                    var myDate = new Date();
+                    newDate.setTime(result.resultJson.planRebackTime);
+                    if(result.resultJson.planRebackTime!=null && result.resultJson.planRebackTime!=0){
+                        $("#callbacktime").html(newDate.toLocaleString());
+                    }
+                    if(result.resultJson.quesStateIt!=quesState.WaitSolve && result.resultJson.planRebackTime!=null && result.resultJson.planRebackTime!=0){
+                        $("#date-timepicker1").val(newDate.format("yyyy-MM-dd hh:mm:ss"));
+                    }
+
+                    //待受理工单详情不显示预计反馈时间
+                    if(result.resultJson.quesStateIt==quesState.WaitSolve){
+                     $("#callbackdiv").hide();
+                 }
+
+                    //用户信息
+                    $("#workCode").html(result.resultJson.raiserUserWorkCode);
+                    $("#userName").html(result.resultJson.userName);
+
+                    //工单信息
+                    $("#quesContent").html(result.resultJson.quesContent);
+                    $("#quesDetailUser").html(result.resultJson.userName+"&nbsp;&nbsp;");
+                    $("#quesDetail").html(result.resultJson.quesContent);
+                    $("#quesWorkCode").html(result.resultJson.quesWorkCode);
+                    $("#quesStateIt").html(getEnums(result.resultJson.quesStateIt));
+                    $("#quesStateItMark").val(result.resultJson.quesStateIt);
+                    $("#raiseDatetime").html(getLocalTime(result.resultJson.raiseDatetime));
+                    $("#raiseDatetimedetail").html(getLocalTime(result.resultJson.raiseDatetime));
+
+                    $("#gongshi").html(result.resultJson.workHours);
+                    $("#jichufen").html(result.resultJson.integralValue);
+                    $("#createUser").html(result.resultJson.userName);
+                    $("#userlist").empty();
+                    adduserlist(result.resultJson.acceptUserList);
+
+                    //已解决
+                    if(result.resultJson.quesStateIt==2){
+                        console.log("处理中");
+                        $("#quesConfirm").show();
+                        $("#myslove").hide();
+                         //$("#userSearchInput").attr("disabled",true);
+
+                     }
+                     if(result.resultJson.quesStateIt>=3){
+                        console.log("已解决");
+                        $("#quesConfirm").hide();
+                        $("#myslove").hide();
+                        $("#save").hide();
+                        $("#userSearchInput").attr("disabled",true);
+                        $("input").attr("disabled",true);
+                        $(".del").remove();
+                    }
+                    
+                    //判断工单权限，只有受理人才能有权限进行操作
+                    if(result.resultJson.acceptUser!=null&&currentUser.userWorkCode!=result.resultJson.acceptUser){
+                          $("#quesConfirm").hide();
+                        $("#myslove").hide();
+                        $("#save").hide();
+                        $("#userSearchInput").attr("disabled",true);
+                        $("input").attr("disabled",true);
+                        $(".del").remove();
+                    }
+
+
+                    
+                    
+
+
+                    
+                }
+            });
+}
+
+
+
+
+
+
+        $("#userSearchInput").keyup(function(event){
+         if(event.keyCode ==13){
+           getUsers($('#userSearchInput').val(),AppendProcess);
+
+          }
+        });
+
+        //用户查询框
+        $("#userSearch").click(function(){
+         var level =$("#approveLevel").val();
+              // var level=  $(this).data("level");
+             //  alert(level);
+           // $("#userSearchLevel").val(level);
+           getUsers($('#userSearchInput').val(),AppendProcess);
+       });
+
+
+
+               //关闭用户信息框
+               $("#userBtnClose").click(function(){
+                $("#modalUser").modal('hide');
+
+                if($("#modalType").val()==1) {
+                    $('#modalBusiness').modal('toggle');
+                    $('#modalBusiness').modal('toggle');
+                }
+                else if($("#modalType").val()==2) {
+                    $("#modalSecond").modal('toggle');
+                    $("#modalSecond").modal('toggle');
+                }
+                $(".modal-backdrop").hide();
+            });
+
+
+
+
+        //分类显示不能点击
+        $("#quesAppend").click(function(){
+         return false;
+     });
+        $("#belongAppend").click(function(){
+            return false;
+        });
+
+        //获取员工信息
+        // getUserByCode($("#workCode").html(),appendUser);
+        // function appendUser(result){
+        //     if(result!=null){
+        //         $("#cellPhone").html(result.ET_ZHR_ALL_INFO.item[0].ZZ_TEL);
+        //         $("#company").html(result.ET_ZHR_ALL_INFO.item[0].BUTXT);
+        //         $("#departmentName").html(result.ET_ZHR_ALL_INFO.item[0].ZZ_JG1T);
+        //         $("#jobTitle").html(result.ET_ZHR_ALL_INFO.item[0].PLSTX);
+        //     }
+
+        // }
+
+        //工单状态修改(修改人工号,登录状态获取人工号)
+        function UpdateWorkBillState(param) {
+            var data = "{";
+            data += "\"quesCid\":\"" + getUrlParam("quesCid") + "\",";
+            data += "\"answerCid\":\"" + $("#answerCid").val() + "\",";
+            data += "\"busiType\":\""+ param +"\",";
+            data += "\"userWorkCode\":\""+ currentUser.userWorkCode +"\",";
+            data += "\"userName\":\""+ currentUser.userName +"\"";
+            data += "}";
+
+            //判断工单是否待受理,待受理才可以修改
+            $.ajax({
+                type: "POST",
+                url: it_service_url.UpdateWorkBillState,
+                data: data,
+                async:false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                }
+            });
+        }
+
+        //人工操作
+        //step1--我要受理(弹出工单信息框，并修改工单状态)
+        // $('#myslove').on('click', function() {
+        //     Load_Data_Select();
+        //     $("#modalSysInfo").modal({show: true,backdrop: false});
+        //     $(".modal-backdrop").hide();
+        // })
+
+
+
+
+         //受理
+         $('#myslove').on('click', function() {
+            // Load_Data_Select();
+            // $("#modalSysInfo").modal({show: true,backdrop: false});
+            // $(".modal-backdrop").hide();
+            addUserBillState(2);
+        })
+
+         // 保存处理人员
+
+         $("#save").on('click',function(){
+             var reviewerList=[];
+             $("div[id^='jifenReview']").each(function(){
+
+                 //判断受理人是否在受理列表中，如果不在，添加当前受理人
+
+                var arr={
+                    workCode:$(this).data("userid"),
+                    name:$(this).data("username"),
+                    workHourRatio:$(this).find("#gongShiZhanBi").val()
+                };
+
+                reviewerList.push(arr);
+            });
+              var data={
+                "userWorkCode":currentUser.userWorkCode,
+                "userName":currentUser.userName,
+                "quesCid":getUrlParam("quesCid"),
+                "reviewerList":reviewerList
+              };
+               $.ajax({
+                type: "POST",
+                url: it_service_url.addAccepters,
+                data: JSON.stringify(data),
+                async:false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if(result.resultCode==100){
+                        AlertTips("保存成功");
+                    }else{
+                        AlertTips("保存出错");
+                    }
+                    
+                    
+                    Load_Data(0);
+
+                }
+            });
+
+
+
+
+
+         });
+
+
+         //已解决
+         $("#quesConfirmDiv").click(function(){
+
+            $("#modalSlove").modal({show: true,backdrop: false});
+
+        });
+
+
+         $("body").on("click","#sloveBtnClose",function(){
+             $("#modalSlove").modal('hide');
+         });
+
+         $("#sloveBtnSubmit").click(function(){
+            UpdateWorkBillState(1);
+            $("#modalSlove").modal('hide');
+            Load_Data(4);
+        });
+
+
+
+        //更改工单状态
+        function addUserBillState(param){
+
+            var reviewerList=[];
+            var flag =false;
+
+            $("div[id^='jifenReview']").each(function(){
+
+                 //判断受理人是否在受理列表中，如果不在，添加当前受理人
+                if($(this).data("userid")==currentUser.userWorkCode){
+                    flag=true;
+                }
+
+                var arr={
+                    workCode:$(this).data("userid"),
+                    name:$(this).data("username"),
+                    workHourRatio:$(this).find("#gongShiZhanBi").val()
+                };
+
+                reviewerList.push(arr);
+            });
+            console.log("flag",flag);
+            if(!flag){
+                reviewerList.push({
+                 workCode:currentUser.userWorkCode,
+                 name:currentUser.userName,
+                 workHourRatio:""
+                });
+
+            }
+            console.log(reviewerList);
+
+            var data ={
+                "quesCid":getUrlParam("quesCid"),
+                "answerCid":$("#answerCid").val(),
+                "busiType":param,
+                "userWorkCode":currentUser.userWorkCode,
+                "userName":currentUser.userName,
+                "reviewerList":reviewerList,
+                "remark":$("#remark").val()
+
+
+
+            };
+
+            //判断工单是否待受理,待受理才可以修改
+            $.ajax({
+                type: "POST",
+                url: it_service_url.UpdateWorkBillState,
+                data: JSON.stringify(data),
+                async:false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if(param==1){
+                        AlertTips("工单已解决");
+                    }else{
+                        AlertTips("受理成功");
+                    }
+                    
+                    
+                    Load_Data(0);
+
+                }
+            });
+        }
+
+
+
+
+
+
+
+        
+
+        //step1--工单信息修改
+        $("#modalSysInfoSubmit").click(function(){
+            if(document.getElementById('updateToQuesBarCheck').checked){
+                $("#updateToQuesBar").val(1);
+            }
+            else{
+                $("#updateToQuesBar").val(3);
+            }
+            if($("#date-timepicker1").val()==""){
+                AlertTips("请选择预计反馈时间");
+                return false;
+            }
+
+            var quesTypeCids="",belongSystypeCids="";
+            $(".ques").each(function(){
+                if($(this).attr('class').indexOf("bg-img2")>=0) {
+                    quesTypeCids+=$(this).data("id")+",";
+                }
+            });
+            $(".sys").each(function(){
+                if($(this).attr('class').indexOf("bg-img2")>=0) {
+                    belongSystypeCids+=$(this).data("id")+",";
+                }
+            });
+            $("#quesLableCids").val(quesTypeCids);
+            $("#belongSystypeCids").val(belongSystypeCids);
+
+            var data = "{";
+            data += "\"quesCid\":\"" + getUrlParam("quesCid") + "\",";
+            data += "\"quesTypeCids\":[";
+            var quesStr="";
+            $(".ques").each(function(){
+                if($(this).attr('class').indexOf("bg-img2")>=0) {
+                    quesStr+= "\"" + $(this).data("id") + "\",";
+                }
+            });
+            data+=quesStr.substring(0,quesStr.length-1);
+            data += "],";
+            data += "\"belongSystypeCids\":[";
+            var sysStr="";
+            $(".sys").each(function(){
+                if($(this).attr('class').indexOf("bg-img2")>=0) {
+                    sysStr+= "\"" + $(this).data("id") + "\",";
+                }
+            });
+            data+=sysStr.substring(0,sysStr.length-1);
+            data += "],";
+            data += "\"updateToQuesBar\":\"" + $("#updateToQuesBar").val() + "\",";
+            data += "\"planRebackTime\":\"" + datetime_to_unix($("#date-timepicker1").val()) + "\"";
+            data += "}";
+
+            var state=$("#quesStateIts").val();
+
+            $.ajax({
+                type: "POST",
+                url: it_service_url.UpdateWorkBillInfo,
+                data: data,
+                async:false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    //修改完信息后加载数据
+                    if(result.resultCode==100){
+                        AlertTips("修改基本信息成功");
+                        Load_Data_Select();
+
+                        $("#modalSysInfo").modal('hide');
+                        if($("#quesStateItMark").val()==1) {
+                            UpdateWorkBillState(2);
+                        }
+                        Load_Data(2);
+                    }
+                }
+            });
+
+            //待受理变为受理中
+            // if(state==quesState.WaitSolve){
+            //     pushMsgData.userId = currentUser.userWorkCode;
+            //     pushMsgData.userList[0] = $("#workCode").html();
+            //     pushMsgData.content="您好，您的问题已经受理啦，可以随时进入IT服务和技术支持们沟通并查看问题解决进度哦。";
+            //     var pushData=JSON.stringify(pushMsgData);
+
+            //     //console.log(pushData);
+            //     $.ajax({
+            //         type: "POST",
+            //         url: it_service_url.PushMsg,
+            //         data: pushData,
+            //         contentType: "application/json; charset=utf-8",
+            //         success: function (result) {
+            //           // AlertTips(result.msg);
+            //         }
+            //     });
+            // }
+
+        });
+
+       //step1--维护工单信息配置--问题分类、所属系统
+       function Load_Data_Select()
+       {
+            //问题分类
+            $.ajax({
+                type: "POST",
+                url: it_service_url.quesTypeList,
+                data: '{"quesTypeState": "1"}',
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    $("#quesdiv1").empty();
+                    for(var i in result.resultJson)
+                    {
+                        if($("#quesLableCids").val().indexOf(result.resultJson[i].quesTypeCid)>=0) {
+                            var appendStr='<div class="bg-img2 ques"  data-id='+result.resultJson[i].quesTypeCid+'><a href="javascript:;" style="color:#333" title="'+result.resultJson[i].quesTypeName+'">'+result.resultJson[i].quesTypeName+'</a></div>';
+                            $("#quesdiv1").append(appendStr);
+                        }
+                        else{
+                            var appendStr='<div class="bg-img3 ques"  data-id='+result.resultJson[i].quesTypeCid+'><a href="javascript:;" style="color:#c6c6c6"  title="'+result.resultJson[i].quesTypeName+'">'+result.resultJson[i].quesTypeName+'</a></div>';
+                            $("#quesdiv1").append(appendStr);
+                        }
+                    }
+                }
+            });
+
+            //所属系统
+            $.ajax({
+                type: "POST",
+                url: it_service_url.BelongSysTypeList,
+                data: '{"belongSystypeState": "1"}',
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    $("#sysdiv1").empty();
+                    for(var i in result.resultJson)
+                    {
+                        var appendStr="";
+                        if($("#belongSystypeCids").val().indexOf(result.resultJson[i].belongSystypeCid)>=0){
+                            appendStr='<div class="bg-img2 sys" data-id='+result.resultJson[i].belongSystypeCid+'><a href="javascript:;" style="color:#333" title="'+result.resultJson[i].belongSystypeName+'">'+result.resultJson[i].belongSystypeName+'</a></div>';
+                            $("#sysdiv1").append(appendStr);
+                        }
+                        else{
+                            appendStr='<div class="bg-img3 sys" data-id='+result.resultJson[i].belongSystypeCid+'><a href="javascript:;" style="color:#c6c6c6" title="'+result.resultJson[i].belongSystypeName+'">'+result.resultJson[i].belongSystypeName+'</a></div>';
+                            $("#sysdiv1").append(appendStr);
+                        }
+                    }
+                }
+            });
+        }
+
+        //step1--维护工单信息配置--问题分类、所属系统选择
+        $("body").on("click",".bg-img3",function(){
+            $(this).removeClass("bg-img3");
+            $(this).addClass("bg-img2");
+            var aobj=$(this).children("a");
+            aobj.css("color","#333");
+        });
+        $("body").on("click",".bg-img2",function(){
+            $(this).removeClass("bg-img2");
+            $(this).addClass("bg-img3");
+            var aobjs=$(this).children("a");
+            aobjs.css("color","#c6c6c6");
+        });
+
+        //添加处理人员
+        function adduserlist(userlist){
+
+            var append ='';
+            for(var i in userlist){
+               append +='<div style="font-size: 12px; margin: 5px 0;" class="row" id="jifenReview_'+userlist[i].workCode+'" data-userid='+userlist[i].workCode+' data-username='+userlist[i].name+'>'+
+               '<div class="col-xs-2">'+
+               '<div class="row">工号：<span id="userId2" value="'+userlist[i].workCode+ '">'+userlist[i].workCode+'</span></div></div>'+
+               '<div class="col-xs-2">'+
+               '<div class="row">姓名：<span id="userName2" value="'+userlist[i].name+'">'+userlist[i].name+'</span></div>'+
+               '</div>'+
+               '<div class="col-xs-3">'+
+               '<div class="row">工时占比：<input id="gongShiZhanBi" value="'+userlist[i].workHourRatio+'" ></input></div></div>'+
+               '<div class="col-xs-2">'+
+               '<div class="row del"><a  href="javascript:;"  class="control-label userDel2"  data-level='+userlist[i].workCode+'>删除</a></div>'+
+               '</div>'+
+               '</div>';
+
+           }
+           $("#userlist").append(append);
+
+       }
+       function selectUserId(userId){
+          if(userId.length==8){
+             return  userId.substring(1,8)+"";
+         } 
+     }
+        //新增处理人员--积分管理
+        function AddUserItem2(userId,userName){
+
+             //添加判断是非重复
+             userId =selectUserId(userId);
+
+             var append ='<div style="font-size: 12px; margin: 5px 0;" class="row" id="jifenReview_'+userId+'" data-userid='+userId+'  data-username='+userName+' >'+
+             '<div class="col-xs-2">'+
+             '<div class="row">工号：<span id="userId2" value="'+userId+'">'+userId+'</span></div></div>'+
+             '<div class="col-xs-2">'+
+             '<div class="row">姓名：<span id="userName2" value="'+userName+'">'+userName+'</span></div>'+
+             '</div>'+
+             '<div class="col-xs-3">'+
+             '<div class="row">工时占比：<input id="gongShiZhanBi"></input></div></div>'+
+             '<div class="col-xs-2">'+
+             '<div class="row del"><a  href="javascript:;"  class="control-label userDel2"  data-level='+userId+'>删除</a></div>'+
+             '</div>'+
+             '</div>';
+
+
+             $("#userlist").append(append);
+             
+
+
+
+                  //$("#jifenLevel").val(parseInt($("#jifenLevel").val())+1);
+
+              }
+
+        //删除新加用户条目
+        $("body").on("click",".userDel2",function(){
+
+            var id = $(this).data("level");
+            
+            $("#jifenReview_"+id).remove();
+
+
+        });
+
+
+        function AppendProcess(result)
+        {
+            $("#userAppend").empty();
+            for(var i in result.ET_BASICINFO.item)
+            {
+                $("#userAppend").append('<tr><td style="width: 80px;">'+result.ET_BASICINFO.item[i].PERNR+'</td><td style="width: 80px;">'+result.ET_BASICINFO.item[i].NACHN+'</td>' +
+                    '<td style="width: 100px;">'+result.ET_BASICINFO.item[i].ZZ_JG1T+'</td>'+
+                    '<td style="width: 80px;"><a href="javascript:;" class="choose" ' +
+                    'data-level='+$("#userSearchLevel").val()+'  data-id='+result.ET_BASICINFO.item[i].PERNR+'  data-name='+result.ET_BASICINFO.item[i].NACHN+'' +
+                    ' data-plans='+ result.ET_BASICINFO.item[i].PLANS+' data-plstx='+ result.ET_BASICINFO.item[i].PLSTX +' ' +
+                    ' data-orgeh='+ result.ET_BASICINFO.item[i].ZZ_JG4 +' data-orgtx='+result.ET_BASICINFO.item[i].ZZ_JG1T+' >选择</a></td></tr>');
+            }
+            $("#modalUser").modal({show: true,backdrop: false});
+            //判断modal存在type
+            if($("#modalBusiness").attr("class")=="modal in") {
+              // $("#modalBusiness").modal('hide');
+              $("#modalType").val(1);
+          }
+          if($("#modalSecond").attr("class")=="modal in") {
+               // $("#modalSecond").modal('hide');
+               $("#modalType").val(2);
+           }
+           $(".modal-backdrop").hide();
+       }
+
+
+
+
+       $("body").on("click",".choose",function(){
+
+           $("#modalUser").modal('hide');
+
+
+            //去除重复工号
+            var id =$(this).data("id");
+            var name =$(this).data("name");
+            var ifexit =0;
+            if($("div[id^='jifenReview']").length==0){
+                AddUserItem2(id,name);
+            }else{
+
+                $("div[id^='jifenReview']").each(function(){
+                   if(id==$(this).data("userid")){
+                    ifexit=1;
+                }
+            });
+                if(ifexit==0){
+                    AddUserItem2(id,name);
+                }
+            }
+        });
+
+
+       $(".ajax-loading-overlay").hide();
+
+
+        //删除新加用户条目
+        $("body").on("click",".userDel",function(){
+            var id = $(this).data("level");
+            $("#approveDiv_"+id).remove();
+
+            //更改等级
+            var typeLv = $(this).data("type");
+            var i= 1,j=1;
+            if(typeLv == 1){
+                $(".levelProcess").each(function(){
+                    $(this).html(NoToChinese(i)+"级");
+                    i++;
+                })
+                $("#modalTypeProcess").val(parseInt($("#modalTypeProcess").val())-1);
+            }
+            else if(typeLv == 2) {
+                $(".levelIt").each(function(){
+                    $(this).html(NoToChinese(j)+"级");
+                    j++;
+                })
+                $("#modalTypeIt").val(parseInt($("#modalTypeIt").val())-1);
+            }
+
+        });
+
+
+
+        
+        //新增员工条目
+        function AddUserItem(param,type){
+            var append='<div class="row" style="margin-top:10px;" id="approveDiv_'+$("#approveLevel").val()+'">';
+            append+='<div class="col-xs-12">';
+            if(type==1) {
+                append+='<div class="col-xs-2 levelProcess">'+NoToChinese($("#modalTypeProcess").val())+'级</div>';
+            }
+            if(type==2){
+                append+='<div class="col-xs-2 levelIt">'+NoToChinese($("#modalTypeIt").val())+'级</div>';
+            } else if(type==0) {
+                append+='<div class="col-xs-2">&nbsp;&nbsp;</div>';
+            }
+            append+='<div class="col-xs-6">';
+            append+='<input type="text" id="search-query_'+$("#approveLevel").val()+'"  data-level='+$("#approveLevel").val()+'  style="width:180px;" data-userid="" data-username="" data-plans=""  data-plstx="" data-spcj="" data-spcjt="" data-orgeh="" data-orgtx=""  class="input-large form-control search-query"  > ';
+            append+='</div>';
+
+            append+=' <div class="col-xs-3">';
+            append+=' <div class="col-xs-6">';
+            append+='<a href="javascript:;" class="blue userSearch" data-level='+$("#approveLevel").val()+'><i class="ace-icon fa fa-search-plus bigger-180"></i></a> ';
+            append+='</div>';
+            append+='<div class="col-xs-6">';
+            append+='<a href="javascript:;" class="red userDel"  data-type="'+type+'" data-level='+$("#approveLevel").val()+'> <i class="ace-icon fa fa-trash-o bigger-180"></i></a>';
+            append+='</div>';
+            append+='</div>';
+
+            append+='<div class="col-xs-4"></div>';
+            append+='</div></div>';
+
+            $(param).append(append);
+            $("#approveLevel").val(parseInt($("#approveLevel").val())+1);
+        };
+
+
+        //breadcrumbs
+        var redirectUrl="index.html#page/works-list";
+        switch(parseInt(getUrlParam("state"))){
+            case parseInt(codeList.WaitSolveList):
+            redirectUrl="index.html?pagenum="+getUrlParam("pagenum")+"#page/works-list";
+            break;
+            case parseInt(codeList.handlingList):
+            redirectUrl="index.html?pagenum="+getUrlParam("pagenum")+"#page/works-list-handling";
+            break;
+            case parseInt(codeList.MyList):
+            redirectUrl="index.html?pagenum="+getUrlParam("pagenum")+"#page/works-list-my";
+            break;
+            case parseInt(codeList.AllList):
+            redirectUrl="index.html?pagenum="+getUrlParam("pagenum")+"#page/works-list-all";
+            break;
+            case parseInt(codeList.ExecList):
+            redirectUrl="index.html?pagenum="+getUrlParam("pagenum")+"#page/works-list-exec";
+            break;
+            case parseInt(codeList.pinfenList):
+
+            redirectUrl="index.html?pagenum="+getUrlParam("pagenum")+"#page/works-list-review";
+            break; 
+        }
+
+        $("#breadcrumbs").empty();
+        $("#breadcrumbs").append('<ul class="breadcrumb">' +
+            ' <li> <img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong> <a href="index.html">首页 </a> </li> ' +
+            ' <li> <a href="'+redirectUrl+'">工单管理</a></li>' +
+            '<li class="active">工单详情</li>' +
+            '</ul>');
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

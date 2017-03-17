@@ -1,0 +1,435 @@
+<title>配置权限维护 - IT服务工作台</title>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">配置权限维护</h3>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-xs-5">
+                    <button class="btn btn-white btn-blue btn-no-border" id="addrole">
+                        <i class="ace-icon fa fa-plus  align-top bigger-125 icon-on-right"></i>
+                        添加权限人员
+                    </button>
+                </div>
+                <div class="col-xs-1"></div>
+
+            </div>
+        </div>
+        <hr/>
+
+        <div class="table-header">
+            权限人员列表
+        </div>
+
+        <div>
+            <table id="sys_list_table" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>工号</th>
+                    <th>姓名</th>
+                    <th>权限</th>
+                    <th>创建时间</th>
+                    <th>启用状态</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加权限人员</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>工号*</h4><span  id ="warnning" style="color: red;display: none;" >此工号不存在</span>
+                        <input type="text" value="" id="workCode"  class="form-control input-inline">
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>姓名</h4>
+                        <input type="text" value="" id="userName"  class="form-control input-inline">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="modalAddSubmit" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ <!--员工查询-->
+            <div class="modal" id="modalUser" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="nav-title">
+                            <h4 class="modal-title" id="myModalLabel">员工信息查询</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   <table>
+                                       <thead>
+                                          <tr><th style="width: 80px;">工号</th><th style="width: 80px;">姓名</th><th style="width: 100px;">部门</th><th style="width: 80px;">操作</th></tr>
+                                      </thead>
+                                      <tbody id="userAppend">
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="userBtnClose" >关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<script type="text/javascript">
+    var scripts = [null, "../assets/js/jquery.dataTables.min.js", "../assets/js/jquery.dataTables.bootstrap.js", null];
+    ace.load_ajax_scripts(scripts, function() {
+        jQuery(function ($) {
+            init();
+            function init()
+            {
+                var table;
+                var data ={
+                    "userWorkCode":"",
+                    "authCode":"",
+                    "pageNum":"1",
+                    "pageSize":"50"
+
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: it_service_url.queryUserAuths,
+                    data: JSON.stringify(data),
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        $('#sys_list_table tbody').remove();
+                        table = $('#sys_list_table').dataTable({
+                            destroy: true,
+                             paging: true,
+                            bAutoWidth: false,
+                            "oLanguage": {
+                                "sSearch": "搜索",
+                                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                                "sZeroRecords": "抱歉， 没有找到",
+                                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                                "sInfoEmpty": "没有数据",
+                                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                                "oPaginate": {
+                                    "sFirst": "首页",
+                                    "sPrevious": "前一页",
+                                    "sNext": "后一页",
+                                    "sLast": "尾页"
+                                },
+                                "sZeroRecords": "没有检索到数据"
+                            },
+                            "data": result.resultJson.list,
+                            "columns": [
+                                {"data": "id"},
+                                {"data": "workCode"},
+                                
+                                {"data": "name"},
+                                {"data":"authDesc"},
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        return getLocalTime(o.updateDatetime);
+                                    }
+                                },
+                               
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        if(o.enableState==1){
+                                            return '<span class="label label-success arrowed-in arrowed-in-right">启用</span>';
+                                        }
+                                        else{
+                                            return '<span class="label label-warning">停用</span>';
+                                        }
+                                    }
+                                },
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        var returnStr='<button class="btn btn-sm btn-success btn-round restartSys"  data-id='+o.workCode+' data-name='+o.name+'>启用</button>';
+                                        returnStr+='<button class="btn btn-white btn-default btn-round pauseSys"  style="margin-left:5px;"  data-id='+o.workCode+' data-name='+o.name+'>停用</button>';
+                                        returnStr+='<button class="btn btn-white btn-warning btn-round deleteSys" style="margin-left:5px;"  data-id='+o.workCode+' data-name='+o.name+'>删除</button>';
+                                        return returnStr;
+                                    }
+                                }
+                            ]
+                        });
+                        $('#sys_list_table tbody').on('click', 'tr', function () {
+                            $(".it-service-highlight").each(function(){
+                                $(this).removeClass('it-service-highlight');
+                            });
+                            $(this).toggleClass('it-service-highlight');
+                        });
+
+                        $('#button').click(function () {
+                            alert(table.rows('.it-service-highlight').data().length + ' row(s) it-service-highlight');
+                        });
+                    }
+                });
+            }
+            
+
+
+            $("#workCode").keyup(function(event){
+              if(event.keyCode ==13){
+        
+                  if($("#workCode").val().length!=7){
+                         AlertTips("请输入正确的工号");
+                     return false;
+                  }
+                  getUserByCode($("#workCode").val(),AppendUser);
+     
+                }
+            });
+              $("#userName").keyup(function(event){
+                  if(event.keyCode ==13){
+        
+                  getUsers($("#userName").val(),AppendProcess2);
+                   
+                }
+              });
+
+
+              function AppendUser(result){
+                      
+                $("#userName").val("");
+                $("#warnning").hide();
+              
+                if(result.ET_ZHR_ALL_INFO.item!=null){
+                    isObject("#userName",result.ET_ZHR_ALL_INFO.item[0].NACHN)
+                }else{
+                    $("#warnning").show();
+                }
+                
+              
+
+              }
+               function isObject(container,param){
+                if(typeof(param)=="object") {
+                    $(container).val("");
+                }
+                else{
+                    $(container).val(param);
+                }
+            }
+  
+            
+
+            //新增系统
+
+            $("#addrole").click(function(){
+
+                $("#modalAdd").modal();
+                $("#userName").val("");
+                $("#workCode").val("");
+                $("#warnning").hide();
+
+            });
+
+
+
+             //输入名字 手机尾号 查询人员
+           function AppendProcess2(result)
+           {   
+            
+            if(result.ET_BASICINFO.item!=null&&result.ET_BASICINFO.item.length>1){
+                $("#userAppend").empty();
+                for(var i in result.ET_BASICINFO.item)
+                {
+                    $("#userAppend").append('<tr><td style="width: 80px;">'+result.ET_BASICINFO.item[i].PERNR+'</td><td style="width: 80px;">'+result.ET_BASICINFO.item[i].NACHN+'</td>' +
+                        '<td style="width: 100px;">'+result.ET_BASICINFO.item[i].ZZ_JG1T+'</td>'+
+                        '<td style="width: 80px;"><a href="javascript:;" class="choose2" ' +
+                        ' data-id='+result.ET_BASICINFO.item[i].PERNR+'  data-name='+result.ET_BASICINFO.item[i].NACHN+'' +
+                        ' data-tell='+ isObjectTrans(result.ET_BASICINFO.item[i].TELL)+' data-mail='+ isObjectTrans(result.ET_BASICINFO.item[i].MAIL)+''+
+                        ' data-plstx='+ isObjectTrans(result.ET_BASICINFO.item[i].PLSTX) +' '+
+                        ' data-butxt='+ isObjectTrans(result.ET_BASICINFO.item[i].BUTXT) +' data-orgtx='+isObjectTrans(result.ET_BASICINFO.item[i].ZZ_JG1T)+' >选择</a></td></tr>');
+                }
+                $("#modalUser").modal({show: true,backdrop: false});
+            //判断modal存在type
+            if($("#modalBusiness").attr("class")=="modal in") {
+              // $("#modalBusiness").modal('hide');
+              $("#modalType").val(1);
+          }
+          if($("#modalSecond").attr("class")=="modal in") {
+               // $("#modalSecond").modal('hide');
+               $("#modalType").val(2);
+           }
+           $(".modal-backdrop").hide();
+            }else{
+              $("#workCode").val(selectUserId(result.ET_BASICINFO.item[0].PERNR));
+              $("#userName").val(result.ET_BASICINFO.item[0].NACHN);
+            }
+
+          }
+
+
+        //添加人员选择事件
+        $("body").on("click",".choose2",function(){
+            $("#modalUser").modal('hide');
+              $("#workCode").val(selectUserId($(this).data("id")));
+              $("#userName").val($(this).data("name"));
+           
+        });
+
+           function isObjectTrans(param){
+              if(typeof(param)=="object"){
+
+                return 'null';
+            }else{
+                return param;
+            }
+        }
+        function selectUserId(userId){
+          if(userId.length==8){
+           return  userId.substring(1,8)+"";
+         } 
+       }
+
+        //关闭用户信息框
+             $("#userBtnClose").click(function(){
+                $("#modalUser").modal('hide');
+
+                if($("#modalType").val()==1) {
+                    $('#modalBusiness').modal('toggle');
+                    $('#modalBusiness').modal('toggle');
+                }
+                else if($("#modalType").val()==2) {
+                    $("#modalSecond").modal('toggle');
+                    $("#modalSecond").modal('toggle');
+                }
+                $(".modal-backdrop").hide();
+            });
+
+
+
+
+
+
+             //添加人员权限（确定）
+
+            $("#modalAddSubmit").click(function(){
+                var workCode=$("#workCode").val();
+                var name= $("#userName").val();
+                
+               
+                //判断
+                if(workCode=="")
+                {
+                    AlertTips("请填写完整带*的信息");
+                    return false;
+                }
+
+                var data ={
+                   "userWorkCode":currentUser.userWorkCode,
+                   "userName":currentUser.userName,
+                   "workCode":workCode,
+                   "name":name,
+                   "operateType":1,
+                   "authCode":"01"
+               }
+
+                $.ajax({
+                    type:"POST",
+                    url:it_service_url.updateUserAuth,
+                    contentType: "application/json; charset=utf-8",
+                    async:false,
+                    data: JSON.stringify(data),
+                    success:function(result){
+                        $("#modalAdd").modal('hide');
+                      
+                        AlertTips(result.resultMessage,init);
+
+//                        if(result.resultJson.code==1) {
+//                            AlertTips("系统创建成功",init);
+//                        }
+//                        if(result.resultJson.code==2) {
+//                            AlertTips("系统创建失败",init);
+//                        }
+                    }
+                });
+            });
+
+            //启用
+            $("body").off("click",".restartSys");
+            $("body").on("click",".restartSys",function(){
+                 UpdateStatus(1,$(this).data("id"),$(this).data("name"));
+            });
+            //停用
+            $("body").off("click",".pauseSys");
+            $("body").on("click",".pauseSys",function(){
+                 UpdateStatus(2,$(this).data("id"),$(this).data("name"));
+            });
+            //删除
+            $("body").off("click",".deleteSys");
+            $("body").on("click",".deleteSys",function(){
+                UpdateStatus(3,$(this).data("id"),$(this).data("name"));
+            });
+
+            function UpdateStatus(param,id,name)
+            {
+                   var data ={
+                   "userWorkCode":currentUser.userWorkCode,
+                   "userName":currentUser.userName,
+                   "workCode":id+"",
+                   "name":name,
+                   "operateType":param,
+                   "authCode":"01"
+               } 
+
+                    $.ajax({
+                        type:"POST",
+                        url:it_service_url.updateUserAuth,
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        success:function(result){
+                            if(result.resultCode==100){
+                                AlertTips("修改成功",init);
+                            }
+                            else{
+                                AlertTips("修改失败",init);
+                            }
+
+                        }
+                    });
+           }
+
+            
+      
+
+            //breadcrumbs
+            $("#breadcrumbs").empty();
+            $("#breadcrumbs").append('<ul class="breadcrumb">' +
+            ' <li> <img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong> <a href="index.html">首页 </a> </li> ' +
+            '<li>数据配置</li> <li class="active">配置权限维护</li> </ul>')
+
+        });
+    });
+</script>

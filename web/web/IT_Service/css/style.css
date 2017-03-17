@@ -1,0 +1,141 @@
+@font-face {
+	font-family: 'AIFT';
+	src:url('../fonts/AIFT.eot?sep7yb');
+	src:url('../fonts/AIFT.eot?sep7yb#iefix') format('embedded-opentype'),
+		url('../fonts/AIFT.ttf?sep7yb') format('truetype'),
+		url('../fonts/AIFT.woff?sep7yb') format('woff'),
+		url('../fonts/AIFT.svg?sep7yb#AIFT') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="aift-"], [class*=" aift-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'AIFT' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.aift-servicerequest:before {
+	content: "\e91d";
+}
+.aift-other:before {
+	content: "\e921";
+}
+.aift-complaint:before {
+	content: "\e922";
+}
+.aift-problem:before {
+	content: "\e923";
+}
+.aift-newdemand:before {
+	content: "\e924";
+}
+.aift-consult:before {
+	content: "\e925";
+}
+.aift-home:before {
+	content: "\e902";
+}
+.aift-peple:before {
+	content: "\e903";
+}
+.aift-downArrow:before {
+	content: "\e904";
+}
+.aift-personal:before {
+	content: "\e905";
+}
+.aift-project:before {
+	content: "\e906";
+}
+.aift-close:before {
+	content: "\e90c";
+}
+.aift-ok:before {
+	content: "\e90e";
+}
+.aift-custom:before {
+	content: "\e915";
+}
+.aift-nextPage:before {
+	content: "\e918";
+}
+.aift-previousPage:before {
+	content: "\e919";
+}
+.aift-search:before {
+	content: "\e91c";
+}
+.aift-lastPage:before {
+	content: "\e91e";
+}
+.aift-firstPage:before {
+	content: "\e91f";
+}
+.aift-rightArrow:before {
+	content: "\e920";
+}
+.aift-ask:before {
+	content: "\e900";
+}
+.aift-appen:before {
+	content: "\e901";
+}
+.aift-call:before {
+	content: "\e907";
+}
+.aift-badComment:before {
+	content: "\e908";
+}
+.aift-checkedBad:before {
+	content: "\e909";
+}
+.aift-answer:before {
+	content: "\e90a";
+}
+.aift-likes:before {
+	content: "\e90b";
+}
+.aift-praise:before {
+	content: "\e90d";
+}
+.aift-checkedPraise:before {
+	content: "\e90f";
+}
+.aift-add:before {
+	content: "\e910";
+}
+.aift-lessen:before {
+	content: "\e911";
+}
+.aift-expect:before {
+	content: "\e912";
+}
+.aift-remove2:before {
+	content: "\e913";
+}
+.aift-finish:before {
+	content: "\e914";
+}
+.aift-noPraise:before {
+	content: "\e91a";
+}
+.aift-needHelp:before {
+	content: "\e91b";
+}
+.aift-nav-left:before {
+	content: "\e917";
+}
+.aift-satisfied:before {
+	content: "\e916";
+}
+

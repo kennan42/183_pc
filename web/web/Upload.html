@@ -1,0 +1,453 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>欢迎页图片管理</title>
+
+    <meta name="description" content="Common form elements and layouts" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./assets/css/dropzone.css" />
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+    <link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+    <link rel="stylesheet" href="./assets/css/chosen.css" />
+    <link rel="stylesheet" href="./assets/css/datepicker.css" />
+    <link rel="stylesheet" href="./assets/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="./assets/css/daterangepicker.css" />
+    <link rel="stylesheet" href="./assets/css/bootstrap-datetimepicker.css" />
+    <link rel="stylesheet" href="./assets/css/colorpicker.css" />
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="./assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="./assets/js/html5shiv.js"></script>
+    <script src="./assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    <script src='./assets/js/jquery.min.js'></script>
+    <script src="./layer/layer.min.js"></script>
+    <script src="./myjs/jquery.form.js"></script>
+    <script>
+        //日期/时间弹出层修改
+        function textFoucus(event) {
+            setTimeout(function () {
+                $(".dropdown-menu").css("z-index", "10000");
+            }, 100);
+        }
+
+        function open1() {
+            $("#modal-form").css("display", "block");
+            $(".modal-backdrop").css("display", "block");
+        }
+        function colr1() {
+            $("#modal-form").css("display", "none");
+            $(".modal-backdrop").css("display", "none");
+        }
+
+        function upload1() {
+
+            // if ($("#sample-table-1 tr").length > 1) {
+            //     $('#option').remove();
+            // };
+            // var newRow = "<tr id='option'><td><div id='localimag'><img src='' id='preview' width=-1 height=-1 style='diplay:none' /></div></td><td><h4 class='pink'>中秋图片</h4></td><td class='hidden-480'><h4 class='pink'><span class='label label-sm label-warning'>2015-01-24 12:24:35</span></h4></td><td><h4 class='pink'><button class='btn btn-sm btn-primary' onclick='open1();'><i class='ace-icon fa fa-hand-o-right green'></i> 上传 </button></h4></td></tr>";
+            // $('#tbody').append(newRow);
+            // setImagePreview();
+
+            // $("#modal-form").css("display", "none");
+            // $(".modal-backdrop").css("display", "none");
+
+
+            //详细
+            var tags = $("#tags").val();
+            if (tags == "") {
+               $.gritter.add({
+                   title: '错误信息提示',
+                   text: '请填写详细情况！',
+                   class_name: 'gritter-error'
+               });
+               return;
+            };
+            //日期
+            var dates = $("#id-date-picker-1").val();
+            if (dates == "") {
+               $.gritter.add({
+                   title: '错误信息提示',
+                   text: '请选择日期！',
+                   class_name: 'gritter-error'
+               });
+               return;
+            };
+            //时间
+            var times = $("#timepicker1").val();
+            if (times == "") {
+               $.gritter.add({
+                   title: '错误信息提示',
+                   text: '请选择时间！',
+                   class_name: 'gritter-error'
+               });
+               return;
+            };
+            //年月日时分
+            var DateTimeMath = dates + ' ' + times;
+            DateTimeMath = DateTimeMath.replace(/-/g, '/');
+            //时间戳
+            var NewDate = new Date(DateTimeMath);
+            var timestamp = NewDate.getTime(NewDate);
+            //图片
+            var file = document.getElementById("file");
+            var myForm = document.getElementById("myForm");
+            var imgPath = $("#file").val();
+            if (imgPath == "") {
+               $.gritter.add({
+                   title: '错误信息提示',
+                   text: '请选择上传图片！',
+                   class_name: 'gritter-error'
+               });
+               return;
+            }
+            //判断上传文件的后缀名
+            var strExtension = imgPath.substr(imgPath.lastIndexOf('.') + 1);
+            if (strExtension.toLowerCase() != 'jpg' && strExtension.toLowerCase() != 'gif'
+            && strExtension.toLowerCase() != 'png' && strExtension.toLowerCase() != 'bmp') {
+               $.gritter.add({
+                   title: '错误信息提示',
+                   text: '请选择图片文件',
+                   class_name: 'gritter-error'
+               });
+               return;
+            }
+            myForm.appendChild(file);
+            var options = {
+               url: 'http://10.10.1.183:808/base/uploadFestivalImage?expireDate='+timestamp+'&detail='+tags+'',
+               //url: 'http://10.10.1.152:808/base/uploadFestivalImage?expireDate='+timestamp+'&detail='+tags+'',
+               //url: 'http://ai.cttq.com:808/base/uploadFestivalImage?expireDate='+timestamp+'&detail='+tags+'',
+               data: {
+                   file: imgPath,
+                   detail: tags,
+                   expireDate: timestamp
+               },
+               dataType: "json",
+               contentType: "charset=UTF-8",
+               timeout: 100000,
+               beforeSubmit: function () {
+                   $('body,html').animate({ scrollTop: 0 }, 10);
+                   aa = layer.load('上传中...');
+               },
+               success: function (result) {
+                   // alert(JSON.stringify(result.ImagesURL));
+                   if (result.status == 0) {
+                       if (undefined != aa) {
+                           layer.close(aa);
+                       }
+                       $.gritter.add({
+                           title: '消息信息提示',
+                           text: '上传成功',
+                           class_name: 'gritter-success'
+                       });
+                       //成功后再 table 中显示
+                       if ($("#sample-table-1 tr").length > 1) {
+                           $('#option').remove();
+                       };
+                       var newRow = "<tr id='option'><td><div id='localimag'><img src='' id='preview' width=-1 height=-1 style='diplay:none' /></div></td><td><h4 class='pink'>"+tags+"</h4></td><td class='hidden-480'><h4 class='pink'><span class='label label-sm label-warning'>"+DateTimeMath+"</span></h4></td><td><h4 class='pink'><button class='btn btn-sm btn-primary' onclick='open1();'><i class='ace-icon fa fa-hand-o-right green'></i> 上传 </button></h4></td></tr>";
+                       $('#tbody').append(newRow);
+                       setImagePreview(result.imageURL);
+
+                       $("#modal-form").css("display", "none");
+                       $(".modal-backdrop").css("display", "none");
+                   }
+               },
+               error: function (result) {
+                   if (undefined != aa) {
+                       layer.close(aa);
+                   }
+                   $.gritter.add({
+                       title: '错误信息提示',
+                       text: '上传失败，请稍后重试！',
+                       class_name: 'gritter-error'
+                   });
+               }
+            };
+            $(myForm).ajaxSubmit(options);
+            return !1;
+        }
+
+        // table 图片显示
+        function setImagePreview(imgurl) {
+            // var docObj = document.getElementById("file");
+            // var imgObjPreview = document.getElementById("preview");
+            // if (docObj.files && docObj.files[0]) {
+            //     //火狐下，直接设img属性
+            //     imgObjPreview.style.display = 'block';
+            //     imgObjPreview.style.width = '120px';
+            //     imgObjPreview.style.height = '40px';
+            //     //imgObjPreview.src = docObj.files[0].getAsDataURL();
+
+            //     //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+            //     imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+            // } else {
+                //IE下
+                var dImg = document.getElementsByTagName('img')[0];
+                dImg.style.width = '120px';
+                dImg.style.height = '55px';
+                dImg.style.display = 'block';
+                dImg.src = imgurl;
+            // }
+            // return true;
+        }
+    </script>
+</head>
+
+<body class="no-skin">
+    <!-- /section:basics/navbar.layout -->
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+        <!-- /section:basics/content.breadcrumbs -->
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- table -->
+                    <div class="col-sm-12">
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h4 class="smaller">欢迎页图片管理</h4>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>图片</th>
+                                                <th>详情</th>
+                                                <th>
+                                                    <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
+                                                    失效时间
+                                                </th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+                                            <tr id='option'>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="hidden-480">
+                                                    <span class="label label-sm label-warning"></span>
+                                                </td>
+                                                <td>
+                                                    <h4 class="pink">
+                                                        <button class="btn btn-sm btn-primary" onclick="open1();">
+                                                            <i class="ace-icon fa fa-hand-o-right green"></i>
+                                                            上传
+                                                        </button>
+                                                    </h4>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- table -->
+                    <!-- 弹出框开始 -->
+                    <div id="modal-form" class="modal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" onclick="colr1();" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="blue bigger">欢迎页图片管理</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-sm-5">
+                                            <label class="ace-file-input">
+                                                <div class="space"></div>
+                                                <input type="file" id="file" name="file">
+                                                <form id="myForm" action="http://10.10.1.183:808/base/uploadFestivalImage?expireDate=2222222222" method="post" enctype="multipart/form-data"></form>
+                                                <!-- <form id="myForm" action="http://10.10.1.152:808/base/uploadFestivalImage?expireDate=2222222222" method="post" enctype="multipart/form-data"></form> -->
+                                                <!-- <form id="myForm" action="http://ai.cttq.com:808/base/uploadFestivalImage?expireDate=2222222222" method="post" enctype="multipart/form-data"></form> -->
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-7">
+                                            <div style="margin-bottom: 10px">
+                                                <label for="form-field-select-3">图片详情</label>
+                                                <input id="tags" type="text" class="form-control ui-autocomplete-input">
+                                            </div>
+                                            <div style="margin-bottom: 10px">
+                                                <label for="form-field-select-3">过期日期</label>
+                                                <div class="input-group">
+                                                    <input class="form-control date-picker" id="id-date-picker-1" onfocus="textFoucus()" type="text" data-date-format="yyyy-mm-dd">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div style="margin-bottom: 10px">
+                                                <label for="form-field-username">过期时间</label>
+                                                <div class="input-group bootstrap-timepicker">
+                                                    <input id="timepicker1" type="text" onfocus="textFoucus()" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-clock-o bigger-110"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-sm btn-primary" onclick="upload1();">
+                                        <i class="ace-icon fa fa-check"></i>
+                                        上传
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 弹出框结束 -->
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.page-content -->
+    </div><!-- /.main-container -->
+    <!-- basic scripts -->
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>" + "<" + "/script>");
+    </script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+     window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <!--[if lte IE 8]>
+      <script src="./assets/js/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="./assets/js/jquery-ui.custom.min.js"></script>
+    <script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="./assets/js/chosen.jquery.min.js"></script>
+    <script src="./assets/js/fuelux/fuelux.spinner.min.js"></script>
+    <script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="./assets/js/date-time/bootstrap-timepicker.min.js"></script>
+    <script src="./assets/js/date-time/moment.min.js"></script>
+    <script src="./assets/js/date-time/daterangepicker.min.js"></script>
+    <script src="./assets/js/date-time/bootstrap-datetimepicker.min.js"></script>
+    <script src="./assets/js/bootstrap-colorpicker.min.js"></script>
+    <script src="./assets/js/jquery.knob.min.js"></script>
+    <script src="./assets/js/jquery.autosize.min.js"></script>
+    <script src="./assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+    <script src="./assets/js/jquery.maskedinput.min.js"></script>
+    <script src="./assets/js/bootstrap-tag.min.js"></script>
+    <!--<script src="./assets/js/typeahead.jquery.min.js"></script>--><!-- 缺少 -->
+    <script src="./assets/js/dropzone.min.js"></script>
+    <!-- ace scripts -->
+    <script src="./assets/js/ace-elements.min.js"></script>
+    <script src="./assets/js/ace.min.js"></script>
+
+    <script src="./assets/js/bootbox.min.js"></script>
+    <script src="./assets/js/jquery.easypiechart.min.js"></script>
+    <script src="./assets/js/jquery.gritter.min.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript">
+        jQuery(function ($) {
+            //过期日期
+            $('.date-picker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+
+            //过期时间
+            $('#timepicker1').timepicker({
+                minuteStep: 1,
+                showSeconds: true,
+                showMeridian: false
+            }).next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+
+            //弹出框中图片控件
+            $('#modal-form input[type=file]').ace_file_input({
+                style: 'well',
+                btn_choose: 'Drop files here or click to choose',
+                btn_change: null,
+                no_icon: 'ace-icon fa fa-picture-o',
+                droppable: true,
+                thumbnail: 'large'
+            })
+
+            //加载时
+            $.getJSON("http://10.10.1.183:808/base/getFestivalInfo",function(data){
+            //$.getJSON("http://10.10.1.152:808/base/getFestivalInfo",function(data){
+            //$.getJSON("http://ai.cttq.com:808/base/getFestivalInfo",function(data){
+                var data = data.data;
+                    var expireDate = new Date(data.expireDate);
+                    var PYear = expireDate.getFullYear();
+                    var PMonth = (expireDate.getMonth() + 1) < 10 ? ("0" + (expireDate.getMonth() + 1)) : (expireDate.getMonth() + 1);
+                    var PDay = (expireDate.getDate()) < 10 ? ("0" + (expireDate.getDate())) : (expireDate.getDate());
+                    var PHours = (expireDate.getHours()) < 10 ? ("0" + (expireDate.getHours())) : (expireDate.getHours());
+                    var PMinutes = (expireDate.getMinutes()) < 10 ? ("0" + (expireDate.getMinutes())) : (expireDate.getMinutes());
+
+                    var shixiaoshijian = ''+PYear+'-'+PMonth+'-'+PDay+'  '+PHours+':'+PMinutes+':00'
+                    if ($("#sample-table-1 tr").length > 1) {
+                        $('#option').remove();
+                    };
+                    var newRow = "<tr id='option'><td><div id='localimag'><img src='' id='preview' width=-1 height=-1 style='diplay:none' /></div></td><td><h4 class='pink'>"+data.detail+"</h4></td><td class='hidden-480'><h4 class='pink'><span class='label label-sm label-warning'>"+shixiaoshijian+"</span></h4></td><td><h4 class='pink'><button class='btn btn-sm btn-primary' onclick='open1();'><i class='ace-icon fa fa-hand-o-right green'></i> 上传 </button></h4></td></tr>";
+                    $('#tbody').append(newRow);
+                    setImagePreview(data.imageURL);
+            },'json',function(e){
+                getJSONError(e,"http://10.10.1.183:808/base/getFestivalInfo");
+                //getJSONError(e,"http://10.10.1.152:808/base/getFestivalInfo");
+                //getJSONError(e,"http://ai.cttq.com:808/base/getFestivalInfo");
+            },'GET','',true);
+        });
+    </script>
+
+    <link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+    <link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+    <script type="text/javascript"> ace.vars['base'] = '..'; </script>
+    <!--<script src="./assets/js/ace/elements.onpage-help.js"></script>--> <!-- 缺少 -->
+    <script src="./assets/js/ace/ace.onpage-help.js"></script>
+    <script src="./docs/assets/js/rainbow.js"></script>
+    <script src="./docs/assets/js/language/generic.js"></script>
+    <script src="./docs/assets/js/language/html.js"></script>
+    <script src="./docs/assets/js/language/css.js"></script>
+    <script src="./docs/assets/js/language/javascript.js"></script>
+</body>
+</html>
+
+

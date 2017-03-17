@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>会议室预定后台管理-会议室调整</title>
+    <meta name="description" content="Common Buttons &amp; Icons"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css"/>
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css"/>
+    <!-- text fonts -->
+    <link rel="stylesheet" href="../assets/css/ace-fonts.css"/>
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css"/>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-part2.min.css"/>
+    <![endif]-->
+    <link rel="stylesheet" href="../assets/css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="../assets/css/ace-rtl.min.css"/>
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-ie.min.css"/>
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="../assets/js/html5shiv.js"></script>
+    <script src="../assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script src='../assets/js/jquery.min.js'></script>
+    <script src="../layer/layer.min.js"></script>
+
+    <script src="../myjs/backupNew.js"></script>
+    <script src="../myjs/lexus.js"></script>
+
+    <!-- ace settings handler -->
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <script src="../assets/js/bootstrap-tag.min.js"></script>
+
+    <!-- 加载自定义样式 -->
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="../assets/css/cttq-fonts.css">
+    <style type="text/css">
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            border: 1px dotted #DCEBF7;
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+        }
+
+        .table > tbody {
+            border: 1px solid #DCEBF7;
+        }
+
+        .table > tbody > tr > td > p, .table > tbody > tr > th {
+            /*margin-bottom:0px;*/
+        }
+
+        .btn-success {
+            background-color: #629b58 !important;
+            border-color: #629b58
+        }
+
+        .btn-success:focus {
+            background-color: #629b58 !important;
+            border-color: #87b87f
+        }
+
+        .table > tbody > tr {
+            /*cursor:pointer;*/
+        }
+
+        .tooltip-info + .tooltip.bottom .tooltip-arrow, .tooltip.tooltip-info.bottom .tooltip-arrow {
+            border-bottom-color: #428bca;
+        }
+
+        .tooltip-info + .tooltip > .tooltip-inner, .tooltip.tooltip-info > .tooltip-inner {
+            background-color: #428bca;
+            border-radius: 4px;
+        }
+
+        .action-buttons a {
+            float: left;
+            display: block;
+        }
+
+        .PortraitHead {
+            float: left;
+            margin-right: 10px;
+            width: 48px;
+            position: relative;
+        }
+
+        .PortraitHead img {
+            border: 1px solid #C9D6E5;
+            border-radius: 100%;
+            max-width: 48px;
+            margin-right: 10px;
+            margin-left: 0px;
+            box-shadow: none;
+        }
+
+        .tooltip.PortraitHead_Admin {
+            position: absolute; /*top:22px;left:-166px;*/
+            top: 62px;
+            left: -126px;
+            visibility: hidden;
+            /*opacity:0.0;
+            -moz-transition:all 0.5s ease;
+            -webkit-transition:all 0.5s ease;
+            -o-transition:all 0.5s ease;*/
+        }
+
+        .tooltip.PortraitHead_AdminHover {
+            visibility: visible;
+            /*opacity:1;
+            top:62px;left:-126px;*/
+        }
+
+        .tooltip.bottom {
+            padding: 0;
+            margin: 0;
+        }
+
+        .PortraitHead_Admin .tooltip-inner {
+            background-color: #fff;
+            padding: 0;
+            max-width: 300px;
+            text-shadow: none;
+            margin: 0;
+            color: #000;
+            width: 300px;
+        }
+
+        .PortraitHead_Admin .widget-header {
+            padding: 0;
+        }
+
+        .tooltip.bottom .tooltip-arrow {
+            top: -27px;
+            z-index: 1000;
+            margin-left: -13px;
+            border-width: 14px;
+            border-bottom-color: #ccc;
+        }
+
+        .tooltip.bottom .tatwoA {
+            border-bottom-color: #f7f7f7;
+            top: -26px;
+        }
+
+        /*焦点图*/
+        .bigImg img {
+            width: 100%;
+        }
+
+        .miniImgBox {
+            margin-right: 4px;
+            width: 80px;
+            height: 80px;
+        }
+
+        .miniImgBox img {
+            border: 2px solid #ccc;
+            width: 100%;
+        }
+
+        #miniImgLine .active img {
+            border: 2px solid #e4393c;
+        }
+
+        .miniBoxButton {
+            height: 80px;
+        }
+
+        .miniBoxButton button {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            vertical-align: middle;
+            line-height: 70px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background-color: #f5f5f5 !important;
+            color: #000 !important;
+        }
+
+        .miniBoxButton button.btn-grey:focus {
+            background-color: #888 !important;
+            color: #fff !important;
+        }
+
+        .miniBoxButton button.btn-grey:hover, .miniBoxButton button.btn-grey:active {
+            color: #fff !important;
+        }
+
+        .miniBoxButton button i {
+            font-size: 100% !important;
+        }
+
+        #miniImgLine {
+            position: absolute;
+        }
+
+        .tabletd {
+            color: #336199;
+            text-align: -webkit-right;
+        }
+
+        .widget-body .table {
+            border-top: none;
+        }
+
+        .table > tbody > tr > td > label {
+            padding-right: 16px;
+        }
+
+        .profile-info-value {
+            display: table-cell;
+            padding: 3px 12px 3px 0px;
+            border-top: none;
+        }
+
+        @media (max-width: 991px) {
+            .tabledd {
+                min-width: 70px;
+            }
+        }
+
+        @media (min-width: 767px) {
+            .table > tbody > tr > td.timetrrs {
+                padding-top: 15px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .timebt {
+                padding-top: 12px;
+            }
+
+            .table > tbody > tr > td.timetrr {
+                padding-top: 40px;
+            }
+
+            .labelsp {
+                padding-bottom: 10px;
+            }
+        }
+
+        .widget-color-blue2 > .widget-header {
+            background: #2577e3;
+            border-color: #2577e3;
+        }
+    </style>
+</head>
+
+<body class="no-skin">
+<div class="main-container" id="main-container">
+    <!-- /section:basics/sidebar -->
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon">
+                </i>
+                <a href="#">
+                    会议室调整
+                </a>
+            </li>
+        </ul>
+        <!-- /.breadcrumb -->
+        <button class="btn border-none" style="float:right;" onClick="closeLay()">
+            <i class="glyphicon glyphicon-remove align-top">
+            </i>
+        </button>
+    </div>
+    <div class="main-content">
+        <div class="page-content">
+            <div class="page-content-area">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-main row" style="margin:0;">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table" style="margin-bottom: 0px;">
+                                        <tbody>
+                                        <tr>
+                                            <td style="border-right: none;">
+                                                <div class="PortraitHead"
+                                                     style="padding-top: 25%; float: right; margin-right: 2px;">
+                                                    <img alt="" src="../assets/avatars/avatar5.png">
+                                                </div>
+                                            </td>
+                                            <td colspan="3" style="border: none;">
+                                                <div class="profile-info-value" style="padding-left: 0;">
+                                                    <div class="profile-info-value">
+                                                        <h3 style="margin-top: 0px;" id="userNACHN"></h3>
+                                                    </div>
+                                                    <div class="profile-info-value">
+                                                        <span id="userPERNR"></span>
+                                                    </div>
+                                                    <div class="profile-info-value" style="display:-webkit-box">
+                                                        <span id="userBUMEN"></span>
+                                                    </div>
+                                                    <div class="profile-info-value">
+                                                        <span id="userTELL"></span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tabletd" style="padding-top: 16px;">会议室</td>
+                                            <td colspan="3">
+                                                <div class="input-group col-xs-7 col-sm-5">
+                                                    <select class="form-control" id="selectedMeetRoomId"
+                                                            onchange="changeRoom()"></select>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tabletd tabledd" style="width:12%">会议主题</td>
+                                            <td style="width:38%"><label id="topic" style="padding-right: 0;"></label>
+                                            </td>
+
+                                            <td class="tabletd tabledd" style="width:12%">会议类型</td>
+                                            <td><label id="type"></label></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tabletd">最高级别</td>
+                                            <td><label id="level"></label></td>
+
+                                            <td class="tabletd">参会人数</td>
+                                            <td><label id="userNumber"></label></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tabletd">清场时间</td>
+                                            <td colspan="3" id="qingchangshijian"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="timetrrs  timetrr tabletd">开始时间</td>
+                                            <td colspan="3">
+                                                <div class="col-sm-12" style="padding:0px;">
+                                                    <div class="col-sm-6 igbt_01" style="padding-left: 0px;">
+                                                        <div class="input-group">
+                                                            <input class="form-control date-picker"
+                                                                   id="id-date-picker-1" type="text"
+                                                                   data-date-format="yyyy-mm-dd"/>
+																		<span class="input-group-addon">
+																			<i class="fa fa-calendar bigger-110 orange"></i>
+																		</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 igbt_02 timebt" style="padding-left: 0px;">
+                                                        <div class="input-group bootstrap-timepicker">
+                                                            <input id="timepicker1" type="text" class="form-control"/>
+																		<span class="input-group-addon">
+																			<i class="fa fa-clock-o bigger-110 orange"></i>
+																		</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tabletd timetrrs timetrr">结束时间</td>
+                                            <td colspan="3">
+                                                <div class="col-sm-12" style="padding:0px;">
+                                                    <div class="col-sm-6 igbt_01" style="padding-left: 0px;">
+                                                        <div class="input-group">
+                                                            <input class="form-control date-picker"
+                                                                   id="id-date-picker-2" type="text"
+                                                                   data-date-format="yyyy-mm-dd"/>
+																		<span class="input-group-addon">
+																			<i class="fa fa-calendar bigger-110 orange"></i>
+																		</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 igbt_02 timebt" style="padding-left: 0px;">
+                                                        <div class="input-group bootstrap-timepicker">
+                                                            <input id="timepicker2" type="text" class="form-control"/>
+																		<span class="input-group-addon">
+																			<i class="fa fa-clock-o bigger-110 orange"></i>
+																		</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <input id="allhours" type="hidden">
+                                        <tr id="ldate" style="display: none;">
+                                            <td></td>
+                                            <td>共<label id="">&nbsp;4.0&nbsp;</label>小时</td>
+                                            <td style="border: none"></td>
+                                            <td style="border: none"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tabletd">服务人员</td>
+                                            <td id="servicePersonal" colspan="3" style="border: none"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tabletd">技术支持</td>
+                                            <td id="technicist" colspan="3">
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tabletd" style="padding-top: 14px;">会议设备</td>
+                                            <td colspan="3">
+															<span class="editable action-buttons" id="shebei">
+																
+															</span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tabletd">会议用品</td>
+                                            <td id="goods" colspan="3">
+
+                                            </td>
+                                        </tr>
+
+                                        <tr id="upfile" style="display: none;">
+                                            <td class="tabletd">上传席位卡</td>
+                                            <input type="hidden" id="seatCard" value="">
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tabletd">预约备注</td>
+                                            <td id="remark" colspan="3">
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="tabletd" style="padding-top: 27px;">审批意见</td>
+                                            <td id="" colspan="3" style="border: none;">
+                                                <textarea id="form-field-11" style="resize:none;height: 65px;"
+                                                          class="autosize-transition form-control"></textarea>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="2" style="border-right: none;">
+                                                <button class="btn btn-warning" type="reset"
+                                                        style="float: right;width: 35%;" onclick="closeLay()">
+                                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                    取消
+                                                </button>
+                                            </td>
+                                            <td colspan="2" style="border-left: none;">
+                                                <button class="btn btn-info" type="button" style="width: 35%;"
+                                                        onclick="submitAdjust()">
+                                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                                    提交
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- basic scripts
+<!--[if !IE]> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+</script>
+<!-- <![endif]-->
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+</script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- page specific plugin scripts -->
+<!-- ace scripts -->
+<script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="../assets/js/date-time/bootstrap-timepicker.min.js"></script>
+<script src="../assets/js/date-time/moment.min.js"></script>
+<script src="../assets/js/date-time/daterangepicker.min.js"></script>
+<script src="../assets/js/date-time/bootstrap-datetimepicker.min.js"></script>
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+<script type="text/javascript"> ace.vars['base'] = '.'; </script>
+<script src="../assets/js/ace/elements.onpage-help.js"></script>
+<script src="../assets/js/jquery.gritter.min.js"></script>
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    var meetingRoomDetails = new Object();
+    // 获取会议用品
+    function getGoods(checked) {
+        $.ajax({
+            type: "post",
+            url: "/meet/findMeetGoods",
+            contentType: "application/json",
+            success: function (data) {
+                if (data.status == 0) {
+                    //会议室用品
+                    var yonpinList = "";
+                    for (i = 0; i < data.data.length; i++) {
+                        yonpinList += '\
+                            <label class="labelsp">\
+                                <input name="goods" class="ace ace-checkbox-2" type="checkbox" id="'+data.data[i]['code']+'"/>\
+                                <span class="lbl"> '+data.data[i]['name']+'</span>\
+                            </label class="labelsp">';
+                    }
+                    $("#goods").html(yonpinList);
+
+                    for(var i = 0;i < checked.length;i++) {
+                        $("#" + checked[i]['code']).prop("checked",true);
+                    }
+                    $("#3006").on("click", function () {
+                        if(!$("#3006").prop("checked")) {
+                            $.layer({
+                                shade: [0],
+                                area: ['auto','auto'],
+                                dialog: {
+                                    msg: '是否删除席位卡？',
+                                    btns: 2,
+                                    type: 4,
+                                    btn: ['是','否'],
+                                    yes: function(){
+                                        $("#seatCard").val("");
+                                        $("#3006").prop("checked",false);
+                                        layer.close(layer_index++);
+                                    }, no: function(){
+                                        $("#3006").prop("checked",!$("#3006").prop("checked"));
+                                    }
+                                },
+                                close: function(index){
+                                    $("#3006").prop("checked",!$("#3006").prop("checked"));
+                                }
+
+                            });
+                        } else {
+                            $("#seatCard").val("");
+                            uploadLayer();
+                        }
+                    });
+                }
+            }
+        });
+    }
+    var layer_index = 1;
+    // 上传页面
+    function uploadLayer() {
+        $.layer({
+            type: 2,
+            border: [0],
+            title: false,
+            shadeClose: false,
+            closeBtn: false,
+            shade: [0.8, '#000'],
+            offset: ['20px', ''],
+            area: ['768px', '280px'],
+            iframe: {src: 'MR_Ordinary_Upload.html'}
+        });
+    }
+
+    jQuery(function ($) {
+        $.ajaxSetup({
+            contentType: 'application/json',
+            async: false,
+            error: function () {
+                var unique_id = $.gritter.add({
+                    title: '系统警告信息提示',
+                    text: '' + errMsg1 + '<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                    sticky: true,
+                    time: '',
+                    class_name: 'gritter-info gritter-center'
+                });
+            },
+            timeout: timeout
+        });
+
+        //页面初始化
+        $('[data-rel=tooltip]').tooltip();
+        $('[data-rel=popover]').popover({html: true});
+        $(".PortraitHead").each(function (i) {
+            $(this).hover(function () {
+                $(this).children(".PortraitHead_Admin").addClass("PortraitHead_AdminHover");
+            }, function () {
+                $(this).children(".PortraitHead_Admin").removeClass("PortraitHead_AdminHover");
+            })
+        });
+
+        var paramJSon = {
+            "scheduleId": getQueryString("WaitHandle")
+        };
+        $.post("/meet/searchSchedule", JSON.stringify(paramJSon), function (data) {
+            data = typeof(data) == 'string' ? $.parseJSON(data) : data;
+            meetingRoomDetails = data.data.meetRoom;
+            if (data.status == 0) {
+                $('#selectedMeetRoomId').val(data.data.meetRoom._id);
+                $("#topic").text(data.data.topic);
+                $("#type").text(data.data.type);
+                $("#level").text(data.data.level);
+                $("#userNumber").text(data.data.userNumber);
+                $("#qingchangshijian").text(data.data.meetRoom.clearMinute + '分钟')
+                $("#id-date-picker-1").val(formatDate(data.data.startTime, 'y-m-d'));
+                $("#timepicker1").val(formatDate(data.data.startTime, 'h:i'));
+                $("#id-date-picker-2").val(formatDate(data.data.endTime, 'y-m-d'));
+                $("#timepicker2").val(formatDate(data.data.endTime, 'h:i'));
+                $('.date-picker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                })
+                        .next().on(ace.click_event, function () {
+                            $(this).prev().focus();
+                        });
+                $('#timepicker1').timepicker({
+                    minuteStep: 10,
+                    showSeconds: false,
+                    //defaultTime: formatDate(data.data.startTime, 'h:i'),
+                    showMeridian: false
+                })
+                        .next().on(ace.click_event, function () {
+                            $(this).prev().focus();
+                        });
+
+                $('#timepicker2').timepicker({
+                    minuteStep: 10,
+                    showSeconds: false,
+                    //defaultTime: formatDate(data.data.endTime, 'h:i'),
+                    showMeridian: false
+                })
+                        .next().on(ace.click_event, function () {
+                            $(this).prev().focus();
+                        });
+
+                $('#id-date-picker-1').datepicker().on('hide',function(e) {
+                    calcTime(e);
+                });
+                $('#id-date-picker-2').datepicker().on('hide',function(e) {
+                    calcTime(e);
+                });
+                $('#timepicker1').timepicker().on('hide.timepicker', function (e) {
+                    calcTime(e);
+                });
+                $('#timepicker2').timepicker().on('hide.timepicker', function (e) {
+                    calcTime(e);
+                });
+
+
+                $("#remark").text(data.data.remark);
+                $("#form-field-11").val(data.data.comments);
+
+
+                var servicePersonal = '';
+                for (var i = 0; i < data.data.meetRoom.servicePersonal.length; i++) {
+                    servicePersonal += '<label class="labelsp"><input name="servicePersonal" class="ace ace-checkbox-2" type="checkbox" value="' + data.data.meetRoom.servicePersonal[i]['userId'] + ' ' + data.data.meetRoom.servicePersonal[i]['userName'] + '"/><span class="lbl"> ' + data.data.meetRoom.servicePersonal[i]['userName'] + '</span></label class="labelsp">';
+                }
+                $("#servicePersonal").append(servicePersonal);
+
+                var technicist = '';
+                for (var i = 0; i < data.data.meetRoom.technicist.length; i++) {
+                    technicist += '<label class="labelsp"><input name="technicist" class="ace ace-checkbox-2" type="checkbox" value="' + data.data.meetRoom.technicist[i]['userId'] + ' ' + data.data.meetRoom.technicist[i]['userName'] + '"/><span class="lbl" > ' + data.data.meetRoom.technicist[i]['userName'] + '</span></label class="labelsp">';
+                }
+                $("#technicist").append(technicist);
+                $("#seatCard").val(data.data.seatCard);
+                getGoods(data.data.goods);
+
+                var iconImg = '';
+                for (var i = 0; i < data.data.meetRoom.device.length; i++) {
+                    //iconImg +='<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="'+data.data.meetRoom.device[i]['name']+'" id="'+data.data.meetRoom.device[i]['code']+'" rel="'+data.data.meetRoom.device[i]['code']+' '+data.data.meetRoom.device[i]['name']+'"><i onclick="CheckboxColor(this);" class="ace-icon fa fa-rss-square text-primary bigger-200"></i></a>';
+                    iconImg += '<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="' + data.data.meetRoom.device[i]['name'] + '" rel="' + data.data.meetRoom.device[i]['code'] + ' ' + data.data.meetRoom.device[i]['name'] + '">' +
+                    '<i class="cttq-icon cttq-' + data.data.meetRoom.device[i].code + ' text-primary bigger-200"></i></a>';
+                }
+                $("#shebei").append(iconImg);
+
+                getMeetingList(data.data.meetRoom._id);
+            } else {
+                layer.msg(data.msg, 1, 1);
+            }
+        });
+    });
+
+    function calcTime(e) {
+        // 时间合法性验证
+        var beginDate = $("#id-date-picker-1").val();
+        var endDate = $("#id-date-picker-2").val();
+        var beginTime = $("#timepicker1").val();
+        var endTime = $("#timepicker2").val();
+
+        if (beginDate != '' && endDate != '') {
+            var beginDateU = changeTime(beginDate + " 08:00:00");
+            var endDateU = changeTime(endDate + " 20:00:00");
+            var today = new Date();
+            var todayStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+            today = new Date(todayStr).getTime();
+            if(beginDateU <= today) {
+                var fixedDate = new Date(new Date().getTime() + 4 * 3600 * 1000);
+                $("#id-date-picker-1").datepicker('update',
+                        fixedDate.getFullYear() + "-" + (fixedDate.getMonth() +  101 + "").substr(1) + "-" + fixedDate.getDate());
+            }
+            if (endDateU < beginDateU) {
+                if (e.target.id == "id-date-picker-1") {
+                    $("#id-date-picker-2").datepicker('update',$("#id-date-picker-1").val());
+                } else if (e.target.id == "id-date-picker-2") {
+                    $("#id-date-picker-1").datepicker('update',$("#id-date-picker-2").val());
+                }
+            }
+        }
+        beginDate = $("#id-date-picker-1").val();
+        endDate = $("#id-date-picker-2").val();
+        if (beginDate != '' && endDate != '' && beginTime != '' && endTime != '') {
+            var beginDateTime = changeTime(beginDate + " " + beginTime + ":00");
+            var endDateTime = changeTime(endDate + " " + endTime + ":00");
+            var tempDate = new Date(beginDateTime);
+            if(endDateTime <= beginDateTime || (endDateTime - beginDateTime) < 600000) {
+                $("#timepicker2").timepicker("setTime",tempDate.getHours() + ":" + (tempDate.getMinutes() + 110 + "").substr(1));
+            }
+        }
+        // 时间合法性验证 -- end
+
+        beginTime = $("#timepicker1").val();
+        endTime = $("#timepicker2").val();
+        $("#allhours").val(Math.round((changeTime(endDate + " " + endTime + ":00")-changeTime(beginDate + " " + beginTime + ":00"))/36000) / 100);
+    }
+
+    // yyyy-mm-dd hh:mm:ss
+    function changeTime(string) {
+        var f = string.split(' ', 2);
+        var d = (f[0] ? f[0] : '').split('-', 3);
+        var t = (f[1] ? f[1] : '').split(':', 3);
+        return (new Date(
+                parseInt(d[0], 10) || null,
+                (parseInt(d[1], 10) || 1) - 1,
+                parseInt(d[2], 10) || null,
+                parseInt(t[0], 10) || null,
+                parseInt(t[1], 10) || null,
+                parseInt(t[2], 10) || null
+        )).getTime();
+    }
+
+    //获取当前用户可以管理的会议室列表
+    function getMeetingList(currentId) {
+        var paramJSon = {
+            userId: localStorage["pernrBase"]
+        };
+        $.post("/meet/getMyAdminMeetingRoomList", JSON.stringify(paramJSon), function (data) {
+            var meetRoomListStr = '';
+            for (var i = 0; i < data.data.length; i++) {
+                if (data.data[i]._id == currentId) {
+                    meetRoomListStr = '<option value="' + data.data[i]._id + '" selected = "selected">' + data.data[i].name + '</option>' + meetRoomListStr;
+                } else {
+                    meetRoomListStr += '<option value="' + data.data[i]._id + '">' + data.data[i].name + '</option>';
+                }
+
+            }
+            $('#selectedMeetRoomId').html(meetRoomListStr);
+
+        });
+    }
+
+    // 获取请求链接中的指定参数的值
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)
+            return r[2];
+        return null;
+    }
+
+    function changexiaoshi(val) {
+        val = val.split(':');
+        val1 = Number(val[0]) * 3600;
+        val2 = Number(val[1]) * 60;
+        return val1 + val2;
+    }
+
+
+    //调整提交操作
+    function submitAdjust() {
+        var selectedMeetRoomId = $('#selectedMeetRoomId').val();
+        var startTime = getTimeToUnit($("#id-date-picker-1").val() + ' ' + $("#timepicker1").val() + ':00');
+        var endTime = getTimeToUnit($("#id-date-picker-2").val() + ' ' + $("#timepicker2").val() + ':00');
+        var nawTime = (new Date()).valueOf();
+        if (endTime <= startTime) {
+            layer.msg("结束时间不能小于开始时间", 1, -1);
+            return false;
+        }
+        var scheduleId = getQueryString("WaitHandle");
+        isPassed(selectedMeetRoomId, startTime, endTime, scheduleId);
+    }
+    ;
+
+    function isPassed(selectedMeetRoomId, startTime, endTime, scheduleId) {
+        var paramJSon = {
+            'meetingRoomId': selectedMeetRoomId,
+            'startTime': startTime,
+            'endTime': endTime
+        };
+        $.post("/meet/isPassed", JSON.stringify(paramJSon), function (data) {
+            data = typeof(data) == 'string' ? $.parseJSON(data) : data;
+            if (data.code == 0) {
+                var paramJSon = {
+                    'startTime': startTime,
+                    'endTime': endTime,
+                    'meetingRoomId': selectedMeetRoomId
+                };
+                $.post("/meet/validateClearOverTime",JSON.stringify(paramJSon),function(info){
+                    if(info.status == 0) {
+                        isFrozen(selectedMeetRoomId, startTime, endTime, scheduleId);
+                    }else {
+                        $.layer({
+                            shade: [0],
+                            area: ['auto','auto'],
+                            dialog: {
+                                msg: '申请时间段与清场时间冲突，是否强制同意？',
+                                btns: 2,
+                                type: 4,
+                                btn: ['是','否'],
+                                yes: function(){
+                                    //判断申请时间段是否冲突
+                                    isFrozen(selectedMeetRoomId, startTime, endTime, scheduleId);
+                                }, no: function(){
+                                }
+                            }
+                        });
+                    }
+                });
+            } else {
+                layer.msg(data.msg,2,-1);
+            }
+        });
+    }
+
+    function isFrozen(selectedMeetRoomId, startTime, endTime, scheduleId) {
+        var paramJSon = {
+            'meetRoomId': selectedMeetRoomId,
+            'startTime': startTime,
+            'endTime': endTime
+        };
+        $.post("/meet/isFrozen", JSON.stringify(paramJSon), function (data) {
+            data = typeof(data) == 'string' ? $.parseJSON(data) : data;
+            if (data.isFrozen == 0) {
+//                validateClearOverTime(selectedMeetRoomId, startTime, endTime, scheduleId);
+                save_adjust(selectedMeetRoomId, startTime, endTime, scheduleId);
+            } else {
+                layer.msg("该会议室在申请时间段被冻结", 1, -1);
+
+            }
+        });
+    }
+
+    function save_adjust(selectedMeetRoomId, startTime, endTime, scheduleId) {
+        var servicePersonal = new Array();
+        $("input[name='servicePersonal']:checked").each(function (index, item) {
+            var admins2 = '';
+            admins2 = $(this).val().split(" ");
+            servicePersonal[index] = {'userId': admins2[0], 'userName': admins2[1]}
+        });
+        var technicist = new Array();
+        $("input[name='technicist']:checked").each(function (index, item) {
+            var admins3 = '';
+            admins3 = $(this).val().split(" ");
+            technicist[index] = {'userId': admins3[0], 'userName': admins3[1]}
+        });
+        var goods = new Array();
+        $("input[name='goods']:checked").each(function (index, item) {
+            goods[index] = {'code': $(this).attr("id"), 'name': $(this).next().html()}
+        });
+
+        var userName = "";
+        var paramJSon = {
+            "IS_PUBLIC": {
+                "FLOWNO": "",
+                "PERNR": "",
+                "ZDOMAIN": "400",
+                "I_PAGENO": "",
+                "I_PAGESIZE": ""
+            },
+            "P_DATE": "",
+            "P_PERNR": {
+                "item": [{
+                    "PERNR": localStorage["pernrBase"]
+                }]
+            }
+        };
+        $.ajax({
+            type: "post",
+            url: "/zhr/ZHR_GET_PER_EASY_INFO",
+            contentType: "application/json",
+            data: JSON.stringify(paramJSon),
+            async:false,
+            success: function (data) {
+                if (data.RETURN_SUBRC == 0) {
+                    userName = data.EASY_TAB.item[0].NACHN;
+                }
+            }
+        });
+
+        var ifKuaTian = 0;
+        if ($("#id-date-picker-1").val() != '' && $("#id-date-picker-2").val() != '' &&
+                $("#timepicker1").val() != '' && $("#timepicker1").val() != '') {
+            if ($("#id-date-picker-1").val() != $("#id-date-picker-2").val()) {
+                ifKuaTian = 1;
+            }
+        }
+
+        paramJSon = {
+            'scheduleId': scheduleId,
+            'meetingRoomId': selectedMeetRoomId,
+            'meetRoomName': $('#selectedMeetRoomId :selected').text(),
+            'startTime': Number(startTime),
+            'endTime': Number(endTime),
+            'servicePersonal': servicePersonal,
+            'technicist': technicist,
+            'comments': $('#form-field-11').val(),
+            'clearOverTime': meetingRoomDetails.clearMinute * 60 * 1000 + changeTime($("#id-date-picker-2").val() + " " + $("#timepicker2").val() + ":00"),
+            goods: goods,
+            guishudiCode: meetingRoomDetails.guishudiId,
+            guishudiName: meetingRoomDetails.guishudiName,
+            needApply: meetingRoomDetails.needApply,
+            userTimes: $("#allhours").val(),
+            ifKuaTian: ifKuaTian,
+            userId: localStorage["pernrBase"],
+            userName: userName,
+            seatCard: $("#seatCard").val()
+        };
+        $.post("/meet/adjustMeetingRoom", JSON.stringify(paramJSon), function (data) {
+            data = typeof(data) == 'string' ? $.parseJSON(data) : data;
+            if (data.status == 0) {
+                layer.msg('操作成功', 1, 1);
+                parent.location.reload();
+            } else {
+                layer.msg(data.msg, 1, 1);
+            }
+        });
+    }
+
+    //判断清场时间是否冲突
+    function validateClearOverTime(selectedMeetRoomId, startTime, endTime, scheduleId) {
+        var paramJSon = {
+            'meetingRoomId': selectedMeetRoomId,
+            'startTime': startTime,
+            'endTime': endTime
+        };
+        $.post("/meet/validateClearOverTime", JSON.stringify(paramJSon), function (data) {
+            data = typeof(data) == 'string' ? $.parseJSON(data) : data;
+            if (data.status == 0) {
+                save_adjust(selectedMeetRoomId, startTime, endTime, scheduleId);
+            } else {
+                $.layer({
+                    shade: [0],
+                    area: ['auto', 'auto'],
+                    dialog: {
+                        msg: '开始时间和清场时间冲突，是否通过审核？',
+                        btns: 2,
+                        type: 4,
+                        btn: ['是', '否'],
+                        yes: function () {
+                            //判断申请时间段是否冲突
+                            save_adjust(selectedMeetRoomId, startTime, endTime, scheduleId);
+                        }, no: function () {
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    //关闭弹出层
+    function closeLay() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+
+    //补零
+    function Appendzero(obj) {
+        if (obj < 10) return "0" + obj; else return obj;
+    }
+
+    //时间戳格式化成正式时间可是
+    function formatDate(now, type) {
+        var time = new Date(now);
+        var ymdhis = "";
+        if (type == 'y-m-d') {
+            ymdhis += time.getFullYear() + "-";
+            ymdhis += Appendzero((time.getMonth() + 1)) + "-";
+            ymdhis += Appendzero(time.getDate());
+        } else if (type == 'h:i') {
+            ymdhis += Appendzero(time.getHours()) + ":";
+            ymdhis += Appendzero(time.getMinutes());
+            //ymdhis += Appendzero(time.getSeconds());
+        }
+        return ymdhis;
+    }
+
+    //将日期格式转化为时间戳
+    function getTimeToUnit(sTimeTmp) {
+        var ss = new Date(Date.parse(sTimeTmp.replace(/-/g, "/")));
+        var sss = new Date(ss);
+        var time_str = ss.getTime().toString();
+        //var sTime =  time_str.substr(0, 10);
+        return time_str;
+    }
+    function CheckboxColor(obj) {
+        if (obj.className != "ace-icon fa fa-rss-square text-onclick bigger-200") {
+            obj.oldClass = obj.className; // 暂存原来的class，用于恢复
+            obj.className = "ace-icon fa fa-rss-square text-onclick bigger-200";
+            $(obj).parent().removeClass("tooltip-info");
+            $(obj).parent().addClass("tooltip-warning");
+        } else if (obj.oldClass) {
+            obj.className = obj.oldClass; // 暂存原来的class，用于恢复
+            $(obj).parent().removeClass("tooltip-warning");
+            $(obj).parent().addClass("tooltip-info");
+        }
+    }
+
+    function changeRoom() {
+        var paramJSon = {
+            "roomId": $("#selectedMeetRoomId").val()
+        }
+        $.post("/meet/getRoomDetail", JSON.stringify(paramJSon), function (data) {
+            meetingRoomDetails = data.data;
+            data = typeof(data) == 'string' ? $.parseJSON(data) : data;
+
+            $("#qingchangshijian").text(data.data.clearMinute + '分钟');
+
+            var fuwuyuan = "";
+            if (data.data.servicePersonal.length > 0) {
+                for (var i = 0; i < data.data.servicePersonal.length; i++) {
+                    fuwuyuan += '<label class="labelsp"><input name="servicePersonal" class="ace ace-checkbox-2" type="checkbox" value="' + data.data.servicePersonal[i]['userId'] + ' ' + data.data.servicePersonal[i]['userName'] + '"/><span class="lbl"> ' + data.data.servicePersonal[i]['userName'] + '</span></label class="labelsp">';
+                }
+            }
+            $("#servicePersonal").html(fuwuyuan);
+            var jishuyuan = "";
+            if (data.data.technicist.length > 0) {
+                for (var i = 0; i < data.data.technicist.length; i++) {
+                    jishuyuan += '<label class="labelsp"><input name="technicist" class="ace ace-checkbox-2" type="checkbox" value="' + data.data.technicist[i]['userId'] + ' ' + data.data.technicist[i]['userName'] + '"/><span class="lbl" > ' + data.data.technicist[i]['userName'] + '</span></label class="labelsp">';
+                }
+            }
+            $("#technicist").html(jishuyuan);
+            var shebei = '';
+            for (var i = 0; i < data.data.device.length; i++) {
+                shebei += '\
+                <a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="' + data.data.device[i]['name'] + '" rel="' + data.data.device[i]['code'] + ' ' + data.data.device[i]['name'] + '">\
+                    <i class="cttq-icon cttq-' + data.data.device[i].code + ' text-primary bigger-200"></i>\
+                </a>';
+            }
+            $("#shebei").html(shebei);
+
+            //getGoods([]);
+        })
+
+    }
+</script>
+
+<link rel="stylesheet" href="../assets/css/ace.onpage-help.css"/>
+<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css"/>
+
+<!-- 焦点图 -->
+<script src="../myjs/jquery.jqzoom.js"></script>
+<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+<script src="../assets/js/ace/ace.onpage-help.js"></script>
+<script src="../docs/assets/js/rainbow.js"></script>
+<script src="../docs/assets/js/language/generic.js"></script>
+<script src="../docs/assets/js/language/html.js"></script>
+<script src="../docs/assets/js/language/css.js"></script>
+<script src="../docs/assets/js/language/javascript.js"></script>
+</body>
+</html>

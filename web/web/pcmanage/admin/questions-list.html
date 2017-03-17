@@ -1,0 +1,607 @@
+<title>所有问题 - IT服务工作台</title>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">所有问题</h3>
+
+        <!--<div class="row">-->
+            <!--<div class="col-xs-12">-->
+                <!--<div class="col-xs-5">-->
+                    <!--<button class="btn btn-white btn-blue btn-no-border" id="addques">-->
+                        <!--<i class="ace-icon fa fa-plus  align-top bigger-125 icon-on-right"></i>-->
+                        <!--发布问题-->
+                    <!--</button>-->
+                <!--</div>-->
+                <!--<div class="col-xs-7"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<hr />-->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <form role="form" class="form-horizontal">
+                    <!-- #section:elements.form -->
+                    <div class="form-group">
+                        <label for="form-field-1" class="col-sm-1 control-label no-padding-right">字词检索：</label>
+
+                        <div id="form-field-1" class="col-sm-4">
+                            <div style="width: 41%; float:left;" class="input-group input-group-sm">
+                                <input type="text" class="col-xs-10 col-sm-12" placeholder="问题关键词" id="quesContent" />
+                            </div>
+                            <span style="float: left;padding-top: 5px;" class="col-xs-1"></span>
+                            <div style="width: 41%; float:left;" class="input-group input-group-sm">
+                                <input type="text" class="col-xs-10 col-sm-12" placeholder="提问人工号" id="quesRaiserWorkCode" />
+                            </div>
+                        </div>
+                        <label for="form-field-2" class="col-sm-1 control-label no-padding-right">日期检索：</label>
+
+                        <div id="form-field-2" class="col-sm-4">
+                            <!-- #section:elements.form.input-icon -->
+                            <div class="row">
+                                <div style="width: 41%; float:left;" class="input-group input-group-sm">
+                                    <input type="text" data-date-format="yyyy-mm-dd" id="quesRaiserBeginTime" class="form-control date-picker" placeholder="开始时间">
+                                             <span class="input-group-addon">
+                                              <i class="fa fa-calendar bigger-110"></i>
+                                            </span>
+                                </div>
+                                <span style="float: left;padding-top: 5px;">-</span>
+
+                                <div style="width: 41%; float:left;" class="input-group input-group-sm">
+                                    <input type="text" data-date-format="yyyy-mm-dd" id="quesRaiserEndTime" class="form-control date-picker" placeholder="结束时间">
+                                              <span class="input-group-addon">
+                                               <i class="fa fa-calendar bigger-110"></i>
+                                              </span>
+                                </div>
+                            </div>
+                            <!-- /section:elements.form.input-icon -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="form-field-3" class="col-sm-1 control-label no-padding-right">类型检索：</label>
+
+                        <div id="form-field-3" class="col-sm-2">
+                            <select  class="form-control" id="quesStateTzd">
+                                <option value="-1">所有问题状态</option>
+                                <option value="1">未解决</option>
+                                <option value="4">已解决</option>
+                                <option value="6">已关闭</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select  class="form-control" id="viewState">
+                                <option value="-1">所有显示状态</option>
+                                <option value="1">显示</option>
+                                <option value="2">不显示</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select  class="form-control" id="topState">
+                                <option value="-1">所有置顶类型</option>
+                                <option value="1">未置顶</option>
+                                <option value="2">已置顶</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <select  class="form-control" id="sysType">
+                                <option value="-1">所有系统类型</option>
+                                <option value="1">天知道</option>
+                                <option value="2">天知道&IT服务</option>
+                                <option value="3">IT服务</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <a  id="btnSearch" class="btn btn-success dropdown-toggle" href="javascript:;">搜索</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="table-header">
+            所有问题列表
+        </div>
+
+        <div>
+            <table id="list_table" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>问题</th>
+                    <th class="col-sm-1">提问人</th>
+                    <th class="col-sm-2 text-center">统计</th>
+                    <th class="col-sm-2 text-center">类型</th>
+                    <th class="col-sm-2">操作</th>
+                </tr>
+                </thead>
+            </table>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="dataTables_info" id="sample-table-2_info" role="status" aria-live="polite">共 <span id="totalnum"></span> 条数据</div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="dataTables_paginate paging_simple_numbers" id="sample-table-2_paginate">
+                        <ul class="pagination" id="paginations">
+                        </ul>
+                    </div>
+                </div>
+                <input type="hidden" id="currentpage" value="1" />
+                <input type="hidden" id="pageCount" value="1" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- page specific plugin scripts -->
+<script src="../assets/js/jquery.colorbox-min.js"></script>
+
+<!--模板-->
+<!--问题-->
+<script id="questionContentTmpl" type="text/html">
+    <div class="col-xs-12">
+        <div class="row" style="background-color: transparent;">
+            <div class="col-sm-1"><span class="blue">问</span>：</div><div class="col-sm-11"><%=showVal(quesContent)%></div>
+        </div>
+        <!--追问-->
+        <%
+        if(subQuesInfos && subQuesInfos.length > 0){
+            %>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11">
+                    <%
+                    for(var i=0; i < subQuesInfos.length; i++){
+                        var item = subQuesInfos[i];
+                    %>
+                    <span class="orange">追问</span>：<%=showVal(item.subQuesContent)%>
+                    <%
+                    if(item.subQuesImagePath && item.subQuesImagePath.length > 0){
+                    %>
+                    <ul class="ace-thumbnails clearfix">
+                        <%
+                        for(var j=0; j < item.subQuesImagePath.length; j++){
+                        %>
+                        <li>
+                            <a href="<%=item.subQuesImagePath[j] %>" class="quesImg" data-rel="colorbox">
+                                <img src="<%=item.subQuesImagePath[j] %>@1e_1c_50w_50h">
+                                <div class="text">
+                                    <div class="inner">点击查看大图</div>
+                                </div>
+                            </a>
+                        </li>
+                        <%
+                        }
+                        %>
+                    </ul>
+                    <%
+                    }
+                    %>
+                    <%
+                    }
+                    %>
+                </div>
+            </div>
+            <%
+        }
+        %>
+        <!--图片-->
+        <%
+        if(quesImages && quesImages.length > 0){
+        %>
+        <div class="row" style="background-color: transparent;">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-11">
+                <ul class="ace-thumbnails clearfix">
+            <%
+            for(var i=0; i < quesImages.length; i++){
+                %>
+                    <li>
+                        <a href="<%=quesImages[i] %>" class="quesImg" data-rel="colorbox">
+                            <img src="<%=quesImages[i] %>@1e_1c_100w_100h">
+                            <div class="text">
+                                <div class="inner">点击查看大图</div>
+                            </div>
+                        </a>
+                    </li>
+                <%
+            }
+            %>
+                </ul>
+            </div>
+        </div>
+        <%
+        }
+        %>
+        <!--标签&时间-->
+        <div class="row" style="border: none;background-color: transparent;">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-11">
+                <i class="glyphicon glyphicon-tag"></i>
+                <%
+                if(quesLabelList && quesLabelList != null){
+                    %>
+                    <label><%=(quesLabelList.quesLabelName == null ? "其他" : quesLabelList.quesLabelName)  %></label>
+                    <%
+                }else{
+                %>
+                <label>其他</label>
+                <%
+                }
+                %>
+
+                <!--<%-->
+                <!--if(quesLabelList && quesLabelList.length > 0){-->
+                    <!--for(var i=0; i < quesLabelList.length; i++){-->
+                        <!--var nm = quesLabelList[i].quesLabelName;-->
+                    <!--%>-->
+                        <!--<label><%=(nm == "" ? "其他" : nm)  %></label>-->
+                    <!--<%-->
+                    <!--}-->
+                <!--}-->
+                <!--%>-->
+                | <%=showTime(new Date(raiserDatetime)) %>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!--统计-->
+<script id="statTmpl" type="text/html">
+    <p><%=answerNum%>条回复</p>
+    <p><%=tabLikeSum%>条赞</p>
+    <p><%=collectSum%>条收藏</p>
+</script>
+
+<!--类型-->
+<script id="statusTmpl" type="text/html">
+    <%
+    if(viewState == 1){
+    %>
+    <p>正常</p>
+    <%
+    }else if(viewState == 2){
+    %>
+    <p>关闭</p>
+    <%
+    }
+    %>
+    <%
+    if(topState == 2){
+    %>
+    <p>置顶</p>
+    <%
+    }
+    %>
+</script>
+
+<script type="text/javascript">
+    var scripts = [null, "../assets/js/jquery.dataTables.min.js", "../assets/js/jquery.dataTables.bootstrap.js", null];
+    ace.load_ajax_scripts(scripts, function () {
+        //加载列表数据
+        Load_Data();
+
+        function Load_Data(){
+            var quesContent = $.trim($("#quesContent").val());
+            var quesRaiserWorkCode = $.trim($("#quesRaiserWorkCode").val());
+            var quesRaiserBeginTime = $.trim($("#quesRaiserBeginTime").val());
+            var quesRaiserEndTime = $.trim($("#quesRaiserEndTime").val());
+            var quesStateTzd = $("#quesStateTzd").val();
+            var viewState = $("#viewState").val();
+            var topState = $("#topState").val();
+            var sysType = $("#sysType").val();
+
+            var inputData ={
+                "userWorkCode" : currentUser.userWorkCode,
+                "quesContent" : quesContent,
+                "quesLabelCid" : "",
+                "quesLabelState" : "",
+                "quesStateTzd" : quesStateTzd == -1 ? "" : quesStateTzd,
+                "quesRaiserWorkCode" : quesRaiserWorkCode,
+                "viewState" : viewState == -1 ? "" : viewState,
+                "topState" : topState == -1 ? "" : topState,
+                "quesRaiserBeginTime" : quesRaiserBeginTime,
+                "quesRaiserEndTime" : quesRaiserEndTime,
+                "sysType" : sysType == -1 ? "1" : sysType,
+                "pageNum" : $("#currentpage").val(),
+                "pageSize" : "10"
+            };
+
+            var table;
+            $.ajax({
+                type: "POST",
+                url: it_service_url.ListQuesCommon,
+                data:JSON.stringify(inputData),
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    $('#customers_list_table td').empty();
+
+                    if(result.resultJson!=null){
+                        //分页
+                        var pageCount=0;
+                        if(result.resultJson.totalNum%result.resultJson.pageSize!=0){
+                            pageCount=parseInt(result.resultJson.totalNum/result.resultJson.pageSize) + 1;
+                        }
+                        else{
+                            pageCount=parseInt(result.resultJson.totalNum/result.resultJson.pageSize);
+                        }
+
+                        setPage(document.getElementById("paginations"),pageCount,result.resultJson.pageNum);
+                        $("#totalnum").html(result.resultJson.totalNum);
+                        $("#currentpage").val(result.resultJson.pageNum);
+                        $("#pageCount").val(pageCount);
+                        $("#customers_list_table_info").hide();
+                    }
+                    else{
+                        var pageCount=0;
+                        setPage(document.getElementById("paginations"),pageCount,0);
+                        $("#totalnum").html(0);
+                        $("#currentpage").val(0);
+                        $("#pageCount").val(pageCount);
+                        $("#customers_list_table_info").hide();
+                    }
+
+                    table = $('#list_table').dataTable({
+                        destroy:true,
+                        bAutoWidth: false,
+                        bSort: false,
+                        paging: false,
+                        "oLanguage": {
+                            "sSearch": "搜索"
+                        },
+                        "data": result.resultJson.quesList,
+                        "columns": [
+                            {
+                                "mData": null,
+                                "bSortable": false,
+                                "mRender": function (o) {
+                                    return baidu.template("questionContentTmpl", o);
+                                }
+                            },
+                            {
+                                "mData": null,
+                                "bSortable": false,
+                                "mRender": function (o) {
+                                    if (o.anonymous != 2) {
+                                        return '<label class="blue">匿名</label>';
+                                    } else {
+                                        return '<label class="blue">' + o.quesRaiserName + '</label>';
+                                    }
+                                }
+                            },
+                            {
+                                "mData": null,
+                                "bSortable": false,
+                                "mRender": function (o) {
+                                    return baidu.template("statTmpl", o);
+                                }
+                            },
+                            {
+                                "mData": null,
+                                "bSortable": false,
+                                "sClass": "center",
+                                "mRender": function (o) {
+                                    return baidu.template("statusTmpl", o);
+                                }
+                            },
+                            {
+                                "mData": null,
+                                "bSortable": false,
+                                "mRender": function (o) {
+                                    var returnStr = '';
+
+                                    if(o.quesStateTzd == 6){
+                                        returnStr += '<button type="button" class="btn btn-sm btn-success btn-round cancelClose" data-id='+o.quesCid+'>取消关闭</button>';
+                                    }else{
+                                        returnStr += '<button type="button" class="btn btn-sm btn-warning btn-round closeQues" data-id='+o.quesCid+'>关闭</button>';
+                                    }
+                                    if(o.topState == 2){
+                                        returnStr += '<button type="button" class="btn btn-sm btn-default btn-round cancelTop" style="margin-left: 5px;" data-id='+o.quesCid+'>取消置顶</button>';
+                                    }else{
+                                        returnStr += '<button type="button" class="btn btn-sm btn-success btn-round setTop" style="margin-left: 5px;" data-id='+o.quesCid+'>置顶</button>';
+                                    }
+                                    returnStr+='<a style="margin-left: 5px;" class="btn btn-white btn-default btn-round" href="' + it_service_common.adminUrl + '/admin/index.html?quesCid=' + o.quesCid + '#page/questions-detail">详情</a>';
+                                    return returnStr;
+                                }
+                            }
+                        ]
+                    });
+
+                    $('#list_table tbody').on('click', 'tr', function () {
+                        $(".it-service-highlight").each(function(){
+                            $(this).removeClass('it-service-highlight');
+                        });
+                        $(this).toggleClass('it-service-highlight');
+                    });
+
+                    $('#button').click(function () {
+                        alert(table.rows('.it-service-highlight').data().length + ' row(s) it-service-highlight');
+                    });
+
+                    //图片处理
+                    var $overflow = '';
+                    var colorbox_params = {
+                        rel: 'colorbox',
+                        reposition:true,
+                        scalePhotos:true,
+                        scrolling:false,
+                        previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                        next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                        close:'&times;',
+                        current:'{current} of {total}',
+                        maxWidth:'100%',
+                        maxHeight:'100%',
+                        onOpen:function(){
+                            $overflow = document.body.style.overflow;
+                            document.body.style.overflow = 'hidden';
+                        },
+                        onClosed:function(){
+                            document.body.style.overflow = $overflow;
+                        },
+                        onComplete:function(){
+                            $.colorbox.resize();
+                        }
+                    };
+
+                    $('.quesImg').colorbox(colorbox_params);
+                    $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");//let's add a custom loading icon
+                    $("#list_table_info").remove();
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                }
+            });
+        }
+
+        //搜索
+        $("#btnSearch").click(function(){
+            $("#currentpage").val(1);
+            Load_Data();
+        });
+
+
+        //选择分页
+        $("#paginations").click(function(){
+            if(parseInt($("#currentpage").val())>0 && parseInt($("#pageCount").val()) >= parseInt($("#currentpage").val())) {
+                Load_Data();
+            }
+        });
+
+        //取消关闭
+        $("body").on("click",".cancelClose",function(){
+            UpdateStatus(1,$(this).data("id"));
+        });
+        //关闭
+        $("body").on("click",".closeQues",function(){
+            UpdateStatus(2,$(this).data("id"));
+        });
+
+        //置顶
+        $("body").on("click",".setTop",function(){
+            SetTop(2,$(this).data("id"));
+        });
+        //取消置顶
+        $("body").on("click",".cancelTop",function(){
+            SetTop(1,$(this).data("id"));
+        });
+
+        function UpdateStatus(param,id)
+        {
+            var data = {
+                "quesCid":id,
+                "operaterWorkCode":currentUser.userWorkCode,
+                "isViewed":param
+            };
+
+            $.ajax({
+                type:"POST",
+                url:it_service_url.CancelQues,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                success:function(result){
+                    if(result.resultJson.code==1) {
+                        AlertTips("修改成功",callbackreload);
+                    }
+                    else{
+                        AlertTips("修改失败",callbackreload);
+                    }
+                }
+            });
+        }
+
+        function SetTop(param, id){
+            var data = {
+                "quesCid":id,
+                "isTop":param,
+                "loginUserWorkCode":currentUser.userWorkCode
+            };
+
+            $.ajax({
+                type:"POST",
+                url:it_service_url.TopQues,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                success:function(result){
+                    if(result.resultJson.code==1) {
+                        AlertTips("修改成功",callbackreload);
+                    }
+                    else{
+                        AlertTips("修改失败",callbackreload);
+                    }
+                }
+            });
+        }
+
+        //删除
+        $("body").on("click",".delete",function(){
+            var quesTypeCid=$(this).data("id");
+
+            var data = "{";
+            data += "\"quesTypeCid\":\"" + quesTypeCid + "\",";
+            data += "\"operaterWorkCode\":\"" + currentUser.userWorkCode + "\"";
+            data += "}";
+
+            $.ajax({
+                type:"POST",
+                url:it_service_url.DeleteQuesType,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                data: data,
+                success:function(result){
+                    if(result.resultJson.code==1){
+                        AlertTips("删除成功",callbackreload);
+                    }
+                    else{
+                        AlertTips("删除失败",callbackreload);
+                    }
+                }
+            });
+        });
+
+        //datetimepicker
+        $('.date-picker').datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            language: 'zh-CN'
+        });
+        $('.input-daterange').datepicker({autoclose:true});
+
+        //breadcrumbs
+        $("#breadcrumbs").empty();
+        $("#breadcrumbs").append('<ul class="breadcrumb">' +
+                ' <li> <img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong> <a href="index.html">首页 </a> </li> ' +
+                '<li><a href="index.html#page/questions-list">内容管理</a></li> <li class="active">所有问题</li> </ul>');
+    });
+
+    function showTime(t) {
+        var curTime = new Date();
+
+        var timespan = curTime.getTime() - t.getTime();
+
+        //相差天数
+        var days = Math.floor(timespan / (24 * 3600 * 1000));
+
+        if (days > 2) {//显示具体日期
+            return t.format("yyyy/MM/dd");
+        } else if (curTime.getDate() != t.getDate()) {//显示昨天
+            return "昨天";
+        } else {//显示具体时间
+            return t.format("hh:mm");
+        }
+    }
+
+    function showVal(val) {
+        if (val != {} && val != undefined && val != null) {
+            return val;
+        } else {
+            return "";
+        }
+    }
+
+</script>

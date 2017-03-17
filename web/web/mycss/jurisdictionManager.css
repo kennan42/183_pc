@@ -1,0 +1,39 @@
+#tbody td {
+    line-height: 32px;
+}
+
+.widget-header > h4 {
+    float: left;
+}
+
+.btn-new {
+    margin: 2px 20px;
+    float: right;
+}
+
+.thead-id {
+    width: 28%;
+}
+
+.thead-name {
+    width: 25%;
+}
+
+.thead-abbreviation {
+    width: 25%;
+}
+
+.thead-op {
+    width: 22%;
+}
+
+.tool-bar {
+    width: 100%;
+    height: 20px;
+}
+
+
+.input-required {
+    color: #ff0000;
+    margin: 0 0 0 2px;
+}

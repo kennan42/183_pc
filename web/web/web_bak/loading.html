@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>加载中</title>
+
+		<meta name="description" content="Large &amp; Small" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js?v=20141224"></script>
+        <script src="./myjs/lexus.js?v=20141224"></script>
+		
+	</head>
+
+	<body class="no-skin" style="background-color:#F4F4F4">
+		<div class="main-container" id="main-container" style="height:100%;width:100%;text-align:center;background-color:#F4F4F4">
+			<!--img src="./assets/avatars/loading.gif" style="margin-top:150px;"/-->
+			<div style="font-size:40px;margin-top:200px">页面加载中...</div>
+		</div>
+
+	
+
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+				if(localStorage.pernrBase){
+					var local = location.href;
+					if(local.indexOf('?')>-1 && local.indexOf('modeId')>-1){
+						var modeId = trim(local.split('?')[1].substring(7));
+						var gotoUrl = "/web/"+modeJSON[modeId];
+						window.location.href = gotoUrl;
+					}else{
+						alert('传入参数错误');
+						window.close();
+					}
+				}else{
+					var local = location.href;
+					var gotoUrl = '/web/perHrDetail.html'
+					if(local.indexOf('?')>-1 && local.indexOf('modeId')>-1){
+						var modeId = trim(local.split('?')[1].substring(7));
+						gotoUrl = modeJSON[modeId];
+						
+					}else{
+						alert('传入参数错误');
+						window.close();
+						return;
+					}
+					window.location.href = '/web/login.html?url='+gotoUrl;
+				}
+			});
+			</script>
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

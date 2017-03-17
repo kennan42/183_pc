@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport"
+        content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no" />
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+            <title>选择器</title>
+            <script src="js/zy_control.js"></script>
+    </head>
+    
+    <body>
+        <div class="tit">选择器(IOS)</div>
+        <div class="conbor">
+            <div class="consj">
+                <input class="btn" type="button" value="日期选择器DatePicker" onclick="createDatePicker();"/>
+                <input class="btn" type="button" value="时间选择器TimePicker" onclick="createTimePicker();"/>
+                <input class="btn" type="button" value="文字选择器WenziPicker" onclick="createWenziPicker();"/>
+                <input class="btn" type="button" value="年月日选择器MonthDayPicker" onclick="createMonthDayPicker();"/>
+                <input class="btn" type="button" value="年月选择器YearMonthPicker" onclick="createYearMonthPicker();"/>
+                <input class="btn" type="button" value="返回" onclick="uexWindow.back();"/>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        window.uexOnload = function() {
+            uexWidgetOne.onError = function(opCode, errorCode, errorDesc) {
+                alert(errorCode + ":" + errorDesc);
+            }
+            
+            uexWindow.setBounce("1");
+            uexWindow.showBounceView("0", "#D0D0D0", "0");
+            uexWindow.showBounceView("1", "#D0D0D0", "0");
+            uexPicker.loadData = function(id, type){
+                uexPicker.setJsonData(type, "");
+            }
+        }
+    
+    function resultData(data){
+        //        alert("result:"+data);
+    }
+    
+    /*************日期选择器*************/
+    function createDatePicker(){
+		/**uexPicker.resultData = resultData;
+         var opid = 'as100';
+         var x = 0;
+         var y = 200;
+         var width = 320;
+         var height = 260;
+         var typeID = '0';
+         var pickerJson = '{"pickerConfig":{"frameBgColor":"#ffffff","frameBroundColor":"#bdbdbd","frameBgImg":"","fontSize":"15","fontColor":"rgba(0,0,0,100)","selFontColor":"#023BA1","selbgColor":"#e3eaf4","selbgImg":"res://bar.png","btnNBgImg":"res://left.png","btnHLBgImg":"res://right.png","btnFontSize":"17","btnNFontColor":"#023BA1","btnHLFontColor":"#ffffff","btnSize":"60,34","btnTextLeft":"取消","btnTextRight":"确定"}}';
+         uexPicker.open(opid,x,y,width,height,typeID,pickerJson);*/
+		
+        uexPicker.resultData = resultData;
+        var fontsize = int(window.getComputedStyle(document.body, null).fontSize);
+        var isAndroid = (window.navigator.userAgent.indexOf('Android')>=0)?true : false;
+        if (isAndroid) {
+            fontsize = (fontsize / 2) + 2;
+        }
+        
+        var opid = 'as100';
+        if (isAndroid) {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = 0;
+            var y = 0;
+        }
+        else {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = int(window.screen.height) * 0.5;
+            var y = int(window.screen.height) - height;
+        }
+        var typeID = '0';
+        var flag = 1; /*参数可选：0 , 1*/
+        var pickerJson = '{"pickerConfig": {"frameBgColor": "#A31616","frameBroundColor": "#bdbdbd","frameBgImg": "res://frame_bg.png","fontSize": "' + fontsize + '","fontColor": "rgba(0,0,0,100)","selbgColor": "rgba(168,180,140,50)","selFontColor": "#3689C9","selbgImg": "res://bar.png","btnNBgImg": "res://left.png","btnHLBgImg": "res://leftover.png","btnNFontColor": "#3689C9","btnHLFontColor": "#3689C9","btnFontSize": "' + fontsize + '","btnSize": "60,34","btnTextLeft": "取消","btnTextRight": "确定"}}'
+        
+        /**  open 方法中最后一个参数：0 , 1*/
+        uexPicker.open(opid, x, y, width, height, typeID, pickerJson,flag);
+        
+    }
+    
+    /*************时间选择器*************/
+    function createTimePicker(){
+        /** uexPicker.resultData = resultData;
+         var opid = 'as200';
+         var x = 0;
+         var y = 200;
+         var width = 320;
+         var height = 260;
+         var typeID = '1';
+         
+         
+         var pickerJson = '{"pickerConfig":{"frameBgColor":"#ffffff","frameBroundColor":"#bdbdbd","frameBgImg":"res://frame_bg.png","fontSize":"15","fontColor":"rgba(0,0,0,100)","selFontColor":"#023BA1","selbgColor":"#e3eaf4","selbgImg":"","btnNBgImg":"res://left.png","btnHLBgImg":"res://right.png","btnFontSize":"17","btnNFontColor":"#023BA1","btnHLFontColor":"#ffffff","btnSize":"60,34","btnTextLeft":"取消","btnTextRight":"确定"}}';
+         
+         uexPicker.open(opid,x,y,width,height,typeID,pickerJson);*/
+        uexPicker.resultData = resultData;
+        var fontsize = int(window.getComputedStyle(document.body, null).fontSize);
+        var isAndroid = (window.navigator.userAgent.indexOf('Android')>=0)?true : false;
+        if (isAndroid) {
+            fontsize = (fontsize / 2) + 2;
+        }
+        
+        var opid = 'as200';
+        if (isAndroid) {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = 0;
+            var y = 0;
+        }
+        else {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = int(window.screen.height) * 0.5;
+            var y = int(window.screen.height) - height;
+        }
+        var typeID = '1';
+        var pickerJson = '{"pickerConfig": {"frameBgColor": "#A31616","frameBroundColor": "#bdbdbd","frameBgImg": "res://frame_bg.png","fontSize": "' + fontsize + '","fontColor": "rgba(0,0,0,100)","selbgColor": "rgba(168,180,140,50)","selFontColor": "#3689C9","selbgImg": "res://bar.png","btnNBgImg": "res://left.png","btnHLBgImg": "res://leftover.png","btnNFontColor": "#FFFFFF","btnHLFontColor": "#3689C9","btnFontSize": "' + fontsize + '","btnSize": "60,34","btnTextLeft": "取消","btnTextRight": "确定"}}'
+        uexPicker.open(opid, x, y, width, height, typeID, pickerJson,1);
+    }
+    
+    /*************文字选择器*************/
+    //加载数据
+    function loadData(opid,dataType){
+        alert("opid:"+opid+" "+"dataType:"+dataType);
+        setData(opid,dataType);
+    }
+    //
+    function createWenziPicker(){
+        uexPicker.loadData = loadData;
+        /**
+         uexPicker.resultData = resultData;
+         var opid = 'as300';
+         var x = 0;
+         var y = 200;
+         var width = 320;
+         var height = 260;
+         var typeID = '2';
+         var pickerJson = '{"pickerConfig":{"frameBgColor":"#ffffff","frameBroundColor":"#bdbdbd","frameBgImg":"res://frame_bg.png","fontSize":"15","fontColor":"rgba(0,0,0,100)","selFontColor":"#023BA1","selbgColor":"#e3eaf4","selbgImg":"res://bar.png","btnNBgImg":"res://left.png","btnHLBgImg":"res://right.png","btnFontSize":"17","btnNFontColor":"#023BA1","btnHLFontColor":"#ffffff","btnSize":"60,34","btnTextLeft":"取消","btnTextRight":"确定"}}';
+         
+         uexPicker.open(opid,x,y,width,height,typeID,pickerJson);*/
+        uexPicker.resultData = resultData;
+        var fontsize = int(window.getComputedStyle(document.body, null).fontSize);
+        var isAndroid = (window.navigator.userAgent.indexOf('Android')>=0)?true : false;
+        if (isAndroid) {
+            fontsize = (fontsize / 2) + 2;
+        }
+        
+        var opid = 'as300';
+        if (isAndroid) {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = 0;
+            var y = 0;
+        }
+        else {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = int(window.screen.height) * 0.5;
+            var y = int(window.screen.height) - height;
+        }
+        var typeID = '2';
+        var pickerJson = '{"pickerConfig": {"frameBgColor": "#A31616","frameBroundColor": "#bdbdbd","frameBgImg": "res://frame_bg.png","fontSize": "' + fontsize + '","fontColor": "rgba(0,0,0,100)","selbgColor": "rgba(168,180,140,50)","selFontColor": "#3689C9","selbgImg": "res://bar.png","btnNBgImg": "res://left.png","btnHLBgImg": "res://leftover.png","btnNFontColor": "#3689C9","btnHLFontColor": "#3689C9","btnFontSize": "' + fontsize + '","btnSize": "60,34","btnTextLeft": "取消","btnTextRight": "确定"}}'
+        uexPicker.open(opid, x, y, width, height, typeID, pickerJson);
+    }
+    //
+    function setData(opid,dataType){
+        var dataStr = '[{"typeId":"1","typeName":"接机到位"},{"typeId":"2","typeName":"人员到位"},{"typeId":"3","typeName":"移交"},{"typeId":"4","typeName":"机组报告故障"},{"typeId":"5","typeName":"飞机起飞检测"},{"typeId":"6","typeName":"无人员伤亡"},{"typeId":"7","typeName":"飞机降落检测"},{"typeId":"8","typeName":"人员配置"},{"typeId":"9","typeName":"机舱检测无误"},{"typeId":"10","typeName":"飞行路线安排"},{"typeId":"11","typeName":"等待人员状态"}]';
+        uexPicker.setJsonData(dataType,dataStr);
+    }
+    
+    /*************年-月-日选择器*************/
+    function createMonthDayPicker(){
+        /** uexPicker.resultData = resultData;
+         var opid = 'as400';
+         var x = 0;
+         var y = 200;
+         var width = 320;
+         var height = 260;
+         var typeID = '3';
+         
+         var pickerJson = '{"pickerConfig":{"frameBgColor":"#ffffff","frameBroundColor":"#bdbdbd","frameBgImg":"res://frame_bg.png","fontSize":"17","fontColor":"rgba(0,0,0,100)","selFontColor":"#023BA1","selbgColor":"#e3eaf4","selbgImg":"res://bar.png","btnNBgImg":"res://left.png","btnHLBgImg":"res://right.png","btnFontSize":"17","btnNFontColor":"#023BA1","btnHLFontColor":"#ffffff","btnSize":"60,34","btnTextLeft":"取消","btnTextRight":"确定"}}';
+         
+         uexPicker.open(opid,x,y,width,height,typeID,pickerJson);*/
+        
+        uexPicker.resultData = resultData;
+        var fontsize = int(window.getComputedStyle(document.body, null).fontSize);
+        var isAndroid = (window.navigator.userAgent.indexOf('Android')>=0)?true : false;
+        if (isAndroid) {
+            fontsize = (fontsize / 2) + 2;
+        }
+        
+        var opid = 'as400';
+        if (isAndroid) {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = 0;
+            var y = 0;
+        }
+        else {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = int(window.screen.height) * 0.5;
+            var y = int(window.screen.height) - height;
+        }
+        var typeID = '3';
+        var pickerJson = '{"pickerConfig": {"frameBgColor": "#A31616","frameBroundColor": "#bdbdbd","frameBgImg": "res://frame_bg.png","fontSize": "' + fontsize + '","fontColor": "rgba(0,0,0,100)","selbgColor": "rgba(168,180,140,50)","selFontColor": "#3689C9","selbgImg": "res://bar.png","btnNBgImg": "res://left.png","btnHLBgImg": "res://leftover.png","btnNFontColor": "#3689C9","btnHLFontColor": "#3689C9","btnFontSize": "' + fontsize + '","btnSize": "60,34","btnTextLeft": "取消","btnTextRight": "确定"}}'
+        uexPicker.open(opid, x, y, width, height, typeID, pickerJson,1);
+    }
+    
+    /*************年-月 选择器*************/
+    function createYearMonthPicker(){
+        /**  uexPicker.resultData = resultData;
+         var opid = 'as500';
+         var x = 0;
+         var y = 200;
+         var width = 320;
+         var height = 260;
+         var typeID = '4';
+         
+         var pickerJson = '{"pickerConfig":{"frameBgColor":"#ffffff","frameBroundColor":"#bdbdbd","frameBgImg":"res://frame_bg.png","fontSize":"17","fontColor":"rgba(0,0,0,100)","selFontColor":"#023BA1","selbgColor":"#e3eaf4","selbgImg":"res://bar.png","btnNBgImg":"res://left.png","btnHLBgImg":"res://right.png","btnFontSize":"17","btnNFontColor":"#023BA1","btnHLFontColor":"#ffffff","btnSize":"60,34","btnTextLeft":"取消","btnTextRight":"确定"}}';
+         
+         uexPicker.open(opid,x,y,width,height,typeID,pickerJson);*/
+        uexPicker.resultData = resultData;
+        var fontsize = int(window.getComputedStyle(document.body, null).fontSize);
+        var isAndroid = (window.navigator.userAgent.indexOf('Android')>=0)?true : false;
+        if (isAndroid) {
+            fontsize = (fontsize / 2) + 2;
+        }
+        
+        var opid = 'as500';
+        if (isAndroid) {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = 0;
+            var y = 0;
+        }
+        else {
+            var x = 0;
+            var width = int(window.screen.width);
+            var height = int(window.screen.height) * 0.5;
+            var y = int(window.screen.height) - height;
+        }
+        var typeID = '4';
+        var pickerJson = '{"pickerConfig": {"frameBgColor": "#A31616","frameBroundColor": "#bdbdbd","frameBgImg": "res://frame_bg.png","fontSize": "' + fontsize + '","fontColor": "rgba(0,0,0,100)","selbgColor": "rgba(168,180,140,50)","selFontColor": "#3689C9","selbgImg": "res://bar.png","btnNBgImg": "res://left.png","btnHLBgImg": "res://leftover.png","btnNFontColor": "#3689C9","btnHLFontColor": "#3689C9","btnFontSize": "' + fontsize + '","btnSize": "60,34","btnTextLeft": "取消","btnTextRight": "确定"}}'
+        uexPicker.open(opid, x, y, width, height, typeID, pickerJson,1);
+    }
+    
+        </script>
+    
+</html>

@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>我的人事信息</title>
+
+		<meta name="description" content="Common UI Features &amp; Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+		<style>
+			/* some elements used in demo only */
+			.spinner-preview {
+				width: 100px;
+				height: 100px;
+				text-align: center;
+				margin-top: 60px;
+			}
+			
+			.dropdown-preview {
+				margin: 0 5px;
+				display: inline-block;
+			}
+			.dropdown-preview  > .dropdown-menu {
+				display: block;
+				position: static;
+				margin-bottom: 5px;
+			}
+			.prtlPageConf{
+padding-top:0;
+padding-left:0;
+padding-right:0;
+padding-bottom:0;
+}
+		</style>
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js"></script>
+		<script src="./myjs/lexus.js"></script>
+	</head>
+
+	<body class="no-skin" style="font-family:Microsoft YaHei ! important">
+
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="http://cpd.cttq.com:50000/irj/portal/">企业信息门户</a>
+						</li>
+
+						<li>
+							<a href="#">员工自助</a>
+						</li>
+					</ul><!-- /.breadcrumb -->
+					<!-- /section:basics/content.searchbox -->
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+					
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1>
+								我的人事信息
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-sm-2"> </div>
+									<div class="col-sm-8">
+									<div id="user-profile-1" class="user-profile row">
+										<div class="col-xs-12 col-sm-3 center" style="min-width:150px">
+											<div>
+												<!-- #section:pages/profile.picture -->
+												<span class="profile-picture" style="border:none;box-shadow:none">
+													<img style="max-height:170px;max-width:170px" id="touxiang" src="./assets/avatars/name.png">
+												</span>
+
+												<!-- /section:pages/profile.picture -->
+												<div class="space-4"></div>
+											</div>
+										</div>
+										<div class="col-xs-12 col-sm-4">
+											<div style="margin-top:30px">
+												<h2 class="blue">
+													<span class="middle" id="NACHN"></span>
+												</h2>
+												<h2 class="blue">
+													<span class="middle" id="PERNR"></span>
+												</h2>
+												<h3 class="blue">
+													<span class="middle" id="PLSTX"></span>
+												</h3>
+												<div class="space-4"></div>
+											</div>
+										</div>
+									</div>
+									</div>
+									<div class="col-sm-2"> </div>
+								</div><!-- /.row -->
+
+								<div class="space"></div>
+
+								
+								<div class="col-sm-2"> </div>
+								<div class="col-sm-8">
+								<div class="hr hr-dotted hr18"></div>
+								<div id="accordion" class="accordion-style1 panel-group">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle" data-toggle="collapse" data-parent="" href="#collapseOne">
+															<i class="ace-icon fa fa-angle-down bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															基本信息
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse in" id="collapseOne">
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-sm-6">
+																	<div class="profile-user-info">
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 人员编号 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="PERNR1"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 性别 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="GESCH_T"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 人事范围 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="PBTXT"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 部门 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ORGTX"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 技术职务 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_JSZWJBT"></span>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 入司时间 </div>
+	
+																		<div class="profile-info-value">
+																			<span  id="ZZ_RZSJ"></span>
+																		</div>
+																	</div>
+																	
+																	
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 毕业院校 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="INSTI"></span>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 学历 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="SLART_T"></span>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 常驻地 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_CZD"></span>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 手机 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_TEL1"></span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<!--右侧半边-->
+															<div class="col-sm-6">
+																	<div class="profile-user-info">
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 姓名 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="NACHN1"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 出生日期 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="GBDAT"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 人事子范围 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="BTRTX"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 岗位 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="PLSTX1"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 直线领导 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_SPZXM"></span>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 合同期限 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_QDNX"></span>
+																		</div>
+																	</div>
+																	
+																	
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 专业 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_SXZY"></span>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 学制(年) </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_XZN"></span>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 第二办公地 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_CZD1"></span>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> EMAIL </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_EMAIL"></span>
+																		</div>
+																		
+																	</div>
+																	
+																	
+																	
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="" href="#collapseTwo">
+															<i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															教育经历
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse" id="collapseTwo">
+													<div class="panel-body" id="eduDiv">
+														<img src="./assets/avatars/nodata.jpg">
+													</div>
+												</div>
+											</div>
+
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="" href="#collapseThree">
+															<i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															培训经历
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse" id="collapseThree">
+													<div class="panel-body" id="trainDiv">
+														<img src="./assets/avatars/nodata.jpg">
+													</div>
+												</div>
+											</div>
+											
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="" href="#collapseFour">
+															<i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															本公司履历
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse" id="collapseFour">
+													<div class="panel-body" id="localLv">
+														<img src="./assets/avatars/nodata.jpg">
+													</div>
+												</div>
+											</div>
+											
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="" href="#collapseFive">
+															<i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															入职前履历
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse" id="collapseFive">
+													<div class="panel-body" id="otherLv">
+														<img src="./assets/avatars/nodata.jpg">
+													</div>
+												</div>
+											</div>
+											
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="" href="#collapseSix">
+															<i class="ace-icon fa fa-angle-right bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															个人银行卡信息
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse" id="collapseSix">
+													<div class="panel-body">
+														<img src="./assets/avatars/nodata.jpg">
+													</div>
+												</div>
+											</div>
+										</div>
+										</div>
+										<div class="col-sm-2"> </div>
+								<hr />
+								
+								<script type="text/javascript">
+									var $path_assets = "./assets";//this will be used in gritter alerts containing images
+								</script>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			<div class="footer">
+				<div class="footer-inner">
+					<!-- #section:basics/footer -->
+					<div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">Ace</span>
+							Application &copy; 2013-2014
+						</span>
+
+						&nbsp; &nbsp;
+						<span class="action-buttons">
+							<a href="#">
+								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+							</a>
+						</span>
+					</div>
+
+					<!-- /section:basics/footer -->
+				</div>
+			</div>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="./assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/bootbox.min.js"></script>
+		<script src="./assets/js/jquery.easypiechart.min.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>
+		<script src="./assets/js/spin.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+				
+			//判断是否已经登录
+			if(!localStorage.pernrBase){
+				window.location.href = '/web/login.html';
+			}
+				/**
+				$('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+				  console.log(e.target.getAttribute("href"));
+				})
+					
+				$('#accordion').on('shown.bs.collapse', function (e) {
+					console.log($(e.target).is('#collapseTwo'))
+				});
+				*/
+				
+				$('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+					if($(e.target).attr('href') == "#home") drawChartNow();
+				})
+			
+				
+				/**
+					//go to next tab, without user clicking
+					$('#myTab > .active').next().find('> a').trigger('click');
+				*/
+			
+			
+				$('#accordion-style').on('click', function(ev){
+					var target = $('input', ev.target);
+					var which = parseInt(target.val());
+					if(which == 2) $('#accordion').addClass('accordion-style2');
+					 else $('#accordion').removeClass('accordion-style2');
+				});
+				
+				//$('[href="#collapseTwo"]').trigger('click');
+			
+			
+				var oldie = /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase());
+				$('.easy-pie-chart.percentage').each(function(){
+					$(this).easyPieChart({
+						barColor: $(this).data('color'),
+						trackColor: '#EEEEEE',
+						scaleColor: false,
+						lineCap: 'butt',
+						lineWidth: 8,
+						animate: oldie ? false : 1000,
+						size:75
+					}).css('color', $(this).data('color'));
+				});
+			
+				$('[data-rel=tooltip]').tooltip();
+				$('[data-rel=popover]').popover({html:true});
+			
+			
+				$('#gritter-regular').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a regular notice!',
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="blue">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar1.png',
+						sticky: false,
+						time: '',
+						class_name: (!$('#gritter-light').get(0).checked ? 'gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+				$('#gritter-sticky').on(ace.click_event, function(){
+					var unique_id = $.gritter.add({
+						title: 'This is a sticky notice!',
+						text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="red">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar.png',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-without-image').on(ace.click_event, function(){
+					$.gritter.add({
+						// (string | mandatory) the heading of the notification
+						title: 'This is a notice without an image!',
+						// (string | mandatory) the text inside the notification
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="orange">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						class_name: 'gritter-success' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-max3').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a notice with a max of 3 on screen at one time!',
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="green">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar3.png',
+						sticky: false,
+						before_open: function(){
+							if($('.gritter-item-wrapper').length >= 3)
+							{
+								return false;
+							}
+						},
+						class_name: 'gritter-warning' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-center').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a centered notification',
+						text: 'Just add a "gritter-center" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+						class_name: 'gritter-info gritter-center' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+				
+				$('#gritter-error').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a warning notification',
+						text: 'Just add a "gritter-light" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+						class_name: 'gritter-error' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+					
+			
+				$("#gritter-remove").on(ace.click_event, function(){
+					$.gritter.removeAll();
+					return false;
+				});
+					
+			
+				///////
+			
+			
+				$("#bootbox-regular").on(ace.click_event, function() {
+					bootbox.prompt("What is your name?", function(result) {
+						if (result === null) {
+							
+						} else {
+							
+						}
+					});
+				});
+					
+				$("#bootbox-confirm").on(ace.click_event, function() {
+					bootbox.confirm("Are you sure?", function(result) {
+						if(result) {
+							//
+						}
+					});
+				});
+				
+			/**
+				$("#bootbox-confirm").on(ace.click_event, function() {
+					bootbox.confirm({
+						message: "Are you sure?",
+						buttons: {
+						  confirm: {
+							 label: "OK",
+							 className: "btn-primary btn-sm",
+						  },
+						  cancel: {
+							 label: "Cancel",
+							 className: "btn-sm",
+						  }
+						},
+						callback: function(result) {
+							if(result) alert(1)
+						}
+					  }
+					);
+				});
+			**/
+					
+				$("#bootbox-options").on(ace.click_event, function() {
+					bootbox.dialog({
+						message: "<span class='bigger-110'>I am a custom dialog with smaller buttons</span>",
+						buttons: 			
+						{
+							"success" :
+							 {
+								"label" : "<i class='ace-icon fa fa-check'></i> Success!",
+								"className" : "btn-sm btn-success",
+								"callback": function() {
+									//Example.show("great success");
+								}
+							},
+							"danger" :
+							{
+								"label" : "Danger!",
+								"className" : "btn-sm btn-danger",
+								"callback": function() {
+									//Example.show("uh oh, look out!");
+								}
+							}, 
+							"click" :
+							{
+								"label" : "Click ME!",
+								"className" : "btn-sm btn-primary",
+								"callback": function() {
+									//Example.show("Primary button");
+								}
+							}, 
+							"button" :
+							{
+								"label" : "Just a button...",
+								"className" : "btn-sm"
+							}
+						}
+					});
+				});
+			
+			
+			
+				$('#spinner-opts small').css({display:'inline-block', width:'60px'})
+			
+				var slide_styles = ['', 'green','red','purple','orange', 'dark'];
+				var ii = 0;
+				$("#spinner-opts input[type=text]").each(function() {
+					var $this = $(this);
+					$this.hide().after('<span />');
+					$this.next().addClass('ui-slider-small').
+					addClass("inline ui-slider-"+slide_styles[ii++ % slide_styles.length]).
+					css({'width':'125px'}).slider({
+						value:parseInt($this.val()),
+						range: "min",
+						animate:true,
+						min: parseInt($this.data('min')),
+						max: parseInt($this.data('max')),
+						step: parseFloat($this.data('step')),
+						slide: function( event, ui ) {
+							$this.val(ui.value);
+							spinner_update();
+						}
+					});
+				});
+			
+			
+			
+			
+			
+				$.fn.spin = function(opts) {
+					this.each(function() {
+					  var $this = $(this),
+						  data = $this.data();
+			
+					  if (data.spinner) {
+						data.spinner.stop();
+						delete data.spinner;
+					  }
+					  if (opts !== false) {
+						data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+					  }
+					});
+					return this;
+				};
+			
+				function spinner_update() {
+					var opts = {};
+					$('#spinner-opts input[type=text]').each(function() {
+						opts[this.name] = parseFloat(this.value);
+					});
+					$('#spinner-preview').spin(opts);
+				}
+			
+			
+			
+				$('#id-pills-stacked').removeAttr('checked').on('click', function(){
+					$('.nav-pills').toggleClass('nav-stacked');
+				});
+			
+			//初始化页面数据
+$.ajaxSetup({
+	contentType: 'application/json',
+	async:false,
+	error:function(){
+		alert(errMsg1);
+	},
+	timeout:timeout
+ });
+ 		//3.1基本信息
+		var eeInfoJson = submit_3_1(localStorage.pernrBase?localStorage.pernrBase:'');
+		if(eeInfoJson.status == '0'){
+			//基本信息
+			var ZHR_EE_INFO = eeInfoJson.ZHR_EE_INFO;
+			$('#NACHN').html(checkNoChar(ZHR_EE_INFO.NACHN));
+			$('#PERNR').html(parseInt(checkNoChar(ZHR_EE_INFO.PERNR)));
+			//$('#ORGTX').html(checkNoChar(ZHR_EE_INFO.ORGTX));
+			var gjs = '';
+			if(checkNoChar(ZHR_EE_INFO.ZZ_JG1T) != ''){
+				gjs += (gjs?'|':'')+checkNoChar(ZHR_EE_INFO.ZZ_JG1T);
+			}
+			if(checkNoChar(ZHR_EE_INFO.ZZ_JG2T) != ''){
+				gjs += (gjs?'|':'')+checkNoChar(ZHR_EE_INFO.ZZ_JG2T);
+			}
+			if(checkNoChar(ZHR_EE_INFO.ZZ_JG3T) != ''){
+				gjs += (gjs?'|':'')+checkNoChar(ZHR_EE_INFO.ZZ_JG3T);
+			}
+			if(checkNoChar(ZHR_EE_INFO.ZZ_JG4T) != ''){
+				gjs += (gjs?'|':'')+checkNoChar(ZHR_EE_INFO.ZZ_JG4T);
+			}
+			if(checkNoChar(ZHR_EE_INFO.ZZ_JG5T) != ''){
+				gjs += (gjs?'|':'')+checkNoChar(ZHR_EE_INFO.ZZ_JG5T);
+			}
+			
+			$('#ORGTX').html(gjs);
+			$('#PERNR1').html(parseInt(checkNoChar(ZHR_EE_INFO.PERNR)));
+			$('#GESCH_T').html(checkNoChar(ZHR_EE_INFO.GESCH_T));
+			$('#PBTXT').html(checkNoChar(ZHR_EE_INFO.PBTXT));
+			$('#ZZ_JSZWJBT').html(checkNoChar(ZHR_EE_INFO.ZZ_JSZWJBT));
+			$('#ZZ_RZSJ').html(checkNoChar(ZHR_EE_INFO.ZZ_RZSJ));
+			$('#ZZ_QDNX').html(checkNoChar(ZHR_EE_INFO.ZZ_HTKSRQ)+'~'+checkNoChar(ZHR_EE_INFO.ZZ_HTJZRQ));
+			$('#INSTI').html(checkNoChar(ZHR_EE_INFO.INSTI));
+			$('#SLART_T').html(checkNoChar(ZHR_EE_INFO.SLART_T));
+			$('#ZZ_CZD').html(checkNoChar(ZHR_EE_INFO.ZZ_CZD));
+			$('#ZZ_EMAIL').html(checkNoChar(ZHR_EE_INFO.ZZ_EMAIL));
+			$('#NACHN1').html(checkNoChar(ZHR_EE_INFO.NACHN));
+			$('#GBDAT').html(checkNoChar(ZHR_EE_INFO.GBDAT));
+			$('#BTRTX').html(checkNoChar(ZHR_EE_INFO.BTRTX));
+			$('#PLSTX').html(checkNoChar(ZHR_EE_INFO.PLSTX));
+			$('#PLSTX1').html(checkNoChar(ZHR_EE_INFO.PLSTX));
+			$('#ZZ_SPZXM').html(checkNoChar(ZHR_EE_INFO.ZZ_SPZXM));
+			$('#ZZ_GZSJ').html(checkNoChar(ZHR_EE_INFO.ZZ_GZSJ));
+			$('#ZZ_TEL1').html(checkNoChar(ZHR_EE_INFO.ZZ_TEL1));
+			$('#ZZ_SXZY').html(checkNoChar(ZHR_EE_INFO.ZZ_SXZY));
+			$('#ZZ_XZN').html(checkNoChar(ZHR_EE_INFO.ZZ_XZN));
+			$('#ZZ_CZD1').html(checkNoChar(ZHR_EE_INFO.ZZ_CZD1));
+			
+			//公司履历
+			var IT0023 = eeInfoJson.IT0023.item;
+			if(undefined != IT0023 && IT0023.length>0){
+				var localLvs = '';
+				var otherLvs = '';
+				for(var k in IT0023){
+					if (checkNoChar(IT0023[k].ZZ_LLLX) == '2') {
+						if (localLvs != '') {
+							localLvs += '<div class="hr hr-dotted hr18"></div>';
+						}
+						localLvs += '<div class="row">'
+						+'<div class="col-sm-6">'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 时间 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].BEGDA)+'~'+checkNoChar(IT0023[k].ENDDA)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 工作单位 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].ARBGB)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 部门 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].ZZ_GZBM)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 变动原因 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].ZZ_DDYY)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'</div>'
+						+'<div class="col-sm-6">'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 　 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>　</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 行业 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].BRANC_T)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 岗位 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].ZZ_JOB)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 　 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>　</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'</div>'
+						+'</div>';											
+					}else{
+						if (otherLvs != '') {
+							otherLvs += '<div class="hr hr-dotted hr18"></div>';
+						}
+						otherLvs += '<div class="row">'
+						+'<div class="col-sm-6">'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 时间 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].BEGDA)+'~'+checkNoChar(IT0023[k].ENDDA)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 工作单位 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].ARBGB)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 部门 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].ZZ_GZBM)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'</div>'
+						+'<div class="col-sm-6">'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 　 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>　</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 行业 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].BRANC_T)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 岗位 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0023[k].ZZ_JOB)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'</div>'
+						+'</div>';		
+						
+					}
+				}
+				localLvs = localLvs?localLvs:'<img src="./assets/avatars/nodata.jpg">';
+				otherLvs = otherLvs?otherLvs:'<img src="./assets/avatars/nodata.jpg">';
+				$('#localLv').html(localLvs);
+				$('#otherLv').html(otherLvs);
+			}
+		}
+		
+		//3.2获取头像
+		var photoJSON= submit_3_2(localStorage.pernrBase?localStorage.pernrBase:'');
+		if (photoJSON.status == '0') {
+			var B64DATA = checkNoChar(photoJSON.B64DATA);
+			if(undefined != B64DATA && B64DATA != ""){
+				$('#touxiang').attr('src','data:image/jpg;base64,'+B64DATA);
+			}
+		}
+		
+		//3.3读取员工培训经历
+		var trainJSON = submit_3_3(localStorage.pernrBase?localStorage.pernrBase:'');
+		if (trainJSON.status == '0') {
+			var IT9130 = trainJSON.IT9130.item;
+			if(undefined != IT9130 && IT9130.length > 0){
+				var trainData = '';
+				for(var k in IT9130){
+						if (trainData != '') {
+							trainData += '<div class="hr hr-dotted hr18"></div>';
+						}
+						trainData += '<div class="row">'
+						+'<div class="col-sm-6">'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 时间 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].BEGDA)+'~'+checkNoChar(IT9130[k].ENDDA)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训课程名称 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXXM)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训类型 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXLXT)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训产品类型1 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXCPJXT)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训产品类型2 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXCPJX2T)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训地点 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXDD)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训机构 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXJG)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'</div>'
+						+'<div class="col-sm-6">'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 　 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>　</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训方式 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXFST)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训阶段 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXJDT)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训产品名称1 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXCPMCT)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训产品名称2 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_PXCPMC2T)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 培训课时 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+parseInt(checkNoChar(IT9130[k].ZZ_PXKS))+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 获得资格 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT9130[k].ZZ_HDZG)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'</div>'
+						+'</div>';	
+				}
+				
+				$('#trainDiv').html(trainData);
+			}
+		}
+		
+		//3.4读取员工教育经历
+		var eduJSON = submit_3_4(localStorage.pernrBase?localStorage.pernrBase:'');
+		if (eduJSON.status == '0') {
+			var IT0022 = eduJSON.IT0022.item;
+			if(undefined != IT0022 && IT0022.length > 0){
+				var eduData = '';
+				for(var k in IT0022){
+						if (eduData != '') {
+							eduData += '<div class="hr hr_dotted hr18"></div>';
+						}
+						eduData += '<div class="row">'
+						+'<div class="col-sm-6">'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 时间 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0022[k].ZZ_RXRQ)+'~'+checkNoChar(IT0022[k].ZZ_BYRQ)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 毕业院校 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0022[k].INSTI)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 学历 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0022[k].SLART_T)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 学习形式 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0022[k].AUSBI_T)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'</div>'
+						+'<div class="col-sm-6">'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 　 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>　</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 所学专业 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0022[k].ZZ_SXZY)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 学位 </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0022[k].ZZ_XW_T)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'<div class="profile-user-info">'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name"> 学制(年) </div>'
+						+'<div class="profile-info-value">'
+						+'<span>'+checkNoChar(IT0022[k].ZZ_XZN)+'</span>'
+						+'</div>'	
+						+'</div>'	
+						+'</div>'
+						+'</div>'
+						+'</div>';	
+				}
+				
+				$('#eduDiv').html(eduData);
+			}
+		}
+			});
+		</script>
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

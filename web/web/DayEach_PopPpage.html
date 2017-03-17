@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>日历每人每天提交</title>
+
+		<meta name="description" content="Common form elements and layouts" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="./assets/css/dropzone.css" />
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/chosen.css" />
+		<link rel="stylesheet" href="./assets/css/datepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-timepicker.css" />
+		<link rel="stylesheet" href="./assets/css/daterangepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-datetimepicker.css" />
+		<link rel="stylesheet" href="./assets/css/colorpicker.css" />
+		<link rel="stylesheet" href="./assets/css/fullcalendar.css" />
+		
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./mycss/ace-btn.css" />
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+		<link rel="stylesheet" href="../assets/css/uncompressed/daterangepicker-bs3.css"/>
+
+		<!-- ace styles -->
+		<script src="assets/js/ace-extra.min.js"></script>
+
+		<style>
+			.mar-t-5{
+				margin-top:5px;
+			}
+			.mar-tt{
+				margin-top:40px;
+			}
+		</style>
+
+		<!-- inline styles related to this page -->
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js?v=20150831"></script>
+        <script src="./myjs/lexus.js?v=20141224"></script>
+		<style type="text/css">
+			body {
+			    background-color:#e4e6e9;
+			    min-height:100%;
+			    padding-bottom:0;
+			    /*font-family:'Open Sans';*/
+			    font-family: "Arial","Microsoft YaHei";
+			    font-size:13px;
+			    color:#393939;
+			    line-height:1.5
+			}
+			.fc-state-default, .fc-state-default .fc-button-inner {
+				border: none;
+				background-color: #6fb3e0;
+				color: #FFF;
+				background-image: none;
+				box-shadow: none;
+				text-shadow: none;
+				border-radius: 0!important;
+				margin-left: 2px;
+			}
+			.fc-button:hover{
+			background-color: #4f99c6;
+			}
+			.main-container:before {
+			    display:block;
+			    content:"";
+			    position:absolute;
+			    z-index:-2;
+			    width:100%;
+			    max-width:inherit;
+			    bottom:0;
+			    top:0;
+			    background-color:#FFF
+			}
+			.main-container.container,.rtl .main-container.container {
+			    padding-left:0;
+			    padding-right:0
+			}
+			.main-container.container:before {
+			    -webkit-box-shadow:0 0 0 1px rgba(0,0,0,.1);
+			    box-shadow:0 0 0 1px rgba(0,0,0,.1);
+			    width:inherit
+			}
+			.breadcrumbs {
+			    position:relative;
+			    z-index:auto;
+			    border-bottom:1px solid #e5e5e5;
+			    background-color:#f5f5f5;
+			    min-height:41px;
+			    line-height:40px;
+			    padding:0 12px 0 0
+			}
+			.breadcrumb {
+			    background-color:transparent;
+			    display:inline-block;
+			    line-height:20px;
+			    margin:6px 22px 0 12px;
+			    padding:0;
+			    font-size:13px;
+			    color:#333;
+			    border-radius:0
+			}
+			.breadcrumb>li,.breadcrumb>li.active {
+			    color:#555;
+			    padding:0 3px
+			}
+			.breadcrumb>li>a {
+			    display:inline-block;
+			    color:#4c8fbd
+			}
+			.breadcrumb>li+li:before {
+			    font-family:FontAwesome;
+			    font-size:14px;
+			    content:"\f105";
+			    color:#b2b6bf;
+			    padding:0;
+			    margin:0 8px 0 0;
+			    position:relative;
+			    top:1px
+			}
+			.breadcrumb .home-icon {
+			    font-size:20px;
+			    margin-left:2px;
+			    margin-right:2px;
+			    vertical-align:top
+			}
+			.white {
+			    color:#fff!important
+			}
+
+				.main-container.container:before {
+				    -webkit-box-shadow:none;
+				    box-shadow:none;
+				    width:100%
+				}
+				.main-content {
+				    margin-left:0;
+				    min-height:100%;
+				    padding:0
+				}
+				.sidebar+.main-content {
+				    margin-left:190px
+				}
+				.page-content {
+				    background-color:#fff;
+				    position:relative;
+				    margin:0;
+				    padding:8px 20px 24px
+				}
+				.page-header {
+				    margin:0 0 12px;
+				    border-bottom:1px dotted #e2e2e2;
+				    padding-bottom:16px;
+				    padding-top:7px
+				}
+				.page-header h1 {
+				    padding:0;
+				    margin:0 8px;
+				    font-size:24px;
+				    font-weight:lighter;
+				    color:#2679b5
+				}
+				.page-header h1 small {
+				    margin:0 6px;
+				    font-size:14px;
+				    font-weight:400;
+				    color:#8089a0
+				}
+				.ace-icon {
+				    text-align:center
+				}
+			.table>thead>tr {
+			    color:#707070;
+			    font-weight:400;
+			    background:#F2F2F2 repeat-x;
+			    background-image:-webkit-linear-gradient(top,#f8f8f8 0,#ececec 100%);
+			    background-image:-o-linear-gradient(top,#f8f8f8 0,#ececec 100%);
+			    background-image:linear-gradient(to bottom,#f8f8f8 0,#ececec 100%);
+			    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff8f8f8', endColorstr='#ffececec', GradientType=0)
+			}
+			table#DayEach thead tr th{text-align:center;vertical-align:middle;}
+			table#DayEach tbody tr td{text-align:center;padding:0;margin:0;vertical-align:middle;height:26px;}
+			table#DayEach tbody tr td button{width:100%;cursor:pointer;}
+			table#DayEach tbody tr td button.btn{padding:0px 3px;}
+			table#DayEach tbody tr td button.btn-success{color:#87b87f!important;text-shadow:0 -1px 0 rgba(54,15,60,0)!important;}
+			table#DayEach tbody tr td button.btn-success:hover{color:#629b58!important;}
+			table#DayEach tbody tr td button.btn-grey{color:#a0a0a0!important;text-shadow:0 -1px 0 rgba(54,15,60,0)!important;}
+			table#DayEach tbody tr td button.btn-grey:hover{color:#888!important;}
+			.table-bordered>thead>tr>td, .table-bordered>thead>tr>th{border-bottom-width:1px;}
+			.row{margin:0;}
+			#DayEachPlay .ColSm2{width:20%;padding:0 12px;float:left;text-align:center;}
+			#DayEachPlay .col-sm-3{text-align:center;}
+			#DayEachPlay .col-sm-3 button{width:100%;font-size:16px;padding:5px 10px;}
+			#DayEachPlay .ColSm2 button{width:90%;font-size:14px;padding:3px 6px;}
+			.xubox_shade, .xubox_layer{position:fixed;}
+			#ArticleNum{position:fixed;bottom:0px;right:0px;}
+			.hr{display: block;
+				height: 0;
+				overflow: hidden;
+				font-size: 0;
+				border-width: 1px 0 0;
+				border-top: 1px solid #E3E3E3;
+				margin: 12px 0;
+				border-top-color: rgba(0,0,0,.11);
+			}
+			.hr-12, .hr12{margin: 12px 0;}
+			.hr-solid {height: 1px;border-top: 1px solid #efefef;border-bottom: none;}
+			.hr-double{height: 3px;
+				border-top: 1px solid #E3E3E3;
+				border-bottom: 1px solid #E3E3E3;
+				border-top-color: rgba(0,0,0,.11);
+				border-bottom-color: rgba(0,0,0,.11);
+			}
+			.xubox_title{-webkit-box-sizing: content-box;
+				-moz-box-sizing: content-box;
+				box-sizing: content-box;
+				position: relative;
+				min-height: 38px;
+				background: #f7f7f7 repeat-x;
+				background-image: -webkit-linear-gradient(top,#fff 0,#eee 100%);
+				background-image: -o-linear-gradient(top,#fff 0,#eee 100%);
+				background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
+				color: #669fc7;
+				border-bottom: 1px solid #DDD;}
+			.xubox_title em{height:auto;line-height:auto;left:auto;top:auto;width:auto;}
+			.xubox_title i{position:relative;}
+			.xubox_title h4{margin-left:12px;font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:17px;}
+			.xubox_title span{margin-left:10px;}
+			
+			.daterangepicker.dropdown-menu{min-width:80px;}
+			.daterangepicker.opensright .ranges{float:none;}
+            .daterangepicker .ranges{float:none;margin:0;width:auto;}
+            .daterangepicker .daterangepicker_start_input label, .daterangepicker .daterangepicker_end_input label{width:auto;}
+            .daterangepicker.opensright:before{right:9px;left:auto;}
+            .daterangepicker.opensright:after{right:10px;left:auto;}
+            .daterangepicker .calendar-time{display:none;}
+            .daterangepicker .ranges .range_inputs .cancelBtn{padding:2px 12px;}
+            .daterangepicker .ranges .range_inputs .applyBtn{padding:2px 12px;}
+            .daterangepicker .ranges .input-mini{margin-bottom:4px;}
+
+            .daterangepicker_start_input,.daterangepicker_end_input{width:30%;padding:0;}
+            .daterangepicker .ranges .range_inputs>div:nth-child(2){padding:0;}
+            .daterangepicker .daterangepicker_start_input label, .daterangepicker .daterangepicker_end_input label{
+			    width: 20%;
+			    float: left;
+			    height: 34px;
+			    line-height: 34px;
+			    text-align: center;
+            }
+            .daterangepicker .ranges .input-mini{width:80%;height:34px}
+            .daterangepicker .ranges .range_inputs .applyBtn,.daterangepicker .ranges .range_inputs .cancelBtn{
+			    width: 18%;
+			    /*float: right;*/
+			    margin-left: 2%;
+            }
+            .daterangepicker .ranges .range_inputs .cancelBtn{
+            	margin-left:1%;
+            	float:right;
+            }
+            .gritter-item-wrapper {
+			    background-image:none!important;
+			    box-shadow:0 2px 10px rgba(50,50,50,.5);
+			    background:rgba(50,50,50,.92)
+			}
+			.gritter-item-wrapper.gritter-info {
+			    background:rgba(49,81,133,.92)
+			}
+			.gritter-item-wrapper.gritter-error {
+			    background:rgba(153,40,18,.92)
+			}
+			.gritter-item-wrapper.gritter-success {
+			    background:rgba(89,131,75,.92)
+			}
+			.gritter-item-wrapper.gritter-warning {
+			    background:rgba(190,112,31,.92)
+			}
+			.gritter-item-wrapper.gritter-light {
+			    background:rgba(245,245,245,.95);
+			    border:1px solid #BBB
+			}
+			.gritter-item-wrapper.gritter-light.gritter-info {
+			    background:rgba(232,242,255,.95)
+			}
+			.gritter-item-wrapper.gritter-light.gritter-info .gritter-item {
+			    color:#4A577D
+			}
+			.gritter-item-wrapper.gritter-light.gritter-error {
+			    background:rgba(255,235,235,.95)
+			}
+			.gritter-item-wrapper.gritter-light.gritter-error .gritter-item {
+			    color:#894A38
+			}
+			.gritter-item-wrapper.gritter-light.gritter-success {
+			    background:rgba(239,250,227,.95)
+			}
+			.gritter-item-wrapper.gritter-light.gritter-success .gritter-item {
+			    color:#416131
+			}
+			.gritter-item-wrapper.gritter-light.gritter-warning {
+			    background:rgba(252,248,227,.95)
+			}
+			.gritter-item-wrapper.gritter-light.gritter-warning .gritter-item {
+			    color:#946446
+			}
+			.gritter-item p {
+			    line-height:1.8
+			}
+			.gritter-bottom,.gritter-item,.gritter-top {
+			    background-image:none
+			}
+			button .gritter-close{
+			    left:auto;
+			    right:auto;
+			    background-image:none;
+			    width:auto;
+			    height:auto;
+			    line-height:auto;
+			    text-align:center;
+			    border:none;
+			    border-radius:auto;
+			    color:auto;
+			}
+			.gritter-close {
+			    left:auto;
+			    right:3px;
+			    background-image:none;
+			    width:18px;
+			    height:18px;
+			    line-height:17px;
+			    text-align:center;
+			    border:2px solid transparent;
+			    border-radius:16px;
+			    color:#E17B67
+			}
+			.gritter-close:before {
+			    font-family:FontAwesome;
+			    font-size:16px;
+			    content:"\f00d"
+			}
+			.gritter-info .gritter-close {
+			    color:orange
+			}
+			.gritter-error .gritter-close,.gritter-success .gritter-close,.gritter-warning .gritter-close {
+			    color:#FFEA07
+			}
+			.gritter-close:hover {
+			    color:#FFF!important
+			}
+			.gritter-title {
+			    text-shadow:none
+			}
+			.gritter-light .gritter-bottom,.gritter-light .gritter-close,.gritter-light .gritter-item,.gritter-light .gritter-top {
+			    background-image:none;
+			    color:#444
+			}
+			.gritter-light .gritter-title {
+			    text-shadow:none
+			}
+			.gritter-light .gritter-close:hover {
+			    color:#8A3104!important
+			}
+			.gritter-center {
+			    position:fixed;
+			    left:33%;
+			    right:33%;
+			    top:33%;
+			    
+			}
+		</style>
+
+		<script type="text/javascript">
+		</script>
+	</head>
+
+	<body class="no-skin" style="background:#fff;">
+		<div id="DayEachPlay" style="width:100%;padding:6px 12px;">
+			<div class="row">
+				<div class="col-sm-6">
+					<h4 style="margin-top: 6px;margin-bottom: 0;font-size: 21px;padding: 0 18px;height: 34px;line-height: 34px;"><span id="PYearMonth"></span><span id="PDay"></span>日&nbsp;&nbsp;&nbsp;&nbsp;(星期<span id="PWeek"></span>)</h4>
+				</div>
+				<div class="col-sm-6">
+					<div class="btn-group" style="margin-top: 6px;">
+		                <div class="col-sm-10" id="selfDate" style="width:auto;">
+		                    <div class="col-sm-2" style="width:100%;">
+		                        <div class="input-group">
+		                            <span class="input-group-addon">
+		                                <i class="fa fa-calendar bigger-110"></i>
+		                            </span>
+		                            <input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" />
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+				</div>
+			</div>		
+			<div class="hr hr-12 hr-double"></div>
+			<div class="row">
+				<div class="col-sm-3">
+					<button class="btn btn-success" onclick="chu(this);">出勤</button>
+				</div>
+				<div class="col-sm-3">
+					<button class="btn btn-warning" onclick="xiu(this);">休息日</button>
+				</div>
+				<div class="col-sm-3">
+					<button class="btn btn-warning" onclick="xiao(this);">销售公休假</button>
+				</div>
+				<div class="col-sm-3">
+					<button class="btn btn-primary" onclick="Attendance(this);">不在岗</button>
+				</div>
+				<input type="hidden" id="DEPTrID">
+				<input type="hidden" id="DEPTdVal">
+				<input type="hidden" id="DEPTrVal">
+			</div>
+			<div class="row hide" id="AttendanceHoliday">
+				<div class="hr hr-solid hr18"></div>
+				<div class="row">
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="事">事假</button></div>
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="病">病假</button></div>
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="婚">婚假</button></div>
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="产">产假</button></div>
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="陪">陪护假</button></div>
+				</div>
+				<div class="row" style="padding:12px 0 6px 0;">
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="伤">工伤假</button></div>
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="丧">丧假</button></div>
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="旷">旷工</button></div>
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="未">未到岗</button></div>
+					<div class="ColSm2"><button class="btn btn-info" onclick="buzai(this);" value="离">离职</button></div>
+				</div>
+			</div>
+			<div class="row" id="AttendanceText">
+				<div class="hr hr-solid hr18"></div>
+				<div class="row text-center" style="font-size:20px;color:#a0a0a0;padding:6px 0 15px 0;">
+					请选该人员当日考勤，考勤修改后系统将自动保存
+				</div>
+			</div>
+		</div>
+		<div class="hide" id="RecordData">
+									
+		</div>
+		<!------------------------------------------------------------------------------------------->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <!-- <![endif]-->
+        <!--[if IE]>
+            <script type="text/javascript">
+                window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+            </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="./assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./assets/js/uncompressed/date-time/moment_ch.js"></script>
+        <script type="text/javascript" src="./assets/js/uncompressed/date-time/daterangepicker_ch.js"></script>
+        <!-- page specific plugin scripts -->
+        <script src="./assets/js/bootstrap-tag.min.js"></script>
+        <script src="./assets/js/jquery.hotkeys.min.js"></script>
+        <script src="./assets/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="./assets/js/jquery-ui.custom.min.js"></script>
+        <script src="./assets/js/chosen.jquery.min.js"></script>
+        <script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="./assets/js/jquery.slimscroll.min.js"></script>
+        <!-- ace scripts -->
+        <script src="./assets/js/ace.min.js"></script>
+        <!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			//出勤
+			function chu(obj){
+				var DateSE = $("#id-date-range-picker-1").val();
+				if( DateSE == "" ){
+					var PYear = JSON.parse(localStorage["PYear"]);
+					var PMonth = JSON.parse(localStorage["PMonth"]);
+					var k = JSON.parse(localStorage["k"]);
+					var PDay = parseInt(parseInt(k)-1);
+
+					var StartDate = ''+PYear+'-'+PMonth+'-'+PDay+'';
+					var EndDate = ''+PYear+'-'+PMonth+'-'+PDay+'';
+				}else{
+					var StartDate = DateSE.substring(0,10);
+					var EndDate = DateSE.substring(13,23);
+				}
+				var g = $("#DEPTrID").val();
+				var k = $("#DEPTdVal").val();
+				var j = $("#DEPTrVal").val();
+				window.parent.chu(g,k,j,StartDate,EndDate);
+			};
+			//休假
+			function xiu(obj){
+				var DateSE = $("#id-date-range-picker-1").val();
+				if( DateSE == "" ){
+					var PYear = JSON.parse(localStorage["PYear"]);
+					var PMonth = JSON.parse(localStorage["PMonth"]);
+					var k = JSON.parse(localStorage["k"]);
+					var PDay = parseInt(parseInt(k)-1);
+
+					var StartDate = ''+PYear+'-'+PMonth+'-'+PDay+'';
+					var EndDate = ''+PYear+'-'+PMonth+'-'+PDay+'';
+				}else{
+					var StartDate = DateSE.substring(0,10);
+					var EndDate = DateSE.substring(13,23);
+				}
+				var g = $("#DEPTrID").val();
+				var k = $("#DEPTdVal").val();
+				var j = $("#DEPTrVal").val();
+				window.parent.xiu(g,k,j,StartDate,EndDate);
+			};
+			//销售公休假
+			function xiao(obj){
+				var DateSE = $("#id-date-range-picker-1").val();
+				if( DateSE == "" ){
+					var PYear = JSON.parse(localStorage["PYear"]);
+					var PMonth = JSON.parse(localStorage["PMonth"]);
+					var k = JSON.parse(localStorage["k"]);
+					var PDay = parseInt(parseInt(k)-1);
+
+					var StartDate = ''+PYear+'-'+PMonth+'-'+PDay+'';
+					var EndDate = ''+PYear+'-'+PMonth+'-'+PDay+'';
+				}else{
+					var StartDate = DateSE.substring(0,10);
+					var EndDate = DateSE.substring(13,23);
+				}
+				var g = $("#DEPTrID").val();
+				var k = $("#DEPTdVal").val();
+				var j = $("#DEPTrVal").val();
+				window.parent.xiao(g,k,j,StartDate,EndDate);
+			};
+			//不在岗
+			function buzai(obj){
+				var DateSE = $("#id-date-range-picker-1").val();
+				if( DateSE == "" ){
+					var PYear = JSON.parse(localStorage["PYear"]);
+					var PMonth = JSON.parse(localStorage["PMonth"]);
+					var k = JSON.parse(localStorage["k"]);
+					var PDay = parseInt(parseInt(k)-1);
+
+					var StartDate = ''+PYear+'-'+PMonth+'-'+PDay+'';
+					var EndDate = ''+PYear+'-'+PMonth+'-'+PDay+'';
+				}else{
+					var StartDate = DateSE.substring(0,10);
+					var EndDate = DateSE.substring(13,23);
+				}
+				var g = $("#DEPTrID").val();
+				var k = $("#DEPTdVal").val();
+				var j = $("#DEPTrVal").val();
+				
+				var BZG = $(obj).val();
+				window.parent.buzai(g,k,j,StartDate,EndDate,BZG);
+			};
+			//不在岗显示
+			function Attendance(obj){
+				//$("#AttendanceText").addClass("hide");
+				$("#AttendanceHoliday").removeClass("hide");
+				$(".xubox_main").css({"height":"268px"});
+			};
+			//页面初始化加载考勤信息
+			jQuery(function($) {
+				//alert(localStorage.pernrBase?localStorage.pernrBase:'');
+				var PYear = JSON.parse(localStorage["PYear"]);
+				var PMonth = JSON.parse(localStorage["PMonth"]);
+				var g = JSON.parse(localStorage["g"]);
+				var k = JSON.parse(localStorage["k"]);
+				var j = JSON.parse(localStorage["j"]);
+
+				var thisYear = new Date().getFullYear();
+				var lastMonth = new Date().getMonth();
+				var thisMonth = new Date().getMonth() + 1;
+				var thisDay = new Date().getDate();
+				var daysEachMon = [31,28,31,30,31,30,31,31,30,31,30,31];//每个月的天数
+				daysEachMon[1] = (0==thisYear%4 && (thisYear%100!=0 || thisYear%400==0)) ? 29 : 28; //闰年二月为29天
+
+				var startTime = ''+parseInt(PYear)+'-'+parseInt(PMonth)+'-'+parseInt(k-1)+'';//起始日期
+				var endTime = ''+parseInt(PYear)+'-'+parseInt(PMonth)+'-'+daysEachMon[parseInt(parseInt(PMonth)-1)]+'';//结束日期
+				//var startTime = ''+parseInt(PYear)+'-'+parseInt(PMonth)+'-01';
+				var minTime = ''+parseInt(PYear)+'-'+parseInt(PMonth)+'-01';//最小选择日期
+				var maxTime = ''+parseInt(PYear)+'-'+parseInt(Number(PMonth)+1)+'-01';//最大选择日期
+
+				$('#id-date-range-picker-1').daterangepicker({
+                    timePicker: true,
+                    timePickerIncrement: 30,
+                    format: 'YYYY-MM-DD',
+                    startDate: startTime,
+                    endDate: endTime,
+                    minDate: minTime,
+                    maxDate: maxTime
+                }, function(start, end, label) {
+                    console.log(start.toISOString(), end.toISOString(), label);
+                });
+
+				
+				
+				var PWeek = JSON.parse(localStorage["PWeek"]);
+
+                $("#DEPTrID").val(g);
+				$("#DEPTdVal").val(k);
+				$("#DEPTrVal").val(j);
+
+				$("#PYearMonth").html(PYear+"年"+PMonth+"月");
+				$("#PDay").html(k-1);
+				$("#PWeek").html(PWeek);
+
+
+				$("#AttendanceText").removeClass("hide");
+				$("#AttendanceHoliday").addClass("hide");
+   	 		})
+		</script>
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+        <link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+        <script type="text/javascript">ace.vars['base'] = '..';</script>
+        <script src="./assets/js/ace/ace.onpage-help.js"></script>
+        <script src="./docs/assets/js/rainbow.js"></script>
+        <script src="./docs/assets/js/language/generic.js"></script>
+        <script src="./docs/assets/js/language/html.js"></script>
+        <script src="./docs/assets/js/language/css.js"></script>
+        <script src="./docs/assets/js/language/javascript.js"></script>
+        <script src="./layer/layer.min.js"></script>
+        <script src="./myjs/backupNew.js"></script>
+        <script src="./myjs/lexus.js"></script>
+        <script src="./assets/js/jquery.gritter.min.js"></script>
+        <script src="./assets/js/fuelux/fuelux.spinner.min.js"></script>
+        <script src="./assets/js/spin.min.js"></script>
+	</body>
+</html>

@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>团队考勤</title>
+
+		<meta name="description" content="3 styles with inline editable feature" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+		<link rel="stylesheet" href="./assets/css/select2.css" />
+		<link rel="stylesheet" href="./assets/css/datepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-editable.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+<style>
+	.border-none{
+		border:none;
+	}
+</style>
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js"></script>
+		<script src="./myjs/lexus.js"></script>
+		<script src="./assets/js/spin.min.js"></script>
+		<script>
+			//请求部门组织列表信息
+			function getOrg(orgId){
+				var opts = {            
+		            lines: 10, // 花瓣数目
+		            length: 0, // 花瓣长度
+		            width: 10, // 花瓣宽度
+		            radius: 20, // 花瓣距中心半径
+		            corners: 1, // 花瓣圆滑度 (0-1)
+		            rotate: 0, // 花瓣旋转角度
+		            direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+		            color: '#2679b5', // 花瓣颜色
+		            speed: 1, // 花瓣旋转速度
+		            trail: 60, // 花瓣旋转时的拖影(百分比)
+		            shadow: false, // 花瓣是否显示阴影
+		            hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+		            className: 'spinner', // spinner css 样式名称
+		            zIndex: 2e9 // spinner的z轴 (默认是2000000000)
+		            //top: '100', // spinner 相对父容器Top定位 单位 px
+		            //left: '100'// spinner 相对父容器Left定位 单位 px
+		        };
+		        var target = document.getElementById("Loading");  
+		        var spinner = new Spinner(opts).spin(target);
+				pagei = $.layer({
+					type: 1,   //0-4的选择,
+					title: false,
+					border: [0],
+					closeBtn: [0],
+					shadeClose: false,
+					area: ['auto', 'auto'],
+					page: {dom : '#Loading'}
+				});
+
+				setTimeout(function() {
+					if(trim($('#'+orgId).html()) != ''){
+						//return;
+					}
+					
+					var orgJSON = submit_4_1(orgId);
+					var liStr = '';
+					if(checkNoChar(orgJSON.FLAG_ORGEH) == 'X'){   //有部门
+						var P_ORG_TAB = orgJSON.P_ORG_TAB.item;
+						
+						for(var k in P_ORG_TAB){
+							liStr += '<li class="">'
+							+'<a href="#" onclick="getOrg(\''+checkNoChar(P_ORG_TAB[k].ORGEH)+'\')" class="dropdown-toggle">'
+							+'<i class=" fa fa-sitemap"></i>'
+							+'<span class="menu-text">　'+checkNoChar(P_ORG_TAB[k].ORGEH_TXT)+' </span>'
+							+'<b class="arrow fa fa-angle-down"></b>'
+							+'</a>'
+							+'<b class="arrow"></b>'
+							+'<ul class="submenu" id="'+checkNoChar(P_ORG_TAB[k].ORGEH)+'">'
+							+'</ul>'
+							+'</li>';
+						}
+					}
+					
+					
+					
+					$('#'+orgId).html(liStr);
+					
+						var showM = $('#showM').val();
+						var showY = $('#showY').val();
+					var paramJSon = {
+								"APPROVAL":"",
+								"BEGDA":getFirstDay(showY,showM),
+								"BUSINESS_TYPE":"2002",
+								"ENDDA":getLastDay(showY,showM),
+								"IS_PUBLIC":{
+									"FLOWNO":"",
+									"PERNR":"",
+									"ZDOMAIN":"",
+									"I_PAGENO":"",
+									"I_PAGESIZE":""
+								},
+								"P_ORGEH":orgId,
+								"P_PERNR":""
+							};
+							
+							$.ajaxSetup({
+								contentType: 'application/json',
+								async:true,
+								error:function(){
+									alert(errMsg1);
+								},
+								timeout:50000
+							 });
+							 
+							 $.post("/zhrws/ZHRWS_GET_DEPT_LINES",JSON.stringify(paramJSon),function(travelData){
+								if (travelData.status == '-1') {
+									layer.alert('列表请求错误',8);
+								}
+								else {
+									if(travelData.RETURN_SUBRC != '0'){
+										if(checkNoChar(travelData.RETURN_MESSAGE)){
+											layer.alert(travelData.RETURN_MESSAGE,8);
+										}else{
+											layer.alert('列表数据请求异常，请联系管理员',8);
+										}
+									}else{
+										myTravelJSON = travelData;
+										var listArr1 = ((myTravelJSON.status == '-1' || undefined == myTravelJSON.T_COUNT.item)?[]:myTravelJSON.T_COUNT.item);
+
+										//页码
+										var countAll = listArr1.length;
+										var pageAll = (countAll%pagesize) == 0?(countAll/pagesize):parseInt(countAll/pagesize) +1;
+										$('#pageAll').html(pageAll);
+										$('#pageNow').html('1');
+										localStorage.removeItem('listArr1');
+										localStorage.setItem('listArr1',JSON.stringify(listArr1));
+										
+										var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7">'
+										+'<table width="100%"><tbody><tr><td class="text-left" width="10%">'
+										+'</td>'
+										+'<td class="text-left" width="10%"> 员工工号</td><td class="text-left" width="10%">姓名</td>'
+										+'<td class="text-left" width="15%">差旅天数</td></tr>'
+										+'</tbody></table></div>';
+										
+										
+									var li = pagesize>countAll?countAll:pagesize;
+										for(var k=0;k<li;k++){
+											
+											vaListStr += '<div class="message-item message-unread">'
+											+'<table width="100%">'
+											+'<tbody>'
+											+'<tr onclick="showCon(\''+k+'\',\''+parseInt(checkNoChar(listArr1[k].PERNR))+'\')" style="cursor:pointer;">'
+											+'<td class="text-left" width="10%">'
+											+'<label class="inline middle">'
+											+'</label>'
+											+'</td>'
+											+'<td class="text-left"  width="10%"> '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td>'
+											+'<td class="text-left"  width="10%">'+checkNoChar(listArr1[k].NACHN)+'</td>'
+											+'<td class="text-left"  width="15%">'+checkNoChar(listArr1[k].COUNT)+'</td>'
+											+'</tr>'
+											+'</tbody>'
+											+'</table>'
+											//下面是详情部分
+											
+											
+											
+											+'<div class="message-content" id="content'+k+'" style="display:none">'
+											+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+											+'</div>'
+											+'</div></div>';
+										}
+										$('#message-list').html(vaListStr);
+									}
+								}
+								spinner.spin();
+								layer.close(pagei);
+							});
+							$.ajaxSetup({
+								contentType: 'application/json',
+								async:false,
+								error:function(){
+									alert(errMsg1);
+								},
+								timeout:100000
+							});
+					
+					//请求部门下所有人员信息
+//					var persJSON = submit_4_10(orgId);
+//					if(persJSON.status == '0' || undefined != persJSON.ITAB_PERNR.item){
+//						var P_PER_TAB = persJSON.ITAB_PERNR.item;
+//						var itemArr = [];
+//						for(var k in P_PER_TAB){
+//							itemArr.push({PERNR:parseInt(P_PER_TAB[k].ZZ_SUB_OBJ)});
+//						}
+//						
+//						var showM = $('#showM').val();
+//						var showY = $('#showY').val();
+//						if(itemArr.length>0){
+//							var paramJSon = {
+//								"BEGDA":getFirstDay(showY,showM),
+//								"ENDDA":getLastDay(showY,showM),
+//								"T_PERNR": {
+//													        "item":itemArr
+//													     }
+//							};
+//							$.ajaxSetup({
+//								contentType: 'application/json',
+//								async:true,
+//								error:function(){
+//									alert(errMsg1);
+//								},
+//								timeout:100000
+//							});
+//							$.post("/zhrws/ZHRWS_TIME_ATTENDANCE",JSON.stringify(paramJSon),function(travelData){
+//								if (travelData.status == '-1') {
+//									alert(-1);
+//								}
+//								else {
+//									if(travelData.RETURN_SUBRC != '0'){
+//										alert(-1);
+//									}else{
+//										myTravelJSON = travelData;
+//										var listArr1 = ((myTravelJSON.status == '-1' || undefined == myTravelJSON.T_COUNT.item)?[]:myTravelJSON.T_COUNT.item);
+//
+//										//页码
+//										var countAll = listArr1.length;
+//										var pageAll = (countAll%pagesize) == 0?(countAll/pagesize):parseInt(countAll/pagesize) +1;
+//										$('#pageAll').html(pageAll);
+//										$('#pageNow').html('1');
+//										localStorage.removeItem('listArr1');
+//										localStorage.setItem('listArr1',JSON.stringify(listArr1));
+//										
+//										var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7">'
+//										+'<table width="100%"><tbody><tr><td class="text-left" width="10%">'
+//										+'</td>'
+//										+'<td class="text-left" width="10%"> 员工工号</td><td class="text-left" width="10%">姓名</td>'
+//										+'<td class="text-left" width="15%">差旅天数</td></tr>'
+//										+'</tbody></table></div>';
+//										
+//										
+//									var li = pagesize>countAll?countAll:pagesize;
+//										for(var k=0;k<li;k++){
+//											
+//											vaListStr += '<div class="message-item message-unread">'
+//											+'<table width="100%">'
+//											+'<tbody>'
+//											+'<tr onclick="showCon(\''+k+'\',\''+parseInt(checkNoChar(listArr1[k].PERNR))+'\')" style="cursor:pointer;">'
+//											+'<td class="text-left" width="10%">'
+//											+'<label class="inline middle">'
+//											+'</label>'
+//											+'</td>'
+//											+'<td class="text-left"  width="10%"> '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td>'
+//											+'<td class="text-left"  width="10%">'+checkNoChar(listArr1[k].NACHN)+'</td>'
+//											+'<td class="text-left"  width="15%">'+checkNoChar(listArr1[k].COUNT)+'</td>'
+//											+'</tr>'
+//											+'</tbody>'
+//											+'</table>'
+//											//下面是详情部分
+//											
+//											
+//											
+//											+'<div class="message-content" id="content'+k+'" style="display:none">'
+//											+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+//											+'</div>'
+//											+'</div></div>';
+//										}
+//										$('#message-list').html(vaListStr);
+//									}
+//								}
+//								spinner.spin();
+//								layer.close(pagei);
+//							});
+//							$.ajaxSetup({
+//								contentType: 'application/json',
+//								async:false,
+//								error:function(){
+//									alert(errMsg1);
+//								},
+//								timeout:100000
+//							});
+//							
+//							
+//						}
+//					}
+					
+	//				if(checkNoChar(orgJSON.FLAG_PERNR) == 'X'){   //有下属  加载下属人员信息列表
+	//					var P_PER_TAB = orgJSON.P_PER_TAB.item;
+	//					var itemArr = [];
+	//					for(var k in P_PER_TAB){
+	//						itemArr.push({PERNR:parseInt(P_PER_TAB[k].PERNR)});
+	//					}
+	//					
+	//					var showM = $('#showM').val();
+	//					var showY = $('#showY').val();
+	//					if(itemArr.length>0){
+	//						//构建列表
+	//						var myTravelJSON = submit_4_6(itemArr,getFirstDay(showY,showM),getLastDay(showY,showM));
+	//						var listArr1 = (myTravelJSON.status == '-1'?[]:myTravelJSON.T_COUNT.item);
+	//						var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7">'
+	//						+'<table width="100%"><tbody><tr><td class="text-left" width="10%">'
+	//						+'</td>'
+	//						+'<td class="text-left" width="10%"> 员工工号</td><td class="text-left" width="10%">姓名</td>'
+	//						+'<td class="text-left" width="15%">差旅天数</td></tr>'
+	//						+'</tbody></table></div>';
+	//						
+	//						
+	//						for(var k in listArr1){
+	//							
+	//							vaListStr += '<div class="message-item message-unread">'
+	//							+'<table width="100%">'
+	//							+'<tbody>'
+	//							+'<tr onclick="showCon(\''+k+'\',\''+parseInt(checkNoChar(listArr1[k].PERNR))+'\')" style="cursor:pointer;">'
+	//							+'<td class="text-left" width="10%">'
+	//							+'<label class="inline middle">'
+	//							+'</label>'
+	//							+'</td>'
+	//							+'<td class="text-left"  width="10%"> '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td>'
+	//							+'<td class="text-left"  width="10%">'+checkNoChar(listArr1[k].NACHN)+'</td>'
+	//							+'<td class="text-left"  width="15%">'+checkNoChar(listArr1[k].COUNT)+'</td>'
+	//							+'</tr>'
+	//							+'</tbody>'
+	//							+'</table>'
+	//							//下面是详情部分
+	//							
+	//							
+	//							
+	//							+'<div class="message-content" id="content'+k+'" style="display:none">'
+	//							+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+	//							+'</div>'
+	//							+'</div></div>';
+	//						}
+	//						$('#message-list').html(vaListStr);
+	//					}
+	//				}
+				}, 300 + parseInt(Math.random() * 300));
+			}
+			
+		
+			//详情
+			function showCon(conId,perId){
+				if($('#content'+conId).is(":hidden")){
+					
+				}else{
+					$('#content'+conId).hide();
+					return;
+				}
+				var showM = $('#showM').val();
+				var showY = $('#showY').val();
+				var itemArr = [{PERNR:perId}];
+				var perlistJSON = submit_4_6(itemArr,getFirstDay(showY,showM),getLastDay(showY,showM));
+				var perlistItem = perlistJSON.TIME_ATTENDANCE.item;
+				var perlistStr = '<div class="message-item message-unread" style="background-color:#EFF7F7">'
+						+'<table width="100%" class="table table-striped table-bordered table-hover"><thead><tr>'
+						+'<th class="text-left" width="20%"> 日期</th><th class="text-left" width="17%">差旅时间</th>'
+						+'<th class="text-left" width="20%">差旅地点</th><th class="text-left" width="30%">差旅事由</th>'
+						+'<th class="text-left" width="13%">审批状态</th>'
+						+'</tr></thead><tbody>'
+						
+						for(var k in perlistItem){
+							perlistStr += '<tr>'
+							+'<td class="text-left"  width="20%"> '+checkNoChar(perlistItem[k].BEGDA)+'  '+checkNoChar(perlistItem[k].WEEK)+'</td>'
+							+'<td class="text-left"  width="17%">全天</td>'
+							+'<td class="text-left"  width="20%">'+checkNoChar(perlistItem[k].ADDRESS)+'</td>'
+							+'<td class="text-left" width="30%">'+checkNoChar(perlistItem[k].REASON)+'</td>'
+							+'<td class="text-left" width="13%">'+(checkNoChar(perlistItem[k].APPROVAL_STATUS)=='9'?'已审批':'审批中')+'</td>'
+							+'</tr>'
+						}
+						
+						perlistStr += '</table></div>';
+						
+						$('#content'+conId).html(perlistStr);
+						$('#content'+conId).show();
+			}
+			
+			
+			//翻页
+		//翻页
+			function changePage(flag){
+				var pageNow = $('#pageNow').html();
+				var pageAll = $('#pageAll').html();
+				if(flag == '1'){
+					if(pageNow == '1' || pageNow == '0'){
+						return;
+					}
+					//第一页
+					changeDo('1');
+				}
+				
+				if(flag == '2'){
+					if(pageNow == '1' || pageNow == '0'){
+						return;
+					}
+					pageNow = parseInt(pageNow)-1;
+					changeDo(pageNow);
+				}
+				
+				if(flag == '3'){
+					if(parseInt(pageNow) >= parseInt(pageAll)){
+						return;
+					}
+					pageNow = parseInt(pageNow)+1;
+					changeDo(pageNow);
+				}
+				
+				if(flag == '4'){
+					if(parseInt(pageNow) >= parseInt(pageAll)){
+						return;
+					}
+					
+					changeDo(pageAll);
+				}
+			}
+			
+			//翻页操作
+			function changeDo(pageNo){
+				$('#pageNow').html(pageNo);
+				
+				var listArr1 = localStorage.getItem('listArr1');
+				listArr1 = JSON.parse(listArr1);
+				
+				var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7">'
+						+'<table width="100%"><tbody><tr><td class="text-left" width="10%">'
+						+'</td>'
+						+'<td class="text-left" width="10%"> 员工工号</td><td class="text-left" width="10%">姓名</td>'
+						+'<td class="text-left" width="15%">差旅天数</td></tr>'
+						+'</tbody></table></div>';
+						
+						
+					var start = (parseInt(pageNo)-1)*20;
+						var end = start + 20;
+						for(var k=start;k<end;k++){
+							
+							vaListStr += '<div class="message-item message-unread">'
+							+'<table width="100%">'
+							+'<tbody>'
+							+'<tr onclick="showCon(\''+k+'\',\''+parseInt(checkNoChar(listArr1[k].PERNR))+'\')" style="cursor:pointer;">'
+							+'<td class="text-left" width="10%">'
+							+'<label class="inline middle">'
+							+'</label>'
+							+'</td>'
+							+'<td class="text-left"  width="10%"> '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td>'
+							+'<td class="text-left"  width="10%">'+checkNoChar(listArr1[k].NACHN)+'</td>'
+							+'<td class="text-left"  width="15%">'+checkNoChar(listArr1[k].COUNT)+'</td>'
+							+'</tr>'
+							+'</tbody>'
+							+'</table>'
+							//下面是详情部分
+							
+							
+							
+							+'<div class="message-content" id="content'+k+'" style="display:none">'
+							+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+							+'</div>'
+							+'</div></div>';
+						}
+						$('#message-list').html(vaListStr);
+			}
+			
+			//切换日期
+			function changeD(flag){
+				var showY = $('#showY').val();
+				var showM = $('#showM').val();
+				if(flag == '1'){
+					if(showM == '12'){
+						showM = '1';
+						showY = parseInt(showY) +1;
+					}else{
+						showM = parseInt(showM) +1;
+					}
+				}else{
+					if(showM == '1'){
+						showM = '12';
+						showY = parseInt(showY) -1;
+					}else{
+						showM = parseInt(showM) -1;
+					}
+				}
+				$('#showD').html('  '+showY+'年'+showM+'月  ')
+				$('#showY').val(showY);
+				$('#showM').val(showM);
+			}
+		</script>
+	</head>
+
+	<body class="no-skin">
+		<div id="Loading" style="display:none;">		
+		</div>
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="http://cpd.cttq.com:50000/irj/portal/">企业信息门户</a>
+						</li>
+
+						<li>
+							<a href="#">团队管理</a>
+						</li>
+					</ul><!-- /.breadcrumb -->
+
+
+					<!-- /section:basics/content.searchbox -->
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+					
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1 style="font-family:Microsoft YaHei ! important;">
+								团队考勤
+								<small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									用于部门经理和考勤员查看本部门员工的日常考勤情况
+								</small>
+								<div id="changeD" style="float:right;">
+									<input type="hidden" id="showY" value="">
+									<input type="hidden" id="showM" value="">
+									<button type="button" class="btn btn-xs btn-info" data-toggle="button" onclick="changeD('-1')">
+										<i class="fa fa-arrow-left"></i>
+									
+									</button>
+									
+									<span id="showD" style="font-size:20px">    </span>
+									<button type="button" class="btn btn-xs btn-info" data-toggle="button" onclick="changeD('1')">
+										<i class="fa fa-arrow-right"></i>
+									
+									</button>
+								</div>
+							</h1>
+						</div><!-- /.page-header -->
+
+			<div class="row">
+            	<div class="col-sm-12">
+                	<div class="row">
+                		<div class="col-sm-12">
+							<button class="btn btn-info" onclick="window.location.href='/web/depAttendance.html'">考勤异常</button>
+							<button class="btn btn-info" onclick="window.location.href='/web/depClock.html'">刷卡信息</button>
+							<button class="btn btn-info" onclick="window.location.href='/web/depVacation.html'">休假信息</button>
+							<button class="btn btn-primary">差旅信息</button>
+							<button class="btn btn-info" onclick="window.location.href='/web/depOvertime.html'">加班信息</button>
+                        </div>
+					</div>
+						<!-- 2 组织树 -->
+					<div class="space-20"></div>
+					<div class="row">
+						<!-- 2 组织树 -->
+									<div class="col-sm-3" style="min-width:100px">
+										<div class="widget-box widget-color-green2">
+											<div class="widget-header" style="vertical-align:middle;background-color:#65bcda">
+												<h4 style="" id="orgTitle" class="widget-title lighter smaller">我的团队</h4>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main padding-8">
+													<div id="sidebar1" class="sidebar responsive" style="float:none;width:auto;margin-left:2px;max-height:3000px;display:none">
+                                                    <!-- /.sidebar-shortcuts -->
+                                                    <ul class="nav nav-list" id="searchUl">
+                                                    	
+                                                    </ul>
+                                                    <script type="text/javascript">
+                                                        try {
+                                                            ace.settings.check('sidebar1', 'collapsed')
+                                                        } 
+                                                        catch (e) {
+                                                        }
+                                                    </script>
+                                                </div>
+                                                <div id="sidebar" class="sidebar responsive" style="float:none;width:auto;margin-left:2px;max-height:3000px;display:block">
+                                                    <!-- /.sidebar-shortcuts -->
+                                                    <ul class="nav nav-list" id="bumenUl">
+                                                    </ul>
+                                                    <script type="text/javascript">
+                                                        try {
+                                                            ace.settings.check('sidebar', 'collapsed')
+                                                        } 
+                                                        catch (e) {
+                                                        }
+                                                    </script>
+                                                </div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-sm-9">
+                        
+                        <!----列表--->
+                        <div class="tabbable donder">
+                                <div class="tab-content no-border no-padding">
+                                    <div  class="tab-pane in active">
+                                        <div class="message-container">
+                                            <!-- #section:pages/inbox.navbar -->
+                                            <div id="id-message-list-navbar" class="message-navbar clearfix">
+														<div class="message-bar">
+															<div class="message-infobar" id="id-message-infobar">
+																<span class="blue bigger-150">差旅列表</span>
+																<span class="grey bigger-110"></span>
+															</div>
+
+															<div class="message-toolbar hide">
+																<div class="inline position-relative align-left">
+																	
+
+																	
+																</div>
+
+																
+
+																
+															</div>
+														</div>
+
+														<div>
+															
+
+															
+
+															<!-- #section:pages/inbox.navbar-search -->
+															<!--div class="nav-search minimized">
+																<form class="form-search">
+																	<span class="input-icon">
+																		<input type="text" autocomplete="off" class="input-small nav-search-input" placeholder="Search inbox ..." />
+																		<i class="ace-icon fa fa-search nav-search-icon"></i>
+																	</span>
+																</form>
+															</div-->
+
+															<!-- /section:pages/inbox.navbar-search -->
+														</div>
+													</div>
+                                            
+            
+                                            
+            
+                                            
+            
+            
+                                            <!-- /section:pages/inbox.navbar -->
+                                            <div class="message-list-container">
+                                                <!-- #section:pages/inbox.message-list -->
+                                                <div class="message-list" id="message-list">
+                                            	</div>
+                                            
+            
+                                            <!-- #section:pages/inbox.message-footer -->
+                                            <div class="message-footer clearfix">
+                                                <!--div class="pull-left"> 共<span id="pageAll">1</span>页 </div-->
+            
+                                                <div class="pull-right">
+                                                    <div class="inline middle">  </div>
+            
+                                                    &nbsp; &nbsp;
+                                                    <ul class="pagination middle">
+                                                        <li >
+                                                            <a href="###" onclick="changePage('1')">
+                                                                <i class="ace-icon fa fa-step-backward middle"></i>
+                                                            </a>
+                                                        </li>
+            
+                                                        <li>
+                                                            <a href="###" onclick="changePage('2')">
+                                                                <i class="ace-icon fa fa-caret-left bigger-140 middle"></i>
+                                                            </a>
+                                                        </li>
+            
+                                                        <!--li>
+                                                           <span id="pageNow">1</span>
+                                                        </li-->
+            											<li>
+                                                           <span id="pageNow" style="padding-right:0">1</span><span style="padding:3px 0 0 0;margin:0">/</span><span id="pageAll" style="padding-left:0">1</span>
+                                                        </li>
+                                                        <li>
+                                                            <a href="###" onclick="changePage('3')">
+                                                                <i class="ace-icon fa fa-caret-right bigger-140 middle"></i>
+                                                            </a>
+                                                        </li>
+            
+                                                        <li>
+                                                            <a href="###" onclick="changePage('4')">
+                                                                <i class="ace-icon fa fa-step-forward middle"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+            
+                                            
+            
+                                            <!-- /section:pages/inbox.message-footer -->
+                                        </div>
+                                    </div>
+                                </div><!-- /.tab-content -->
+                            </div>
+                        <!---修改--->
+                        
+                        </div>
+                    </div>
+									
+									
+									
+								</div>
+
+								<!-- /section:plugins/fuelux.treeview -->
+								<script type="text/javascript">
+									var $assets = "./assets";//this will be used in fuelux.tree-sampledata.js
+								</script>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="./assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>
+		<script src="./assets/js/bootbox.min.js"></script>
+		<script src="./assets/js/jquery.easypiechart.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="./assets/js/jquery.hotkeys.min.js"></script>
+		<script src="./assets/js/bootstrap-wysiwyg.min.js"></script>
+		<script src="./assets/js/select2.min.js"></script>
+		<script src="./assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="./assets/js/x-editable/bootstrap-editable.min.js"></script>
+		<script src="./assets/js/x-editable/ace-editable.min.js"></script>
+		<script src="./assets/js/jquery.maskedinput.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+			
+				//editables on first profile page
+				$.fn.editable.defaults.mode = 'inline';
+				$.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
+			    $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
+			                                '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';    
+				
+				//editables 
+				
+				//text editable
+			    $('#username')
+				.editable({
+					type: 'text',
+					name: 'username'
+			    });
+			
+			
+				
+				//select2 editable
+				var countries = [];
+			    $.each({ "CA": "Canada", "IN": "India", "NL": "Netherlands", "TR": "Turkey", "US": "United States"}, function(k, v) {
+			        countries.push({id: k, text: v});
+			    });
+			
+				var cities = [];
+				cities["CA"] = [];
+				$.each(["Toronto", "Ottawa", "Calgary", "Vancouver"] , function(k, v){
+					cities["CA"].push({id: v, text: v});
+				});
+				cities["IN"] = [];
+				$.each(["Delhi", "Mumbai", "Bangalore"] , function(k, v){
+					cities["IN"].push({id: v, text: v});
+				});
+				cities["NL"] = [];
+				$.each(["Amsterdam", "Rotterdam", "The Hague"] , function(k, v){
+					cities["NL"].push({id: v, text: v});
+				});
+				cities["TR"] = [];
+				$.each(["Ankara", "Istanbul", "Izmir"] , function(k, v){
+					cities["TR"].push({id: v, text: v});
+				});
+				cities["US"] = [];
+				$.each(["New York", "Miami", "Los Angeles", "Chicago", "Wysconsin"] , function(k, v){
+					cities["US"].push({id: v, text: v});
+				});
+				
+				var currentValue = "NL";
+			    $('#country').editable({
+					type: 'select2',
+					value : 'NL',
+					//onblur:'ignore',
+			        source: countries,
+					select2: {
+						'width': 140
+					},		
+					success: function(response, newValue) {
+						if(currentValue == newValue) return;
+						currentValue = newValue;
+						
+						var new_source = (!newValue || newValue == "") ? [] : cities[newValue];
+						
+						//the destroy method is causing errors in x-editable v1.4.6+
+						//it worked fine in v1.4.5
+						/**			
+						$('#city').editable('destroy').editable({
+							type: 'select2',
+							source: new_source
+						}).editable('setValue', null);
+						*/
+						
+						//so we remove it altogether and create a new element
+						var city = $('#city').removeAttr('id').get(0);
+						$(city).clone().attr('id', 'city').text('Select City').editable({
+							type: 'select2',
+							value : null,
+							//onblur:'ignore',
+							source: new_source,
+							select2: {
+								'width': 140
+							}
+						}).insertAfter(city);//insert it after previous instance
+						$(city).remove();//remove previous instance
+						
+					}
+			    });
+			
+				$('#city').editable({
+					type: 'select2',
+					value : 'Amsterdam',
+					//onblur:'ignore',
+			        source: cities[currentValue],
+					select2: {
+						'width': 140
+					}
+			    });
+			
+			
+				
+				//custom date editable
+				$('#signup').editable({
+					type: 'adate',
+					date: {
+						//datepicker plugin options
+						    format: 'yyyy/mm/dd',
+						viewformat: 'yyyy/mm/dd',
+						 weekStart: 1
+						 
+						//,nativeUI: true//if true and browser support input[type=date], native browser control will be used
+						//,format: 'yyyy-mm-dd',
+						//viewformat: 'yyyy-mm-dd'
+					}
+				})
+			
+			    $('#age').editable({
+			        type: 'spinner',
+					name : 'age',
+					spinner : {
+						min : 16,
+						max : 99,
+						step: 1,
+						on_sides: true
+						//,nativeUI: true//if true and browser support input[type=number], native browser control will be used
+					}
+				});
+				
+			
+			    $('#login').editable({
+			        type: 'slider',
+					name : 'login',
+					
+					slider : {
+						 min : 1,
+						  max: 50,
+						width: 100
+						//,nativeUI: true//if true and browser support input[type=range], native browser control will be used
+					},
+					success: function(response, newValue) {
+						if(parseInt(newValue) == 1)
+							$(this).html(newValue + " hour ago");
+						else $(this).html(newValue + " hours ago");
+					}
+				});
+			
+				$('#about').editable({
+					mode: 'inline',
+			        type: 'wysiwyg',
+					name : 'about',
+			
+					wysiwyg : {
+						//css : {'max-width':'300px'}
+					},
+					success: function(response, newValue) {
+					}
+				});
+				
+				
+				
+				// *** editable avatar *** //
+				try {//ie8 throws some harmless exceptions, so let's catch'em
+			
+					//first let's add a fake appendChild method for Image element for browsers that have a problem with this
+					//because editable plugin calls appendChild, and it causes errors on IE at unpredicted points
+					try {
+						document.createElement('IMG').appendChild(document.createElement('B'));
+					} catch(e) {
+						Image.prototype.appendChild = function(el){}
+					}
+			
+					var last_gritter
+					$('#avatar').editable({
+						type: 'image',
+						name: 'avatar',
+						value: null,
+						image: {
+							//specify ace file input plugin's options here
+							btn_choose: 'Change Avatar',
+							droppable: true,
+							maxSize: 110000,//~100Kb
+			
+							//and a few extra ones here
+							name: 'avatar',//put the field name here as well, will be used inside the custom plugin
+							on_error : function(error_type) {//on_error function will be called when the selected file has a problem
+								if(last_gritter) $.gritter.remove(last_gritter);
+								if(error_type == 1) {//file format error
+									last_gritter = $.gritter.add({
+										title: 'File is not an image!',
+										text: 'Please choose a jpg|gif|png image!',
+										class_name: 'gritter-error gritter-center'
+									});
+								} else if(error_type == 2) {//file size rror
+									last_gritter = $.gritter.add({
+										title: 'File too big!',
+										text: 'Image size should not exceed 100Kb!',
+										class_name: 'gritter-error gritter-center'
+									});
+								}
+								else {//other error
+								}
+							},
+							on_success : function() {
+								$.gritter.removeAll();
+							}
+						},
+					    url: function(params) {
+							// ***UPDATE AVATAR HERE*** //
+							//for a working upload example you can replace the contents of this function with 
+							//examples/profile-avatar-update.js
+			
+							var deferred = new $.Deferred
+			
+							var value = $('#avatar').next().find('input[type=hidden]:eq(0)').val();
+							if(!value || value.length == 0) {
+								deferred.resolve();
+								return deferred.promise();
+							}
+			
+			
+							//dummy upload
+							setTimeout(function(){
+								if("FileReader" in window) {
+									//for browsers that have a thumbnail of selected image
+									var thumb = $('#avatar').next().find('img').data('thumb');
+									if(thumb) $('#avatar').get(0).src = thumb;
+								}
+								
+								deferred.resolve({'status':'OK'});
+			
+								if(last_gritter) $.gritter.remove(last_gritter);
+								last_gritter = $.gritter.add({
+									title: 'Avatar Updated!',
+									text: 'Uploading to server can be easily implemented. A working example is included with the template.',
+									class_name: 'gritter-info gritter-center'
+								});
+								
+							 } , parseInt(Math.random() * 800 + 800))
+			
+							return deferred.promise();
+							
+							// ***END OF UPDATE AVATAR HERE*** //
+						},
+						
+						success: function(response, newValue) {
+						}
+					})
+				}catch(e) {}
+				
+				
+			
+				//another option is using modals
+				$('#avatar2').on('click', function(){
+					var modal = 
+					'<div class="modal fade">\
+					  <div class="modal-dialog">\
+					   <div class="modal-content">\
+						<div class="modal-header">\
+							<button type="button" class="close" data-dismiss="modal">&times;</button>\
+							<h4 class="blue">Change Avatar</h4>\
+						</div>\
+						\
+						<form class="no-margin">\
+						 <div class="modal-body">\
+							<div class="space-4"></div>\
+							<div style="width:75%;margin-left:12%;"><input type="file" name="file-input" /></div>\
+						 </div>\
+						\
+						 <div class="modal-footer center">\
+							<button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Submit</button>\
+							<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
+						 </div>\
+						</form>\
+					  </div>\
+					 </div>\
+					</div>';
+					
+					
+					var modal = $(modal);
+					modal.modal("show").on("hidden", function(){
+						modal.remove();
+					});
+			
+					var working = false;
+			
+					var form = modal.find('form:eq(0)');
+					var file = form.find('input[type=file]').eq(0);
+					file.ace_file_input({
+						style:'well',
+						btn_choose:'Click to choose new avatar',
+						btn_change:null,
+						no_icon:'ace-icon fa fa-picture-o',
+						thumbnail:'small',
+						before_remove: function() {
+							//don't remove/reset files while being uploaded
+							return !working;
+						},
+						allowExt: ['jpg', 'jpeg', 'png', 'gif'],
+						allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+					});
+			
+					form.on('submit', function(){
+						if(!file.data('ace_input_files')) return false;
+						
+						file.ace_file_input('disable');
+						form.find('button').attr('disabled', 'disabled');
+						form.find('.modal-body').append("<div class='center'><i class='ace-icon fa fa-spinner fa-spin bigger-150 orange'></i></div>");
+						
+						var deferred = new $.Deferred;
+						working = true;
+						deferred.done(function() {
+							form.find('button').removeAttr('disabled');
+							form.find('input[type=file]').ace_file_input('enable');
+							form.find('.modal-body > :last-child').remove();
+							
+							modal.modal("hide");
+			
+							var thumb = file.next().find('img').data('thumb');
+							if(thumb) $('#avatar2').get(0).src = thumb;
+			
+							working = false;
+						});
+						
+						
+						setTimeout(function(){
+							deferred.resolve();
+						} , parseInt(Math.random() * 800 + 800));
+			
+						return false;
+					});
+							
+				});
+			
+				
+			
+				//////////////////////////////
+				$('#profile-feed-1').ace_scroll({
+					height: '250px',
+					mouseWheelLock: true,
+					alwaysVisible : true
+				});
+			
+				$('a[ data-original-title]').tooltip();
+			
+				$('.easy-pie-chart.percentage').each(function(){
+				var barColor = $(this).data('color') || '#555';
+				var trackColor = '#E2E2E2';
+				var size = parseInt($(this).data('size')) || 72;
+				$(this).easyPieChart({
+					barColor: barColor,
+					trackColor: trackColor,
+					scaleColor: false,
+					lineCap: 'butt',
+					lineWidth: parseInt(size/10),
+					animate:false,
+					size: size
+				}).css('color', barColor);
+				});
+			  
+				///////////////////////////////////////////
+			
+				//right & left position
+				//show the user info on right or left depending on its position
+				$('#user-profile-2 .memberdiv').on('mouseenter touchstart', function(){
+					var $this = $(this);
+					var $parent = $this.closest('.tab-pane');
+			
+					var off1 = $parent.offset();
+					var w1 = $parent.width();
+			
+					var off2 = $this.offset();
+					var w2 = $this.width();
+			
+					var place = 'left';
+					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) place = 'right';
+					
+					$this.find('.popover').removeClass('right left').addClass(place);
+				}).on('click', function(e) {
+					e.preventDefault();
+				});
+			
+			
+				///////////////////////////////////////////
+				$('#user-profile-3')
+				.find('input[type=file]').ace_file_input({
+					style:'well',
+					btn_choose:'Change avatar',
+					btn_change:null,
+					no_icon:'ace-icon fa fa-picture-o',
+					thumbnail:'large',
+					droppable:true,
+					
+					allowExt: ['jpg', 'jpeg', 'png', 'gif'],
+					allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+				})
+				.end().find('button[type=reset]').on(ace.click_event, function(){
+					$('#user-profile-3 input[type=file]').ace_file_input('reset_input');
+				})
+				.end().find('.date-picker').datepicker().next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				})
+				$('.input-mask-phone').mask('(999) 999-9999');
+			
+			
+			
+				////////////////////
+				//change profile
+				$('[data-toggle="buttons"] .btn').on('click', function(e){
+					var target = $(this).find('input[type=radio]');
+					var which = parseInt(target.val());
+					$('.user-profile').parent().addClass('hide');
+					$('#user-profile-'+which).parent().removeClass('hide');
+				});
+				
+				$('[data-rel=popover]').popover({container:'body'});
+				//lexus
+				//初始化页面数据
+$.ajaxSetup({
+	contentType: 'application/json',
+	async:false,
+	error:function(){
+		alert(errMsg1);
+	},
+	timeout:timeout
+ });
+				//初始化部门树
+				var p_obj = localStorage.pernrBase?localStorage.pernrBase:'';
+				
+				var liStr = '';
+				
+				var ifKQYJSON = submit_7_1(p_obj);
+					if(ifKQYJSON.status != '0'){
+						var orgJSON = submit_4_1(p_obj);
+						if(checkNoChar(orgJSON.FLAG_ORGEH) == 'X'){   //有部门
+							var P_ORG_TAB = orgJSON.P_ORG_TAB.item;
+							
+							for(var k in P_ORG_TAB){
+								liStr += '<li class="">'
+								+'<a href="" onclick="getOrg(\''+checkNoChar(P_ORG_TAB[k].ORGEH)+'\')" class="dropdown-toggle">'
+								+'<i class="menu-icon fa fa-sitemap"></i>'
+								+'<span class="menu-text">'+checkNoChar(P_ORG_TAB[k].ORGEH_TXT)+' </span>'
+								+'<b class="arrow fa fa-angle-down"></b>'
+								+'</a>'
+								+'<b class="arrow"></b>'
+								+'<ul class="submenu" id="'+checkNoChar(P_ORG_TAB[k].ORGEH)+'">'
+								+'</ul>'
+								+'</li>';
+							}
+						}else{
+							layer.alert('您不具有权限查看团队考勤',8,function(){
+									window.close();
+								});
+						}
+						
+					}else{
+						var temp_objidItem1 = ifKQYJSON.ET_OBJID.item;
+						var temp_objidItem = [];
+						if(undefined == temp_objidItem1.length){
+							temp_objidItem.push(temp_objidItem1);
+						}else{
+							temp_objidItem = temp_objidItem1;
+						}
+						for(var oi in temp_objidItem){
+							liStr += '<li class="">'
+							+'<a href="" onclick="getOrg(\''+checkNoChar(temp_objidItem[oi].OBJID)+'\')" class="dropdown-toggle">'
+							+'<i class="menu-icon fa fa-sitemap"></i>'
+							+'<span class="menu-text">'+checkNoChar(temp_objidItem[oi].ORGTX)+' </span>'
+							+'<b class="arrow fa fa-angle-down"></b>'
+							+'</a>'
+							+'<b class="arrow"></b>'
+							+'<ul class="submenu" id="'+checkNoChar(temp_objidItem[oi].OBJID)+'">'
+							+'</ul>'
+							+'</li>';
+						}
+						//orgJSON = submit_4_1(checkNoChar(ifKQYJSON.E_OBJID));
+//						liStr += '<li class="">'
+//						+'<a href="" onclick="getOrg(\''+checkNoChar(ifKQYJSON.E_OBJID)+'\')" class="dropdown-toggle">'
+//						+'<i class="menu-icon fa fa-sitemap"></i>'
+//						+'<span class="menu-text">'+checkNoChar(ifKQYJSON.E_ORGTX)+' </span>'
+//						+'<b class="arrow fa fa-angle-down"></b>'
+//						+'</a>'
+//						+'<b class="arrow"></b>'
+//						+'<ul class="submenu" id="'+checkNoChar(ifKQYJSON.E_OBJID)+'">'
+//						+'</ul>'
+//						+'</li>';
+					}
+				
+				
+				
+			
+				
+				$('#bumenUl').html(liStr);
+				
+				//请求直属下属的列表信息
+				var dateT = new Date();
+				$('#showY').val(dateT.getFullYear());
+				$('#showM').val(dateT.getMonth()+1);
+				$('#showD').html('  '+$('#showY').val()+'年'+$('#showM').val()+'月  ')
+			});
+		</script>
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

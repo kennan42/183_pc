@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="../assets/css/chosen.css" />
+        <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+        <link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
+        <!-- text fonts -->
+        <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="../assets/css/ace.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <!-- inline styles related to this page -->
+        <!-- ace settings handler -->
+        <script src="../assets/js/ace-extra.min.js"></script>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lte IE 8]>
+            <script src="../assets/js/html5shiv.js">
+            </script>
+            <script src="../assets/js/respond.min.js">
+            </script>
+        <![endif]-->
+        <title>
+            意见反馈-已回复详情
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+            body{background:#fff;}
+            .page-content{padding:24px;}
+            .page-header{padding-bottom:12px;padding-top:0px;margin-bottom:0;}
+            .page-header h1{font-size:22px;}
+            .page-content-area{padding:12px 24px;overflow:hidden;}
+            .hr-dotted{border-style:dashed;border-color:#7ea8fb;display:inline-block;width:100%;}
+            .form-group{margin:0;}
+            .form-group label[class*=col-]{
+                padding-top:0px;
+                margin:0;
+                display:block;
+                padding:7px 12px 6px 12px;
+                text-align:right;
+                color:#4c4c4c;
+                font-size:14px;
+                font-weight:500;
+            }
+            .form-group-span {
+                padding:8px 0 7px 0;
+                display:block;
+                color:#030303;
+                font-size:14px;
+                font-weight:500;
+            }
+            .btn-info:active, .btn-info:hover, .open .btn-info.dropdown-toggle{
+                background-color:#1567c5!important;
+                border-color:#2e82ff;
+            }
+            .btn-info, .btn-info:focus {
+                background-color:#2e82ff!important;
+                border-color:#2e82ff;
+            }
+            .btn-warning:active, .btn-warning:hover, .open .btn-warning.dropdown-toggle{
+                background-color:#e0ab01!important;
+                border-color:#ffc300;
+            }
+            .btn-warning, .btn-warning:focus {
+                background-color:#ffc300!important;
+                border-color:#ffc300;
+            }
+            .widget-box.transparent>.widget-header{background:#f7f7f7;border-bottom:1px solid #1777e5;padding-left:12px;min-height:32px;}
+            .widget-box.transparent>.widget-header a{color:#333;}
+            .widget-box.transparent>.widget-header a:hover{color:#333;}
+            .widget-box.transparent>.widget-header h4{margin:6px 0;height:20px;line-height:20px;}
+            .widget-box.transparent>.widget-header .widget-toolbar{line-height:32px;}
+            .widget-body .table{border-top:none;}
+            .widget-body .table>thead>tr>td,.widget-body  .table>thead>tr>th{border-top:none;border-bottom:1px solid #1777e5;color:#333;}
+            .widget-body .table>tbody>tr>td,.widget-body  .table>tbody>tr>th{border-top:1px dashed #7ea8fb;color:#030303;}
+
+            /* */
+            .label-lg {
+                padding: .4em .6em .4em;
+                font-size: 13px;
+                line-height: 1.1;
+                height: 24px;
+                float: left;
+            }
+            .label-success {
+                background-color: #1777e5!important;
+            }
+            .label-success.arrowed-in:before {
+                border-color: #1777e5;
+            }
+            .label-success.arrowed-right:after {
+                border-left-color: #1777e5;
+            }
+            #HFImg,#HFHFIMG{display:none;}
+            .imgPreview ul,.imgList ul{margin:0;padding:0;}
+            .imgPreview ul li,.imgList ul li{float:left;margin-right:10px;margin-top:8px;}
+            .imgPreview ul li img,.imgList ul li img{width:56px;height:100px;cursor:pointer;border:1px solid #c3c3c3;}
+
+            .HFimgPreview ul,.imgList ul{margin:0;padding:0;}
+            .HFimgPreview ul li,.imgList ul li{float:left;margin-right:10px;margin-top:8px;}
+            .HFimgPreview ul li img,.imgList ul li img{width:56px;height:100px;cursor:pointer;border:1px solid #c3c3c3;}
+            .tianjiaSVG,.shanchuSVG{
+            	border:1px dashed #aaa;
+            	border-radius:4px;
+            	text-align:center;
+            	float:left;
+            	width:56px;
+            	height:56px;
+            	cursor:pointer;
+            	line-height:68px;
+            	margin:30px 8px 22px 8px;
+            }
+            .tianjiaSVG svg,.shanchuSVG svg{
+            	/*width:30px;
+            	height:30px;*/
+				stroke-width:4;
+                fill:#aaa;
+            }
+            .imgList{float:left;}
+            .SVGBox{
+            	height:108px;
+            	float:left;
+            	cursor:pointer;
+            }
+            #file{border:none;cursor:pointer;}
+            #shanchu{display:none;}
+            .removeIMG{
+            	display:none;
+            	width: 28px;
+			    height: 28px;
+			    position: absolute;
+			    top: -12px;
+    			left: -12px;
+            }
+            .imgList ul li {position:relative;}
+        </style>
+        <script src="../assets/js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/custom.css" />
+    </head>
+    <body class="no-skin" style="overflow:hidden;">
+        <div class="main-container main_iframe_div" id="main-container" style="overflow:hidden;">
+            <div class="main-content">
+                <div class="row-fluid page-content" style="overflow: hidden;">
+                    <div class="page-header" style="border-bottom:solid 1px #1777e5;">
+                        <input type="hidden" id="begD" value="">
+                        <input type="hidden" id="endD" value="">
+                        <h1 style="color:#1a1a1a;" id="titleH1">
+                            意见反馈已回复
+                            <button type="button" class="close" onclick="Close_Enterprise()">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                        </h1>
+                    </div>
+                    <div class="col-xs-12 no-padding">
+                        <div class="widget-box transparent" style="padding-top: 16px;">
+                            <div class="widget-header">
+                                <a href="javascript:void(0);" style="display:inline-block;width:100%;cursor:default;">
+                                    <h4 class="widget-title lighter" style="float:left; padding-top: 2px;">
+                                        意见单信息
+                                    </h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="page-content-area">
+                            <div class="hr hr6 hr-dotted"></div>
+                            <div class="col-xs-12 col-sm-12 form-group no-padding">
+                                <label class="col-sm-2 control-label">提出人</label>
+                                <div class="col-sm-3">
+                                    <span class="form-group-span" id="NACHN"></span>
+                                </div>
+                                <label class="col-sm-3 control-label">联系方式</label>
+                                <div class="col-sm-4">
+                                    <span class="form-group-span" id="ZZ_TEL"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 form-group no-padding">
+                                <label class="col-sm-2 control-label">公司</label>
+                                <div class="col-sm-3">
+                                    <span class="form-group-span" id="BUTXT"></span>
+                                </div>
+                                <label class="col-sm-3 control-label">邮箱</label>
+                                <div class="col-sm-4">
+                                    <span class="form-group-span" id="ZZ_EMAIL"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 form-group no-padding">
+                                <label class="col-sm-2 control-label">部门</label>
+                                <div class="col-sm-3">
+                                    <span class="form-group-span" id="ORGTX"></span>
+                                </div>
+                                <label class="col-sm-3 control-label">职位</label>
+                                <div class="col-sm-4">
+                                    <span class="form-group-span" id="STLTX"></span>
+                                </div>
+                            </div>
+                            <div class="hr hr6 hr-dotted"></div>
+                            <div class="col-xs-12 col-sm-12 form-group no-padding">
+                                <label class="col-sm-2 control-label">意见编号</label>
+                                <div class="col-sm-3">
+                                    <span class="form-group-span" id="taskId"></span>
+                                </div>
+                                <label class="col-sm-3 control-label">提交时间</label>
+                                <div class="col-sm-4">
+                                    <span class="form-group-span" id="createTime"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 form-group no-padding">
+                                <label class="col-sm-2 control-label">意见描述</label>
+                                <div class="col-sm-10">
+                                    <span class="form-group-span" id="opinion"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 form-group no-padding" id="HFImg">
+                                <label class="col-sm-2 control-label">图片</label>
+                                <div class="col-sm-10 imgPreview">
+                                    <ul>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 no-padding">
+                        <div class="widget-box transparent" style="padding-top: 16px;">
+                            <div class="widget-header">
+                                <a href="javascript:void(0);" style="display:inline-block;width:100%;cursor:default;">
+                                    <h4 class="widget-title lighter" style="float:left; padding-top: 2px;">
+                                        回复信息
+                                    </h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="page-content-area">
+                            <div class="hr hr6 hr-dotted"></div>
+                            <div class="col-xs-12 col-sm-12 form-group no-padding">
+                                <label class="col-sm-2 control-label">回复信息</label>
+                                <div class="col-sm-10">
+                                    <span class="form-group-span" id="HFopinion"></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 form-group no-padding" id="HFHFIMG">
+                                <label class="col-sm-2 control-label">回复图片</label>
+                                <div class="col-sm-10 HFimgPreview">
+                                    <ul>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+        	//意见反馈图片数组
+        	var ImgArr = new Array();
+        	//删除图片
+        	function removeIMG(obj){
+        		var RdIMG = $(obj).prev().attr('src');                          //获取当前删除图片的本地路径
+	            var XCode = $.inArray(RdIMG,ImgArr);                          	//获取当前删除图片的本地图片数组下标
+	            ImgArr.splice(XCode,1);                                         //在上传图片数组中删除该元素
+	            $(obj).parent().remove();
+	            if( $(".imgList ul").find("li").length < 1 ){
+	            	$("#shanchu").hide();
+	            }
+	            //$(obj).remove();
+        	}
+        	//图片上传
+        	function UpImg(){
+	            var file = document.getElementById("file");
+			    var myForm = document.getElementById("myForm");
+			    var imgPath = $("#file").val();
+			    var startIndex = imgPath.lastIndexOf("\\");
+			    var imgName = imgPath.substring(startIndex + 1, imgPath.length);
+			    if (imgPath == "") {
+			    	var unique_id = $.gritter.add({
+						title: '错误信息提示',
+						text: '请选择上传图片！',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-error gritter-center'
+					});
+			        return;
+			    }
+			    //判断上传文件的后缀名
+			    var strExtension = imgPath.substr(imgPath.lastIndexOf('.') + 1);
+			    if (strExtension.toLowerCase() != 'jpg' && strExtension.toLowerCase() != 'gif'
+			        && strExtension.toLowerCase() != 'png' && strExtension.toLowerCase() != 'bmp') {
+			    	var unique_id = $.gritter.add({
+						title: '错误信息提示',
+						text: '请选择图片文件',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-error gritter-center'
+					});
+			        return;
+			    }
+			    myForm.appendChild(file);
+
+			    var layerIndexNum = layer.load('上传中...');
+			    var options = {
+			        url: '/app/uploadFile',
+			        data: {
+			            userId: localStorage["pernrBase"],
+			            fileName: imgPath,
+			            meetRoomId: '54dc003177f34cd80f187a47'
+			        },
+			        dataType: "json",
+			        contentType: "charset=UTF-8",
+			        timeout: 100000,
+			        success: function (result) {
+			        	layer.close(layerIndexNum);
+			            if( result.status == 0 ){
+			            	var OldHtml = $(".imgList ul").html();
+			            	$(".imgList ul").html(''+OldHtml+'<li onclick="GoPreview(this);"><img src='+result.img.url+'><svg version="1.1" class="removeIMG" onclick="removeIMG(this);" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 57 56" enable-background="new 0 0 57 56" xml:space="preserve"><path fill="#E63832" d="M28.5,5c-12.703,0-23,10.297-23,23s10.297,23,23,23s23-10.297,23-23S41.203,5,28.5,5z"/><rect x="15.5" y="27" fill="#FFFFFF" width="26" height="3"/></svg></li>');
+            				ImgArr.push(result.img);
+            				$("#shanchu").show();
+            				localStorage.removeItem("ImagesItem");
+            				localStorage.ImagesItem = JSON.stringify(ImgArr);
+			            }else{
+			            	var unique_id = $.gritter.add({
+								title: '错误信息提示',
+								text: '图片上传失败，请重试',
+								sticky: true,
+								time: '',
+								class_name: 'gritter-error gritter-center'
+							});
+					        return;
+			            }
+			        },
+			        error: function (result) {
+			        	var unique_id = $.gritter.add({
+							title: '错误信息提示',
+							text: '图片上传失败，请重试',
+							sticky: true,
+							time: '',
+							class_name: 'gritter-error gritter-center'
+						});
+				        return;
+			        }
+			    };
+			    $(myForm).ajaxSubmit(options);
+			    return !1;
+        	}
+        	//删除图片
+        	function jianhao(){
+        		$(".removeIMG").show();
+        	}
+        	//回复
+        	function WSubmit(){
+        		var taskId = JSON.parse(localStorage["taskId"]);
+                var userId = JSON.parse(localStorage["userId"]);
+                var content = $("#textarea").val();
+                if( $(".imgList ul").find("li").length < 1 ){
+                    localStorage.removeItem("ImagesItem");
+                    localStorage.ImagesItem = JSON.stringify(ImgArr);
+                }
+                var ImagesItem = localStorage["ImagesItem"];
+                if( content == '请详细描述审批意见,不得少于5个字并且不得多于100个字...' ){
+                    content = '';
+                }
+        		var HuiFuData = WaitHandleHuiFu(taskId,userId,content,ImagesItem);
+        		if( HuiFuData.status == 0 ){
+        			window.parent.window.HuiFUWin(HuiFuData.msg);
+        			Close_Enterprise();
+        		}else{
+					var unique_id = $.gritter.add({
+                        title: '意见反馈回复',
+                        text: ''+HuiFuData.msgm+'，请重试<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-error gritter-center'
+                    });
+					return false;
+        		}
+        	}
+            function CloseGritter(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+                window.location.reload();
+            }
+            function CloseGritter_two(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+            }
+            function WindowClose(){
+                window.close();
+            }
+            function Close_Enterprise() {
+                var main = $(window.parent.document).find("iframe");
+                main.parent().parent().prevAll(".main-container").css({"height":"auto"});
+                var index = parent.layer.getFrameIndex(window.name);
+                $(document.body).parent().remove();//弹出iframe后input无法输入问题解决方案2014-11-11
+                parent.layer.close(index);
+            }
+            function adstF(obj){
+                if( $(obj).val() == "请详细描述审批意见,不得少于5个字并且不得多于100个字..." ){
+                    $(obj).val("");
+                    $(obj).css({"color":"#444"});
+                }
+            }
+            function adstB(obj){
+                if( $(obj).val() == "" ){
+                    $(obj).val("请详细描述审批意见,不得少于5个字并且不得多于100个字...");
+                    $(obj).css({"color":"#ccc"});
+                }
+            }
+            function GoPreview(obj){
+            	var imgOpen = $(obj).html();
+            	localStorage.removeItem('imgOpen');
+                localStorage.setItem('imgOpen',imgOpen);
+            	window.parent.window.OpenImg(imgOpen);
+            }
+            //初始化
+            jQuery(function($) {
+                //页面初始化
+                $.ajaxSetup({
+                    contentType: 'application/json',
+                    async:false,
+                    error:function(){
+                        alert(errMsg1);
+                    },
+                    timeout:timeout
+                });
+
+                //弹出层默认高度设置
+                $(window.parent.document).find("iframe").load(function(){
+                    var main = $(window.parent.document).find("iframe");
+                    var WBoxHeigth = $(window.parent.document).height() - 4;
+                    var mainheight = $(document).height();
+                    main.height(mainheight);
+                    main.parent().height(mainheight);
+                    main.parent().parent().height(mainheight);
+                    //main.parent().parent().parent().height(mainheight+52);
+                    //console.log(WBoxHeigth,mainheight);
+                    if( WBoxHeigth > mainheight ){
+                        main.parent().parent().prev(".xubox_shade").height(WBoxHeigth+4);
+                        main.parent().parent().prevAll(".main-container").height(WBoxHeigth);
+                    }else{
+                        main.parent().parent().prev(".xubox_shade").height(mainheight+56);
+                        main.parent().parent().prevAll(".main-container").height(mainheight+56);
+                    }
+                });
+
+                //获取意见反馈详情
+                var taskId = JSON.parse(localStorage["taskId"]);
+                var userId = JSON.parse(localStorage["userId"]);
+                var WDitleData = WaitHandleDetails(taskId,userId);
+                //console.log(WDitleData);
+                if( WDitleData.status == '0' ){
+                    //个人信息
+                    var WDUser = WDitleData.user
+                    $('#NACHN').html(WDUser.NACHN);                                               //提交人
+                    $('#ZZ_TEL').html(WDUser.ZZ_TEL);                                             //联系方式
+                    $('#BUTXT').html(WDUser.BUTXT);                                               //公司
+                    $('#ZZ_EMAIL').html(WDUser.ZZ_EMAIL);                                         //邮箱
+                    $('#ORGTX').html(showPost(WDUser,'-'));                                       //部门
+                    $('#STLTX').html(WDUser.STLTX);                                               //职位
+                    var WDOrder = WDitleData.opinion
+                    //订单信息
+                    $('#taskId').html(WDOrder._id);                                               //意见编号
+                    $('#createTime').html(formatUnix(WDOrder.createTime));                        //提交时间
+                    $('#opinion').html(WDOrder.opinion);                                          //意见描述
+
+                    $('#HFopinion').html(WDOrder.reply);                                          //意见描述
+                    //console.log(WDOrder.replyImgs);
+                    if( WDOrder.imgs.length != 0 ){
+                    	var imgStr = '';
+                    	for( i=0;i<WDOrder.imgs.length;i++ ){
+                    		imgStr +='<li onclick="GoPreview(this);"><img src='+WDOrder.imgs[i]+'></li>';
+                    	}
+                    	$(".imgPreview ul").html(imgStr);
+                        $("#HFImg").show();
+                    }
+
+                    if( WDOrder.replyImgs.length != 0 && WDOrder.replyImgs[0] != '[]' ){
+                        var HFimgStr = '';
+                        for( i=0;i<WDOrder.replyImgs.length;i++ ){
+                            //console.log(WDOrder.replyImgs[i]);
+                            HFimgStr +='<li onclick="GoPreview(this);"><img src='+WDOrder.replyImgs[i].url+'></li>';
+                        }
+                        $(".HFimgPreview ul").html(HFimgStr);
+                        $("#HFHFIMG").show();
+                    }
+                }else{
+
+                }
+                setInterval(function() {
+					var main = $(window.parent.document).find("iframe");
+					var mifH = $(".main_iframe_div").outerHeight();
+					//console.log(mifH);
+					main.height(mifH);
+				},10);
+            });
+        </script>
+        <!--[if !IE]> -->
+		<script type="text/javascript">
+		    window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+		</script>
+
+		<!-- <![endif]-->
+		<!--[if IE]>
+		<script type="text/javascript">
+		    window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+		    if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+		</script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+		<!--[if lte IE 8]>
+		<script src="../assets/js/excanvas.min.js"></script>
+		<![endif]-->
+        <link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+        <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+        <script src="../assets/js/jquery-ui.custom.min.js"></script>
+		<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="../assets/js/chosen.jquery.min.js"></script>
+		<script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="../assets/js/date-time/bootstrap-timepicker.min.js"></script>
+		<script src="../assets/js/date-time/moment.min.js"></script>
+		<script src="../assets/js/date-time/daterangepicker.min.js"></script>
+		<script src="../assets/js/date-time/bootstrap-datetimepicker.min.js"></script>
+		<script src="../assets/js/bootstrap-colorpicker.min.js"></script>
+		<script src="../assets/js/jquery.knob.min.js"></script>
+		<script src="../assets/js/jquery.autosize.min.js"></script>
+		<script src="../assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+		<script src="../assets/js/jquery.maskedinput.min.js"></script>
+		<script src="../assets/js/bootstrap-tag.min.js"></script>
+		<!--<script src="./assets/js/typeahead.jquery.min.js"></script>--><!-- 缺少 -->
+		<script src="../assets/js/dropzone.min.js"></script>
+		<!-- ace scripts -->
+		<script src="../assets/js/ace-elements.min.js"></script>
+		<script src="../assets/js/ace.min.js"></script>
+
+		<script src="../assets/js/bootbox.min.js"></script>
+		<script src="../assets/js/jquery.easypiechart.min.js"></script>
+		<script src="../assets/js/jquery.gritter.min.js"></script>
+		<!-- inline scripts related to this page -->
+
+		<!--<script src="./layer/layer.min.js"></script>-->
+		<script src="../layer193/layer.js"></script>
+		<script src="../myjs/jquery.form.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<!--<script src="./assets/js/ace/elements.onpage-help.js"></script>--> <!-- 缺少 -->
+		<script src="../assets/js/ace/ace.onpage-help.js"></script>
+		<script src="../docs/assets/js/rainbow.js"></script>
+		<script src="../docs/assets/js/language/generic.js"></script>
+		<script src="../docs/assets/js/language/html.js"></script>
+		<script src="../docs/assets/js/language/css.js"></script>
+		<script src="../docs/assets/js/language/javascript.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../myjs/backupNew.js"></script>
+        <script src="../myjs/lexus.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+        <script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+        <script src="../assets/js/spin.min.js"></script>
+        <script src="../myjs/opinionFeedback.js"></script>
+    </body>
+</html>

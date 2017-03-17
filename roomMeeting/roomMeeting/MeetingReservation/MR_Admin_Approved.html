@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <title>管理员需要预订</title> 
+<meta name="description" content="Common Buttons &amp; Icons" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+    <!-- page specific plugin styles -->
+    <!-- text fonts -->
+    <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="../assets/css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="../assets/js/html5shiv.js"></script>
+    <script src="../assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script src='../assets/js/jquery.min.js'></script>
+    <script src="../layer/layer.min.js"></script>
+
+    <script src="../myjs/backupNew.js"></script>
+    <script src="../myjs/lexus.js"></script>
+    
+    <!-- ace settings handler -->
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <script src="../assets/js/bootstrap-tag.min.js"></script>
+
+    <!-- 加载自定义样式 -->
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="../assets/css/cttq-fonts.css">
+    <style type="text/css">
+        .tooltip-info+.tooltip.bottom .tooltip-arrow, .tooltip.tooltip-info.bottom .tooltip-arrow{
+            border-bottom-color:#428bca;
+        }
+        .tooltip-info+.tooltip>.tooltip-inner, .tooltip.tooltip-info>.tooltip-inner{
+            background-color:#428bca;
+            border-radius: 4px;
+        }
+        .hr-solid{
+            height:1px;
+            border-top:1px solid #d5e3ef;
+            border-bottom:none;
+        }
+        .text-onclick{
+            color: #ed7735;
+        }
+        .control-label {
+            color: #667E99;
+        }
+        input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] 
+        {
+            border-radius: 0 !important;
+            color: #858585;
+            background-color: #fff;
+            border: 1px solid #8aafce;
+            padding: 5px 4px 6px;
+            font-size: 14px;
+            font-family: inherit;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            -webkit-transition-duration: .1s;
+            transition-duration: .1s;
+        }
+        .form-control, select {
+            border-radius: 0;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            color: #858585;
+            background-color: #fff;
+            border: 1px solid #8aafce;
+        }
+        .input-required {
+            font-size: 10px;
+            color: red;
+            font-family:tahoma;
+            vertical-align:middle;
+        }
+    </style>
+</head>
+    <body class="no-skin">
+        <!-- /section:basics/navbar.layout -->
+        <!-- /section:basics/navbar.layout -->
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+            </script>
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch(e) {}
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon">
+                        </i>
+                        <a href="#">
+                            会议室预定
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.breadcrumb -->
+                <button class="btn border-none" style="float:right;" onClick="closeLay()">
+                    <i class="glyphicon glyphicon-remove align-top">
+                    </i>
+                </button>
+            </div>
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-sm-12">
+                            <div class="tab-content">
+                                <form class="form-horizontal" role="form">
+                                  <input id="meetingRoomId" value="" type="hidden">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername"> 工 号 </label>
+                                        <div class="col-sm-4">
+                                            <input readonly id="gonghao" type="text" class="col-xs-10 col-sm-10">
+                                        </div>
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername"> 姓 名 </label>
+                                        <div class="col-sm-4">
+                                            <input readonly id="xingming" type="text" class="col-xs-10 col-sm-10">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername"> 电 话 </label>
+                                        <div class="col-sm-4">
+                                            <input readonly id="dianhua" type="text" class="col-xs-10 col-sm-10">
+                                        </div>
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername">  </label>
+                                        <div class="col-sm-4">
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername">
+                                            <span class="input-required">*</span>&nbsp;会议主题 </label>
+                                        <div class="col-sm-10">
+                                            <input id="huiyizhuti" name="huiyizhuti" placeholder="输入会议主题20字内"
+                                                   maxlength="20" type="text" style="width: 93.8%;" onchange="isAllSpace(this.value,'请正确填写会议主题！')">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="hr hr-solid hr18"></div>
+
+                                    <div name="need-apply" class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername">
+                                            <span class="input-required">*</span>&nbsp;会议级别 </label>
+                                        <div class="col-sm-4">
+                                           <div class="btn-group" style="width:83%">
+                                                <button data-toggle="dropdown" name="huiyileixing" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+                                                    <span id="add_hylx_text" style="float:left;color:#444;width:90%;overflow:hidden;"></span>
+                                                    <i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>                     
+                                                </button>
+                                                <ul class="dropdown-menu" id="add_hylx_ul" style="height:200px;overflow-y:scroll;width:100%;">
+                                                </ul>
+                                                <input type="hidden" id="add_hylx_code" value="">
+                                            </div>
+                                        </div>
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername">
+                                            <span id="zuigaojibie-required" class="input-required">*</span>&nbsp;最高级别 </label>
+                                        <div class="col-sm-4">
+                                          <!--<input type="text" id="add_zgjb_code" name="add_zgjb_code" style="width:83%;"-->
+                                                 <!--maxlength="20" onchange="isAllSpace(this.value,'请正确填写最高级别！')">-->
+                                            <div class="btn-group" style="width:83%">
+                                                <button data-toggle="dropdown" name="huiyijibie" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+                                                    <span id="add_zgjb_text" style="float:left;color:#444;width:90%;overflow:hidden;"></span>
+                                                    <i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" id="add_zgjb_ul" style="height:200px;overflow-y:scroll;width:100%;">
+                                                </ul>
+                                                <input type="hidden" id="add_zgjb_code" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div name="need-apply" class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername">
+                                            <span class="input-required">*</span>&nbsp;参会人数 </label>
+                                        <div class="col-sm-4">
+                                            <input id="canhuirenshu" name="canhuirenshu" placeholder="输入参会人数"
+                                                   type="text" class="col-xs-10 col-sm-8" onchange="limitCanhuirenshu()">
+                                            &nbsp;
+                                            <label style="padding-top: 4px;"> 人数 </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername">
+                                            <span class="input-required">*</span>&nbsp;开始时间 </label>
+                                        <div class="col-sm-10">
+                                             <div class="col-sm-12" style="padding:0px;">
+                                                <div class="col-sm-5 igbt_01" style="padding-left: 0px;">
+                                                    <div class="input-group">
+                                                        <input class="form-control date-picker" id="id-date-picker-1" name="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd"/>
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-calendar bigger-110 orange"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5 igbt_02 timebt">
+                                                    <div class="input-group bootstrap-timepicker">
+                                                        <input id="timepicker1" name="timepicker1" type="text" class="form-control">
+                                                        <span class="input-group-addon">
+                                                            <i class="fa fa-clock-o bigger-110 orange"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername">
+                                            <span class="input-required">*</span>&nbsp;结束时间 </label>
+                                        <div class="col-sm-10">
+                                            <div class="col-sm-5 igbt_01" style="padding-left: 0px;">
+                                                <div class="input-group">
+                                                    <input class="form-control date-picker" id="id-date-picker-2" name="id-date-picker-2" type="text" data-date-format="yyyy-mm-dd"/>
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-calendar bigger-110 orange"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5 igbt_02 timebt">
+                                                <div class="input-group bootstrap-timepicker">
+                                                    <input id="timepicker2" name="timepicker2" type="text" class="form-control">
+                                                    <span class="input-group-addon">
+                                                        <i class="fa fa-clock-o bigger-110 orange"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername">  </label>
+                                        <label class="col-sm-1 control-label no-padding-right jbsswraplabel" style="min-width:70px; text-align: -webkit-left">共</label>
+                                            <div class="col-sm-2 xjdays-input" style="padding: 0px;">
+                                                <input id="allhours" type="text" value="0.0" readonly="readonly" class="col-xs-12 col-sm-12 line-height-1 bigger-200 infobox-data-number" style="border-color:white !important;text-align:center;background-color:white !important;color:#d53f40;font-family:'Open Sans';padding:0;margin-top:-2px;">
+                                            </div>
+                                        <label class="col-sm-1 control-label no-padding-right xjdays-day" for="form-field-username">小时</label>
+                                    </div>
+
+                                    <div  name="need-apply" class="hr hr-solid hr18" id="gysBackiftz-0-line"></div>
+                                    <!-- 隐藏预定界面服务人员和技术支持 start -->
+                                    <!--<div class="form-group">-->
+                                        <!--<label class="col-sm-2 control-label no-padding-right" for="form-field-sername"> 服务人员 </label>-->
+                                        <!--<div class="col-sm-10" style="padding-top: 4px;">-->
+                                            <!--<div id="checkboxFW" class="control-group">-->
+                                        <!-- -->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+                                    <!--<div class="form-group">-->
+                                        <!--<label class="col-sm-2 control-label no-padding-right" for="form-field-sername"> 技术支持 </label>-->
+                                        <!--<div class="col-sm-10" style="padding-top: 4px;">-->
+                                            <!--<div id="checkboxJS" class="control-group">-->
+                                        <!-- -->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!-- 隐藏预定界面服务人员和技术支持 end -->
+                                    <div name="need-apply" class="form-group" id="shebei1">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername"> 会议设备 </label>
+                                        <div class="col-sm-10" style="padding-top: 4px;">
+                                            <span class="editable action-buttons" id="shebei">
+
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div name="need-apply" class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername"> 会议用品 </label>
+                                        <div class="col-sm-10" style="padding-top: 4px;">
+                                            <div id="yonpin" class="control-group">
+                                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div name="need-apply" class="form-group">
+                                        <label class="col-sm-2 control-label no-padding-right" for="form-field-sername"> 备注 </label>
+                                        <div class="col-sm-10" style="padding-top: 4px;">
+                                            <textarea id="beizhu" class="form-control limited" maxlength="500" style="resize:none; height:120px; width:98%"></textarea>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="seatCard">
+
+                                    <div class="clearfix form-actions" style="background-color:#fff;border-top:1px solid #d5e3ef;">
+                                        <div class="col-sm-12" >
+                                            <div class="col-sm-6">
+                                                <button class="btn btn-warning" style="width:50%;float: right;" type="button" onclick="closeLay();">
+                                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                    取消
+                                                </button>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <button class="btn btn-info" style="width:50%;" type="button" onclick="ajaxSubmitForm();">
+                                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                                    提交
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div><!-- /.main-container -->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+
+        <!-- <![endif]-->
+        <!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>"+"<"+"/script>");
+        </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+
+        <!-- page specific plugin scripts -->
+        <!--[if lte IE 8]>
+          <script src="../assets/js/excanvas.min.js"></script>
+        <![endif]-->
+        <script src="../assets/js/jquery-ui.custom.min.js"></script>
+        <script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="../assets/js/chosen.jquery.min.js"></script>
+        <script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-timepicker.min.js"></script>
+        <script src="../assets/js/date-time/moment.min.js"></script>
+        <script src="../assets/js/date-time/daterangepicker.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-datetimepicker.min.js"></script>
+        <script src="../assets/js/bootstrap-colorpicker.min.js"></script>
+        <script src="../assets/js/jquery.knob.min.js"></script>
+        <script src="../assets/js/jquery.autosize.min.js"></script>
+        <script src="../assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+        <script src="../assets/js/jquery.maskedinput.min.js"></script>
+        <script src="../assets/js/bootstrap-tag.min.js"></script>
+        <!--<script src="../assets/js/typeahead.jquery.min.js"></script>--><!-- 缺少 -->
+        <script src="../assets/js/dropzone.min.js"></script>
+        <!-- ace scripts -->
+        <script src="../assets/js/ace-elements.min.js"></script>
+        <script src="../assets/js/ace.min.js"></script>
+
+        <script src="../assets/js/bootbox.min.js"></script>
+        <script src="../assets/js/jquery.easypiechart.min.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            jQuery(function ($) {
+                //页面初始化
+                $('[data-rel=tooltip]').tooltip();
+                $('[data-rel=popover]').popover({html: true});
+                $(".PortraitHead").each(function (i) {
+                    $(this).hover(function () {
+                        $(this).children(".PortraitHead_Admin").addClass("PortraitHead_AdminHover");
+                    }, function () {
+                        $(this).children(".PortraitHead_Admin").removeClass("PortraitHead_AdminHover");
+                    })
+                });
+                $("#meetingRoomId").val(getQueryString("meetRoomId"));
+
+                // 获取用户信息
+                getUerInfo();
+
+                // 查询会议室详情
+                getMeetroomDetil();
+
+                // 会议类型
+                getMeetType();
+
+                // 最高级别
+                getZgjb();
+
+                // 会议用品
+                getMeetGoods();
+
+                //时间
+                $("#timepicker1").timepicker({
+                    minuteStep: 1,
+                    showSeconds: false,
+                    showMeridian: false
+                })
+                .next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                });
+
+                $("#timepicker2").timepicker({
+                    minuteStep: 1,
+                    showSeconds: false,
+                    showMeridian: false
+                })
+                .next().on(ace.click_event, function(){
+                    $(this).prev().focus();
+                });
+
+                //日期
+                $('.date-picker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                });
+                $('.date-picker').next().on(ace.click_event, function () {
+                            $(this).prev().focus();
+                        });
+                $('#id-date-picker-1').datepicker().on('hide',function(e) {
+                  calcTime(e);
+                });
+                $('#id-date-picker-2').datepicker().on('hide',function(e) {
+                  calcTime(e);
+                });
+                $('#timepicker1').timepicker().on('hide.timepicker', function(e) {
+                  calcTime(e);
+                });
+                $('#timepicker2').timepicker().on('hide.timepicker', function(e) {
+                  calcTime(e);
+                });
+
+                setDefaultDateTime();
+
+            });
+
+            // 设置默认的时间日期
+            function setDefaultDateTime() {
+                var y = getQueryString("y");
+                var m = getQueryString("m");
+                var d = getQueryString("d");
+                var selectedDate = "";
+                if(y && m && d) {
+                    selectedDate = y + "-" + m + "-" + d;
+                }
+                var today = new Date();
+                var todayU = changeTime(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
+                if(changeTime(selectedDate) < todayU) {
+                    selectedDate = today.getFullYear() + "-" + (today.getMonth() + 101 + "").substr(1) + "-" + today.getDate();
+                }
+                if(selectedDate != "") {
+                    $('.date-picker').datepicker('update',selectedDate);
+//                    if(new Date().getTime() < changeTime(selectedDate + " 08:00:00")) {
+                        $("#timepicker1").timepicker("setTime","08:00");
+                        $("#timepicker2").timepicker("setTime","09:00");
+                        calcTime("");
+//                    }else if(){
+//                        var time1 = new Date().getTime() + 10 * 60 * 1000;
+//                        var time1 = new Date().getTime() + 70 * 60 * 1000;
+//                        $("#timepicker1").timepicker("setTime","08:00");
+//                        $("#timepicker1").timepicker("setTime","08:00");
+//                    }
+                }
+//                $("#timepicker2").timepicker("setTime",dateTime.getHours() + ":" + (dateTime.getMinutes() + 100 + "").substr(1));
+
+
+            }
+
+            // 检验空格
+            function isAllSpace(str,msg) {
+                str = str.replace(/ /g,"");
+
+                if(str == '') {
+                    layer.msg(msg, 2, -1);
+                    return true;
+                }
+                return false;
+            }
+            var layer_index = 1;
+            // 获取会议用品
+            function getMeetGoods() {
+                $.ajax({
+                    type: "post",
+                    url: "/meet/findMeetGoods",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data.status == 0) {
+                            //会议室用品
+                            var yonpinList = "";
+                            for (i = 0; i < data.data.length; i++) {
+                                yonpinList += '<label style="padding-right: 16px;">'
+                                + '<input id="' + data.data[i].code + '" name="meet-goods" class="ace ace-checkbox-2" type="checkbox">'
+                                + '<span class="lbl">' + data.data[i].name + '</span>'
+                                + '</label>';
+                            }
+                            $("#yonpin").append(yonpinList);
+                            $("#3006").on("click", function () {
+                                if(!$("#3006").prop("checked")) {
+                                    $.layer({
+                                        shade: [0],
+                                        area: ['auto','auto'],
+                                        dialog: {
+                                            msg: '是否删除席位卡？',
+                                            btns: 2,
+                                            type: 4,
+                                            btn: ['是','否'],
+                                            yes: function(){
+                                                $("#seatCard").val("");
+                                                $("#3006").prop("checked",false);
+                                                layer.close(layer_index++);
+                                            }, no: function(){
+                                                $("#3006").prop("checked",!$("#3006").prop("checked"));
+                                            }
+                                        },
+                                        close: function(index){
+                                            $("#3006").prop("checked",!$("#3006").prop("checked"));
+                                        }
+
+                                    });
+                                } else {
+                                    $("#seatCard").val("");
+                                    uploadLayer();
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+
+            // 获取会议类型
+            function getMeetType() {
+                $.ajax({
+                    type: "post",
+                    url: "/meet/findMeetType",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data.status == 0) {
+                            var huiyiType = "";
+                            for (var i = 0; i < data.data.length; i++) {
+                                huiyiType += '<li><a onclick="chooseAdd_hylx(\'' + data.data[i].code + '\',\'' + data.data[i].type + '\')">' + data.data[i].type + '</a></li>';
+                            }
+                            $("#add_hylx_ul").append(huiyiType);
+                        }
+                    }
+                });
+            }
+
+            // 获取最高级别
+            function getZgjb() {
+                $.ajax({
+                    type: "post",
+                    url: "/meet/getMeetLevelList",
+                    contentType: "application/json",
+                    success: function (data) {
+                        if (data.status == 0) {
+                            var zgjb = "";
+                            for (var i = 0; i < data.data.length; i++) {
+                                zgjb += '<li><a onclick="chooseAdd_zgjb(\'' + data.data[i].code + '\',\'' + data.data[i].name + '\')">' + data.data[i].name + '</a></li>';
+                            }
+                            $("#add_zgjb_ul").append(zgjb);
+                        }
+                    }
+                });
+            }
+            var meetingRoomDetails = new Object();
+            // 获取会议室详情
+            function getMeetroomDetil() {
+                $.ajax({
+                    type: "post",
+                    url: "/meet/getRoomDetail",
+                    contentType: "application/json",
+                    data: JSON.stringify({"roomId": $("#meetingRoomId").val().split(".")[0]}),
+                    success: function (detailsData) {
+                        if (detailsData.status == 0) {
+//                             服务人员
+//                            var fuwuList = "";
+//                            for (var i = 0; i < detailsData.data.servicePersonal.length; i++) {
+//                                fuwuList += '\
+//                                    <label style="width: 100px;">\
+//                                        <input name="servicePersonal" id="' + detailsData.data.servicePersonal[i].userId + '" class="ace ace-checkbox-2" type="checkbox">\
+//                                        <span class="lbl">' + detailsData.data.servicePersonal[i].userName + '</span>\
+//                                    </label>';
+//                            }
+//                            $("#checkboxFW").append(fuwuList);
+//
+//                            // 技术支持
+//                            var jishuList = "";
+//                            for (var i = 0; i < detailsData.data.technicist.length; i++) {
+//                                jishuList += '\
+//                                    <label style="width: 100px;">\
+//                                        <input name="technicist" id="' + detailsData.data.technicist[i].userId + '" class="ace ace-checkbox-2" type="checkbox">\
+//                                        <span class="lbl">' + detailsData.data.technicist[i].userName + '</span>\
+//                                    </label>';
+//                            }
+//                            $("#checkboxJS").append(jishuList);
+                            if(getQueryString("meetRoomId").split(".").length > 1) {
+                                $("#shebei1").hide();
+                            }else {
+
+//                             设备
+                                var shebeiList = "";
+                                for (var i = 0; i < detailsData.data.device.length; i++) {
+                                    shebeiList += '\
+                                    <a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="' + detailsData.data.device[i].name + '" id="' + detailsData.data.device[i].code + '">\
+                                        <i class="cttq-icon cttq-' + detailsData.data.device[i].code + ' text-primary bigger-200"></i>\
+                                    </a>'
+                                }
+                                $("#shebei").append(shebeiList);
+
+                                $('[data-rel=tooltip]').tooltip();
+                            }
+                            // 视频会议室均需要审批 -b
+//                            if(detailsData.data.needApply == 0) {
+//                                $("div[name=need-apply]").each(function() {
+//                                    $(this).show();
+//                                });
+//                            }
+                            // 视频会议室均需要审批 -e
+
+                            meetingRoomDetails = detailsData;
+                        }
+                    }
+                });
+            }
+
+            // 获取并设置用户信息
+            function getUerInfo() {
+                var paramJSon = {
+                    "IS_PUBLIC": {
+                        "FLOWNO": "",
+                        "PERNR": "",
+                        "ZDOMAIN": "400",
+                        "I_PAGENO": "",
+                        "I_PAGESIZE": ""
+                    },
+                    "P_DATE": "",
+                    "P_PERNR": {
+                        "item": [{
+                            "PERNR": localStorage["pernrBase"]
+                        }]
+                    }
+                };
+
+                $.ajax({
+                    type: "post",
+                    url: "/zhr/ZHR_GET_PER_EASY_INFO",
+                    contentType: "application/json",
+                    data: JSON.stringify(paramJSon),
+                    success: function (data) {
+                        if (data.RETURN_SUBRC == 0) {
+                            $("#gonghao").val(localStorage["pernrBase"]);
+                            $("#xingming").val(data.EASY_TAB.item[0].NACHN);
+
+                            if (data.EASY_TAB.item[0].TELL == "[object Object]") {
+                                $("#dianhua").val("");
+                            } else {
+                                $("#dianhua").val(data.EASY_TAB.item[0].TELL);
+                            }
+                        }
+                    }
+                });
+            }
+
+            arrayObj = new Array(0);  // 加载初始化会议室设备添加数组
+            // 会议室设备
+            function Equipment (argument) {
+                Array.prototype.indexOf = function(val) {
+                    for (var i = 0; i < this.length; i++) {
+                        if (this[i] == val) return i;
+                    }
+                    return -1;
+                };
+                Array.prototype.remove = function(val) {
+                    var index = this.indexOf(val);
+                    if (index > -1) {
+                        this.splice(index, 1);
+                    }
+                };
+                var news = arrayObj.indexOf(argument);
+                if (news != -1) {
+                    arrayObj.remove(argument);
+                }else{
+                    arrayObj[arrayObj.length] = argument;
+                }
+                alert(arrayObj);
+
+            }
+
+            // 上传页面
+            function uploadLayer() {
+                $.layer({
+                    type: 2,
+                    border: [0],
+                    title: false,
+                    shadeClose: false,
+                    closeBtn: false,
+                    shade: [0.8, '#000'],
+                    offset: ['20px', ''],
+                    area: ['768px', '280px'],
+                    iframe: {src: 'MR_Ordinary_Upload.html'}
+                });
+            }
+
+            function CheckboxColor(obj){
+                if(obj.className != "ace-icon fa fa-rss-square text-onclick bigger-200"){
+                    obj.oldClass = obj.className; // 暂存原来的class，用于恢复
+                    obj.className = "ace-icon fa fa-rss-square text-onclick bigger-200";
+                    $(obj).parent().removeClass("tooltip-info");
+                    $(obj).parent().addClass("tooltip-warning");
+                }else if(obj.oldClass){
+                    obj.className = obj.oldClass; // 暂存原来的class，用于恢复
+                    $(obj).parent().removeClass("tooltip-warning");
+                    $(obj).parent().addClass("tooltip-info");
+                }
+            }
+
+            function chooseAdd_hylx(zhhzCode,zhhzText){
+                $('#add_hylx_text').html(zhhzText);
+                $('#add_hylx_code').val(zhhzCode);
+                if(zhhzCode != "4001" && zhhzCode != "4003") {
+                    $("#zuigaojibie-required").hide();
+                }else {
+                    $("#zuigaojibie-required").show();
+                }
+            }
+
+            function chooseAdd_zgjb(zhhzCode,zhhzText){
+                $('#add_zgjb_text').html(zhhzText);
+                $('#add_zgjb_code').val(zhhzCode);
+            }
+
+            //关闭弹出层
+            function closeLay() {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            }
+
+            // 获取请求链接中的指定参数的值
+            function getQueryString(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null)
+                    return r[2];
+                return null;
+            }
+
+            // yyyy-mm-dd hh:mm:ss
+            function changeTime(string) {
+                var f = string.split(' ', 2);
+                var d = (f[0] ? f[0] : '').split('-', 3);
+                var t = (f[1] ? f[1] : '').split(':', 3);
+                return (new Date(
+                        parseInt(d[0], 10) || null,
+                        (parseInt(d[1], 10) || 1) - 1,
+                        parseInt(d[2], 10) || null,
+                        parseInt(t[0], 10) || null,
+                        parseInt(t[1], 10) || null,
+                        parseInt(t[2], 10) || null
+                )).getTime();
+            }
+
+            //计算时间差,同时验证开始结束时间合法
+            function calcTime(e) {
+                // 时间合法性验证
+                var beginDate = $("#id-date-picker-1").val();
+                var endDate = $("#id-date-picker-2").val();
+                var beginTime = $("#timepicker1").val();
+                var endTime = $("#timepicker2").val();
+
+                if (beginDate != '' && endDate != '') {
+                    var beginDateU = changeTime(beginDate + " 08:00:00");
+                    var endDateU = changeTime(endDate + " 20:00:00");
+//                    var today = new Date();
+//                    var todayStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+//                    today = new Date(todayStr).getTime();
+//                    if(beginDateU <= today) {
+//                        var fixedDate = new Date(new Date().getTime() + 4 * 3600 * 1000);
+//                        $("#id-date-picker-1").datepicker('update',
+//                                fixedDate.getFullYear() + "-" + (fixedDate.getMonth() +  101 + "").substr(1) + "-" + fixedDate.getDate());
+//                    }
+                    if (endDateU < beginDateU) {
+                        if (e.target.id == "id-date-picker-1") {
+                            $("#id-date-picker-2").datepicker('update',$("#id-date-picker-1").val());
+                        } else if (e.target.id == "id-date-picker-2") {
+                            $("#id-date-picker-1").datepicker('update',$("#id-date-picker-2").val());
+                        }
+                    }
+                }
+                beginDate = $("#id-date-picker-1").val();
+                endDate = $("#id-date-picker-2").val();
+                if (beginDate != '' && endDate != '' && beginTime != '' && endTime != '') {
+                    var beginDateTime = changeTime(beginDate + " " + beginTime + ":00");
+                    var endDateTime = changeTime(endDate + " " + endTime + ":00");
+                    var tempDate = new Date(beginDateTime);
+                    if(endDateTime <= beginDateTime || (endDateTime - beginDateTime) < 600000) {
+                        $("#timepicker2").timepicker("setTime",tempDate.getHours() + ":" + (tempDate.getMinutes() + 110 + "").substr(1));
+                    }
+
+//                    // 每天预约的时间应在8:00之后，19:50之前
+//                    if (beginDateTime < changeTime(beginDate + " 08:00:00")) {
+//                        beginDateTime = changeTime(beginDate + " 08:00:00");
+//                    }
+//                    if (beginDateTime > changeTime(beginDate + " 19:50:00")) {
+//                        beginDateTime = changeTime(beginDate + " 19:50:00");
+//                    }
+//                    var dateTime = new Date(beginDateTime);
+//                    $("#timepicker1").timepicker("setTime",dateTime.getHours() + ":" + (dateTime.getMinutes() + 100 + "").substr(1));
+//
+//
+//                    // 结束日期如果大于开始日期，那么结束时间应在8:00到20:00之间
+//                    if((changeTime(endDate + " " + endTime + ":00") - changeTime(beginDate + " " + beginTime + ":00")) > 12 * 60 * 60 * 1000) {
+//                        endDateTime = changeTime(beginDate + " " + endTime + ":00");
+//                        endDateTime1 = changeTime(endDate + " " + endTime + ":00");
+//                        // 每天预约的时间应在8:00之后，19:50之前
+//                        if (endDateTime1 < changeTime(endDate + " 08:00:00")) {
+//                            endDateTime = changeTime(endDate + " 08:10:00");
+//                        }
+//                        if (endDateTime1 > changeTime(endDate + " 20:00:00")) {
+//                            endDateTime = changeTime(endDate + " 20:00:00");
+//                        }
+//                    }else {
+//                        // 当结束时间比开始时间早，或者结束时间与开始时间间隔少于10分钟
+//                        // 结束时间即为开始时间后10分钟，并且最晚不超过20:00
+//                        if (endDateTime <= beginDateTime || (endDateTime - beginDateTime) < (10 * 60 * 1000)) {
+//                            endDateTime = beginDateTime + 10 * 60 * 1000;
+//                        }
+//                        if (endDateTime > changeTime(beginDate + " 20:00:00")) {
+//                            endDateTime = changeTime(beginDate + " 20:00:00");
+//                        }
+//                    }
+//
+//                    var dateTime = new Date(endDateTime);
+//                    $("#timepicker2").timepicker("setTime",dateTime.getHours() + ":" + (dateTime.getMinutes() + 100 + "").substr(1));
+
+                    //计算时间差
+                    beginTime = $("#timepicker1").val();
+                    endTime = $("#timepicker2").val();
+                    $("#allhours").val(Math.round((changeTime(endDate + " " + endTime + ":00")-changeTime(beginDate + " " + beginTime + ":00"))/36000) / 100);
+
+//                    if(beginDate == endDate) {
+//                        var hours = (changeTime(beginDate + " " + endTime + ":00") - changeTime(beginDate + " " + beginTime + ":00")) / (60 * 60 * 1000);
+//                        $("#allhours").val(Math.round(hours * 100) / 100);
+//                    }else {
+//                        var days = (changeTime(endDate + " 00:00:00") - changeTime(beginDate + " 00:00:00")) / (24 * 60 * 60 * 1000) - 1;
+////                        console.info(days);
+////                        var hours = (changeTime(beginDate ,ndTime) - changeTime(beginDate, beginTime)) / (60 * 60 * 1000);
+//                        var firstDay = (changeTime(beginDate + " 20:00:00") - changeTime(beginDate + " " + beginTime + ":00")) / (60 * 60 * 1000);
+//                        var lastDay = (changeTime(beginDate + " " + endTime + ":00") - changeTime(beginDate + " 8:00:00")) / (60 * 60 * 1000);
+//                        $("#allhours").val(Math.round((days * 12 + firstDay + lastDay) * 100) / 100);
+//                    }
+
+                    //计算时间差 -- end
+                }
+                // 时间合法性验证 -- end
+            }
+
+            // 参会人数限制
+            function limitCanhuirenshu() {
+                var str =$("#canhuirenshu").val();
+                var re = new RegExp(/^(?!0)\d{1,3}$/);
+                var msg = "请填写正确的参会人数！人数范围为1-999";
+                if(isAllSpace(str,msg)) {
+                    return false;
+                }
+
+                if(!re.test(str)) {
+                    layer.msg(msg, 2, -1);
+                    return false;
+                }
+                return true;
+            }
+
+            // 提交表单
+            function ajaxSubmitForm() {
+                var meetRoomData = meetingRoomDetails;
+                if (meetRoomData.status != 0) {
+                    return;
+                }
+                if($("#xingming").val() == "") {
+                    layer.msg("姓名获取失败！", 1, -1);
+                    return;
+                }
+                if(isAllSpace($("#huiyizhuti").val(),"请正确填写会议主题！")) {
+                    $("#huiyizhuti").focus();
+                    return false;
+                }
+                if($("#huiyizhuti").val() == "") {
+                    $("#huiyizhuti").focus();
+                    layer.msg("请填写会议主题！", 1, -1);
+                    return;
+                }
+
+                if(meetRoomData.data.needApply == 1) {
+                    if($("#add_hylx_text").html() == "") {
+                        $("#add_hylx_text").focus();
+                        layer.msg("请选择会议类型！", 1, -1);
+                        return;
+                    }
+                    if($("#add_zgjb_text").html() == "" && ($('#add_hylx_code').val() == 4001 || $('#add_hylx_code').val() == 4003)) {
+                        $("#add_zgjb_text").focus();
+                        layer.msg("请填写最高级别！", 1, -1);
+                        return;
+                    }
+                    if($("#canhuirenshu").val() == "") {
+                        $("#canhuirenshu").focus();
+                        layer.msg("请填写参会人数！", 1, -1);
+                        return;
+                    }
+                    if(limitCanhuirenshu() == false) {
+                        $("#canhuirenshu").focus();
+                        return;
+                    }
+                }
+
+                if($("#id-date-picker-1").val() == "") {
+                    $("#id-date-picker-1").focus();
+                    layer.msg("请填写开始日期！", 1, -1);
+                    return;
+                }
+                if($("#timepicker1").val() == "") {
+                    $("#timepicker1").focus();
+                    layer.msg("请填写开始时间！", 1, -1);
+                    return;
+                }
+                if($("#id-date-picker-2").val() == "") {
+                    $("#id-date-picker-2").focus();
+                    layer.msg("请填写结束日期！", 1, -1);
+                    return;
+                }
+                if($("#timepicker2").val() == "") {
+                    $("#timepicker2").focus();
+                    layer.msg("请填写结束时间！", 1, -1);
+                    return;
+                }
+
+//                var servicePersonal = [];
+//                $("input[type='checkbox'][name='servicePersonal']:checked").each(function () {
+//                    var add = {userId: $(this).attr("id"), userName: $(this).next().html()};
+//                    servicePersonal.push(add);
+//                });
+//
+//                var technicist = [];
+//                $("input[type='checkbox'][name='technicist']:checked").each(function () {
+//                    var add = {userId: $(this).attr("id"), userName: $(this).next().html()};
+//                    technicist.push(add);
+//                });
+
+                var goods = [];
+                $("input[type='checkbox'][name='meet-goods']:checked").each(function () {
+                    var add = {code: $(this).attr("id"), name: $(this).next().html()};
+                    goods.push(add);
+                });
+
+                var ifKuaTian = 0;
+                if ($("#id-date-picker-1").val() != '' && $("#id-date-picker-2").val() != '' &&
+                        $("#timepicker1").val() != '' && $("#timepicker1").val() != '') {
+                    if ($("#id-date-picker-1").val() != $("#id-date-picker-2").val()) {
+                        ifKuaTian = 1;
+                    }
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/meet/getFrozenRooms",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        "meetRoomIds": $("#meetingRoomId").val().split("."),
+                        "frozenBegin": changeTime($("#id-date-picker-1").val() + " " + $("#timepicker1").val() + ":00"),
+                        "frozenEnd": changeTime($("#id-date-picker-2").val() + " " + $("#timepicker2").val() + ":00")
+                    }),
+                    async: false,
+                    success: function(data) {
+                        if(data.status != 0) {
+                            layer.msg(data.msg, 4, -1);
+                        }else {
+                            if(data.data.length == 0) {
+                                isMultiApply();
+                            }else {
+                                var meetingrooms = data.data;
+                                var message = "";
+                                $.each(meetingrooms,function(n,value) {
+                                    message = message + value.name + " ";
+                                });
+                                message += "会议室已经被冻结，请重新选择。";
+                                layer.msg(message,3,-1);
+                            }
+                        }
+                    }
+                });
+            }
+            
+            //判断多会议室该时段有否存在预定的信息
+            function isMultiApply(){
+                $.ajax({
+                    type: "post",
+                    url: "/meet/hasApplyBookByMultiMeetRoomIds",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        "meetRoomIds": $("#meetingRoomId").val().split("."),
+                        "startTime": changeTime($("#id-date-picker-1").val() + " " + $("#timepicker1").val() + ":00"),
+                        "endTime": changeTime($("#id-date-picker-2").val() + " " + $("#timepicker2").val() + ":00")
+                    }),
+                    success: function (data) {
+                        //console.log(data);
+                        if (data.status == 1) {//有预定
+                            if (data.userNames.length > 5) {
+                                var userNames = data.userNames.slice(0,5).join("、") + '等';
+                            } else {
+                                var userNames = data.userNames.join("、");
+                            }
+                            var alertIndex = layer.alert('您预定的  ' + data.meetRooms.join("、") + ' 时间上有冲突。 若要使用请与  ' + userNames + ' 联系',8);
+                            layer.title('预定失败', alertIndex);
+                        } else {
+                            submitBook();
+                        }
+                    }
+                });
+            }
+            function submitBook(){
+                var meetRoomData = meetingRoomDetails;
+                var goods = [];
+                $("input[type='checkbox'][name='meet-goods']:checked").each(function () {
+                    var add = {code: $(this).attr("id"), name: $(this).next().html()};
+                    goods.push(add);
+                });
+
+                var ifKuaTian = 0;
+                if ($("#id-date-picker-1").val() != '' && $("#id-date-picker-2").val() != '' &&
+                        $("#timepicker1").val() != '' && $("#timepicker1").val() != '') {
+                    if ($("#id-date-picker-1").val() != $("#id-date-picker-2").val()) {
+                        ifKuaTian = 1;
+                    }
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/meet/bookMultiMeetroom",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        "meetRoomIds": $("#meetingRoomId").val().split("."),
+                        "name": meetRoomData.data.name,
+                        "guishudiCode": meetRoomData.data.guishudiId,
+                        "guishudiName": meetRoomData.data.guishudiName,
+                        "userId": localStorage["pernrBase"],
+                        "userName": $("#xingming").val(),
+                        "tel": $("#dianhua").val(),
+                        "topic": $("#huiyizhuti").val(),
+                        "type": $("#add_hylx_text").html(),
+                        "level": $("#add_zgjb_text").html(),
+                        "userNumber": $("#canhuirenshu").val(),
+                        "startTime": changeTime($("#id-date-picker-1").val() + " " + $("#timepicker1").val() + ":00"),
+                        "checkUser": meetRoomData.data.admin,
+                        "endTime": changeTime($("#id-date-picker-2").val() + " " + $("#timepicker2").val() + ":00"),
+                        "needApply": meetRoomData.data.needApply,
+                        "servicePersonal": [],
+                        "technicist": [],
+                        "goods": goods,
+                        "remark": $("#beizhu").val(),
+                        "clearOverTime": meetRoomData.data.clearMinute * 60 * 1000 + changeTime($("#id-date-picker-2").val() + " " + $("#timepicker2").val() + ":00"),
+                        "userTimes": $("#allhours").val(),
+                        "createTime": new Date().getTime(),
+                        "ifKuaTian": ifKuaTian,
+                        "seatCard": $("#seatCard").val()
+                    }),
+                    success: function (data) {
+                        if (data.status == 0) {
+                            var time = changeTime($("#id-date-picker-1").val() + " " + $("#timepicker1").val()) - new Date().getTime();
+                            if (time < 12 * 3600 * 1000) {
+                                layer.msg("下次请至少提前12小时预定会议室", 2, -1);
+                            } else {
+                                layer.msg(data.msg, 2, -1);
+                            }
+                            setTimeout(function () {
+                                closeLay();
+                            }, 2000);
+//                                        setTimeout(function () {
+////                                            console.info(3, parent.$('#video-type').val());
+//                                            var times = parent.$('#video-type').val();
+//                                            if (times == 4 || times == 6 || times == 7) {
+//                                                layer.msg("您选择的是 " + parent.$("input[type='radio'][name='video']:checked").next().html() + " 请再预约 " + ((times - 5) > 0 ? times - 5 : times - 3) + "  个会议室！", 4, -1);
+//                                                parent.$('#video-type').val(times - 1);
+//                                                setTimeout("closeLay()", 4100);
+//                                            } else {
+//                                                parent.$('#video-type').val(times - 1);
+//                                                closeLay();
+//                                            }
+//                                        }, 2100);
+                        }
+                    }
+                });
+            }
+        </script>
+
+        <link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+        <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+
+        <script type="text/javascript"> ace.vars['base'] = '..'; </script>
+        <script src="../assets/js/ace/ace.onpage-help.js"></script>
+        <script src="../docs/assets/js/rainbow.js"></script>
+        <script src="../docs/assets/js/language/generic.js"></script>
+        <script src="../docs/assets/js/language/html.js"></script>
+        <script src="../docs/assets/js/language/css.js"></script>
+    </body>
+</html>

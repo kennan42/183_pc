@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>会议室新增</title>
+
+    <meta name="description" content="Common form elements and layouts"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../assets/css/dropzone.css"/>
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="../assets/css/jquery.gritter.css"/>
+    <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css"/>
+    <link rel="stylesheet" href="../assets/css/chosen.css"/>
+    <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+    <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css"/>
+    <link rel="stylesheet" href="../assets/css/daterangepicker.css"/>
+    <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+    <link rel="stylesheet" href="../assets/css/colorpicker.css"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="../assets/css/ace-fonts.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="./assets/css/ace-part2.min.css"/>
+    <![endif]-->
+    <link rel="stylesheet" href="../assets/css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="../assets/css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="./assets/css/ace-ie.min.css"/>
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="../assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="./assets/js/html5shiv.js"></script>
+    <script src="./assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    <script src='../assets/js/jquery.min.js'></script>
+    <script src="../layer/layer.min.js"></script>
+    <script src="../myjs/jquery.form.js"></script>
+    <link rel="stylesheet" type="text/css" href="../diyUpload/css/webuploader.css">
+    <link rel="stylesheet" type="text/css" href="../diyUpload/css/diyUpload.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" href="../assets/css/cttq-fonts.css">
+    <style type="text/css">
+        .tooltip-info + .tooltip.bottom .tooltip-arrow, .tooltip.tooltip-info.bottom .tooltip-arrow {
+            border-bottom-color: #428bca;
+        }
+
+        .tooltip-info + .tooltip > .tooltip-inner, .tooltip.tooltip-info > .tooltip-inner {
+            background-color: #428bca;
+            border-radius: 4px;
+        }
+
+        .tooltip-warning + .tooltip > .tooltip-inner, .tooltip.tooltip-warning > .tooltip-inner {
+            border-radius: 4px;
+        }
+
+        .text-onclick {
+            color: #e59729;
+        }
+
+        /*上传图片*/
+        .fileBoxUl {
+            margin: 0;
+        }
+
+        .fileBoxUl li {
+            float: left;
+        }
+
+        .fileBox {
+            position: relative;
+            height: auto;
+            border: 1px dashed #aaa;
+            border-radius: 4px;
+            text-align: center;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .parentFileBox {
+            float: left;
+        }
+
+        .fileBox label {
+            cursor: pointer;
+            margin: 0;
+            padding: 0;
+            float: left;
+            margin: 5px;
+            height: 132px;
+            position: relative;
+            overflow: hidden;
+            display: inline;
+            width: 142px;
+        }
+
+        .parentFileBox > .fileBoxUl > li > .diyBar {
+            background: none;
+        }
+
+        .parentFileBox > .fileBoxUl > li {
+            width: 142px;
+            height: 132px;
+        }
+
+        .parentFileBox > .fileBoxUl > li > .viewThumb {
+            width: 142px;
+            height: 132px;
+        }
+
+        .parentFileBox > .fileBoxUl > li > .diyBar {
+            width: 142px;
+            height: 132px;
+            line-height: 132px;
+        }
+
+        .addImg {
+            overflow: hidden;
+            display: inline-block;
+            position: absolute;
+            left: 35px;
+            top: 32px;
+        }
+
+        .addImg i {
+            position: relative;
+            display: block;
+            text-align: center;
+            height: auto;
+            line-height: 64px;
+            width: auto;
+            font-size: 64px;
+            color: #D5D5D5;
+            margin: 4px 0;
+            background-color: transparent;
+        }
+
+        .addText {
+            display: inline-block;
+            content: attr(data-title);
+            position: relative;
+            right: 0;
+            left: 0;
+            margin: 12px;
+            line-height: 22px;
+            color: #aaa;
+            font-size: 18px;
+            font-weight: bold;
+            border-width: 0;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .none {
+            display: none;
+        }
+
+        .block {
+            display: block;
+        }
+
+        .input-required {
+            font-size: 10px;
+            color: red;
+            font-family: tahoma;
+            vertical-align: middle;
+        }
+
+        .diyCancel {
+            position:absolute;
+            width:32px;
+            height:32px;
+            top:2px;
+            right:2px;
+            cursor:pointer;
+            display:none;
+            z-index:100;
+            background:url(images/x_alt.png) no-repeat;
+        }
+    </style>
+    <script type="text/javascript">
+        function upload1() {
+            var file = document.getElementById("file");
+            var myForm = document.getElementById("myForm");
+            var imgPath = $("#file").val();
+            var startIndex = imgPath.lastIndexOf("\\")
+            var imgName = imgPath.substring(startIndex + 1, imgPath.length);
+            if (imgPath == "") {
+                $.gritter.add({
+                    title: '错误信息提示',
+                    text: '请选择上传图片！',
+                    class_name: 'gritter-error'
+                });
+                return;
+            }
+            //判断上传文件的后缀名
+            var strExtension = imgPath.substr(imgPath.lastIndexOf('.') + 1);
+            if (strExtension.toLowerCase() != 'jpg' && strExtension.toLowerCase() != 'gif' && strExtension.toLowerCase() != 'png' && strExtension.toLowerCase() != 'bmp') {
+                $.gritter.add({
+                    title: '错误信息提示',
+                    text: '请选择图片文件',
+                    class_name: 'gritter-error'
+                });
+                return;
+            }
+            myForm.appendChild(file);
+            var options = {
+                url: '/meet/uploadMeetRoomImage',
+                data: {
+                    fileName: imgPath,
+                    meetRoomId: '54dc003177f34cd80f187a47'
+                },
+                dataType: "json",
+                contentType: "charset=UTF-8",
+                timeout: 100000,
+                beforeSubmit: function () {
+                    $('body,html').animate({
+                        scrollTop: 0
+                    }, 10);
+                    aa = layer.load('上传中...');
+                },
+                success: function (result) {
+                    if (result.status == 0) {
+                        if (undefined != aa) {
+                            layer.close(aa);
+                        }
+                        var imgNum = $(".fileBoxUl").children("li").length;
+                        if (imgNum <= 4) {
+                            var li = '\
+                                    <li id="fileBoxImg_' + imgNum + '">\
+                                        <div class="viewThumb" rel="' + result.imageURL + ' ' + result.compressedImageURL + '">\
+                                            <img src="' + result.imageURL + '">\
+                                        </div>\
+                                        <div class="diyFileName">' + imgName + '</div>\
+                                        <div class="diyBar" style="display:block;">\
+                                            <div class="diyCancel" style="display: block;float: right;" onclick="deleteImage(this)"></div>\
+                                            <div class="diyProgress"></div>\
+                                            <div class="diyProgressText">上传成功</div>\
+                                        </div>\
+                                    </li>';
+                            $(".fileBoxUl").append(li);
+                            if (imgNum == 4) {
+                                $("#AddImgLabel").hide();
+                                $(".fileBox").css({"padding-right": "5px"})
+                            }
+                        }
+                    }
+                    $("#AddImgLabel").html("");
+                    var fileInput = '\
+                            <input type="file" id="file" name="file" onchange="upload1(this)" style="position:absolute;width:0;height:0;z-index:-2;opacity:0;">\
+                            <span class="addImg">\
+                                <span class="addText">\
+                                    添加图片\
+                                </span>\
+                                <i class="ace-icon fa fa-picture-o"></i>\
+                            </span>\
+                            <form id="myForm" action="/meet/uploadMeetRoomImage" method="post" enctype="multipart/form-data"></form>';
+                    $("#AddImgLabel").html(fileInput);
+                },
+                error: function (result) {
+                    if (undefined != aa) {
+                        layer.close(aa);
+                    }
+                    layer.msg("上传失败",1,-1);
+                    $("#AddImgLabel").html("");
+                    var fileInput = '\
+                            <input type="file" id="file" name="file" onchange="upload1(this)" style="position:absolute;width:0;height:0;z-index:-2;opacity:0;">\
+                            <span class="addImg">\
+                                <span class="addText">\
+                                    添加图片\
+                                </span>\
+                                <i class="ace-icon fa fa-picture-o"></i>\
+                            </span>\
+                            <form id="myForm" action="/meet/uploadMeetRoomImage" method="post" enctype="multipart/form-data"></form>';
+                    $("#AddImgLabel").html(fileInput);
+                }
+            };
+            $(myForm).ajaxSubmit(options);
+            return !1;
+        }
+        function deleteImage(obj) {
+            $(obj).parent().parent().remove();
+            if($(".fileBoxUl").children("li").length <= 4) {
+                $("#AddImgLabel").show();
+            }
+        }
+    </script>
+</head>
+
+<body class="no-skin">
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-sm-12">
+                    <div class="form-horizontal">
+                        <div class="form-group" style="padding-top: 15px;">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 归属地1 </label>
+
+                            <div class="col-sm-4">
+                                <select id="guishudi" class="form-control" style="padding: 0 0 0 0">
+
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                <span class="input-required">*</span>&nbsp;会议室名称 </label>
+
+                            <div class="col-sm-4">
+                                <input id="huiyishimingcheng" placeholder="输入会议室名称" type="text"
+                                       class="col-xs-10 col-sm-10" onchange="isAllSpace(this.value,'请正确填写会议室名称！')">
+                            </div>
+                        </div>
+                         <div class="form-group" >
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    <span class="input-required">*</span>&nbsp;会议室短描述</label>
+                                <div class="col-sm-4">
+                                   <input id="shortName" placeholder="输入会议室短描述" type="text"
+                                           class="form-control" onchange="isAllSpace(this.value,'请正确填写会议室短描述！')">
+                                </div>
+                                <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                    <span class="input-required">*</span>&nbsp;会议室所属部门 </label>
+                                <div class="col-sm-4">
+                                    <input id="homesector" placeholder="输入会议室所属部门" type="text"
+                                           class="col-xs-10 col-sm-10" onchange="isAllSpace(this.value,'请正确填写会议室所属部门！')">
+                                </div>
+                            </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 容纳人数 </label>
+
+                            <div class="col-sm-4">
+                                <select id="rongnarenshu" class="form-control" style="padding: 0 0 0 0">
+                                    <option value="10人以下">10人以下</option>
+                                    <option value="10到20人">10到20人</option>
+                                    <option value="20到30人">20到30人</option>
+                                    <option value="30到40人">30到40人</option>
+                                    <option value="50人以上">50人以上</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1">
+                                <span class="input-required">*</span>&nbsp;会议室地址 </label>
+
+                            <div class="col-sm-4">
+                                <input id="huiyishidizhi" placeholder="输入会议室地址" type="text" class="col-xs-10 col-sm-10"
+                                       onchange="isAllSpace(this.value,'请正确填写会议室地址！')">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 会议室级别 </label>
+
+                            <div class="col-sm-4">
+                                <select id="huiyijibie" class="form-control" style="padding: 0 0 0 0">
+                                    <option value="1">高规格会议</option>
+                                    <option value="0">普通会议</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1">序号 </label>
+
+                            <div class="col-sm-4">
+                                <input id="index" placeholder="输入会议室序号" type="text" class="col-xs-10 col-sm-10"
+                                      value="0" onchange="limitNumber(this.value,'请填写正确的序号！')">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-tags">
+                                &nbsp;会议室描述 </label>
+
+                            <div class="col-sm-10">
+                                <div class="tags" style="width: 93.7%; padding-top: 4px;">
+                                    <input type="text" placeholder="输入会议室描述" id="desc">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-tags">
+                                <span class="input-required">*</span>&nbsp;管理员 </label>
+
+                            <div class="col-sm-10">
+                                <div class="tags" style="width: 93.7%; padding-top: 4px;">
+
+                                    <input type="text" placeholder="输入姓名或工号" oninput="findUser(value,'guanliyuan')"
+                                           id="guanliyuan">
+                                    <ul class="typeahead dropdown-menu"
+                                        style="top: 52.65px; left: 12px; display: none;">
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="border-top: 2px solid #eee;">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-tags">
+                                <span class="input-required">*</span>&nbsp;是否需要审批 </label>
+
+                            <div class="col-sm-4">
+                                <label style="padding-top: 4px;">
+                                    <input name="form-field-radio" type="radio" class="ace" value='1' checked="checked">
+                                    <span class="lbl"> 是 </span>
+                                </label>
+                                <label style="padding-left: 10%; padding-top: 4px;">
+                                    <input name="form-field-radio" type="radio" class="ace" value='0'>
+                                    <span class="lbl"> 否 </span>
+                                </label>
+                            </div>
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1" name="need-apply">
+                                清场时间 </label>
+
+                            <div class="col-sm-4" name="need-apply">
+                                <input id="qingchangshijian" placeholder="输入清场时间" type="text" value="0"
+                                       class="col-xs-10 col-sm-8" onchange="limitNumber(this.value,'请填写正确的清场时间！')">
+                                &nbsp;&nbsp;&nbsp;<label style="padding-top: 4px;">
+                                分钟 </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" name="need-apply">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-tags"> 服务人员 </label>
+
+                            <div class="col-sm-10">
+                                <div class="tags" style="width: 93.7%; padding-top: 4px;">
+
+                                    <input type="text" placeholder="输入姓名或工号" oninput="findUser(value,'fuwuyuan')"
+                                           id="fuwuyuan">
+                                    <ul class="typeahead dropdown-menu"
+                                        style="top: 52.65px; left: 12px; display: none;">
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" name="need-apply">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-tags"> 技术支持 </label>
+
+                            <div class="col-sm-10">
+                                <div class="tags" style="width: 93.7%; padding-top: 4px;">
+
+                                    <input type="text" placeholder="输入姓名或工号" oninput="findUser(value,'jishuyuan')"
+                                           id="jishuyuan">
+                                    <ul class="typeahead dropdown-menu"
+                                        style="top: 52.65px; left: 12px; display: none;">
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="border-top: 2px solid #eee;">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-5">
+                                <span class="input-required">*</span>&nbsp;会议室设备 </label>
+
+                            <div class="col-sm-10" style="padding-top: 4px;">
+									<span class="editable action-buttons" id="shebei">
+		                                
+										
+		                            </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right">图片上传</label>
+
+                            <div class="col-sm-10">
+                                <div class="fileBox">
+                                    <div class="parentFileBox">
+                                        <ul class="fileBoxUl">
+
+                                        </ul>
+                                    </div>
+                                    <label id="AddImgLabel">
+                                        <input type="file" id="file" name="file" onchange="upload1(this)"
+                                               style="position:absolute;width:0;height:0;z-index:-2;opacity:0;">
+											<span class="addImg">
+												<span class="addText">
+													添加图片
+												</span>
+												<i class="ace-icon fa fa-picture-o"></i>
+											</span>
+
+                                        <form id="myForm" action="/meet/uploadMeetRoomImage"
+                                              method="post" enctype="multipart/form-data"></form>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <hr style="border-top: 2px solid #eee;">
+                        <div class="form-group" style="float: right;">
+                            <div class="col-sm-12">
+                                <button class="btn" type="reset" onclick="closeIframe();">
+                                    <i class="ace-icon fa fa-undo bigger-110"></i>
+                                    取消
+                                </button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-info" type="button" onclick="submintRoom()">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.page-content -->
+</div>
+<!-- /.main-container -->
+<!-- basic scripts -->
+<!--[if !IE]> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+</script>
+
+<!-- <![endif]-->
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>" + "<" + "/script>");
+</script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="../assets/js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+<!--[if lte IE 8]>
+<script src="./assets/js/excanvas.min.js"></script>
+<![endif]-->
+<script src="../assets/js/jquery-ui.custom.min.js"></script>
+<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="../assets/js/chosen.jquery.min.js"></script>
+<script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+<script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="../assets/js/date-time/bootstrap-timepicker.min.js"></script>
+<script src="../assets/js/date-time/moment.min.js"></script>
+<script src="../assets/js/date-time/daterangepicker.min.js"></script>
+<script src="../assets/js/date-time/bootstrap-datetimepicker.min.js"></script>
+<script src="../assets/js/bootstrap-colorpicker.min.js"></script>
+<script src="../assets/js/jquery.knob.min.js"></script>
+<script src="../assets/js/jquery.autosize.min.js"></script>
+<script src="../assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+<script src="../assets/js/jquery.maskedinput.min.js"></script>
+<script src="../assets/js/bootstrap-tag.min.js"></script>
+<!--<script src="./assets/js/typeahead.jquery.min.js"></script>--><!-- 缺少 -->
+<script src="../assets/js/dropzone.min.js"></script>
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+
+<script src="../assets/js/bootbox.min.js"></script>
+<script src="../assets/js/jquery.easypiechart.min.js"></script>
+<script src="../assets/js/jquery.gritter.min.js"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function ($) {
+        //弹出框中图片控件
+        // $('#file').ace_file_input({
+        //     style: 'well',
+        //     btn_choose: 'Drop files here or click to choose',
+        //     btn_change: null,
+        //     no_icon: 'ace-icon fa fa-picture-o',
+        //     droppable: true,
+        //     thumbnail: 'large'
+        // })
+    });
+</script>
+<script type="text/javascript">
+
+    // 取消按钮
+    function closeIframe() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+    function CheckboxColor(obj) {
+        var arrObj = obj.className.split(" ");
+        if (arrObj[2] != "text-onclick") {
+            obj.oldClass = obj.className; // 暂存原来的class，用于恢复
+            arrObj[2] = "text-onclick";
+            obj.className = arrObj.join(" ");
+            $(obj).parent().removeClass("tooltip-info");
+            $(obj).parent().addClass("tooltip-warning");
+        } else if (obj.oldClass) {
+            obj.className = obj.oldClass; // 暂存原来的class，用于恢复
+            $(obj).parent().removeClass("tooltip-warning");
+            $(obj).parent().addClass("tooltip-info");
+        }
+    }
+    function checkVideo(obj) {
+        var arrObj = obj.className.split(" ");
+        if (arrObj[2] != "text-onclick") {
+            // 取消选择
+            $($("input[type=radio]")[1]).prop("disabled", false);
+            $($("input[type=radio]")[1]).next().on("click", function () {
+                var val = $(this).prev().val();
+                if (val == 1) {
+                    $("[name=need-apply]").show();
+                } else if (val == 0) {
+                    $("[name=need-apply]").hide();
+                }
+            });
+        } else if (obj.oldClass) {
+            // 选中
+            $($("input[type=radio]")[0]).prop("checked", true);
+            $($("input[type=radio]")[1]).prop("disabled", true);
+            $($("input[type=radio]")[1]).next().unbind("click");
+            $("[name=need-apply]").show();
+        }
+    }
+
+    var updateUser = new Array();
+    jQuery(function ($) {
+        $.ajaxSetup({
+            contentType: 'application/json',
+            async: false,
+            error: function () {
+                var unique_id = $.gritter.add({
+                    title: '系统警告信息提示',
+                    text: '' + errMsg1 + '<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                    sticky: true,
+                    time: '',
+                    class_name: 'gritter-info gritter-center'
+                });
+            },
+            timeout: 1000
+        });
+
+        findGuishudi();
+        findShebei();
+        selectUser();
+
+        //页面初始化
+        $('[data-rel=tooltip]').tooltip();
+        $('[data-rel=popover]').popover({html: true});
+        $(".PortraitHead").each(function (i) {
+            $(this).hover(function () {
+                $(this).children(".PortraitHead_Admin").addClass("PortraitHead_AdminHover");
+            }, function () {
+                $(this).children(".PortraitHead_Admin").removeClass("PortraitHead_AdminHover");
+            })
+        });
+
+        $(document).on('click', '.close', function () {
+            $(this).parent().remove();
+        });
+
+        // 是否需要申请 点击响应
+        $("input[type=radio]").next().each(function () {
+            $(this).on("click", function () {
+                var val = $(this).prev().val();
+                if (val == 1) {
+                    $("[name=need-apply]").show();
+                } else if (val == 0) {
+                    $("[name=need-apply]").hide();
+                }
+            });
+        });
+
+
+
+    });
+
+    // 限制清场时间
+    function limitNumber(str,msg) {
+        var re = new RegExp(/^[1-9]\d*|0$/);
+        if(isAllSpace(str,msg)) {
+            return false;
+        }
+
+        if(!re.test(str)) {
+            layer.msg(msg, 2, -1);
+            return false;
+        }
+        return true;
+    }
+
+    // 检验空格
+    function isAllSpace(str,msg) {
+        str = str.replace(/ /g,"");
+
+        if(str == '') {
+            layer.msg(msg, 2, -1);
+            return true;
+        }
+        return false;
+    }
+
+    // 会议室设备
+    function Equipment(argument) {
+        Array.prototype.ifndexOf = function (val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function (val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        var news = arrayObj.indexOf(argument);
+        if (news != -1) {
+            arrayObj.remove(argument);
+        } else {
+            arrayObj[arrayObj.length] = argument;
+        }
+        alert(arrayObj);
+    }
+
+    function enterkey(val) {
+        //val入参工号
+        //接口函数
+        var Valuesd = 1;//Valuesd 接口返回值0是正确，1是错误
+        return 1;
+    }
+
+    //调去查询查询接口
+    function findGuishudi() {
+        var paramJSon = {'userId':localStorage["pernrBase"]};
+        $.post("/meet/getMyAdminGuishudis", JSON.stringify(paramJSon), function (data) {
+            if (data.status == 0) {
+                var option = '';
+                $.each(data.data, function (n, value) {
+                    option += '<option value="' + value['_id'] + '">' + value['name'] + '</option>';
+                })
+                $("#guishudi").html(option);
+            }
+        });
+    }
+
+    //查询会议室设备接口
+    function findShebei() {
+        var paramJSon = {}
+        $.post("/meet/findMeetEquipment", JSON.stringify(paramJSon), function (data) {
+            if (data.status == 0) {
+                var shebeiList = '';
+                $.each(data.data, function (n, value) {
+                    if(value['code'] == 2002) {
+                        shebeiList += '<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="' + value['name'] + '" id="' + value['code'] + '" rel="' + value['code'] + ' ' + value['name'] + '">' +
+                        '<i onclick="CheckboxColor(this);checkVideo(this);" class="cttq-icon cttq-' + value['code'] + ' text-primary bigger-200"></i></a>'
+                    }else {
+                        shebeiList += '<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="' + value['name'] + '" id="' + value['code'] + '" rel="' + value['code'] + ' ' + value['name'] + '">' +
+                        '<i onclick="CheckboxColor(this);" class="cttq-icon cttq-' + value['code'] + ' text-primary bigger-200"></i></a>'
+                    }
+                })
+                $("#shebei").html(shebeiList);
+            }
+        });
+    }
+
+    function findUser(val, doum) {
+        if (val != '' && val.length > 1) {
+            var paramJSon = {
+                "IT_EXTENDMAP": {
+                    "item": {
+                        "FIELDNAME": '',
+                        "VALUE": ''
+                    }
+                },
+                "I_PUBLIC": {
+                    "CHANNELSERIALNO": '',
+                    "ORIGINATETELLERID": '',
+                    "ZDOMAIN": '100',
+                    "I_PAGENO": '',
+                    "I_PAGESIZE": '',
+                    "ZVERSION": ''
+                },
+                "P_PNAME": val
+            };
+
+            $.post("/base/GET_PERSON_INFO_LIKE", JSON.stringify(paramJSon), function (data) {
+                //alert(data.E_PUBLIC.TYPE);
+                if (data.E_PUBLIC.TYPE == 'S') {
+                    var html1 = '';
+                    $.each(data.P_BASICINFO.item, function (n, value) {
+                        var chongfu = false;
+                        // 获取已选的人员
+                        if(doum == "guanliyuan") {
+                            $(".guanliyuan").each(function (index, item) {
+                                var admins = $(this).attr('rel').split(" ");
+                                var userid = admins[1];
+                                if(userid == pernrShow(value['PERNR']) || userid == value['PERNR']) {
+                                    chongfu = true;
+                                }
+                            });
+                        }else if(doum == "fuwuyuan") {
+                            $(".fuwuyuan").each(function(index,item) {
+                                var admins = $(this).attr('rel').split(" ");
+                                var userid = admins[1];
+                                if(userid == pernrShow(value['PERNR']) || userid == value['PERNR']) {
+                                    chongfu = true;
+                                }
+                            });
+                        }else if(doum == "jishuyuan") {
+                            $(".jishuyuan").each(function(index,item) {
+                                var admins = $(this).attr('rel').split(" ");
+                                var userid = admins[1];
+                                if(userid == pernrShow(value['PERNR']) || userid == value['PERNR']) {
+                                    chongfu = true;
+                                }
+                            });
+                        }
+                        // 跳过重复的人员
+                        if(!chongfu) {
+                            var infoHtml = value['NACHN'] + ' ' + value['PERNR'] + ' ' + value['ORGTX'];
+                            html1 += '<li onclick="addtag(' + "'" + infoHtml + "'" + ',' + "'" + doum + "'" + ')"><a href="#">' + infoHtml + '</a></li>';
+                        }
+                    });
+                    var html2 = $("#" + doum).parent().parent().outerHeight();
+                    if(html1 != "") {
+                        $("#" + doum).next().html(html1).css("display", "block").css("top", html2);
+                    }
+                } else {
+                    $("#"+doum).next().css("display","none");
+                }
+            });
+
+        } else {
+            $("#" + doum).next().css("display", "none");
+        }
+
+    }
+
+    function addtag(val, doum) {
+        var htmltag = '<span class="tag ' + doum + '" rel="' + val + '">' + val + '<button class="close" type="button">×</button></span>';
+        $("#" + doum).before(htmltag).val("");
+        $("#" + doum).next().css("display", "none");
+    }
+
+    function submintRoom() {
+        var guishudiCode = $("#guishudi").val();
+        var guishudiName = $("#guishudi option:selected").text();
+        var name = trimString($("#huiyishimingcheng").val());
+        var desc = trimString($("#desc").val());
+        //短描述
+            var shortName=trimString($("#shortName").val());
+            var homesector=trimString($("#homesector").val());
+             
+        if (name == '') {
+            layer.msg("会议室名称不能为空", 1, -1);
+            $("#huiyishimingcheng").focus();
+            return false;
+        }
+        if (shortName == '') {
+                layer.msg("会议室短描述不能为空", 1, -1);
+                return false;
+            }
+            if (homesector == '') {
+                layer.msg("会议室所属部门", 1, -1);
+                return false;
+            }
+        if(isAllSpace(name,"请正确填写会议室名称！")) {
+            return false;
+        }
+        var capacity = $("#rongnarenshu option:selected").text();
+        var meetlevel;
+        if(capacity=='10人以下'){
+            meetlevel =1;
+        }else if(capacity=='10到20人'){
+            meetlevel =2;
+        }else if(capacity=='20到30人'){
+            meetlevel =3;
+        }else if(capacity=='30到40人'){
+            meetlevel =4;
+        }else {
+            meetlevel =5;
+        } 
+        var address = trimString($("#huiyishidizhi").val());
+        if (address == '') {
+            layer.msg("会议室地址不能为空", 1, -1);
+            $("#huiyishidizhi").focus();
+            return false;
+        }
+        if(isAllSpace(address,"请正确填写会议室地址！")) {
+            return false;
+        }
+        var level = $("#huiyijibie").val();
+        if(!limitNumber($("#index").val(),"请填写正确的序号！")) {
+            return false;
+        }
+        var admin = new Array();
+        $(".guanliyuan").each(function (index, item) {
+            var admins = $(this).attr('rel').split(" ");
+            var userid = pernrShow(admins[1]);
+            admin[index] = {'userId': userid, 'userName': admins[0]}
+        });
+
+        if (admin.length == 0) {
+            layer.msg("会议室管理员不能为空", 1, -1);
+            $("#guanliyuan").focus();
+            return false;
+        }
+
+        var needApply = $("input[name=form-field-radio]:checked").val();
+
+        var clearMinute = 0;
+        var servicePersonal = new Array();
+        var technicist = new Array();
+        if(needApply == 1) {
+            if(!limitNumber($("#qingchangshijian").val(),"请填写正确的清场时间！")) {
+                return false;
+            }
+
+            clearMinute = $("#qingchangshijian").val();
+            clearMinute = trimString(clearMinute);
+            clearMinute = clearMinute == '' ? 0 : clearMinute;
+
+            $(".fuwuyuan").each(function (index, item) {
+                var admins = $(this).attr('rel').split(" ");
+                var userid = pernrShow(admins[1]);
+                servicePersonal[index] = {'userId': userid, 'userName': admins[0]}
+            });
+
+            $(".jishuyuan").each(function (index, item) {
+                var admins = $(this).attr('rel').split(" ");
+                var userid = pernrShow(admins[1]);
+                technicist[index] = {'userId': userid, 'userName': admins[0]}
+            });
+        }
+
+        var type = 1;
+        var device = new Array();
+        $(".tooltip-warning").each(function (index, item) {
+            var admins = $(this).attr('rel').split(" ");
+            if (admins[0] == '2002') {
+                type = 2;
+            }
+            device[index] = {'code': admins[0], 'name': admins[1]}
+        });
+        
+        if (device.length == 0) {
+            layer.msg("会议室设备不能为空", 1, -1);
+            return false;
+        }
+
+        var image = new Array();
+        $(".viewThumb").each(function (index, item) {
+            var admins = $(this).attr('rel').split(" ");
+            image[index] = {'imageURL': admins[0], 'compressedImageURL': admins[1]}
+        });
+        if (image.length == 0) {
+            image = '';
+        }
+
+        $.ajaxSetup({
+            contentType: 'application/json',
+            async: false,
+            error: function () {
+                var unique_id = $.gritter.add({
+                    title: '系统警告信息提示',
+                    text: '' + errMsg1 + '<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                    sticky: true,
+                    time: '',
+                    class_name: 'gritter-info gritter-center'
+                });
+            },
+            timeout: 1000
+        });
+
+        var paramJSon = {
+            "guishudiCode": guishudiCode,
+            "guishudiName": guishudiName,
+            "name": name,
+            "capacity": capacity,
+            "address": address,
+            "level": level,
+            "type": type,
+            "needApply": needApply,
+            "clearMinute": clearMinute,
+            "admin": admin,
+            "servicePersonal": servicePersonal,
+            "technicist": technicist,
+            "device": device,
+            "image": image,
+            "createUser": updateUser,
+            "createTime": (new Date()).valueOf(),
+            "updateUser": updateUser,
+            "updateTime": (new Date()).valueOf(),
+            "index": parseInt($("#index").val()),
+            "desc": desc,
+            "shortName":shortName,
+            "homesector":homesector,
+            "meetlevel":meetlevel
+        };
+
+        $.post("/meet/addMeetingRoom", JSON.stringify(paramJSon), function (data) {
+            if (data.status == 0) {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.msg(data.msg, 3, -1);
+                parent.location.reload();
+                parent.layer.close(index);
+            } else {
+                layer.msg(data.msg, 3, -1);
+            }
+        });
+
+    }
+
+    function selectUser() {
+        var paramJSon = {
+            "IS_PUBLIC": {
+                "FLOWNO": "",
+                "PERNR": "",
+                "ZDOMAIN": "400",
+                "I_PAGENO": "",
+                "I_PAGESIZE": ""
+            },
+            "P_DATE": "",
+            "P_PERNR": {
+                "item": [{
+                    "PERNR": localStorage["pernrBase"]
+                }]
+            }
+
+        };
+        $.post("/zhr/ZHR_GET_PER_EASY_INFO", JSON.stringify(paramJSon), function (data) {
+            data = typeof(data) == 'string' ? $.parseJSON(data) : data;
+            if (data.RETURN_SUBRC == 0) {
+                updateUser = {'userId': localStorage["pernrBase"], 'userName': data.EASY_TAB.item[0]['NACHN']}
+
+            }
+        });
+    }
+
+    function pernrShow(pernr) {
+        return pernr.replace(/(^0*)/g, "");
+    }
+
+    function trimString(str) {
+        // return str;
+        return str.replace('/^/s/s*/', '').replace('//s/s*$/', '');
+    }
+
+</script>
+
+<link rel="stylesheet" href="../assets/css/ace.onpage-help.css"/>
+<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css"/>
+
+<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+<!--<script src="./assets/js/ace/elements.onpage-help.js"></script>--> <!-- 缺少 -->
+<script src="../assets/js/ace/ace.onpage-help.js"></script>
+<script src="../docs/assets/js/rainbow.js"></script>
+<script src="../docs/assets/js/language/generic.js"></script>
+<script src="../docs/assets/js/language/html.js"></script>
+<script src="../docs/assets/js/language/css.js"></script>
+<script src="../docs/assets/js/language/javascript.js"></script>
+</body>
+</html>

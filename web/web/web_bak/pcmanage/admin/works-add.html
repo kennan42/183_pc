@@ -1,0 +1,364 @@
+<title>新建工单 - IT服务工作台</title>
+
+<div id="breadcrumbs" class="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong>
+            <a href="index.html">
+                首页
+            </a>
+        </li>
+        <li>工单管理</li>
+        <li class="active">新建工单</li>
+    </ul>
+</div>
+
+
+<!-- /section:basics/navbar.layout -->
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+
+        <!-- /section:basics/content.breadcrumbs -->
+        <div class="row" style="margin:0 48px;">
+            <div class="col-xs-12">
+                <div class="row" style=" text-align: center;">
+                    <div class="widget-box transparent" id="recent-box" style="margin-top: 10px;">
+                        <div class="widget-header">
+                            <div class="widget-toolbar no-border" style="float: left;">
+                                <ul class="nav nav-tabs" id="recent-tab">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#task-tab" id="inner">公司员工</a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#task-tab" id="outer">合作伙伴</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-4">
+                                <div class="tab-content padding-8">
+                                    <div id="task-tab" class="tab-pane active">
+                                        <div class="xjgd-title1">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <!-- PAGE CONTENT BEGINS -->
+                                                    <form class="form-horizontal" role="form">
+                                                        <!-- #section:elements.form -->
+                                                        <input type="hidden"  id="innerOuter"  value="1"/>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                                   for="form-field-1">工号：</label>
+
+                                                            <div class="col-sm-1">
+                                                                <div class="row"><input type="text" id="workCode" placeholder="工号" name="workCode" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                                   for="form-field-1">姓名：</label>
+
+                                                            <div class="col-sm-1">
+                                                                <div class="row"><input type="text" id="userName" placeholder="姓名" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                                   for="form-field-1">手机号：</label>
+
+                                                            <div class="col-sm-2">
+                                                                <div class="row"><input type="text" id="cellphone" placeholder="手机号" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                                   for="form-field-1">邮箱：</label>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="row"><input type="text" id="email" placeholder="邮箱@163.com" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                                   for="form-field-1">公司：</label>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="row"><input type="text" id="company" placeholder="公司" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                                   for="form-field-1">部门：</label>
+
+                                                            <div class="col-sm-4">
+                                                                <div class="row"><input type="text" id="department" placeholder="部门" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                                   for="form-field-1">职务：</label>
+
+                                                            <div class="col-sm-1">
+                                                                <div class="row"><input type="text" id="jobTitle" placeholder="职位" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">问题分类：</label>
+
+                                                            <div class="col-sm-10">
+                                                                <div class="row" id="quesTypeCids">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">所属系统：</label>
+
+                                                            <div class="col-sm-10">
+                                                                <div class="row" id="belongSystypeCids">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                                   for="form-field-1">预计反馈时间：</label>
+
+                                                            <div class="col-sm-2">
+                                                                <div class="row">
+                                                                    <div class="input-group">
+                                                                        <input id="date-timepicker1" type="text"
+                                                                               class="form-control"/>
+                                                                <span class="input-group-addon">
+                                                                    <i class="fa fa-calendar bigger-110"></i>
+                                                                </span>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <div class="row" style="line-height: 34px;">
+                                                                    <div class="nav-tbd">
+                                                                        <div style="width: 92px; float: left;">同步到天知道：
+                                                                        </div>
+                                                                        <label>
+                                                                            <input type="checkbox" checked="checked" id="checkToBar">
+                                                                            <span style="padding-left: 10px;">是</span></label>
+                                                                        <input type="hidden" id="updateToQuesBar" value="1"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                                   for="form-field-1">问题描述：</label>
+
+                                                            <div class="col-sm-10">
+                                                                <div class="row">
+                                                                <textarea style="width: 100%;" rows="4" id="quesContent" placeholder="问题描述"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-sm-12">
+                                                                <div class="row">
+                                                                    <a href="javascript:;" id="btnSave"><img src=" ../contents/img/c-8.jpg"></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- /section:pages/dashboard.tasks -->
+                                    </div>
+
+                                    <div id="member-tab" class="tab-pane bg-img3">
+                                        <!-- #section:pages/dashboard.members -->
+                                        <!-- /section:pages/dashboard.members -->
+                                    </div>
+                                    <!-- /.#member-tab -->
+                                </div>
+                            </div>
+                            <!-- /.widget-main -->
+                        </div>
+                        <!-- /.widget-body -->
+                    </div>
+                    <!-- /.widget-box -->
+                    <!-- /.row -->
+                </div>
+                <!-- /.page-content-area -->
+            </div>
+            <!-- /.page-content -->
+        </div>
+        <!-- /.main-content -->
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+        </a>
+      </div>
+    <!-- /.main-container -->
+</div>
+    <!-- basic scripts -->
+
+<script type="text/javascript">
+    var scripts = [null, null]
+    ace.load_ajax_scripts(scripts, function() {
+        //inline scripts related to this page
+        jQuery(function($){
+            $('#date-timepicker1').datetimepicker().next().on(ace.click_event, function () {
+                $(this).prev().focus();
+            });
+
+            $("#workCode").change(function(){
+                getUserByCode($("#workCode").val(),AppendUser);
+            });
+
+            function AppendUser(result){
+                isObject("#cellphone",result.ET_ZHR_ALL_INFO.item[0].ZZ_TEL)
+                isObject("#userName",result.ET_ZHR_ALL_INFO.item[0].NACHN)
+                isObject("#email",result.ET_ZHR_ALL_INFO.item[0].ZZ_EMAIL)
+                isObject("#company",result.ET_ZHR_ALL_INFO.item[0].BUTXT)
+                isObject("#department",result.ET_ZHR_ALL_INFO.item[0].ZZ_JG1T)
+                isObject("#jobTitle",result.ET_ZHR_ALL_INFO.item[0].PLSTX)
+            };
+
+
+            function isObject(container,param){
+                if(typeof(param)=="object") {
+                    $(container).val("");
+                }
+                else{
+                    $(container).val(param);
+                }
+            }
+
+
+
+            Load_Data_Select();
+            //加载选择条件
+            function Load_Data_Select()
+            {
+                //问题分类
+                $.ajax({
+                    type: "POST",
+                    url: it_service_url.quesTypeList,
+                    data: '{"quesTypeState": "1"}',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        for(var i in result.resultJson) {
+                            $("#quesTypeCids").append('<div class="bg-img3 ques" style="overflow:hidden"  data-id='+result.resultJson[i].quesTypeCid+'>'+result.resultJson[i].quesTypeName+'</div>');
+                        }
+                    }
+                });
+
+                //所属系统
+                $.ajax({
+                    type: "POST",
+                    url: it_service_url.BelongSysTypeList,
+                    data: '{"belongSystypeState": "1"}',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        for(var i in result.resultJson) {
+                            $("#belongSystypeCids").append('<div class="bg-img3 sys" data-id='+result.resultJson[i].belongSystypeCid+'>'+result.resultJson[i].belongSystypeName+'</div>');
+                        }
+                    }
+                });
+            }
+
+
+            $("body").on("click",".bg-img3",function(){
+                $(this).removeClass("bg-img3");
+                $(this).addClass("bg-img2");
+            });
+
+            $("body").on("click",".bg-img2",function(){
+                $(this).removeClass("bg-img2");
+                $(this).addClass("bg-img3");
+            });
+
+
+            $("#inner").click(function(){
+                $("#innerOuter").val(1);
+            });
+
+            $("#outer").click(function(){
+                $("#innerOuter").val(2);
+            });
+
+            //保存
+           $("#btnSave").click(function(){
+                   if(document.getElementById("checkToBar").checked){
+                       $("#updateToQuesBar").val(1);
+                   }
+                   else{
+                       $("#updateToQuesBar").val(3);
+                   }
+
+
+                if($("#workCode").val()=="" || $("#cellphone").val()=="" || $("#email").val()==""
+                        || $("#userName").val()=="" || $("#company").val()==""
+                || $("#department").val()=="" || $("#jobTitle").val()=="" || $("#quesContent").val()==""
+                || $("#date-timepicker1").val()==""){
+                    AlertTips("请将信息填写完整");
+                    return false;
+                }
+
+               newWork.innerOuter=$("#innerOuter").val();
+               newWork.workCode=$("#workCode").val();
+               newWork.cellphone=$("#cellphone").val();
+               newWork.email=$("#email").val();
+               newWork.userName=$("#userName").val();
+               newWork.company=$("#company").val();
+               newWork.department=$("#department").val();
+               newWork.jobTitle=$("#jobTitle").val();
+               var i= 0,j=0;
+               $(".ques").each(function(){
+                   if($(this).attr('class').indexOf("bg-img2")>0) {
+                       newWork.quesTypeCids[i]=$(this).data("id");
+                       i++;
+                   }
+               });
+               $(".sys").each(function(){
+                   if($(this).attr('class').indexOf("bg-img2")>0) {
+                       newWork.belongSystypeCids[j]=$(this).data("id");
+                       j++;
+                   }
+               });
+               newWork.updateToQuesBar= $("#updateToQuesBar").val();
+               newWork.planRebackTime= Date.parse(new Date($("#date-timepicker1").val()));
+               newWork.quesContent= $("#quesContent").val();
+               newWork.createrWorkCode= currentUser.userWorkCode;
+               newWork.createrName= currentUser.userName;
+               var data=JSON.stringify(newWork);
+
+               $.ajax({
+                   type: "POST",
+                   url: it_service_url.AddWorkBill,
+                   data: data,
+                   contentType: "application/json; charset=utf-8",
+                   success: function (result) {
+                      if(result.resultCode==100){
+                          AlertTips("保存成功",callbackreload);
+                      }
+                   }
+               });
+
+
+           });
+
+        })
+
+    });
+</script>

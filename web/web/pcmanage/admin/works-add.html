@@ -1,0 +1,1177 @@
+<title>新建工单 - IT服务工作台</title>
+
+<!-- /section:basics/navbar.layout -->
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+
+        <!-- /section:basics/content.breadcrumbs -->
+        <div class="row" style="margin:0 48px;">
+            <div class="col-xs-12">
+                <div class="row" style=" text-align: center;">
+                    <div class="widget-box transparent" id="recent-box" style="margin-top: 10px;">
+                        <div class="widget-header">
+                            <div class="widget-toolbar no-border" style="float: left;">
+                                <ul class="nav nav-tabs" id="recent-tab">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#task-tab" id="inner">公司员工</a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#task-tab" id="outer">合作伙伴</a>
+                                    </li>
+                                    <li>
+                                        <a data-toggle="tab" href="#task-tab" id="review">积分管理</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-4">
+                                <div class="tab-content padding-8">
+                                    <div id="task-tab" class="tab-pane active">
+                                        <div class="xjgd-title1">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <!-- PAGE CONTENT BEGINS -->
+                                                    <form class="form-horizontal" role="form">
+                                                        <!-- #section:elements.form -->
+                                                        <input type="hidden"  id="innerOuter"  value="1"/>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                            for="form-field-1">工号*：</label>
+
+                                                            <div class="col-sm-1">
+                                                                <div class="row"><input type="text" id="workCode" placeholder="工号(必填)" name="workCode" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                            for="form-field-1">姓名：</label>
+
+                                                            <div class="col-sm-1">
+                                                                <div class="row"><input type="text" id="userName" placeholder="姓名" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                            for="form-field-1">手机号：</label>
+
+                                                            <div class="col-sm-2">
+                                                                <div class="row"><input type="text" id="cellphone" placeholder="手机号" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                            for="form-field-1">邮箱：</label>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="row"><input type="text" id="email" placeholder="邮箱@163.com" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                            for="form-field-1">公司：</label>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="row"><input type="text" id="company" placeholder="公司" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                            for="form-field-1">部门：</label>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="row"><input type="text" id="department" placeholder="部门" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                            for="form-field-1">职务：</label>
+
+                                                            <div class="col-sm-2">
+                                                                <div class="row"><input type="text" id="jobTitle" placeholder="职位" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">问题分类*：</label>
+
+                                                            <div class="col-sm-10">
+                                                                <div class="row" id="quesTypeCids">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">问题来源*：</label>
+
+                                                            <div class="col-sm-10">
+                                                                <div class="row" id="quesTagCids">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-1 control-label no-padding-right" for="form-field-1">所属系统*：</label>
+
+                                                            <div class="col-sm-10">
+                                                                <div class="row" id="belongSystypeCids">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label id="shouli" class="col-sm-1 control-label no-padding-right" for="form-field-1">添加受理人员*: </label>
+                                                            <div class="col-sm-2">
+                                                                <div class="row">
+                                                                  <div class="input-group">
+                                                                   <input id="userSearchInput" type="text"
+                                                                   class="form-control"/>
+                                                                   <span class="input-group-addon" id="userSearch">
+                                                                    <i class="fa fa-search bigger-110"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <div class="row" style="line-height: 34px;">
+                                                            <div class="nav-tbd">
+                                                                <div style="width: 92px; float: left;">分配给自己：
+                                                                </div>
+                                                                <label>
+                                                                    <input type="checkbox"  id="checkToSelf" checked="true">
+                                                                    <span style="padding-left: 10px;">是</span></label>
+                                                                    <input type="hidden" id="toself" value="3"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="workHoursDiv" style="display: none;">
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                            for="form-field-1">工时*：</label>
+
+                                                            <div class="col-sm-1">
+                                                                <div class="row"><input type="text" id="workHours" placeholder="工时" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                            <label class="col-sm-1 control-label no-padding-right"
+                                                            for="form-field-1">分值*：</label>
+
+                                                            <div class="col-sm-1">
+                                                                <div class="row"><input type="text" id="integralValue" placeholder="分值" class="col-xs-10 col-sm-12"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div> 	
+
+
+                                                    <div class="form-group" id="userShowGroup">
+                                                        <div class="col-sm-10">
+                                                            <div class="row" id="userShow" style="margin-left:74px;">
+                                                            </div>
+                                                        </div>      
+                                                    </div>
+
+                                                    <!--积分处理人员 -->
+                                                    <div class="form-group" id="userReviewGroup">
+                                                        <div class="col-sm-10">
+                                                            <div class="row"  id="userReview" style="margin-left:74px;">
+
+
+
+                                                            </div>
+                                                        </div>      
+                                                    </div>
+
+
+
+
+                                                    <div class="form-group" id="fankui">
+                                                        <label class="col-sm-1 control-label no-padding-right"
+                                                        for="form-field-1">预计反馈时间：</label>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="row">
+                                                                <div class="input-group">
+                                                                    <input id="date-timepicker1" type="text"
+                                                                    class="form-control"/>
+                                                                    <span class="input-group-addon" >
+                                                                        <i class="fa fa-calendar bigger-110"></i>
+                                                                    </span>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                           <!--  <div class="col-sm-2">
+                                                                <div class="row" style="line-height: 34px;">
+                                                                    <div class="nav-tbd">
+                                                                        <div style="width: 92px; float: left;">同步到天知道：
+                                                                        </div>
+                                                                        <label>
+                                                                            <input type="checkbox"  id="checkToBar">
+                                                                            <span style="padding-left: 10px;">是</span></label>
+                                                                        <input type="hidden" id="updateToQuesBar" value="3"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+                                                            <div class="col-sm-2" >
+                                                                <div class="row" style="line-height: 34px;">
+                                                                    <div class="nav-tbd">
+                                                                        <div style="width: 92px; float: left;">设为精品工单：
+                                                                        </div>
+                                                                        <label>
+                                                                            <input type="checkbox"  id="checkToJinpin">
+                                                                            <span style="padding-left: 10px;">是</span></label>
+                                                                            <input type="hidden" id="choiceState" value="0"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-1 control-label no-padding-right"
+                                                                for="form-field-1">问题描述*：</label>
+
+                                                                <div class="col-sm-10">
+                                                                    <div class="row">
+                                                                        <textarea style="width: 100%;" rows="4" id="quesContent" placeholder="问题描述(必填)"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-sm-12">
+                                                                    <div class="row">
+                                                                        <a href="javascript:;" id="btnSave"><img src=" ../contents/img/c-8.jpg"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- /section:pages/dashboard.tasks -->
+                                        </div>
+
+                                        <div id="member-tab" class="tab-pane bg-img3">
+                                            <!-- #section:pages/dashboard.members -->
+                                            <!-- /section:pages/dashboard.members -->
+                                        </div>
+                                        <!-- /.#member-tab -->
+                                    </div>
+                                </div>
+                                <!-- /.widget-main -->
+                            </div>
+                            <!-- /.widget-body -->
+                        </div>
+                        <!-- /.widget-box -->
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.page-content-area -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+            <!-- /.main-content -->
+
+
+            <!--员工查询-->
+            <div class="modal" id="modalUser" tabindex="-1" role="dialog"  aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="nav-title">
+                            <h4 class="modal-title" id="myModalLabel">员工信息查询</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                   <table>
+                                       <thead>
+                                          <tr><th style="width: 80px;">工号</th><th style="width: 80px;">姓名</th><th style="width: 100px;">部门</th><th style="width: 80px;">操作</th></tr>
+                                      </thead>
+                                      <tbody id="userAppend">
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="userBtnClose" >关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--确认已解决-->
+        <div class="modal" id="modalSlove" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 500px;margin: 0 auto; ">
+                    <div class="nav-title">
+                        <h4 class="modal-title" >创建完成</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-6">
+                                 您需要立即维护此工单吗？
+                             </div>
+                             <div class="col-md-2"></div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" style="float: left;margin-left: 100px;" id="sloveBtnClose" >等会再说</button>
+                    <button type="button" class="btn btn-primary" style="float: right;margin-right: 100px;" id="sloveBtnSubmit" >立即维护</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--业务审批人级数-->
+    <input type="hidden" id="approveLevel" value="1"/>
+    <!--积分处理人员数-->
+    <input type="hidden" id="jifenLevel" value="0"/>
+
+    <!-- 创建工单的quescid-->
+    <input type="hidden" id="quesCid" value=""/>
+
+
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div>
+<!-- /.main-container -->
+</div>
+<!-- basic scripts -->
+
+<script type="text/javascript">
+    var scripts = [null, null]
+    ace.load_ajax_scripts(scripts, function() {
+        //inline scripts related to this page
+        jQuery(function($){
+            document.getElementById('shouli').innerHTML = '添加受理人员*: ';
+//            $("#workCode").change(function(){
+//                if($("#innerOuter").val()==1){
+//                     getUserByCode($("#workCode").val(),AppendUser);
+//                }
+//                else if($("#innerOuter").val()==2){
+//                    //外部人员接口
+//                    //$("#workCode").val(99999999);
+//                }
+//            });
+
+$("#workCode").keyup(function(event){
+    if(event.keyCode ==13){
+        if($("#innerOuter").val()==1||$("#innerOuter").val()==3){
+            if($("#workCode").val().length!=7){
+                AlertTips("请输入正确的工号");
+                return false;
+            }
+            getUserByCode($("#workCode").val(),AppendUser);
+        }
+        else if($("#innerOuter").val()==2){
+                        //外部人员接口
+                    }
+                }
+            });
+$("#userName").keyup(function(event){
+    if(event.keyCode ==13){
+        if($("#innerOuter").val()==1||$("#innerOuter").val()==3){
+                        //getUsers($("#userName").val(),AppendSearchUser);
+                        getUsers($("#userName").val(),AppendProcess2);
+                    }
+                    else if($("#innerOuter").val()==2){
+                    }
+                }
+            });
+$("#cellphone").keyup(function(event){
+    if(event.keyCode ==13){
+        if($("#innerOuter").val()==1||$("#innerOuter").val()==3){
+            getUsers($("#cellphone").val(),AppendProcess2);
+        }
+        else if($("#innerOuter").val()==2){
+        }
+
+    }
+});
+
+
+$("#userSearchInput").keyup(function(event){
+     if(event.keyCode ==13){
+      getUsers($('#userSearchInput').val(),AppendProcess);
+
+    }
+});
+
+
+            //用户查询框
+            $("#userSearch").click(function(){
+               var level =$("#approveLevel").val();
+              // var level=  $(this).data("level");
+             //  alert(level);
+           // $("#userSearchLevel").val(level);
+           getUsers($('#userSearchInput').val(),AppendProcess);
+       });
+            
+            
+            
+            
+            function AppendProcess(result)
+            {
+                $("#userAppend").empty();
+                for(var i in result.ET_BASICINFO.item)
+                {
+                    $("#userAppend").append('<tr><td style="width: 80px;">'+result.ET_BASICINFO.item[i].PERNR+'</td><td style="width: 80px;">'+result.ET_BASICINFO.item[i].NACHN+'</td>' +
+                        '<td style="width: 100px;">'+result.ET_BASICINFO.item[i].ZZ_JG1T+'</td>'+
+                        '<td style="width: 80px;"><a href="javascript:;" class="choose" ' +
+                        'data-level='+$("#approveLevel").val()+'  data-id='+result.ET_BASICINFO.item[i].PERNR+'  data-name='+result.ET_BASICINFO.item[i].NACHN+'' +
+                        ' data-plans='+ result.ET_BASICINFO.item[i].PLANS+' data-plstx='+ result.ET_BASICINFO.item[i].PLSTX +' ' +
+                        ' data-orgeh='+ result.ET_BASICINFO.item[i].ZZ_JG4 +' data-orgtx='+result.ET_BASICINFO.item[i].ZZ_JG1T+' >选择</a></td></tr>');
+                }
+                $("#modalUser").modal({show: true,backdrop: false});
+            //判断modal存在type
+            if($("#modalBusiness").attr("class")=="modal in") {
+              // $("#modalBusiness").modal('hide');
+              $("#modalType").val(1);
+          }
+          if($("#modalSecond").attr("class")=="modal in") {
+               // $("#modalSecond").modal('hide');
+               $("#modalType").val(2);
+           }
+           $(".modal-backdrop").hide();
+       }
+
+
+
+           //输入名字 手机尾号 查询人员
+           function AppendProcess2(result)
+           {   
+            
+            if(result.ET_BASICINFO.item.length>1){
+                $("#userAppend").empty();
+                for(var i in result.ET_BASICINFO.item)
+                {
+                    $("#userAppend").append('<tr><td style="width: 80px;">'+result.ET_BASICINFO.item[i].PERNR+'</td><td style="width: 80px;">'+result.ET_BASICINFO.item[i].NACHN+'</td>' +
+                        '<td style="width: 100px;">'+result.ET_BASICINFO.item[i].ZZ_JG1T+'</td>'+
+                        '<td style="width: 80px;"><a href="javascript:;" class="choose2" ' +
+                        ' data-id='+result.ET_BASICINFO.item[i].PERNR+'  data-name='+result.ET_BASICINFO.item[i].NACHN+'' +
+                        ' data-tell='+ isObjectTrans(result.ET_BASICINFO.item[i].TELL)+' data-mail='+ isObjectTrans(result.ET_BASICINFO.item[i].MAIL)+''+
+                        ' data-plstx='+ isObjectTrans(result.ET_BASICINFO.item[i].PLSTX) +' '+
+                        ' data-butxt='+ isObjectTrans(result.ET_BASICINFO.item[i].BUTXT) +' data-orgtx='+isObjectTrans(result.ET_BASICINFO.item[i].ZZ_JG1T)+' >选择</a></td></tr>');
+                }
+                $("#modalUser").modal({show: true,backdrop: false});
+            //判断modal存在type
+            if($("#modalBusiness").attr("class")=="modal in") {
+              // $("#modalBusiness").modal('hide');
+              $("#modalType").val(1);
+          }
+          if($("#modalSecond").attr("class")=="modal in") {
+               // $("#modalSecond").modal('hide');
+               $("#modalType").val(2);
+           }
+           $(".modal-backdrop").hide();
+       }else{
+         AppendSearchUser(result);
+     }
+
+ }
+
+        //添加人员选择事件
+        $("body").on("click",".choose2",function(){
+            $("#modalUser").modal('hide');
+            $("#cellphone").val("");
+            $("#userName").val("");
+            $("#email").val("");
+            $("#company").val("");
+            $("#department").val("");
+            $("#jobTitle").val("");
+            isObject("#workCode",parseInt($(this).data("id")));
+            isObject("#cellphone",$(this).data("tell"));
+            isObject("#userName",$(this).data("name"));
+            isObject("#email",$(this).data("mail"));
+            isObject("#company",$(this).data("butxt"));
+            isObject("#department",$(this).data("orgtx"));
+            isObject("#jobTitle",$(this).data("plstx"));
+        });
+
+
+
+
+             //关闭用户信息框
+             $("#userBtnClose").click(function(){
+                $("#modalUser").modal('hide');
+
+                if($("#modalType").val()==1) {
+                    $('#modalBusiness').modal('toggle');
+                    $('#modalBusiness').modal('toggle');
+                }
+                else if($("#modalType").val()==2) {
+                    $("#modalSecond").modal('toggle');
+                    $("#modalSecond").modal('toggle');
+                }
+                $(".modal-backdrop").hide();
+            });
+
+
+        //添加人员选择事件
+        $("body").on("click",".choose",function(){
+            $("#modalUser").modal('hide');
+            if($("#innerOuter").val()!=3){
+              //判断是否选中自己
+              if($("#checkToSelf").is(":checked")){
+                             $("#checkToSelf").prop("checked", false);//分配自己关闭
+                         }
+
+                         AddUserItem($(this).data("id"), $(this).data("name"));
+                         var level = $(this).data("level");
+                     }else{
+            //去除重复工号
+            var id =$(this).data("id");
+            var name =$(this).data("name");
+            var ifexit =0;
+            if($("div[id^='jifenReview']").length==0){
+                AddUserItem2(id,name);
+            }else{
+                $("div[id^='jifenReview']").each(function(){
+                 if(id==$(this).data("userid")){
+                    ifexit=1;
+                }
+            });
+                if(ifexit==0){
+                    AddUserItem2(id,name);
+                }
+            }
+            
+        }
+
+
+
+
+
+
+
+           // $("#selectUser").val($(this).data("id") + " " + $(this).data("name"););
+         //   document.getElementById("selectUser").innerHTML= $(this).data("id") + " " + $(this).data("name");
+
+          //  $('#search-query_'+level).val($(this).data("id") + " " + $(this).data("name"));
+          //  $('#search-query_'+level).attr("data-userid",$(this).data("id"));
+           // $('#search-query_'+level).attr("data-username",$(this).data("name"));
+           // $('#search-query_'+level).attr("data-plans",$(this).data("plans"));
+           // $('#search-query_'+level).attr("data-plstx",$(this).data("plstx"));
+           // $('#search-query_'+level).attr("data-orgeh",$(this).data("orgeh"));
+           // $('#search-query_'+level).attr("data-orgtx",$(this).data("orgtx"));
+           // AlertTips("选择成功",clearModalHide);
+           // $("#modalUser").modal('hide');
+           // modalBus($("#modalType").val());
+       });
+        
+
+        function selectUserId(userId){
+          if(userId.length==8){
+           return  userId.substring(1,8)+"";
+       } 
+   }
+
+        //新增处理人员 
+        function AddUserItem(userId,userName){
+
+            $("#userShow").empty();
+            userId =selectUserId(userId);
+            var append='<div  class="row" style="float:left;width: 40%;" id="approveDiv_'+$("#approveLevel").val()+'" data-userid='+userId+' data-username='+userName+' >'+
+            '<div sytle="float:left;" class="col-md-5"><span id="search-query_'+$("#approveLevel").val()+'"  data-level='+$("#approveLevel").val()+'>'+userId+' '+userName+'</span></div>'+
+            '<div sytle="float:left;" class="col-md-2" ><a  href="javascript:;" class="userDel"  data-type="'+0+'" data-level='+$("#approveLevel").val()+'>删除</a></div>'+
+            '<div sytle="float:left;" class="col-md-2"><a href="javascript:;" class="userAdd" data-level='+$("#approveLevel").val()+'>新增</a></div></div>';
+
+
+
+            $("#userShow").append(append);
+            $("#approveLevel").val(parseInt($("#approveLevel").val())+1);
+        };
+
+
+
+        //新增处理人员--积分管理
+        function AddUserItem2(userId,userName){
+
+             //添加判断是非重复
+             userId =selectUserId(userId);
+
+            /* var append ='<div id="jifenReview_'+$("#jifenLevel").val()+'" class="row" data-userid='+userId+' data-username='+userName+' data-jifenLevel='+$("#jifenLevel").val()+'>'+
+             '<div  style="float: left; margin-left: 20px;width: 100px;" >'+
+             '<div  class="control-label" style="float: left;" id="jifen_query_'+$("#jifenLevel").val()+'" >'+userId+' '+userName+'</div></div>'+
+             '<div class="col-sm-3" ><div class="row"  ><label style="width:30%;float: left;" class="control-label">工时占比:&nbsp;&nbsp;</label>'+'<input   style="width:70%;" class="col-xs-10 col-sm-12" type="text" id="gongshi_'+$("#jifenLevel").val()+'" placeholder="工时占比" ></input>'
+             +'</div></div>'+'<div  class="col-sm-2" style="margin-left: 20px;">'+
+             '<div class="row">'+
+             '<a  href="javascript:;" style="width:20%;float: left;"  class="control-label userDel2"  data-level='+$("#jifenLevel").val()+'>删除</a>';*/
+                              
+
+            var append ='<div style="font-size: 12px; margin: 5px 0;" class="row" id="jifenReview_'+$("#jifenLevel").val()+'" data-userid='+userId+'  data-username='+userName+' data-jifenLevel='+$("#jifenLevel").val()+'>'+
+             '<div class="col-xs-2">'+
+             '<div class="row">工号：<span id="userId2" value="'+userId+'">'+userId+'</span></div></div>'+
+             '<div class="col-xs-2">'+
+             '<div class="row">姓名：<span id="userName2" value="'+userName+'">'+userName+'</span></div>'+
+             '</div>'+
+             '<div class="col-xs-3">'+
+             '<div class="row">工时占比：<input id="gongshi_'+$("#jifenLevel").val()+'"></input></div></div>'+
+             '<div class="col-xs-2">'+
+             '<div class="row del"><a  href="javascript:;"  class="control-label userDel2" data-level='+$("#jifenLevel").val()+' >删除</a></div>'+
+             '</div>'+
+             '</div>';
+
+                                $("#userReview").append(append);
+                                $("#jifenLevel").val(parseInt($("#jifenLevel").val())+1);
+
+                            }
+
+
+
+
+         //删除新加用户条目
+         $("body").on("click",".userDel",function(){
+
+            var id = $(this).data("level");
+            $("#approveDiv_"+id).remove();
+           //$("#approveLevel").val(parseInt($("#approveLevel").val())-1);
+            //更改等级
+
+        });
+
+         //删除新加用户条目
+         $("body").on("click",".userDel2",function(){
+
+            var id = $(this).data("level");
+            
+            $("#jifenReview_"+id).remove();
+           //$("#approveLevel").val(parseInt($("#approveLevel").val())-1);
+            //更改等级
+
+        });
+
+
+         //分配给自己
+         function toSelf(){
+
+          if($("#innerOuter").val()!=3){
+            if( $("#checkToSelf").is(":checked")){
+                $("#userShow").empty(); 
+                getUserByCode(currentUser.userWorkCode,appendUserSelf);
+
+            }else{
+                $("#userShow").empty();
+            }
+        }else{
+           if( $("#checkToSelf").is(":checked")){
+                //去除重复工号
+           
+            var ifexit =0;
+            if($("div[id^='jifenReview']").length==0){
+            
+                 getUserByCode(currentUser.userWorkCode,appendUserSelf2);
+            }else{
+                $("div[id^='jifenReview']").each(function(){
+                 if(urrentUser.userWorkCode==$(this).data("userid")){
+                    ifexit=1;
+                }
+            });
+                if(ifexit==0){
+
+                    getUserByCode(currentUser.userWorkCode,appendUserSelf2);
+                }
+            }      
+
+         
+           }else{
+                       //删除
+
+                       $("div[id^='jifenReview']").each(function(){
+
+                        if($(this).data("userid")==(currentUser.userWorkCode)){
+                                 
+                          var jifendiv ="jifenReview_"+$(this).data("jifenlevel");
+                          $("#"+jifendiv).remove();
+                      }
+
+                  });
+                   }
+
+               }
+
+           }
+
+
+
+
+
+
+           toSelf();
+
+
+           $("#checkToSelf").click(function(){
+              //document.getElementById("checkToBar").checked
+              //alert($(this).is(":checked"));
+              var id = parseInt($("#approveLevel").val());
+
+              toSelf();
+          });
+
+
+//            $("#userName").change(function(){
+//                getUsers($("#userName").val(),AppendSearchUser);
+//            })
+//            $("#cellphone").change(function(){
+//                getUsers($("#cellphone").val(),AppendSearchUser);
+//            })
+
+             //选择自己添加信息
+             function appendUserSelf(result){
+
+              AddUserItem(result.ET_ZHR_ALL_INFO.item[0].PERNR,result.ET_ZHR_ALL_INFO.item[0].NACHN);
+          }
+          function appendUserSelf2(result){
+
+              AddUserItem2(result.ET_ZHR_ALL_INFO.item[0].PERNR,result.ET_ZHR_ALL_INFO.item[0].NACHN);
+          }
+
+
+
+             //弹出框的appendUser
+             function AppendUser(result){
+                $("#cellphone").val("");
+                $("#userName").val("");
+                $("#email").val("");
+                $("#company").val("");
+                $("#department").val("");
+                $("#jobTitle").val("");
+                isObject("#cellphone",result.ET_ZHR_ALL_INFO.item[0].ZZ_TEL)
+                isObject("#userName",result.ET_ZHR_ALL_INFO.item[0].NACHN)
+                isObject("#email",result.ET_ZHR_ALL_INFO.item[0].ZZ_EMAIL)
+                isObject("#company",result.ET_ZHR_ALL_INFO.item[0].BUTXT)
+                isObject("#department",result.ET_ZHR_ALL_INFO.item[0].ZZ_JG1T)
+                isObject("#jobTitle",result.ET_ZHR_ALL_INFO.item[0].PLSTX)
+            };
+
+
+            function AppendSearchUser(result){
+                $("#cellphone").val("");
+                $("#userName").val("");
+                $("#email").val("");
+                $("#company").val("");
+                $("#department").val("");
+                $("#jobTitle").val("");
+                isObject("#workCode",parseInt(result.ET_BASICINFO.item[0].PERNR))
+                isObject("#cellphone",result.ET_BASICINFO.item[0].TELL)
+                isObject("#userName",result.ET_BASICINFO.item[0].NACHN)
+                isObject("#email",result.ET_BASICINFO.item[0].MAIL)
+                isObject("#company",result.ET_BASICINFO.item[0].BUTXT)
+                isObject("#department",result.ET_BASICINFO.item[0].ZZ_JG1T)
+                isObject("#jobTitle",result.ET_BASICINFO.item[0].PLSTX)
+            };
+
+
+            function isObject(container,param){
+                if(typeof(param)=="object") {
+                    $(container).val("");
+                }
+                else{
+                    $(container).val(param);
+                }
+            }
+
+
+            function isObjectTrans(param){
+              if(typeof(param)=="object"){
+
+                return 'null';
+            }else{
+                return param;
+            }
+        }
+
+
+           //时间控件
+           $('#date-timepicker1').datetimepicker({
+                //format: 'YYYY/MM/DD HH:mm:ss',
+                language: 'zh-CN',
+                showSeconds: true,
+                showMeridian: false,
+                todayBtn:true
+            }).next().on(ace.click_event, function(){
+                $(this).prev().focus();
+            });
+
+
+
+         //维护或跳转
+         $("body").on("click","#sloveBtnClose",function(){
+             $("#modalSlove").modal('hide');
+             window.location.reload();
+         });
+
+         $("#sloveBtnSubmit").click(function(){
+
+            $("#modalSlove").modal('hide');
+            
+            if($("#innerOuter").val()==3){
+                window.location.href=it_service_common.adminUrl+'/admin/index.html?quesCid=' +$("#quesCid").val() + '&state='+4+'&pagenum=1#page/works-detail-review';
+            }else{
+                window.location.href=it_service_common.adminUrl+'/admin/index.html?quesCid=' +$("#quesCid").val() + '&state='+4+'&pagenum=1#page/works-detail';
+            }
+            
+            
+        });
+
+
+         Load_Data_Select();
+            //加载选择条件
+            function Load_Data_Select()
+            {
+                //问题分类
+                $.ajax({
+                    type: "POST",
+                    url: it_service_url.quesTypeList,
+                    data: '{"quesTypeState": "1"}',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        for(var i in result.resultJson) {
+                            $("#quesTypeCids").append('<div class="bg-img3 ques" style="overflow:hidden"  data-id='+result.resultJson[i].quesTypeCid+' data-name='+result.resultJson[i].quesTypeName+'><a href="javascript:;" style="color:#c6c6c6" title="'+result.resultJson[i].quesTypeName+'">'+result.resultJson[i].quesTypeName+'</a></div>');
+                        }
+                    }
+                });
+
+                //所属系统
+                $.ajax({
+                    type: "POST",
+                    url: it_service_url.BelongSysTypeList,
+                    data: '{"belongSystypeState": "1"}',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        for(var i in result.resultJson) {
+                            $("#belongSystypeCids").append('<div class="bg-img3 sys" data-id='+result.resultJson[i].belongSystypeCid+' data-name='+result.resultJson[i].belongSystypeName+'><a href="javascript:;" style="color:#c6c6c6" title="'+result.resultJson[i].belongSystypeName+'">'+result.resultJson[i].belongSystypeName+'</a></div>');
+                        }
+                    }
+                });
+
+
+                //问题来源
+                var jsonData={
+                    "userWorkCode":currentUser.userWorkCode,
+                    "quesSource":"30",
+                    "tagType":"0",
+                    "pageNum":"1",
+                    "pageSize":"20"
+                };
+            //问题来源
+            $.ajax({
+                type: "POST",
+                url: it_service_url.quesTagList,
+                data: JSON.stringify(jsonData),
+                //async:false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    //console.log(result);
+                    for(var i in result.resultJson.tagList) {
+                       // console.log(result.resultJson.tagList[0]);
+                       $("#quesTagCids").append('<div class="bg-img3 tag" style="overflow:hidden"  data-id='+
+                        result.resultJson.tagList[i].tagCid+' data-name='+result.resultJson.tagList[i].tagContent+'><a href="javascript:;" style="color:#c6c6c6" title="'+result.resultJson.tagList[i].tagContent+'">'+result.resultJson.tagList[i].tagContent+'</a></div>');
+                   }
+               }
+           });
+
+
+        }
+
+
+        $("body").on("click",".bg-img3",function(){
+            $(this).removeClass("bg-img3");
+            $(this).addClass("bg-img2");
+            var aobj=$(this).children("a");
+            aobj.css("color","#333");
+        });
+
+        $("body").on("click",".bg-img2",function(){
+            $(this).removeClass("bg-img2");
+            $(this).addClass("bg-img3");
+            var aobjs=$(this).children("a");
+            aobjs.css("color","#c6c6c6");
+        });
+
+            //公司员工
+            $("#inner").click(function(){
+                $("#innerOuter").val(1);
+                if($("#workCode").val()=="99999999"){
+                    $("#workCode").val("");
+                }
+
+                $("#workCode").removeAttr("readonly","readonly");
+                $("#userShowGroup").show();
+                $("#userReviewGroup").hide();
+                $("#fankui").show();
+                $("#checkToSelf").prop("checked", true);//分配自己关闭
+                $("#workHoursDiv").hide();
+                //改变*
+                document.getElementById('shouli').innerHTML = '添加受理人员*: ';
+             
+            });
+            
+            //合作伙伴
+            $("#outer").click(function(){
+                $("#innerOuter").val(2);
+                $("#workCode").val(99999999);
+                $("#workCode").attr("readonly","readonly");
+                $("#cellphone").val("");
+                $("#userName").val("");
+                $("#email").val("");
+                $("#company").val("");
+                $("#department").val("");
+                $("#jobTitle").val("");
+                $("#userShowGroup").show();
+                $("#userReviewGroup").hide();
+                $("#fankui").show();
+                $("#checkToSelf").prop("checked", true);//分配自己关闭
+                $("#workHoursDiv").hide();
+                //改变*
+                document.getElementById('shouli').innerHTML = '添加受理人员*: ';
+            });
+
+            //积分管理
+            $("#review").click(function(){
+                if($("#workCode").val()=="99999999"){
+                    $("#workCode").val("");
+                }
+                $("#workCode").removeAttr("readonly","readonly");
+                $("#innerOuter").val(3);
+                $("#checkToSelf").attr("checked", false);//分配自己关闭
+                $("#userShowGroup").hide();
+                $("#userReviewGroup").show();
+                $("#fankui").hide();
+                $("#workHoursDiv").show();
+                //改变*
+                document.getElementById('shouli').innerHTML = '添加受理人员: ';
+
+            });
+
+            //保存
+            $("#btnSave").click(function(){
+
+
+                if($("#innerOuter").val()==3){
+                    if($("#workHours").val()=="" || $("#integralValue").val()==""){
+                     AlertTips("请将带*的选项填写完整");
+
+                     return false;
+                 }
+
+             }
+
+             if($("#workCode").val()=="" || $("#quesContent").val()=="" ){
+                AlertTips("请将带*的选项填写完整");
+                return false;
+            }
+               //添加处理人员. 1.判断是否是积分管理
+               if($("#innerOuter").val()==2){
+                   $("#workCode").val(99999999);
+               }
+               if($("#innerOuter").val()==3){
+                     //处理人员添加
+                     //判断工时是否填了
+
+                     var acceptUserList=[];
+                     $("div[id^='jifenReview']").each(function(){
+                        var gongshi = "gongshi_"+$(this).data("jifenlevel");
+                        var arr={
+                            workCode:$(this).data("userid"),
+                            name:$(this).data("username"),
+                            workHourRatio:$("#"+gongshi).val()
+                        };
+
+                        acceptUserList.push(arr);
+                    });
+                     newWork.acceptUserList=acceptUserList;
+                     newWork.workHours =$("#workHours").val();
+                     newWork.integralValue=$("#integralValue").val();
+
+
+
+
+
+
+                 }else{
+                   //判断是非精品
+                   if($("#checkToJinpin").is(":checked")){
+                       newWork.choiceState=2;
+
+                   }else{
+                       newWork.choiceState=1;
+
+                   }
+                   var acceptUserList=[];
+                   //判断是非自己
+                   if($("#checkToSelf").is(":checked")){
+
+                    var arr={
+                        workCode:currentUser.userWorkCode,
+                        name:currentUser.userName,
+                        workHourRatio:""
+                    };
+
+                    acceptUserList.push(arr);
+                }else{
+                   $("div[id^='approveDiv']").each(function(){
+
+                    var arr={
+                        workCode:$(this).data("userid"),
+                        name:$(this).data("username"),
+                        workHourRatio:""
+                    };
+
+                    acceptUserList.push(arr);
+                });
+
+               } 
+               newWork.acceptUserList=acceptUserList;
+
+
+
+           }
+
+
+               //initWorkData();
+               if($("#innerOuter").val()!=3){
+               if(newWork.acceptUserList.length==0){
+                   AlertTips("请将带*的选项填写完整");
+                   return false;
+               }}
+
+               newWork.innerOuter=$("#innerOuter").val();
+               newWork.userWorkCode=$("#workCode").val();
+               newWork.cellPhone=$("#cellphone").val();
+               newWork.email=$("#email").val();
+               newWork.userName=$("#userName").val();
+               newWork.company=$("#company").val();
+               newWork.department=$("#department").val();
+               newWork.jobTitle=$("#jobTitle").val();
+               var i= 0,j=0,z=0;
+               var orderTagList=[];//工单标签数组
+
+               $(".ques").each(function(){
+                   if($(this).attr('class').indexOf("bg-img2")>=0) {
+
+                       var arr={
+                        tagType:2,
+                        tagCid:$(this).data("id"),
+                        tagContent:$(this).data("name")
+                    };
+
+                    orderTagList.push(arr);
+
+                    i++;
+                }
+            });
+               $(".sys").each(function(){
+                   if($(this).attr('class').indexOf("bg-img2")>=0) {
+                       var arr={
+                        tagType:3,
+                        tagCid:$(this).data("id"),
+                        tagContent:$(this).data("name")
+                    };
+
+                    orderTagList.push(arr);
+                    j++;
+                }
+            });
+               $(".tag").each(function(){
+                   if($(this).attr('class').indexOf("bg-img2")>=0) {
+                       var arr={
+                        tagType:4,
+                        tagCid:$(this).data("id"),
+                        tagContent:$(this).data("name")
+                    };
+
+                    orderTagList.push(arr);
+                    z++;
+                }
+            });
+               newWork.orderTagList=orderTagList;
+               console.log(orderTagList);
+
+
+               if(i==0 || j==0||z==0){
+                   AlertTips("请选择问题分类/来源或所属系统");
+                   return false;
+               }
+
+
+
+
+
+               //newWork.updateToQuesBar= $("#updateToQuesBar").val();
+               if($("#date-timepicker1").val()!=""){
+                   newWork.planRebackTime= datetime_to_unix($("#date-timepicker1").val());
+               }
+               else{
+                   newWork.planRebackTime="";
+               }
+               newWork.quesContent= $("#quesContent").val();
+               newWork.createrWorkCode= currentUser.userWorkCode;
+               newWork.createrName= currentUser.userName;
+               var data=JSON.stringify(newWork);
+
+               var resCode=0;
+               $.ajax({
+                   type: "POST",
+                   url: it_service_url.AddWorkBill,
+                   data: data,
+                   contentType: "application/json; charset=utf-8",
+                   success: function (result) {
+                      if(result.resultCode==100){
+                          resCode=1;
+                          initWorkData();
+                          if(resCode==1){
+                              $("#btnSave").unbind('click');
+                             // AlertTips("保存成功",callbackreload);
+                             
+                             $("#quesCid").val(result.resultJson.quesCid);
+                             //跳出页面
+                             $("#modalSlove").modal({show: true,backdrop: false});
+
+
+                         }
+                         else{
+                          AlertTips("保存失败",callbackreload);
+                      }
+                  }
+              }
+          });
+
+               pushMsgData.userId = currentUser.userWorkCode;
+               pushMsgData.userList[0] = $("#workCode").val();
+               pushMsgData.content="您好，您的问题已经受理啦，可以随时进入IT服务和技术支持们沟通并查看问题解决进度哦。";
+               var pushData=JSON.stringify(pushMsgData);
+
+               $.ajax({
+                   type: "POST",
+                   url: it_service_url.PushMsg,
+                   data: pushData,
+                   contentType: "application/json; charset=utf-8",
+                   success: function (result) {
+                      // AlertTips(result.msg);
+                  }
+              });
+
+           });
+
+
+            //breadcrumbs
+            $("#breadcrumbs").empty();
+            $("#breadcrumbs").append('<ul class="breadcrumb">' +
+                ' <li> <img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong> <a href="index.html">首页 </a> </li> ' +
+                '<li>工单管理</li> ' +
+                '<li class="active">新建工单</li> ' +
+                '</ul>')
+
+        })
+
+});
+</script>

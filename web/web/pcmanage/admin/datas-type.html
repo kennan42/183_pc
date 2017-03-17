@@ -1,0 +1,271 @@
+<title>问题分类维护 - IT服务工作台</title>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">问题分类维护</h3>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-xs-5">
+                    <button class="btn btn-white btn-blue btn-no-border" id="addques">
+                        <i class="ace-icon fa fa-plus  align-top bigger-125 icon-on-right"></i>
+                        新增问题分类
+                    </button>
+                </div>
+                <div class="col-xs-1"></div>
+            </div>
+        </div>
+        <hr/>
+
+        <div class="table-header">
+            问题分类列表
+        </div>
+
+        <div>
+            <table id="qus_list_table" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>问题分类</th>
+                    <th>操作人</th>
+                    <th>创建时间</th>
+                    <th>启用状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增问题分类</h4>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>问题分类*</h4>
+                            <input type="text" value="" id="quesTypeName"  class="form-control input-inline">
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="modalAddSubmit" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var scripts = [null, "../assets/js/jquery.dataTables.min.js", "../assets/js/jquery.dataTables.bootstrap.js", null];
+    ace.load_ajax_scripts(scripts, function () {
+        jQuery(function ($) {
+            Load_Data();
+
+            function Load_Data(){
+                var table;
+                $.ajax({
+                    type: "POST",
+                    url: it_service_url.quesTypeList,
+                    data: '{"quesTypeState": "2"}',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                         //$('#qus_list_table tbody').remove();
+                        table = $('#qus_list_table').dataTable({
+                            destroy: true,
+                            paging: true,
+                            bAutoWidth: false,
+                            "oLanguage": {
+                                "sSearch": "搜索",
+                                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                                "sZeroRecords": "抱歉， 没有找到",
+                                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                                "sInfoEmpty": "没有数据",
+                                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                                "oPaginate": {
+                                    "sFirst": "首页",
+                                    "sPrevious": "前一页",
+                                    "sNext": "后一页",
+                                    "sLast": "尾页"
+                                },
+                                "sZeroRecords": "没有检索到数据"
+                            },
+                            "data": result.resultJson,
+                            "columns": [
+                                {"data": "indexNo"},
+                                {"data": "quesTypeName"},
+                                {"data": "operaterName"},
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        return getLocalTime(o.updateDatetime);
+                                    }
+                                },
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        if(o.enableState==1){
+                                            return '<span class="label label-success arrowed-in arrowed-in-right">启用</span>';
+                                        }
+                                        else{
+                                            return '<span class="label label-warning">停用</span>';
+                                        }
+                                    }
+                                },
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        var returnStr='<button class="btn btn-sm btn-success btn-round restartType"  data-id='+o.quesTypeCid+'>启用</button>';
+                                        returnStr+='<button class="btn btn-white btn-default btn-round pauseType"  style="margin-left:5px;"  data-id='+o.quesTypeCid+'>停用</button>';
+                                        returnStr+='<button class="btn btn-white btn-warning btn-round deleteType" style="margin-left:5px;"  data-id='+o.quesTypeCid+' >删除</button>';
+                                        return returnStr;
+                                    }
+                                }
+                            ]
+                        });
+                        $('#qus_list_table tbody').on('click', 'tr', function () {
+                            $(".it-service-highlight").each(function(){
+                                $(this).removeClass('it-service-highlight');
+                            });
+                            $(this).toggleClass('it-service-highlight');
+                        });
+
+                        $('#button').click(function () {
+                            alert(table.rows('.it-service-highlight').data().length + ' row(s) it-service-highlight');
+                        });
+                    }
+                });
+            }
+
+
+            //新增问题分类
+            $("#addques").click(function(){
+                $("#modalAdd").modal();
+            });
+
+            $("#modalAddSubmit").click(function(){
+                var quesTypeName=$("#quesTypeName").val();
+                var createrWorkCode=$("#createrWorkCode").val();
+                var createrName=$("#createrName").val();
+                //判断
+                if(quesTypeName=="")
+                {
+                    AlertTips("请填写完整带*的信息");
+                    return false;
+                }
+
+                var data = "{";
+                data += "\"quesTypeName\":\"" + quesTypeName + "\",";
+                data += "\"createrWorkCode\":\"" + currentUser.userWorkCode + "\",";
+                data += "\"createUserName\":\"" + currentUser.userName + "\"";
+                data += "}";
+
+                $.ajax({
+                    type:"POST",
+                    url:it_service_url.AddQuesType,
+                    contentType: "application/json; charset=utf-8",
+                    async:false,
+                    data: data,
+                    success:function(result){
+                        $("#modalAdd").modal('hide');
+
+                        if(result.resultJson.code==1) {
+                            AlertTips("问题分类创建成功",Load_Data);
+                        }
+                        else{
+                            AlertTips("问题分类创建失败",Load_Data);
+                        }
+                    }
+                });
+            });
+
+            //启用
+            $("body").off("click",".restartType");
+            $("body").on("click",".restartType",function(){
+
+                UpdateStatus(1,$(this).data("id"));
+            });
+            //停用
+            $("body").off("click",".pauseType");
+            $("body").on("click",".pauseType",function(){
+                UpdateStatus(0,$(this).data("id"));
+            });
+
+            function UpdateStatus(param,id)
+            {
+                var quesTypeCid=id;
+                var data = "{";
+                data += "\"quesTypeCid\":\"" + quesTypeCid + "\",";
+                data += "\"operateStateType\":\"" + param + "\",";
+                data += "\"operaterWorkCode\":\"" + currentUser.userWorkCode + "\"";
+                data += "}";
+
+                $.ajax({
+                    type:"POST",
+                    url:it_service_url.UpdateTypeEnableState,
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    data: data,
+                    success:function(result){
+                        if(result.resultJson.code==1) {
+                            //$('#qus_list_table tbody').remove();
+                            AlertTips("修改成功",Load_Data);
+                        }
+                        else{
+                            AlertTips("修改失败",Load_Data);
+                        }
+                    }
+                });
+            }
+
+            //删除
+            $("body").off("click",".deleteType");
+            $("body").on("click",".deleteType",function(){
+                var quesTypeCid=$(this).data("id");
+
+                var data = "{";
+                data += "\"quesTypeCid\":\"" + quesTypeCid + "\",";
+                data += "\"operaterWorkCode\":\"" + currentUser.userWorkCode + "\"";
+                data += "}";
+
+                $.ajax({
+                    type:"POST",
+                    url:it_service_url.DeleteQuesType,
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    data: data,
+                    success:function(result){
+                        if(result.resultJson.code==1){
+                            $('#qus_list_table tbody').remove();
+                            AlertTips("删除成功",Load_Data);
+                        }
+                        else{
+                            $('#qus_list_table tbody').remove();
+                            AlertTips("删除失败",Load_Data);
+                        }
+                    }
+                });
+            });
+
+            //breadcrumbs
+            $("#breadcrumbs").empty();
+            $("#breadcrumbs").append('<ul class="breadcrumb">' +
+            ' <li> <img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong> <a href="index.html">首页 </a> </li> ' +
+            '<li>数据配置</li> <li class="active">问题分类维护</li> </ul>')
+
+        });
+
+
+
+    });
+
+</script>

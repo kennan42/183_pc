@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="../assets/css/chosen.css" />
+        <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+        <link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
+        <!-- text fonts -->
+        <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="../assets/css/ace.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <!-- inline styles related to this page -->
+        <!-- ace settings handler -->
+        <script src="../assets/js/ace-extra.min.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../myjs/lexus.js"></script>
+        <script src="../myjs/file.js"></script>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lte IE 8]>
+            <script src="../assets/js/html5shiv.js">
+            </script>
+            <script src="../assets/js/respond.min.js">
+            </script>
+        <![endif]-->
+        <title>
+            存档待处理
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+            body{background:#fff;}
+            .page-content{padding:24px;}
+            .page-header{padding-bottom:12px;padding-top:0px;margin-bottom:0;}
+            .page-header h1{font-size:22px;}
+            .page-content-area{padding:12px 24px;}
+            .hr-dotted{border-style:dashed;border-color:#7ea8fb;display:inline-block;width:100%;}
+            .form-group{margin:0;}
+            .form-group label[class*=col-]{
+                padding-top:0px;
+                margin:0;
+                display:block;
+                padding:7px 12px 6px 12px;
+                text-align:right;
+                color:#4c4c4c;
+                font-size:14px;
+                font-weight:500;
+            }
+            .form-group-span {
+                padding:8px 0 7px 0;
+                display:block;
+                color:#030303;
+                font-size:14px;
+                font-weight:500;
+            }
+            .btn-info:active, .btn-info:hover, .open .btn-info.dropdown-toggle{
+                background-color:#1567c5!important;
+                border-color:#2e82ff;
+            }
+            .btn-info, .btn-info:focus {
+                background-color:#2e82ff!important;
+                border-color:#2e82ff;
+            }
+            .btn-warning:active, .btn-warning:hover, .open .btn-warning.dropdown-toggle{
+                background-color:#e0ab01!important;
+                border-color:#ffc300;
+            }
+            .btn-warning, .btn-warning:focus {
+                background-color:#ffc300!important;
+                border-color:#ffc300;
+            }
+            .widget-box.transparent>.widget-header{background:#f7f7f7;border-bottom:1px solid #1777e5;padding-left:12px;min-height:32px;}
+            .widget-box.transparent>.widget-header a{color:#333;}
+            .widget-box.transparent>.widget-header a:hover{color:#333;}
+            .widget-box.transparent>.widget-header h4{margin:6px 0;height:20px;line-height:20px;}
+            .widget-box.transparent>.widget-header .widget-toolbar{line-height:32px;}
+            .widget-body .table{border-top:none;}
+            .widget-body .table>thead>tr>td,.widget-body  .table>thead>tr>th{border-top:none;border-bottom:1px solid #1777e5;color:#333;}
+            .widget-body .table>tbody>tr>td,.widget-body  .table>tbody>tr>th{border-top:1px dashed #d6d6d6;color:#030303;}
+
+            /* */
+            .label-lg {
+                padding: .4em .6em .4em;
+                font-size: 13px;
+                line-height: 1.1;
+                height: 24px;
+                float: left;
+            }
+            .label-success {
+                background-color: #1777e5!important;
+            }
+            .label-success.arrowed-in:before {
+                border-color: #1777e5;
+            }
+            .label-success.arrowed-right:after {
+                border-left-color: #1777e5;
+            }
+            .paddin6-0{padding:6px 0;}
+            #SPYJList li a{cursor:pointer;}
+            #SPYJBox input[type=text]{
+                color: #cccccc;
+                font-family: "Microsoft YaHei";
+                border-color: #8fbcd9;
+            }
+            #shuoM01{display:none;}
+        </style>
+        <script src="../assets/js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/custom.css" />
+    </head>
+    <body class="no-skin" style="overflow:hidden;">
+        <div id="tempDiv" style="display: none"></div>
+        <div class="main-container" id="main-container" style="overflow:hidden;">
+            <div class="main-content">
+                <div class="row-fluid  page-content">
+                    <div class="page-header" style="border-bottom:solid 1px #1777e5;">
+                        <input type="hidden" id="begD" value="">
+                        <input type="hidden" id="endD" value="">
+                        <h1 style="color:#1a1a1a; padding-top: 2px;" id="titleH1">
+                            存档待处理
+                            <button type="button" class="close" onclick="Close_Enterprise()">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                        </h1>
+                    </div>
+                    <div class="page-content-area">
+                        <div class="hr hr6 hr-dotted"></div>
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">全宗</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="FONDS_CODE"></span>
+                            </div>
+                            <label class="col-sm-2 control-label">年度</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="YEAR_CODE"></span>
+                            </div>
+                            <label class="col-sm-2 control-label">保管期限</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="RETENTION_PERIOD"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">件号</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="ITEM_NO"></span>
+                            </div>
+                            <label class="col-sm-2 control-label">文号</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="FILE_CODE"></span>
+                            </div>
+                            <label class="col-sm-2 control-label">文件日期</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="DATE_OF_CREATION"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">责任人</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="AUTHOR"></span>
+                            </div>
+                            <label class="col-sm-2 control-label">密级</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="SECURITY_CLASSIFICATION"></span>
+                            </div>
+                            <label class="col-sm-2 control-label">归档人</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="FILING_USER"></span>
+                            </div>
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div>
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">正题</label>
+                            <div class="col-sm-10">
+                                <span class="form-group-span" id="TITLE_PROPER"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">页数</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="AMOUNT_OF_PAGES"></span>
+                            </div>
+                            <!--label class="col-sm-2 control-label">主题词</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="zhutici"></span>
+                            </div-->
+                            <label class="col-sm-2 control-label">归档部门</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="FILING_DEPT"></span>
+                            </div>
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div>
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">备注</label>
+                            <div class="col-sm-10">
+                                <span class="form-group-span" id="REMARKS"></span>
+                            </div>
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div>
+                        <div class="col-xs-12 col-sm-12 form-group" style="margin:12px 0;">
+                            <div class="widget-box transparent" style="border:1px solid #d6d6d6;">
+                                <div class="widget-header">
+                                    <a class="hidecollapsed" data-action="collapse" style="display:inline-block;width:100%;">
+                                        <h4 class="hidecollapsed widget-title lighter" style="float:left; padding-top: 2px;">
+                                            审批路径
+                                        </h4>
+                                    </a>
+                                </div>
+                                <div class="widget-body" id="splj">
+                                    <div class="widget-main" style="padding:0 24px;" id="ProcPathQryList">
+                                        <!--table class="table" style="margin-bottom:2px;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center col-xs-3">处理时间</th>
+                                                    <th class="center col-xs-2">操作人</th>
+                                                    <th class="center col-xs-2">状态</th>
+                                                    <th class="center col-xs-2">处理信息</th>
+                                                    <th class="center col-xs-3">审批意见</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="center">2015-04-21 15:00:41</td>
+                                                    <td class="center">季亚伟</td>
+                                                    <td class="center">已审批</td>
+                                                    <td class="center">提交</td>
+                                                    <td class="center">提交</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="center">2015-04-21 15:03:57</td>
+                                                    <td class="center">季亚伟</td>
+                                                    <td class="center">已审批</td>
+                                                    <td class="center">同意</td>
+                                                    <td class="center">同意</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="center">2015-04-21 15:04:47</td>
+                                                    <td class="center">孟丽</td>
+                                                    <td class="center">已审批</td>
+                                                    <td class="center">拒绝</td>
+                                                    <td class="center">242332qefq</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="center"> </td>
+                                                    <td class="center">吴二文</td>
+                                                    <td class="center">未审批</td>
+                                                    <td class="center"> </td>
+                                                    <td class="center"> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div>
+                        <input type="hidden" id="ywUrl" value=""/>
+                        <div class="col-xs-12 col-sm-12 form-group" style="margin:12px 0;">
+                            <button class="btn btn-info" type="button" id="" onclick="openYW()" style="float:right;">
+                                <i class="ace-icon glyphicon glyphicon-file bigger-110"></i>
+                                查看原文
+                            </button>
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div>
+                        <div class="col-xs-12 col-sm-12 form-group" style="padding:12px 0;">
+                            <label class="col-sm-2 control-label">审批意见</label>
+                            <div class="col-sm-6" id="SPYJBox">
+                                <input type="text" id="SPYJText" placeholder="请填写或选择审批意见" value="请填写或选择审批意见" onfocus="phClear(this)" onblur="phJR(this)" class="" style="float:left;height:34px;text-align:left;width:80%;">
+                                <div class="btn-group" style="float:left;margin-left:2px;">
+                                    <button class="btn btn-info btn-white" style="display:none;">Info</button>
+                                    <button id="SPYJBtn" onclick="OpenSPYJList()" data-toggle="dropdown" class="btn btn-info btn-white dropdown-toggle">
+                                        <span class="ace-icon fa fa-caret-down icon-only"></span>
+                                    </button>
+                                    <ul id="SPYJList" class="dropdown-menu dropdown-info dropdown-menu-right" style="left:0;">
+                                        <li><a onclick="OnSPYJText(this)">--</a></li>
+                                        <li><a onclick="OnSPYJText(this)">同意</a></li>
+                                        <li><a onclick="OnSPYJText(this)">无需归档</a></li>
+                                        <li><a onclick="OnSPYJText(this)">存档需上传附件</a></li>
+                                        <li><a onclick="OnSPYJText(this)">归档文件不完整</a></li>
+                                        <li><a onclick="OnSPYJText(this)">归档年度错误</a></li>
+                                        <li><a onclick="OnSPYJText(this)">存档名称不规范</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="text-align:right;">
+                                <button class="btn btn-warning" type="button" id="" onclick="doSubmit(0)">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    &nbsp;&nbsp;拒&nbsp;&nbsp;&nbsp;绝&nbsp;&nbsp;
+                                </button>
+                            </div>
+                            <div class="col-sm-2" style="text-align:right;">
+                                <button class="btn btn-info" type="button" id="" onclick="doSubmit(1)">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    &nbsp;&nbsp;同&nbsp;&nbsp;&nbsp;意&nbsp;&nbsp;
+                                </button>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div>
+                        <div class="col-xs-12" id="shuoM01" style="text-align:right;">
+                            <span>说明：</span><span><span id="RefusedText">延长保管</span>时，请填写审批意见。</span>
+                        </div>       
+                        <div class="hr hr6 hr-dotted" style="border:#fff;margin:0;padding:0;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------------------------------------------------------------------------------->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <!-- <![endif]-->
+        <!--[if IE]>
+            <script type="text/javascript">
+                window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+            </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <!-- page specific plugin scripts -->
+        <script src="../assets/js/bootstrap-tag.min.js"></script>
+        <script src="../assets/js/jquery.hotkeys.min.js"></script>
+        <script src="../assets/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="../assets/js/jquery-ui.custom.min.js"></script>
+        <script src="../assets/js/chosen.jquery.min.js"></script>
+        <script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="../assets/js/jquery.slimscroll.min.js"></script>
+        <!-- ace scripts -->
+        <script src="../assets/js/ace-elements.min.js"></script>
+        <script src="../assets/js/ace.min.js"></script>
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+        var ifSP = false;
+            function CloseGritter(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+                window.location.reload();
+            }
+            function WindowClose(){
+                window.close();
+            }
+            function Close_Enterprise() {
+                var main = $(window.parent.document).find("iframe");
+                main.parent().parent().prevAll(".main-container").css({"height":"auto"});
+                var index = parent.layer.getFrameIndex(window.name);
+                $(document.body).parent().remove();//弹出iframe后input无法输入问题解决方案2014-11-11
+                parent.layer.close(index);
+            }
+            function adstF(obj){
+                if( $(obj).val() == "请详细描述审批意见,不得少于5个字并且不得多于100个字..." ){
+                    $(obj).val("");
+                    $(obj).css({"color":"#444"});
+                }
+            }
+            function adstB(obj){
+                if( $(obj).val() == "" ){
+                    $(obj).val("请详细描述审批意见,不得少于5个字并且不得多于100个字...");
+                    $(obj).css({"color":"#ccc"});
+                }
+            }
+            //展开审批意见列表
+            function OpenSPYJList(){
+                var SPYJWidth = $("#SPYJText").outerWidth();
+                $("#SPYJList").width(SPYJWidth-3);
+                $("#SPYJList").css({"left":-SPYJWidth-1});
+                $("#SPYJList").css({"top":-$("#SPYJList").outerHeight()-4});
+            }
+            //选择审批意见
+            function OnSPYJText(obj){
+                $("#SPYJText").css({"color":"#030303"});
+                $("#SPYJText").val($("#SPYJText").val().replace("请填写或选择审批意见","")+$(obj).text());
+            }
+            //初始化
+            jQuery(function($) {
+                //页面初始化
+                $.ajaxSetup({
+                    contentType: 'application/json',
+                    async:false,
+                    error:function(){
+                        alert(errMsg1);
+                    },
+                    timeout:timeout
+                });
+
+                //var Hscroll = $("#main-container").outerHeight() - 140;
+                //alert(Hscroll);
+                //滚动条
+                // $('#profile-feed-1').ace_scroll({
+                //     size: Hscroll,
+                //     mouseWheelLock: true,
+                //     alwaysVisible : true,
+                //     styleClass: 'scroll-visible'
+                // });
+                
+                //弹出层默认高度设置
+                $(window.parent.document).find("iframe").load(function(){
+                    var main = $(window.parent.document).find("iframe");
+                    var mainheight = $(document).height();
+                    main.height(mainheight);
+                    main.parent().height(mainheight);
+                    main.parent().parent().height(mainheight);
+                    main.parent().parent().prev(".xubox_shade").height(mainheight+52);
+                    main.parent().parent().prevAll(".main-container").height(mainheight+52);
+                });
+
+                //获取详情
+                var file_spData = JSON.parse(localStorage.file_spData);
+                var bussNo = file_spData.bussNo;
+                var dtJSON = getDetail(bussNo.split("_")[0],"FMS_SAVE");
+                if(dtJSON.status != "0"){
+                    layer.alert('请勿擅自修改请求信息，您的本次操作已被记录',8,function(){
+                        window.close();
+                    });
+                }else{
+                    $('#tempDiv').html(dtJSON.return);
+                    //用下面的方式获取详情字段
+                    var FONDS_CODE = $('#tempDiv').find("FONDS_CODE").html();//全宗号
+                    var YEAR_CODE = $('#tempDiv').find("YEAR_CODE").html();//年度
+                    var RETENTION_PERIOD = $('#tempDiv').find("RETENTION_PERIOD").html();//保管期限
+                    var ITEM_NO = $('#tempDiv').find("ITEM_NO").html();//件号
+                    var FILE_CODE = $('#tempDiv').find("FILE_CODE").html();//文号
+                    var DATE_OF_CREATION = $('#tempDiv').find("DATE_OF_CREATION").html();//文件日期
+                    var AUTHOR = $('#tempDiv').find("AUTHOR").html();//责任人
+                    var SECURITY_CLASSIFICATION = $('#tempDiv').find("SECURITY_CLASSIFICATION").html();//密级
+                    var FILING_USER = file_spData.reqUsrNm+" "+$('#tempDiv').find("FILING_USER").html();//归档人
+                    var TITLE_PROPER = $('#tempDiv').find("TITLE_PROPER").html();//正题
+                    var AMOUNT_OF_PAGES = $('#tempDiv').find("AMOUNT_OF_PAGES").html();//页数
+                    var zhutici = "";//主题词
+                    var FILING_DEPT = $('#tempDiv').find("FILING_DEPT").html();//归档部门
+                    var REMARKS = $('#tempDiv').find("REMARKS").html();//备注
+                    var backURL = $('#tempDiv').find("URL").html();//回看url
+                    
+                    $('#FONDS_CODE').html(FONDS_CODE);
+                    $('#YEAR_CODE').html(YEAR_CODE);
+                    $('#RETENTION_PERIOD').html(RETENTION_PERIOD);
+                    $('#ITEM_NO').html(ITEM_NO);
+                    $('#FILE_CODE').html(FILE_CODE);
+                    $('#DATE_OF_CREATION').html(DATE_OF_CREATION);
+                    $('#AUTHOR').html(AUTHOR);
+                    $('#SECURITY_CLASSIFICATION').html(SECURITY_CLASSIFICATION);
+                    $('#FILING_USER').html(FILING_USER);
+                    $('#TITLE_PROPER').html(TITLE_PROPER);
+                    $('#AMOUNT_OF_PAGES').html(AMOUNT_OF_PAGES);
+                    //$('#zhutici').html(zhutici);
+                    $('#FILING_DEPT').html(FILING_DEPT);
+                    $('#REMARKS').html(REMARKS);
+                    $('#ywUrl').val(backURL);
+                    
+                }
+                
+                //获取审批路径
+                var spListJSON = getSPList(localStorage.pernrBase?localStorage.pernrBase:'',"FMS_SAVE",bussNo);
+                
+                if (spListJSON.status == '0') {
+                    var spListStr = "";
+                    spListStr += '<table class="table" style="margin-bottom:2px;">'
+                    +'<thead><tr>'
+                    +'<th class="center col-xs-3">处理时间</th>'
+                    +'<th class="center col-xs-2">操作人</th>'
+                    +'<th class="center col-xs-2">状态</th>'
+                    +'<th class="center col-xs-2">处理信息</th>'
+                    +'<th class="center col-xs-3">审批意见</th>'
+                    +'</tr></thead>'
+                    +'<tbody>';
+                    var spListArr = [];
+                    var spListItem = spListJSON.output.procApprInfoList;
+                    if(undefined != spListItem.length){
+                        spListArr = spListItem;
+                    }else{
+                        spListArr.push(spListItem);
+                    }
+                    var spType = "";
+                    var spCon = "";
+                    var appTm = "";
+                    for(var i in spListArr){
+                        spType = "";
+                        spCon = "";
+                        appTm = "";
+                        if("1" == spListArr[i].status){
+                            if(spListArr[i].apprResult == "AG"){
+                                spType = "同意";
+                            }else if(spListArr[i].apprResult == "RT"){
+                                spType = "拒绝";
+                            }else if(spListArr[i].apprResult == "SM"){
+                                spType = "提交";
+                            }
+                            appTm = spListArr[i].apprTm.substr(0,16);
+                            spCon = (undefined != spListArr[i].comments?spListArr[i].comments:"");
+                        }
+                        
+                        spListStr += '<tr>'
+                        +'<td class="center">'+appTm+'</td>'
+                        +'<td class="center">'+spListArr[i].apprUsrNm+'</td>'
+                        +'<td class="center">'+(spListArr[i].status == '1'?'已审批':'未审批')+'</td>'
+                        +'<td class="center">'+spType+'</td>'
+                        +'<td class="center">'+spCon+'</td>'
+                        +'</tr>';
+                        
+                    }
+                    spListStr += '</tbody>'
+                    +'</table>';
+                    $('#ProcPathQryList').html(spListStr);
+                }else{
+                    $("#ProcPathQryList").html("已取消");
+                }
+                
+                
+                
+            });
+            //拒绝操作
+            function Refused(){
+                if( $("#SPYJText").val() == "" || $("#SPYJText").val() == $("#SPYJText").attr('placeholder')){
+                    $("#shuoM01").show();
+                    $("#RefusedText").text("拒绝");
+                }else{
+                    $("#shuoM01").hide();
+                    $("#RefusedText").text("");
+                }
+            }
+            //placeHoder兼容
+            function phJR(obj){/*失去焦点时触发*/
+                var oldValue = $(obj).val();
+                $(obj).css({"border-color":"#8fbcd9"});
+                if( oldValue == "" || oldValue == "请填写或选择审批意见" ){
+                    $(obj).css({"color":"#ccc"});
+                    $(obj).val("请填写或选择审批意见");
+                }
+            }
+            function phClear(obj){/*进入焦点时触发*/
+                var oldValue = $(obj).val();
+                $(obj).css({"border-color":"#f59942"});
+                if( oldValue == "请填写或选择审批意见" ){
+                    $(obj).css({"color":"#030303"});
+                    $(obj).val("")
+                }  
+            }
+            
+            //流程审批
+            function doSubmit(tyType){
+                if(ifSP){
+                    return;
+                }
+                ifSP = true;
+                var PsTop = $(window.parent.document).find("iframe").parent().parent().parent().parent().scrollTop();
+                if( PsTop == '0' ){
+                    PsTop = $(window.parent.document).find("iframe").parent().parent().parent().scrollTop();
+                }
+                
+                var opinion = $("#SPYJText").val().replace("请填写或选择审批意见","");
+                if(tyType == 0){
+                    if(opinion == ""){
+                        window.parent.goToTop();
+                        $.gritter.add({
+                            title: '提示信息',
+                            text: '请输入审批意见',
+                            class_name: 'gritter-error'
+                        });
+                        ifSP = false;
+                        return;
+                    }
+                }else{
+                    if(opinion == ""){
+                        opinion = "同意";
+                    }
+                }
+                
+                
+                var spJSON = JSON.parse(localStorage.file_spData);
+                var submitJSON = doFileSub(localStorage.pernrBase?localStorage.pernrBase:'',"FMS_SAVE",spJSON.bussNo,spJSON.taskId,spJSON.currStep,tyType,opinion);
+                
+                if(submitJSON.status == "0"){
+                    $.gritter.add({
+                        title: '成功操作提示信息',
+                        text: '审批成功',
+                        class_name: 'gritter-success gritter-center'
+                    });
+                    $(".gritter-center").css({"top":PsTop+200});
+                    setTimeout(function(){
+                       window.parent.IframeNavTabs("FMS_SAVE");
+                    },1500);
+                }else{
+                    $.gritter.add({
+                            title: '提示信息',
+                            text: '操作失败，请稍后再试',
+                            class_name: 'gritter-error'
+                        });
+                    $(".gritter-center").css({"top":PsTop+200});
+                    ifSP = false;
+                }
+            }
+            
+            function openYW(){
+                
+                //打开原文
+                var ywUrl = $('#ywUrl').val();
+                if(ywUrl == ""){
+                    window.parent.goToTop();
+                        $.gritter.add({
+                            title: '提示信息',
+                            text: '没有原文地址信息',
+                            class_name: 'gritter-error'
+                        });
+                }else{
+                    window.open(ywUrl);
+                }
+            }
+        </script>
+        <link rel="stylesheet" href="../assets/css/ace.onpage-help.css">
+        <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css">
+        <script type="text/javascript">ace.vars['base'] = '..';</script>
+        <script src="../assets/js/ace/ace.onpage-help.js"></script>
+        <script src="../docs/assets/js/rainbow.js"></script>
+        <script src="../docs/assets/js/language/generic.js"></script>
+        <script src="../docs/assets/js/language/html.js"></script>
+        <script src="../docs/assets/js/language/css.js"></script>
+        <script src="../docs/assets/js/language/javascript.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+</body>
+</html>

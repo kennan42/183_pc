@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>团队人事</title>
+
+		<meta name="description" content="3 styles with inline editable feature" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+		<link rel="stylesheet" href="./assets/css/select2.css" />
+		<link rel="stylesheet" href="./assets/css/datepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-editable.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+<style>
+	.border-none{
+		border:none;
+	}
+	.tp-wrap .table{margin-bottom:0;border:none;}
+.tp-wrap .table>tbody>tr>td{border:none;white-space:nowrap;}
+.tp-wrap .table>tbody>tr>td.t-border-bottom{border-bottom:1px dotted #D5E4F1;}
+.tabl-personnel{}
+.tp-wrap .tabl-personnel>tbody>tr>td,.tabl-personnel>tbody>tr>th,.tabl-personnel>tfoot>tr>td,.tabl-personnel>tfoot>tr>th,.tabl-personnel>thead>tr>td,.tabl-personnel>thead>tr>th{
+    padding:8px;
+    line-height:1.42857143;
+    vertical-align:top;
+    border-bottom:1px dotted #D5E4F1;}
+    .beyond{display:inline-block;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+    .color667E99 {color:#667E99;}
+    .no-skin .nav-list>li .submenu>li>a.blue{color:#4b88b7;
+background-color:#f1f5f9;}
+</style>
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js?v=20141224"></script>
+        <script src="./myjs/lexus.js?v=20141224"></script>
+		<script>
+			function CloseGritter(obj){
+				$(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+					$(obj).parents(".gritter-item-wrapper").remove();
+				});
+			}
+			function WindowClose(){
+				window.close();
+			}
+			//请求部门组织列表信息
+			function getOrg(orgId){
+				//layer.load('aaa',1);
+				if(trim($('#'+orgId).html()) != ''){
+					return;
+				}
+				
+				var orgJSON = submit_4_1(orgId);
+				var liStr = '';
+				
+				if(checkNoChar(orgJSON.FLAG_PERNR) == 'X'){   //有下属
+					var P_PER_TAB = orgJSON.P_PER_TAB.item;
+					
+					for(var k in P_PER_TAB){
+						liStr += '<li class="">'
+						+'<a href="#" onclick="getPer(\''+checkNoChar(P_PER_TAB[k].PERNR)+'\');onblue(this);"><i class=" fa fa-user"></i>'
+						+'<span class="menu-text">　'+parseInt(checkNoChar(P_PER_TAB[k].PERNR))+'  '+checkNoChar(P_PER_TAB[k].NACHN)+'</span>'
+						+'</a>'
+						+'<b class="arrow"></b>'
+						+'</li>';
+					}
+					
+				
+				}
+				if(checkNoChar(orgJSON.FLAG_ORGEH) == 'X'){   //有部门
+					var P_ORG_TAB = orgJSON.P_ORG_TAB.item;
+					
+					for(var k in P_ORG_TAB){
+						liStr += '<li class="">'
+						+'<a href="#" onclick="getOrg(\''+checkNoChar(P_ORG_TAB[k].ORGEH)+'\')" class="dropdown-toggle">'
+						+'<i class=" fa fa-sitemap"></i>'
+						+'<span class="menu-text">　'+checkNoChar(P_ORG_TAB[k].ORGEH_TXT)+' </span>'
+						+'<b class="arrow fa fa-angle-down"></b>'
+						+'</a>'
+						+'<b class="arrow"></b>'
+						+'<ul class="submenu" id="'+checkNoChar(P_ORG_TAB[k].ORGEH)+'">'
+						+'</ul>'
+						+'</li>';
+					}
+				}
+				
+				
+				
+				$('#'+orgId).html(liStr);
+				//layer.close(aa);
+			}
+			
+		//直属下属可以请求到他的直属下属
+		function getPer1(pernr){
+			getPer(pernr);
+			
+			if(trim($('#'+pernr).html()) != ''){
+					return;
+				}
+				
+				var orgJSON = submit_4_1(pernr);
+				var liStr = '';
+				if(checkNoChar(orgJSON.FLAG_PERNR) == 'X'){   //有下属
+					var P_PER_TAB = orgJSON.P_PER_TAB.item;
+					
+					for(var k in P_PER_TAB){
+						liStr += '<li class="">'
+						+'<a href="#" onclick="getPer(\''+checkNoChar(P_PER_TAB[k].PERNR)+'\')"><i class=" fa fa-user"></i>'
+						+'<span class="menu-text">　'+parseInt(checkNoChar(P_PER_TAB[k].PERNR))+'  '+checkNoChar(P_PER_TAB[k].NACHN)+'</span>'
+						+'</a>'
+						+'<b class="arrow"></b>'
+						+'</li>';
+					}
+					
+				
+				}
+				
+				$('#'+pernr).html(liStr);
+		}
+			
+			
+			
+		function onblue(obj){
+			$("#bumenUl").find("a").removeClass("blue");
+			$(obj).addClass("blue");
+		};	
+			//获取个人信息
+			function getPer(pernr){
+				//3.1基本信息
+		var eeInfoJson = submit_3_1(pernr);
+		if(eeInfoJson.status == '0'){
+			localStorage.removeItem("perOnShow");
+			localStorage.setItem("perOnShow",JSON.stringify(eeInfoJson.ZHR_EE_INFO));
+			//基本信息
+			var ZHR_EE_INFO = eeInfoJson.ZHR_EE_INFO;
+			$('#NACHN').html(checkNoChar(ZHR_EE_INFO.NACHN));
+			$('#PERNR').html(parseInt(checkNoChar(ZHR_EE_INFO.PERNR)));
+			$('#ORGTX').html(checkNoChar(ZHR_EE_INFO.ORGTX));
+			$('#ORGTX1').html(checkNoChar(ZHR_EE_INFO.ORGTX));
+			$('#PERNR1').html(parseInt(checkNoChar(ZHR_EE_INFO.PERNR)));
+			$('#PERNR2').html(parseInt(checkNoChar(ZHR_EE_INFO.PERNR)));
+			$('#GESCH_T').html(checkNoChar(ZHR_EE_INFO.GESCH_T));
+			$('#PBTXT').html(checkNoChar(ZHR_EE_INFO.PBTXT));
+			$('#PBTXT').attr("title", checkNoChar(ZHR_EE_INFO.PBTXT));
+			$('#ZZ_JSZWJBT').html(checkNoChar(ZHR_EE_INFO.ZZ_JSZWJBT));
+			$('#ZZ_RZSJ').html(checkNoChar(ZHR_EE_INFO.ZZ_RZSJ));
+			$('#ZZ_RZSJ1').html(checkNoChar(ZHR_EE_INFO.ZZ_RZSJ));
+			$('#ZZ_QDNX').html(checkNoChar(ZHR_EE_INFO.ZZ_HTKSRQ)+'~'+checkNoChar(ZHR_EE_INFO.ZZ_HTJZRQ));
+			$('#ZZ_QDNX').attr("title", checkNoChar(ZHR_EE_INFO.ZZ_HTKSRQ)+'~'+checkNoChar(ZHR_EE_INFO.ZZ_HTJZRQ));
+			$('#INSTI').html(checkNoChar(ZHR_EE_INFO.INSTI));
+			$('#SLART_T').html(checkNoChar(ZHR_EE_INFO.SLART_T));
+			$('#ZZ_CZD').html(checkNoChar(ZHR_EE_INFO.ZZ_CZD));
+			$('#ZZ_CZD2').html(checkNoChar(ZHR_EE_INFO.ZZ_CZD));
+			$('#ZZ_EMAIL').html(checkNoChar(ZHR_EE_INFO.ZZ_EMAIL));
+			$('#NACHN1').html(checkNoChar(ZHR_EE_INFO.NACHN));
+			$('#NACHN2').html(checkNoChar(ZHR_EE_INFO.NACHN));
+			$('#GBDAT').html(checkNoChar(ZHR_EE_INFO.GBDAT));
+			$('#BTRTX').html(checkNoChar(ZHR_EE_INFO.BTRTX));
+			$('#PLSTX').html(checkNoChar(ZHR_EE_INFO.PLSTX));
+			$('#PLSTX1').html(checkNoChar(ZHR_EE_INFO.PLSTX));
+			$('#ZZ_SPZXM').html(checkNoChar(ZHR_EE_INFO.ZZ_SPZXM));
+			$('#ZZ_GZSJ').html(checkNoChar(ZHR_EE_INFO.ZZ_GZSJ));
+			$('#ZZ_TEL1').html(checkNoChar(ZHR_EE_INFO.ZZ_TEL1));
+			$('#ZZ_SXZY').html(checkNoChar(ZHR_EE_INFO.ZZ_SXZY));
+			$('#ZZ_XZN').html(checkNoChar(ZHR_EE_INFO.ZZ_XZN));
+			$('#ZZ_CZD1').html(checkNoChar(ZHR_EE_INFO.ZZ_CZD1));
+
+			var d = new Date(); 
+		    var Year = d.getFullYear();
+		    var CS = $("#GBDAT").text()
+		    var CSYear = CS.slice(0,4);
+		    var Age = Year - CSYear;
+		    if( Age <= 99 && Age > 0 ){
+		    	$("#current-age").html(Age);
+		    };
+			
+			//公司履历
+			var IT0023 = eeInfoJson.IT0023.item;
+			if(undefined != IT0023 && IT0023.length>0){
+				var localLvs = '';
+				var otherLvs = '';
+				for(var k in IT0023){
+					if (checkNoChar(IT0023[k].ZZ_LLLX) == '2') {
+						if (localLvs != '') {
+							localLvs += '<div class="hr hr-dotted hr18"></div>';
+						}
+						localLvs += '<div class="row">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td width="50%">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 时间 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].BEGDA)+'~'+checkNoChar(IT0023[k].ENDDA)+'>'+checkNoChar(IT0023[k].BEGDA)+'~'+checkNoChar(IT0023[k].ENDDA)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 工作单位 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].ARBGB)+'>'+checkNoChar(IT0023[k].ARBGB)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 部门 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].ZZ_GZBM)+'>'+checkNoChar(IT0023[k].ZZ_GZBM)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 变动原因 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].ZZ_DDYY)+'>'+checkNoChar(IT0023[k].ZZ_DDYY)+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</td>'
+						+'<td width="50%">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> &nbsp; </td>'
+						+'<td class="text-left beyond" width="70%" title=""> &nbsp; </td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 行业 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].BRANC_T)+'>'+checkNoChar(IT0023[k].BRANC_T)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 岗位 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].ZZ_JOB)+'>'+checkNoChar(IT0023[k].ZZ_JOB)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> &nbsp; </td>'
+						+'<td class="text-left beyond" width="70%" title=""> &nbsp; </td>'
+						+'</tr>'
+						+'</table>'
+						+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</div>';											
+					}else{
+						if (otherLvs != '') {
+							otherLvs += '<div class="hr hr-dotted hr18"></div>';
+						}
+						otherLvs += '<div class="row">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td width="50%">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 时间 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].BEGDA)+'~'+checkNoChar(IT0023[k].ENDDA)+'>'+checkNoChar(IT0023[k].BEGDA)+'~'+checkNoChar(IT0023[k].ENDDA)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 工作单位 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].ARBGB)+'>'+checkNoChar(IT0023[k].ARBGB)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 部门 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].ZZ_GZBM)+'>'+checkNoChar(IT0023[k].ZZ_GZBM)+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</td>'
+						+'<td width="50%">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> &nbsp; </td>'
+						+'<td class="text-left beyond" width="70%" title=""> &nbsp; </td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 行业 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].BRANC_T)+'>'+checkNoChar(IT0023[k].BRANC_T)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 岗位 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0023[k].ZZ_JOB)+'>'+checkNoChar(IT0023[k].ZZ_JOB)+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</div>';		
+						
+					}
+				}
+				localLvs = localLvs?localLvs:'<img src="./assets/avatars/nodata.jpg">';
+				otherLvs = otherLvs?otherLvs:'<img src="./assets/avatars/nodata.jpg">';
+				$('#localLv').html(localLvs);
+				$('#otherLv').html(otherLvs);
+			}else{
+				$('#localLv').html('<img src="./assets/avatars/nodata.jpg">');
+				$('#otherLv').html('<img src="./assets/avatars/nodata.jpg">');
+				
+			}
+		}
+		
+			//3.2获取头像
+		var photoJSON= submit_3_2(pernr);
+		if (photoJSON.status == '0') {
+			var B64DATA = checkNoChar(photoJSON.B64DATA);
+			if(undefined != B64DATA && B64DATA != ""){
+				$('#touxiang').attr('src','data:image/jpg;base64,'+B64DATA);
+			}else{
+				$('#touxiang').attr('src','./assets/avatars/name.png');
+			}
+		}else{
+			$('#touxiang').attr('src','./assets/avatars/name.png');
+		}
+		
+			//3.3读取员工培训经历
+		var trainJSON = submit_3_3(pernr);
+		if (trainJSON.status == '0') {
+			var IT9130 = trainJSON.IT9130.item;
+			if(undefined != IT9130 && IT9130.length > 0){
+				var trainData = '';
+				for(var k in IT9130){
+						if (trainData != '') {
+							trainData += '<div class="hr hr-dotted hr18"></div>';
+						}
+						trainData += '<div class="row">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td width="50%">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 时间 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].BEGDA)+'~'+checkNoChar(IT9130[k].ENDDA)+'>'+checkNoChar(IT9130[k].BEGDA)+'~'+checkNoChar(IT9130[k].ENDDA)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训课程名称 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXXM)+'>'+checkNoChar(IT9130[k].ZZ_PXXM)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训类型 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXLXT)+'>'+checkNoChar(IT9130[k].ZZ_PXLXT)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训产品类型1 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXCPJXT)+'>'+checkNoChar(IT9130[k].ZZ_PXCPJXT)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训产品类型2 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXCPJX2T)+'>'+checkNoChar(IT9130[k].ZZ_PXCPJX2T)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训地点 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXDD)+'>'+checkNoChar(IT9130[k].ZZ_PXDD)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训机构 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXJG)+'>'+checkNoChar(IT9130[k].ZZ_PXJG)+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</td>'
+						+'<td width="50%">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> &nbsp; </td>'
+						+'<td class="text-left beyond" width="70%" title=""> &nbsp; </td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训方式 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXFST)+'>'+checkNoChar(IT9130[k].ZZ_PXFST)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训阶段 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXJDT)+'>'+checkNoChar(IT9130[k].ZZ_PXJDT)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训产品名称1 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXCPMCT)+'>'+checkNoChar(IT9130[k].ZZ_PXCPMCT)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训产品名称2 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_PXCPMC2T)+'>'+checkNoChar(IT9130[k].ZZ_PXCPMC2T)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 培训课时 </td>'
+						+'<td class="text-left beyond" width="70%" title='+parseInt(checkNoChar(IT9130[k].ZZ_PXKS))+'>'+parseInt(checkNoChar(IT9130[k].ZZ_PXKS))+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 获得资格 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT9130[k].ZZ_HDZG)+'>'+checkNoChar(IT9130[k].ZZ_HDZG)+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</div>';	
+				}
+				
+				$('#trainDiv').html(trainData);
+			}
+			else{
+				$('#trainDiv').html('<img src="./assets/avatars/nodata.jpg">');
+			}
+		}
+		
+			//3.4读取员工教育经历
+		var eduJSON = submit_3_4(pernr);
+		if (eduJSON.status == '0') {
+			var IT0022 = eduJSON.IT0022.item;
+			if(undefined != IT0022 && IT0022.length > 0){
+				var eduData = '';
+				for(var k in IT0022){
+						if (eduData != '') {
+							eduData += '<div class="hr hr-dotted hr18"></div>';
+						}
+						eduData += '<div class="row">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td width="50%">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 时间 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0022[k].ZZ_RXRQ)+'~'+checkNoChar(IT0022[k].ZZ_BYRQ)+'>'+checkNoChar(IT0022[k].ZZ_RXRQ)+'~'+checkNoChar(IT0022[k].ZZ_BYRQ)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 毕业院校 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0022[k].INSTI)+'>'+checkNoChar(IT0022[k].INSTI)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 所学专业 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0022[k].ZZ_SXZY)+'>'+checkNoChar(IT0022[k].ZZ_SXZY)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 学历 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0022[k].SLART_T)+'>'+checkNoChar(IT0022[k].SLART_T)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 学习形式 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0022[k].AUSBI_T)+'>'+checkNoChar(IT0022[k].AUSBI_T)+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</td>'
+						+'<td width="50%">'
+						+'<table class="table col-sm-12">'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> &nbsp; </td>'
+						+'<td class="text-left beyond" width="70%" title=""> &nbsp; </td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> &nbsp; </td>'
+						+'<td class="text-left beyond" width="70%" title=""> &nbsp; </td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> &nbsp; </td>'
+						+'<td class="text-left beyond" width="70%"> &nbsp; </td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 学位 </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0022[k].ZZ_XW_T)+'>'+checkNoChar(IT0022[k].ZZ_XW_T)+'</td>'
+						+'</tr>'
+						+'<tr>'
+						+'<td class="text-right color667E99" width="30%"> 学制(年) </td>'
+						+'<td class="text-left beyond" width="70%" title='+checkNoChar(IT0022[k].ZZ_XZN)+'>'+checkNoChar(IT0022[k].ZZ_XZN)+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</td>'
+						+'</tr>'
+						+'</table>'
+						+'</div>';	
+				}
+				
+				$('#eduDiv').html(eduData);
+			}else{
+				$('#eduDiv').html('<img src="./assets/avatars/nodata.jpg">');
+			}
+		}
+		
+				$('#perDet').show();
+				
+				if(parseInt(pernr) == parseInt(localStorage.pernrBase)){
+					$('#btnCZD').attr('disabled',true);
+					$('#btnCZD1').attr('disabled',true);
+					$('#btnZXLD').attr('disabled',true);
+				}else{
+					$('#btnCZD').removeAttr('disabled');
+					$('#btnCZD1').removeAttr('disabled');
+					$('#btnZXLD').removeAttr('disabled');
+				}
+			}
+			
+			//搜索框返回列表框
+			function backToList(){
+				$('#nav-search-input').val('');
+				$('#backBtn').hide();
+				$('#orgTitle').show();
+				$('#sidebar1').hide();
+				$('#sidebar').show();
+			}
+			
+			//回车搜索功能
+			function toSearch(sval){
+				if(event.keyCode==13){
+					searchPer(sval);
+				}else{
+					return;
+				}
+			}
+			
+			
+			//输入关键字自动查询
+			function searchPer(sval){
+				if(sval == $('#hiddenText').val()){
+					return;
+				}
+				 $('#hiddenText').val(sval);
+				if(sval == ""){
+					var initStr = '<li class="">'
+					+'<a href="#"><i class=" fa  fa-info-circle"></i>'
+					+'<span class="menu-text">请输入正确的员工号或者姓名关键字</span></a>'
+					+'<b class="arrow"></b>'
+					+'</li>';
+					$('#searchUl').html(initStr);
+					return;
+				}
+				var pernr = localStorage.pernrBase?localStorage.pernrBase:'';
+				var resJSON = submit_4_2(sval,pernr);
+				if(resJSON.status == '0'){
+					var T_PERNR = resJSON.T_PERNR.item;
+					if(undefined != T_PERNR && T_PERNR.length >0){
+						var liStr = '';
+						for(var k in T_PERNR){
+							liStr += '<li class="">'
+							+'<a href="#" onclick="getPer(\''+checkNoChar(T_PERNR[k].PERNR)+'\')"><i class=" fa fa-user"></i>'
+							+'<span class="menu-text">　'+parseInt(checkNoChar(T_PERNR[k].PERNR))+'  '+checkNoChar(T_PERNR[k].NACHN)+'</span>'
+							+'</a>'
+							+'<b class="arrow"></b>'
+							+'</li>';
+						}
+						$('#searchUl').html(liStr);
+					}
+				}else{
+					var initStr = '<li class="">'
+					+'<a href="#"><i class=" fa  fa-info-circle"></i>'
+					+'<span class="menu-text">查无此人</span></a>'
+					+'<b class="arrow"></b>'
+					+'</li>';
+					$('#searchUl').html(initStr);
+				}
+			}
+			
+			//打开修改常驻地
+			function openModifyCZD(){
+				$('body,html').animate({scrollTop:0},10);
+				thislayer = $.layer({
+				    type: 2,
+				    shadeClose: true,
+				    title: false,
+				    closeBtn: [0, false],
+				    shade: [0.8, '#000'],
+				    border: [0],
+				    offset: ['20px',''],
+				    area: ['500px',''],
+				    iframe: {src: '/web/modifyCZD.html'}
+				});
+			}
+			//打开修改直线领导
+			function openModifyZXLD(){
+				$('body,html').animate({scrollTop:0},10);
+				thislayer = $.layer({
+				    type: 2,
+				    shadeClose: true,
+				    title: false,
+				    closeBtn: false,
+				    shade: [0.5, '#000'],
+				    border: [0],
+				    offset: ['20px',''],
+				    area: ['550px',''],
+				    iframe: {src: '/web/modifyZXLD.html'}
+				});
+			}
+			
+			//修改手机号
+			function openModifySJ(){
+				$('body,html').animate({scrollTop:0},10);
+				thislayer = $.layer({
+				    type: 2,
+				    shadeClose: true,
+				    title: false,
+				    closeBtn: false,
+				    shade: [0.5, '#000'],
+				    border: [0],
+				    offset: ['20px',''],
+				    area: ['550px',''],
+				    iframe: {src: '/web/modifySJ.html'}
+				});
+			}
+		</script>
+	</head>
+
+	<body class="no-skin">
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs" style="background:#438eb9;">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon white"></i>
+							<a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+						</li>
+
+						<li>
+							<a href="#" class="white">部门管理</a>
+						</li>
+					</ul><!-- /.breadcrumb -->
+
+					<!-- /section:basics/content.searchbox -->
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+					
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1 class="family_MY" style="font-family:Microsoft YaHei ! important;">
+								团队人事信息查询
+								<small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									用于各部门经理查看下属的基本信息、教育经历信息、培训信息、工作经历信息、个人银行卡信息等
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12" style="width:100%;float:left;">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<!-- #section:plugins/fuelux.treeview -->
+								
+									<div class="col-sm-3" style="width:25%;float:left;">
+										<div class="widget-box widget-color-green2" style="border-color:#ccc;width:100%;">
+											<div class="widget-header" style="vertical-align:middle;background:#65bcda;">
+												<span style="" id="orgTitle" class="widget-title lighter smaller">我的团队</span>
+												
+												<button id="backBtn" onclick="backToList()" class="btn btn-sm" style="border-color:rgb(124, 174, 228);display:none">
+													<i class="ace-icon fa fa-reply icon-only"></i>
+													<span class="bigger-110 no-text-shadow">返回</span>
+												</button>
+                                                <div class="nav-search" id="nav-search" style="display:inline-block;margin-top:5px;margin-right:20px">
+                                                    <form onsubmit="return false;">
+                                                        <span class="input-icon">
+                                                        	<input type="text" onkeypress="toSearch(this.value)" onchange="searchPer(this.value)" onblur="searchPer(this.value)"  placeholder="员工搜索" class="nav-search-input" id="nav-search-input" />
+															<i class="ace-icon fa fa-search nav-search-icon"></i>
+															<input type="hidden" id="hiddenText" value="">
+														</span>
+                                                    </form>
+                                                </div>
+												<span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-content="请输入员工号或者人名关键字,后点击页面空白处查询" title="" data-original-title="" style="margin-top:7px;margin-right:8px;float:right">?</span>
+                                                <!-- /.nav-search -->
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main padding-8">
+													<div id="sidebar1" class="sidebar responsive" style="float:none;width:auto;margin-left:2px;max-height:3000px;display:none">
+                                                    <!-- /.sidebar-shortcuts -->
+                                                    <ul class="nav nav-list" id="searchUl">
+                                                    	
+                                                    </ul>
+                                                    <script type="text/javascript">
+                                                        try {
+                                                            ace.settings.check('sidebar1', 'collapsed')
+                                                        } 
+                                                        catch (e) {
+                                                        }
+                                                    </script>
+                                                </div>
+                                                <div id="sidebar" class="sidebar responsive" style="float:none;width:100%;margin-left:2px;max-height:3000px;display:block;">
+                                                    <!-- /.sidebar-shortcuts -->
+                                                    <ul class="nav nav-list" id="bumenUl">
+                                                    </ul>
+                                                    <script type="text/javascript">
+                                                        try {
+                                                            ace.settings.check('sidebar', 'collapsed')
+                                                        } 
+                                                        catch (e) {
+                                                        }
+                                                    </script>
+                                                </div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-9" style="width:75%;float:left;">
+										<div class="widget-box widget-color-gray">
+											<div class="widget-header" style="background:#65bcda;">
+												<span class=" widget-title lighter ">人事信息</span>
+												<!--a href="#" onclick="openModifyCzd()" class="btn btn-app btn-success no-radius" style="float: right;width:45px">
+													<i class="ace-icon fa fa-pencil-square-o" style="font-size:30px;line-height:18px"></i>
+												</a-->
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main padding-8"  id="perDet" style="display:none">
+													<div class="row" >
+							<div class="col-xs-12">
+
+								<div class="col-sm-3" style="background-color:#4c8fbd;padding:0 38px;padding-top:38px;padding-bottom:8px;height:426px;width:25%;float:left;">
+                                	<div style="overflow:hidden;width:129px;height:172px;">
+                                    	<img style="width:129px;" id="touxiang" src="./assets/avatars/name.png">
+                                    </div>
+                                    <h2 class="white" style="font-family: Microsoft YaHei ! important;"><div id="NACHN1"></div></h2>
+                                    <div class="white" style="font-family: Microsoft YaHei ! important;" id="PERNR1"></div>
+                                    <!--<div class="page-header" style="padding-bottom: 0px; border-bottom-style:solid;">
+                                        <h4 class="white" style="font-family: Microsoft YaHei ! important;">事件</h4>
+                                    </div>
+                                    <div>
+                                    	<ul class="list-unstyled white">
+                                        	<li>
+                                            	<p>
+                                            		<i class="ace-icon fa fa-square-o" style="margin-right:8px;"></i>
+                                                	<span>2014年10月1日</span>
+                                                </p>
+                                                <p style="margin-left:20px;"><span>入职</span></p>
+                                            </li>
+                                            <li>
+                                            	<p>
+                                            		<i class="ace-icon fa fa-square-o" style="margin-right:8px;"></i>
+                                                	<span>2014年10月1日</span>
+                                                </p>
+                                                <p style="margin-left:20px;"><span>入职</span></p>
+                                            </li>
+                                        </ul>
+                                    </div>-->
+                                	
+                                </div>
+                            	
+                                <div class="col-sm-9" style="width:75%;float:left;">
+                                	<div class="user-profile">
+                                	<div class="tabbable">
+                                    	<ul class="nav nav-tabs padding-18">
+											<li class="active">
+												<a data-toggle="tab" href="#home">
+													<i class="green ace-icon fa fa-user bigger-120"></i>
+													基本信息
+												</a>
+											</li>
+
+											<li>
+												<a data-toggle="tab" href="#feed">
+													<i class="orange ace-icon fa fa-rss bigger-120"></i>
+													教育经历
+												</a>
+											</li>
+
+											<li>
+												<a data-toggle="tab" href="#friends">
+													<i class="blue ace-icon fa fa-users bigger-120"></i>
+													培训经历
+												</a>
+											</li>
+
+											<li>
+												<a data-toggle="tab" href="#pictures">
+													<i class="pink ace-icon fa fa-picture-o bigger-120"></i>
+													本公司履历
+												</a>
+											</li>
+                                            
+                                            <li>
+												<a data-toggle="tab" href="#record">
+													<i class="ace-icon fa fa-globe  blue bigger-120"></i>
+													入职前履历
+												</a>
+											</li>
+										</ul>
+                                        <div class="tab-content no-border padding-24">
+											<div id="home" class="tab-pane in active">
+												<div class="row panel-body tp-wrap">
+                                                            <table class="table col-sm-12">
+                                                            	<tbody><tr>
+                                                            		<td width="50%">
+                                                            			<table class="table tabl-personnel col-sm-12">
+			                                                            	<tbody><tr>
+			                                                                	<td class="text-right color667E99" width="30%">人员编号</td>
+			                                                                	<td class="text-left" width="70%" id="PERNR2"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">性别</td>
+			                                                                	<td class="text-left" width="70%" id="GESCH_T"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">人事范围</td>
+			                                                                	<td class="text-left" width="70%" id="PBTXT"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">部门</td>
+			                                                                	<td class="text-left" width="70%" id="ORGTX1"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">技术职务</td>
+			                                                                	<td class="text-left" width="70%" id="ZZ_JSZWJBT"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">入司时间</td>
+			                                                                	<td class="text-left" width="70%" id="ZZ_RZSJ1"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">合同期限</td>
+			                                                                	<td class="text-left" width="70%" id="ZZ_QDNX"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">毕业院校</td>
+			                                                                	<td class="text-left" width="70%" id="INSTI"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">学历</td>
+			                                                                	<td class="text-left" width="70%" id="SLART_T"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">常驻地</td>
+			                                                                	<td class="text-left" width="70%">
+			                                                                		<a id="thisa2" href="###" onclick="openModifyCZD()">
+			                                                                        <span id="ZZ_CZD">&nbsp;</span>
+																					<i id="thisa2i" class="ace-icon glyphicon glyphicon-pencil"></i>
+																					<!--button id="btnCZD" class="btn border-none" onclick="openModifyCZD()">
+																						<i class="ace-icon fa fa-pencil align-top bigger-125"></i>
+																					</button-->
+																					</a>
+			                                                                	</td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">EMAIL</td>
+			                                                                	<td class="text-left" width="70%" id="ZZ_EMAIL"></td>
+			                                                                </tr>
+			                                                            </tbody></table>
+                                                            		</td>
+                                                            		<td width="50%">
+                                                            			<table class="table tabl-personnel col-sm-12">
+			                                                            	<tbody><tr>
+			                                                                	<td class="text-right color667E99" width="30%">姓名</td>
+			                                                                	<td class="text-left" width="70%" id="NACHN2" width="60%"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">出生日期</td>
+			                                                                	<td class="text-left" width="70%" id="GBDAT"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">人事子范围</td>
+			                                                                	<td class="text-left" width="70%" id="BTRTX"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">岗位</td>
+			                                                                	<td class="text-left" width="70%" id="PLSTX1"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">直线领导</td>
+			                                                                	<td class="text-left" width="70%">
+			                                                                		<a id="thisa1" href="###" onclick="openModifyZXLD()">
+			                                                                        <span id="ZZ_SPZXM"></span>
+																					<i id="thisa1i" class="ace-icon glyphicon glyphicon-pencil"></i>
+																					<!--button id="btnZXLD" class="btn border-none"  onclick="openModifyZXLD()">
+																						<i class="ace-icon fa fa-pencil align-top bigger-125"></i>
+																					</button-->
+																					</a>
+			                                                                	</td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">参加工作时间</td>
+			                                                                	<td class="text-left" width="70%" id="ZZ_GZSJ"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">手机</td>
+			                                                                	<!--td class="text-left" width="70%" id="ZZ_TEL1"></td-->
+																				<td class="text-left" width="70%">
+			                                                                		<a id="thisa4" href="###" onclick="openModifySJ()">
+			                                                                        <span id="ZZ_TEL1">&nbsp;</span>
+																					<i id="thisa3i" class="ace-icon glyphicon glyphicon-pencil"></i>
+			                                                                	</td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">专业</td>
+			                                                                	<td class="text-left" width="70%" id="ZZ_SXZY"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">学制(年)</td>
+			                                                                	<td class="text-left" width="70%" id="ZZ_XZN"></td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">第二办公地</td>
+			                                                                	<td class="text-left" width="70%">
+			                                                                		<a id="thisa3" href="###" onclick="openModifyCZD()">
+			                                                                        <span id="ZZ_CZD1">&nbsp;</span>
+																					<i id="thisa3i" class="ace-icon glyphicon glyphicon-pencil"></i>
+																					<!--button id="btnCZD1" class="btn border-none" onclick="openModifyCZD()">
+																						<i class="ace-icon fa fa-pencil align-top bigger-125"></i>
+																					</button-->
+																					</a>
+			                                                                	</td>
+			                                                                </tr>
+			                                                                <tr>
+			                                                                	<td class="text-right color667E99" width="30%">&nbsp;</td>
+			                                                                	<td class="text-left" width="70%" id="ZZ_EMAIL"></td>
+			                                                                </tr>
+			                                                            </tbody></table>
+                                                            		</td>
+                                                            	</tr>
+                                                            </tbody></table>
+												</div>
+											</div><!-- /#home -->
+
+											<div id="feed" class="tab-pane">
+												<div class="row panel-body tp-wrap" id="eduDiv">
+                                                    <img src="./assets/avatars/nodata.jpg">
+												</div><!-- /.row -->
+											</div><!-- /#feed -->
+
+											<div id="friends" class="tab-pane">
+												<div class="row panel-body tp-wrap" id="trainDiv">
+													<img src="./assets/avatars/nodata.jpg">
+                                                </div>
+											</div><!-- /#friends -->
+
+											<div id="pictures" class="tab-pane">
+												<div class="row panel-body tp-wrap" id="localLv">
+													<img src="./assets/avatars/nodata.jpg">
+												</div>
+											</div><!-- /#pictures -->
+                                            
+                                            <div id="record" class="tab-pane">
+												<div class="row panel-body tp-wrap" id="otherLv">
+													<img src="./assets/avatars/nodata.jpg">
+												</div>
+											</div><!-- /#pictures -->
+										</div>
+                                    </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+										<hr/>
+                                            <script type="text/javascript">
+                                                var $path_assets = "./assets";//this will be used in gritter alerts containing images
+                                            </script>
+                                            <!-- PAGE CONTENT ENDS -->
+                                            </div>
+                                            <!-- /.col -->
+                                            </div>
+												</div>
+											</div>
+										</div>
+									</div>
+								
+
+								<!-- /section:plugins/fuelux.treeview -->
+								<script type="text/javascript">
+									var $assets = "./assets";//this will be used in fuelux.tree-sampledata.js
+								</script>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="./assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>
+		<script src="./assets/js/bootbox.min.js"></script>
+		<script src="./assets/js/jquery.easypiechart.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="./assets/js/jquery.hotkeys.min.js"></script>
+		<script src="./assets/js/bootstrap-wysiwyg.min.js"></script>
+		<script src="./assets/js/select2.min.js"></script>
+		<script src="./assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="./assets/js/x-editable/bootstrap-editable.min.js"></script>
+		<script src="./assets/js/x-editable/ace-editable.min.js"></script>
+		<script src="./assets/js/jquery.maskedinput.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+				var localCookie = document.cookie;
+			var cookie_user = '';
+			if(localCookie.length > 0 && localCookie.indexOf('userid')>-1){
+				localCookie = localCookie.split(';');
+				for(var lc in localCookie){
+					if(localCookie[lc].indexOf('userid=')>-1){
+						cookie_user = localCookie[lc];
+						break;
+					}
+				} 
+				
+				if(cookie_user == ''){
+					var unique_id = $.gritter.add({
+						title: '系统登录错误提示',
+						text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+				}else{
+					cookie_user = trim(cookie_user).substring(7);
+					localStorage.removeItem('pernrBase');
+					localStorage.setItem('pernrBase',cookie_user);
+					//$('#thisPer').html(cookie_user);
+				}
+			}else{
+				var unique_id = $.gritter.add({
+						title: '系统登录错误提示',
+						text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+			}
+			
+				//editables on first profile page
+				$.fn.editable.defaults.mode = 'inline';
+				$.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
+			    $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
+			                                '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';    
+				
+				//editables 
+				
+				//text editable
+			    $('#username')
+				.editable({
+					type: 'text',
+					name: 'username'
+			    });
+			
+			
+				
+				//select2 editable
+				var countries = [];
+			    $.each({ "CA": "Canada", "IN": "India", "NL": "Netherlands", "TR": "Turkey", "US": "United States"}, function(k, v) {
+			        countries.push({id: k, text: v});
+			    });
+			
+				var cities = [];
+				cities["CA"] = [];
+				$.each(["Toronto", "Ottawa", "Calgary", "Vancouver"] , function(k, v){
+					cities["CA"].push({id: v, text: v});
+				});
+				cities["IN"] = [];
+				$.each(["Delhi", "Mumbai", "Bangalore"] , function(k, v){
+					cities["IN"].push({id: v, text: v});
+				});
+				cities["NL"] = [];
+				$.each(["Amsterdam", "Rotterdam", "The Hague"] , function(k, v){
+					cities["NL"].push({id: v, text: v});
+				});
+				cities["TR"] = [];
+				$.each(["Ankara", "Istanbul", "Izmir"] , function(k, v){
+					cities["TR"].push({id: v, text: v});
+				});
+				cities["US"] = [];
+				$.each(["New York", "Miami", "Los Angeles", "Chicago", "Wysconsin"] , function(k, v){
+					cities["US"].push({id: v, text: v});
+				});
+				
+				var currentValue = "NL";
+			    $('#country').editable({
+					type: 'select2',
+					value : 'NL',
+					//onblur:'ignore',
+			        source: countries,
+					select2: {
+						'width': 140
+					},		
+					success: function(response, newValue) {
+						if(currentValue == newValue) return;
+						currentValue = newValue;
+						
+						var new_source = (!newValue || newValue == "") ? [] : cities[newValue];
+						
+						//the destroy method is causing errors in x-editable v1.4.6+
+						//it worked fine in v1.4.5
+						/**			
+						$('#city').editable('destroy').editable({
+							type: 'select2',
+							source: new_source
+						}).editable('setValue', null);
+						*/
+						
+						//so we remove it altogether and create a new element
+						var city = $('#city').removeAttr('id').get(0);
+						$(city).clone().attr('id', 'city').text('Select City').editable({
+							type: 'select2',
+							value : null,
+							//onblur:'ignore',
+							source: new_source,
+							select2: {
+								'width': 140
+							}
+						}).insertAfter(city);//insert it after previous instance
+						$(city).remove();//remove previous instance
+						
+					}
+			    });
+			
+				$('#city').editable({
+					type: 'select2',
+					value : 'Amsterdam',
+					//onblur:'ignore',
+			        source: cities[currentValue],
+					select2: {
+						'width': 140
+					}
+			    });
+			
+			
+				
+				//custom date editable
+				$('#signup').editable({
+					type: 'adate',
+					date: {
+						//datepicker plugin options
+						    format: 'yyyy/mm/dd',
+						viewformat: 'yyyy/mm/dd',
+						 weekStart: 1
+						 
+						//,nativeUI: true//if true and browser support input[type=date], native browser control will be used
+						//,format: 'yyyy-mm-dd',
+						//viewformat: 'yyyy-mm-dd'
+					}
+				})
+			
+			    $('#age').editable({
+			        type: 'spinner',
+					name : 'age',
+					spinner : {
+						min : 16,
+						max : 99,
+						step: 1,
+						on_sides: true
+						//,nativeUI: true//if true and browser support input[type=number], native browser control will be used
+					}
+				});
+				
+			
+			    $('#login').editable({
+			        type: 'slider',
+					name : 'login',
+					
+					slider : {
+						 min : 1,
+						  max: 50,
+						width: 100
+						//,nativeUI: true//if true and browser support input[type=range], native browser control will be used
+					},
+					success: function(response, newValue) {
+						if(parseInt(newValue) == 1)
+							$(this).html(newValue + " hour ago");
+						else $(this).html(newValue + " hours ago");
+					}
+				});
+			
+				$('#about').editable({
+					mode: 'inline',
+			        type: 'wysiwyg',
+					name : 'about',
+			
+					wysiwyg : {
+						//css : {'max-width':'300px'}
+					},
+					success: function(response, newValue) {
+					}
+				});
+				
+				
+				
+				// *** editable avatar *** //
+				try {//ie8 throws some harmless exceptions, so let's catch'em
+			
+					//first let's add a fake appendChild method for Image element for browsers that have a problem with this
+					//because editable plugin calls appendChild, and it causes errors on IE at unpredicted points
+					try {
+						document.createElement('IMG').appendChild(document.createElement('B'));
+					} catch(e) {
+						Image.prototype.appendChild = function(el){}
+					}
+			
+					var last_gritter
+					$('#avatar').editable({
+						type: 'image',
+						name: 'avatar',
+						value: null,
+						image: {
+							//specify ace file input plugin's options here
+							btn_choose: 'Change Avatar',
+							droppable: true,
+							maxSize: 110000,//~100Kb
+			
+							//and a few extra ones here
+							name: 'avatar',//put the field name here as well, will be used inside the custom plugin
+							on_error : function(error_type) {//on_error function will be called when the selected file has a problem
+								if(last_gritter) $.gritter.remove(last_gritter);
+								if(error_type == 1) {//file format error
+									last_gritter = $.gritter.add({
+										title: 'File is not an image!',
+										text: 'Please choose a jpg|gif|png image!',
+										class_name: 'gritter-error gritter-center'
+									});
+								} else if(error_type == 2) {//file size rror
+									last_gritter = $.gritter.add({
+										title: 'File too big!',
+										text: 'Image size should not exceed 100Kb!',
+										class_name: 'gritter-error gritter-center'
+									});
+								}
+								else {//other error
+								}
+							},
+							on_success : function() {
+								$.gritter.removeAll();
+							}
+						},
+					    url: function(params) {
+							// ***UPDATE AVATAR HERE*** //
+							//for a working upload example you can replace the contents of this function with 
+							//examples/profile-avatar-update.js
+			
+							var deferred = new $.Deferred
+			
+							var value = $('#avatar').next().find('input[type=hidden]:eq(0)').val();
+							if(!value || value.length == 0) {
+								deferred.resolve();
+								return deferred.promise();
+							}
+			
+			
+							//dummy upload
+							setTimeout(function(){
+								if("FileReader" in window) {
+									//for browsers that have a thumbnail of selected image
+									var thumb = $('#avatar').next().find('img').data('thumb');
+									if(thumb) $('#avatar').get(0).src = thumb;
+								}
+								
+								deferred.resolve({'status':'OK'});
+			
+								if(last_gritter) $.gritter.remove(last_gritter);
+								last_gritter = $.gritter.add({
+									title: 'Avatar Updated!',
+									text: 'Uploading to server can be easily implemented. A working example is included with the template.',
+									class_name: 'gritter-info gritter-center'
+								});
+								
+							 } , parseInt(Math.random() * 800 + 800))
+			
+							return deferred.promise();
+							
+							// ***END OF UPDATE AVATAR HERE*** //
+						},
+						
+						success: function(response, newValue) {
+						}
+					})
+				}catch(e) {}
+				
+				
+			
+				//another option is using modals
+				$('#avatar2').on('click', function(){
+					var modal = 
+					'<div class="modal fade">\
+					  <div class="modal-dialog">\
+					   <div class="modal-content">\
+						<div class="modal-header">\
+							<button type="button" class="close" data-dismiss="modal">&times;</button>\
+							<h4 class="blue">Change Avatar</h4>\
+						</div>\
+						\
+						<form class="no-margin">\
+						 <div class="modal-body">\
+							<div class="space-4"></div>\
+							<div style="width:75%;margin-left:12%;"><input type="file" name="file-input" /></div>\
+						 </div>\
+						\
+						 <div class="modal-footer center">\
+							<button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Submit</button>\
+							<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
+						 </div>\
+						</form>\
+					  </div>\
+					 </div>\
+					</div>';
+					
+					
+					var modal = $(modal);
+					modal.modal("show").on("hidden", function(){
+						modal.remove();
+					});
+			
+					var working = false;
+			
+					var form = modal.find('form:eq(0)');
+					var file = form.find('input[type=file]').eq(0);
+					file.ace_file_input({
+						style:'well',
+						btn_choose:'Click to choose new avatar',
+						btn_change:null,
+						no_icon:'ace-icon fa fa-picture-o',
+						thumbnail:'small',
+						before_remove: function() {
+							//don't remove/reset files while being uploaded
+							return !working;
+						},
+						allowExt: ['jpg', 'jpeg', 'png', 'gif'],
+						allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+					});
+			
+					form.on('submit', function(){
+						if(!file.data('ace_input_files')) return false;
+						
+						file.ace_file_input('disable');
+						form.find('button').attr('disabled', 'disabled');
+						form.find('.modal-body').append("<div class='center'><i class='ace-icon fa fa-spinner fa-spin bigger-150 orange'></i></div>");
+						
+						var deferred = new $.Deferred;
+						working = true;
+						deferred.done(function() {
+							form.find('button').removeAttr('disabled');
+							form.find('input[type=file]').ace_file_input('enable');
+							form.find('.modal-body > :last-child').remove();
+							
+							modal.modal("hide");
+			
+							var thumb = file.next().find('img').data('thumb');
+							if(thumb) $('#avatar2').get(0).src = thumb;
+			
+							working = false;
+						});
+						
+						
+						setTimeout(function(){
+							deferred.resolve();
+						} , parseInt(Math.random() * 800 + 800));
+			
+						return false;
+					});
+							
+				});
+			
+				
+			
+				//////////////////////////////
+				$('#profile-feed-1').ace_scroll({
+					height: '250px',
+					mouseWheelLock: true,
+					alwaysVisible : true
+				});
+			
+				$('a[ data-original-title]').tooltip();
+			
+				$('.easy-pie-chart.percentage').each(function(){
+				var barColor = $(this).data('color') || '#555';
+				var trackColor = '#E2E2E2';
+				var size = parseInt($(this).data('size')) || 72;
+				$(this).easyPieChart({
+					barColor: barColor,
+					trackColor: trackColor,
+					scaleColor: false,
+					lineCap: 'butt',
+					lineWidth: parseInt(size/10),
+					animate:false,
+					size: size
+				}).css('color', barColor);
+				});
+			  
+				///////////////////////////////////////////
+			
+				//right & left position
+				//show the user info on right or left depending on its position
+				$('#user-profile-2 .memberdiv').on('mouseenter touchstart', function(){
+					var $this = $(this);
+					var $parent = $this.closest('.tab-pane');
+			
+					var off1 = $parent.offset();
+					var w1 = $parent.width();
+			
+					var off2 = $this.offset();
+					var w2 = $this.width();
+			
+					var place = 'left';
+					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) place = 'right';
+					
+					$this.find('.popover').removeClass('right left').addClass(place);
+				}).on('click', function(e) {
+					e.preventDefault();
+				});
+			
+			
+				///////////////////////////////////////////
+				$('#user-profile-3')
+				.find('input[type=file]').ace_file_input({
+					style:'well',
+					btn_choose:'Change avatar',
+					btn_change:null,
+					no_icon:'ace-icon fa fa-picture-o',
+					thumbnail:'large',
+					droppable:true,
+					
+					allowExt: ['jpg', 'jpeg', 'png', 'gif'],
+					allowMime: ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
+				})
+				.end().find('button[type=reset]').on(ace.click_event, function(){
+					$('#user-profile-3 input[type=file]').ace_file_input('reset_input');
+				})
+				.end().find('.date-picker').datepicker().next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				})
+				$('.input-mask-phone').mask('(999) 999-9999');
+			
+			
+			
+				////////////////////
+				//change profile
+				$('[data-toggle="buttons"] .btn').on('click', function(e){
+					var target = $(this).find('input[type=radio]');
+					var which = parseInt(target.val());
+					$('.user-profile').parent().addClass('hide');
+					$('#user-profile-'+which).parent().removeClass('hide');
+				});
+				
+				$('[data-rel=popover]').popover({container:'body'});
+				//lexus
+				//初始化页面数据
+$.ajaxSetup({
+	contentType: 'application/json',
+	async:false,
+	error:function(){
+		var unique_id = $.gritter.add({
+			title: '系统警告信息提示',
+			text: ''+errMsg1+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+			sticky: true,
+			time: '',
+			class_name: 'gritter-info gritter-center'
+		});
+	},
+	timeout:timeout
+ });
+				//初始化部门树
+				var p_obj = localStorage.pernrBase?localStorage.pernrBase:'';
+				var orgJSON = submit_4_1(p_obj);
+				var liStr = '';
+				if(checkNoChar(orgJSON.FLAG_ORGEH) != 'X' && checkNoChar(orgJSON.FLAG_PERNR) != 'X'){
+					//没有组织则判断是否考勤员
+//					var ifKQYJSON = submit_7_1(p_obj);
+//					if(ifKQYJSON.status != '0'){
+//						alert(您不具有部门管理权限);
+//					}else{
+//						orgJSON = submit_4_1(checkNoChar(ifKQYJSON.E_OBJID));
+//					}
+					var unique_id = $.gritter.add({
+						title: '登录权限警告提示',
+						text: '您不具有权限查看部门人事<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+				}
+				if(checkNoChar(orgJSON.FLAG_ORGEH) == 'X'){   //有部门
+					var P_ORG_TAB = orgJSON.P_ORG_TAB.item;
+					
+					for(var k in P_ORG_TAB){
+						liStr += '<li class="">'
+						+'<a href="" onclick="getOrg(\''+checkNoChar(P_ORG_TAB[k].ORGEH)+'\')" class="dropdown-toggle">'
+						+'<i class="menu-icon fa fa-sitemap"></i>'
+						+'<span class="menu-text">'+checkNoChar(P_ORG_TAB[k].ORGEH_TXT)+' </span>'
+						+'<b class="arrow fa fa-angle-down"></b>'
+						+'</a>'
+						+'<b class="arrow"></b>'
+						+'<ul class="submenu" id="'+checkNoChar(P_ORG_TAB[k].ORGEH)+'">'
+						+'</ul>'
+						+'</li>';
+					}
+				}
+				
+				if(checkNoChar(orgJSON.FLAG_PERNR) == 'X'){   //有直属下属   单独结构展示
+					var P_PER_TAB = orgJSON.P_PER_TAB.item;
+					
+					liStr += '<li class="">'
+					+'<a href="#" class="dropdown-toggle">'
+					+'<i class="menu-icon fa fa-users"></i> 直接下属<b class="arrow fa fa-angle-down"></b>'
+					+'</a>'
+					+'<b class="arrow"></b>'
+					+'<ul class="submenu">';
+					
+					for(var k in P_PER_TAB){
+						liStr += '<li class="">'
+						+'<a href="#" onclick="getPer1(\''+checkNoChar(P_PER_TAB[k].PERNR)+'\')" class="dropdown-toggle"><i class=" fa fa-user"></i>'
+						+'<span class="menu-text">　'+parseInt(checkNoChar(P_PER_TAB[k].PERNR))+'  '+checkNoChar(P_PER_TAB[k].NACHN)+'</span>'
+						+'</a>'
+						+'<b class="arrow"></b>'
+						+'<ul class="submenu" id="'+checkNoChar(P_PER_TAB[k].PERNR)+'">'
+						+'</ul>'
+						+'</li>';
+					}
+					+'</ul>'
+					+'</li>';
+				
+				}
+				
+				$('#bumenUl').html(liStr);
+				
+				
+				$('#nav-search-input').on('focus',function(){
+					$('#orgTitle').hide();
+					$('#backBtn').show();
+					var initStr = '<li class="">'
+					+'<a href="#"><i class=" fa  fa-info-circle"></i>'
+					+'<span class="menu-text">请输入正确的员工号或者姓名关键字</span></a>'
+					+'<b class="arrow"></b>'
+					+'</li>';
+					//$('#searchUl').html(initStr);
+															
+															
+														
+					$('#sidebar').hide();
+					$('#sidebar1').show();
+				})
+				
+			});
+		</script>
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

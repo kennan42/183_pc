@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>登录 - IT服务工作台</title>
+
+    <meta name="description" content="User login page"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css?t=1456826545"/>
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css?t=1456826545"/>
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="../assets/css/ace-fonts.css?t=1456826545"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css?t=1456826545"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-part2.min.css?t=1456826545"/>
+    <![endif]-->
+    <link rel="stylesheet" href="../assets/css/ace-rtl.min.css?t=1456826545"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-ie.min.css?t=1456826545"/>
+    <![endif]-->
+    <link rel="stylesheet" href="../assets/css/ace.onpage-help.css?t=1456826545"/>
+
+    <!-- HTML5 shim and Respond.js?t=1456826545 IE8 support of HTML5 elements and media queries -->
+
+    <!--[if lt IE 9]>
+    <script src="../assets/js/html5shiv.js?t=1456826545"></script>
+    <script src="../assets/js/respond.min.js?t=1456826545"></script>
+    <![endif]-->
+</head>
+
+<body class="login-layout">
+<div class="main-container">
+    <div class="main-content">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="login-container">
+                    <div class="center">
+                        <h1>
+                            <i class="ace-icon fa fa-leaf green"></i>
+                            <span class="red">IT服务</span>
+                            <span class="white" id="id-text2">工作台</span>
+                        </h1>
+                        <h4 class="blue" id="id-company-text">&copy; 正大天晴药业集团股份有限公司</h4>
+                    </div>
+
+                    <div class="space-6"></div>
+
+                    <div class="position-relative">
+                        <div id="login-box" class="login-box visible widget-box no-border">
+                            <div class="widget-body">
+                                <div class="widget-main">
+                                    <h4 class="header blue lighter bigger">
+                                        <i class="ace-icon fa fa-coffee green"></i>
+                                        请输入登录信息
+                                    </h4>
+
+                                    <div class="space-6"></div>
+
+                                    <form>
+                                        <fieldset>
+                                            <label class="block clearfix">
+													<span class="block input-icon input-icon-right">
+														<input type="text" class="form-control" placeholder="登录名"
+                                                               id="username"/>
+														<i class="ace-icon fa fa-user"></i>
+													</span>
+                                            </label>
+                                            <input type="hidden" id="realusername" value=""/>
+                                            <label class="block clearfix">
+													<span class="block input-icon input-icon-right">
+														<input type="password" class="form-control" placeholder="密码"
+                                                               id="password"/>
+														<i class="ace-icon fa fa-lock"></i>
+													</span>
+                                            </label>
+
+                                            <div class="space"></div>
+
+                                            <div class="clearfix">
+                                                <label class="inline">
+                                                    <input type="checkbox" class="ace"/>
+                                                    <span class="lbl">记住我</span>
+                                                </label>
+
+                                                <button type="button" class="width-35 pull-right btn btn-sm btn-primary"
+                                                        id="login">
+                                                    <i class="ace-icon fa fa-key"></i>
+                                                    <span class="bigger-110">登录</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="space-4"></div>
+                                        </fieldset>
+                                    </form>
+
+                                    <!--<div class="social-or-login center">-->
+                                    <!--<span class="bigger-110">Or Login Using</span>-->
+                                    <!--</div>-->
+
+                                    <!--<div class="space-6"></div>-->
+
+                                    <!--<div class="social-login center">-->
+                                    <!--<a class="btn btn-primary">-->
+                                    <!--<i class="ace-icon fa fa-facebook"></i>-->
+                                    <!--</a>-->
+
+                                    <!--<a class="btn btn-info">-->
+                                    <!--<i class="ace-icon fa fa-twitter"></i>-->
+                                    <!--</a>-->
+
+                                    <!--<a class="btn btn-danger">-->
+                                    <!--<i class="ace-icon fa fa-google-plus"></i>-->
+                                    <!--</a>-->
+                                    <!--</div>-->
+                                </div>
+                                <!-- /.widget-main -->
+
+                                <div class="toolbar clearfix">
+                                    <div>
+                                        <!--<a href="#" data-target="#forgot-box" class="forgot-password-link">-->
+                                        <!--<i class="ace-icon fa fa-arrow-left"></i>-->
+                                        <!--I forgot my password-->
+                                        <!--</a>-->
+                                    </div>
+
+                                    <div>
+                                        <!--<a href="#" data-target="#signup-box" class="user-signup-link">-->
+                                        <!--I want to register-->
+                                        <!--<i class="ace-icon fa fa-arrow-right"></i>-->
+                                        <!--</a>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.widget-body -->
+                        </div>
+                        <!-- /.login-box -->
+
+                    </div>
+                    <!-- /.position-relative -->
+
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.main-content -->
+</div>
+<!-- /.main-container -->
+
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='../assets/js/jquery.min.js?t=1456826545'>" + "<" + "/script>");
+</script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js?t=1456826545'>" + "<" + "/script>");
+</script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js?t=1456826545'>" + "<" + "/script>");
+</script>
+
+<script src="../assets/js/bootstrap.min.js?t=1456826545"></script>
+<script src="../contents/js/it-service-common.js?t=1456826545"></script>
+<script src="../contents/js/it-service-users.js?t=1456826545"></script>
+<script src="../contents/js/xml2json.js?t=1456826545"></script>
+<script src="../assets/js/bootbox.min.js?t=1456826545"></script>
+<script src="../contents/js/it-common.js?t=1456826545"></script>
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    $.support.cors = true;
+    jQuery(function ($) {
+        $(document).on('click', '.toolbar a[data-target]', function (e) {
+            e.preventDefault();
+            var target = $(this).data('target');
+            $('.widget-box.visible').removeClass('visible');//hide others
+            $(target).addClass('visible');//show target
+        });
+    });
+
+    $("input").keyup(function(event){
+        if(event.keyCode ==13){
+            $("#login").trigger("click");
+        }
+    });
+
+
+    var resultcode=0;
+    $("#login").click(function () {
+        if ($("#username").val() != "" && $("#password").val() != "") {
+            var data = JSON.stringify({
+                "loginName": $("#username").val(),
+                "password": $("#password").val()
+            });
+
+           // Ace_HttpPost("http://aidev.cttq.com:808/base/login2",data,cbk,false);
+
+            $.ajax({
+                type: "POST",
+                //url: "http://aidev.cttq.com:808/base/login2",
+                url: it_service_user.UserLoginNew,
+                contentType: "application/json",
+                async: false,
+                data: data,
+                success: function (result) {
+                    if (result.CheckUser2Result == "调用成功") {
+                        //resultcode = 1;
+                        setCookie("userWorkCode", $("#username").val(), 2);
+                        getUserByCode($("#username").val(), findusername);
+                        setCookie("userName", $("#realusername").val(), 2);
+                        //setCookie("userType", result.resultJson.userType, 2);
+
+                        window.location.href = it_service_common.adminUrl + '/admin/index.html#page/works-list';
+                    }
+                    else {
+                        AlertTips(result.CheckUser2Result);
+                    }
+                }
+            });
+
+
+            //查询人员角色
+            if (resultcode == 1) {
+                $.ajax({
+                    type: "POST",
+                    url: it_service_url.QueryPersonalRole,
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"userWorkCode": ' + $("#username").val() + '}',
+                    success: function (result) {
+                        if (result.resultCode = 100) {
+                            setCookie("userWorkCode", $("#username").val(), 2);
+                            getUserByCode($("#username").val(), findusername);
+                            setCookie("userName", $("#realusername").val(), 2);
+                            setCookie("userType", result.resultJson.userType, 2);
+                            window.location.href = it_service_common.adminUrl + '/admin/index.html#page/works-list';
+                        }
+                        else {
+                            AlertTips("用户没有权限登录系统");
+                        }
+                    }
+                });
+            }
+        }
+        else {
+            AlertTips("用户名或密码不能为空");
+        }
+    });
+
+
+    function findusername(result) {
+        $("#realusername").val(result.ET_ZHR_ALL_INFO.item[0].NACHN);
+    }
+
+    //背景
+    $('body').attr('class', 'login-layout blur-login');
+    $('#id-text2').attr('class', 'white');
+    $('#id-company-text').attr('class', 'light-blue');
+
+</script>
+</body>
+</html>

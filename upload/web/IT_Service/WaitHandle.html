@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+    <link rel="stylesheet" href="../assets/css/chosen.css" />
+    <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+    <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+    <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+    <link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
+    <!-- text fonts -->
+    <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="../assets/js/html5shiv.js"></script>
+    <script src="../assets/js/respond.min.js"></script>
+    <![endif]-->
+    <title>IT服务 - 待审批</title>
+    <style type="text/css">
+        .btn-info:active, .btn-info:hover, .open .btn-info.dropdown-toggle{
+            background-color:#1567c5!important;
+            border-color:#2e82ff;
+        }
+        .btn-info, .btn-info:focus {
+            background-color:#2e82ff!important;
+            border-color:#2e82ff;
+        }
+        .nav-tabs>li{margin-right:4px;margin-bottom:-2px;}
+        .nav-tabs>li.active{margin-bottom:-1px;}
+        .tab-content.profile-edit-tab-content{border:1px solid #7ea8fb;border-width:1px 0 0 0;-webkit-box-shadow:none;box-shadow:none;}
+        .nav-tabs>li>a{padding: 14px 34px 14px 26px;font-size:16px;overflow:hidden;}
+        .nav-tabs>li>a>.ace-icon{float:left;margin-right:6px;}
+        .nav-tabs>li>a>span{float:left;margin-top:1px;}
+        .nav-tabs{border-color:#7ea8fb;border-bottom: 1px solid #7ea8fb;}
+        .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+            color:#1777e5;
+            border-color:#7ea8fb #7ea8fb transparent;
+            border-top:2px solid #1777e5;  
+        }
+        .nav-tabs>li>a, .nav-tabs>li>a:focus{
+            color:#1777e5;
+            border-color:#7ea8fb;
+            background-color: #fff;
+        }
+        .nav-tabs>li>a:hover{border-color:#7ea8fb;color:#1777e5;}
+
+        .tab-content.profile-edit-tab-content{padding:8px 0;padding-bottom:0px;}
+        .table-bordered{border:none;}
+        .table-bordered>thead>tr{border-top: 1px solid #ddd;}
+        .table-bordered>thead>tr,.table-bordered>tbody>tr{border:1px solid #ddd;border-width:0 1px;}
+        .table-bordered>thead>tr.TrInterval,.table-bordered>tbody>tr.TrInterval{border:none;}
+        .table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color:#fff;}
+        .table-bordered>tbody>tr.TrInterval>td,.table-bordered>thead>tr.TrInterval>th{border:none;padding:0;height:4px;background:#fff;}
+        .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color:#E4EFC9;}
+        .table-striped>tbody>tr.TdEach>td{background-color: rgba(225,228,250,0.6);}
+        .table-hover>tbody>tr.TdEach:hover>td{background-color: rgba(225,228,250,0.6);}
+        .table-striped>tbody>tr.TrDetailed>td{background-color: #fff;cursor: auto;}
+        .table-hover>tbody>tr.TrDetailed:hover>td{background-color: #fff;}
+        .table-hover>tbody>tr:hover>td.TrInterval, .table-hover>tbody>tr:hover>th.TrInterval{background-color:#fff;}
+        .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th{
+            cursor:pointer;
+        }
+        .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+            border-width:1px 0;
+        }
+        .table-striped>thead>tr{background-image:none;background-color:#1777e5;color:#fff;}
+        .table>thead>tr>th{font-weight:normal;}
+        .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+            padding:10px 8px;vertical-align:middle;
+        }
+        .table{font-size:14px;}
+        .table>tbody>tr>td>span.Beyond{vertical-align:middle;padding-top:1px;margin-top:2px;display:inline-block;}
+        .table>thead>tr>th>span.Beyond{vertical-align:middle;padding-top:1px;margin-top:1px;display:inline-block;}
+        .message-bar{position:absolute;margin-left:-58px;left:50%;}
+        .pagination>li.active>a{
+            background-color:#1777e5;
+        }
+        .pagination>li.active>a:hover{
+            background-color:#1777e5;
+        }
+        .overflowspan{
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .badge {
+            position: absolute !important;
+            top: 2px;
+            right: 2px;
+            padding: 1px 3px;
+            text-align: center;
+            font-size: 12px;
+            color: #FFF;
+        }
+        canvas{display:none;}
+        .main-container{background:#fff;}
+
+        .table-striped>tbody>tr.TrDetailed{
+            display: none;
+        }
+        .form-group{margin:0;}
+        .form-group label[class*=col-]{
+            padding-top:0px;
+            margin:0;
+            display:block;
+            padding:7px 12px 6px 12px;
+            text-align:right;
+            color:#4c4c4c;
+            font-size:14px;
+            font-weight:500;
+        }
+        .form-group-span {
+            padding:8px 0 7px 0;
+            display:block;
+            color:#030303;
+            font-size:14px;
+            font-weight:500;
+        }
+        .widget-body .table{border-top:none;}
+        .widget-body .table>thead>tr>td,.widget-body  .table>thead>tr>th{border-top:none;border-bottom:1px solid #1777e5;color:#333;}
+        .widget-body .table>tbody>tr>td,.widget-body  .table>tbody>tr>th{border-top:1px dashed #7ea8fb;color:#030303;}
+        .hr-dotted{border-style:dashed;border-color:#7ea8fb;display:inline-block;width:100%;}
+        .btn-info:active, .btn-info:hover, .open .btn-info.dropdown-toggle{
+            background-color:#1567c5!important;
+            border-color:#2e82ff;
+        }
+        .btn-info, .btn-info:focus {
+            background-color:#2e82ff!important;
+            border-color:#2e82ff;
+        }
+        .btn-warning:active, .btn-warning:hover, .open .btn-warning.dropdown-toggle{
+            background-color:#e0ab01!important;
+            border-color:#ffc300;
+        }
+        .btn-warning, .btn-warning:focus {
+            background-color:#ffc300!important;
+            border-color:#ffc300;
+        }
+        .form-actions{
+            margin-top: 5px;
+            margin-bottom: 0;
+        }
+        .label{height: auto;line-height: auto;padding: 5px 6px;margin-right: 10px;}
+        .System .btn.disabled,.System .btn[disabled],.System fieldset[disabled] .btn{
+            cursor: pointer;
+            pointer-events: all;
+            opacity: 1;
+        }
+        .System .btn{
+            margin-bottom: 2px;margin-top: 2px;
+        }
+        .profile-activity{
+            padding: 12px 8px;
+        }
+        .recordList{
+            overflow: hidden;
+        }
+        .recordList div.Rtitle{
+            font-weight: bold;
+        }
+        .recordList .tabModule{
+            margin-top: 8px;
+        }
+        .profile-activity .time{
+            margin-top: 10px;
+        }
+        .tabModuleBox{
+            position: relative;
+            display: inline-block;
+        }
+        .recordList .tabModule{
+            padding: 12px;width: auto;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: left;
+            cursor: pointer;
+            width: 260px;
+        }
+        .recordList .tabModule i.ace-icon,.recordList .tabModule div.tabModuleText{
+            float: left;
+            margin: 0;
+            padding: 0;
+        }
+        .recordList .tabModule i.ace-icon{
+            margin-right: 12px;
+        }
+        .btn-app.btn-info{
+            background: #3f96d4 !important;
+        }
+        .btn-app.btn-info:hover{
+            background: #3f96d4 !important;
+        }
+        .btn-app.btn-warning{
+            background: #fe9e19 !important;
+        }
+        .btn-app.btn-warning:hover{
+            background: #fe9e19 !important;
+        }
+        .btn.btn-app.btn-light{
+            background: #f2f2f2 !important;
+        }
+        .btn.btn-app.btn-light:hover{
+            background: #f2f2f2 !important;
+        }
+        .tabModuleBox{
+            cursor: pointer;
+        }
+        .tabModuleBox:hover .btn-app.btn-info{
+            background: #026dc9 !important;
+        }
+        .tabModuleBox:hover .btn-app.btn-warning{
+            background: #fe7902 !important;
+        }
+        .tabModuleBox:hover .btn-app.btn-light{
+            background: #ebebeb !important;
+        }
+        .recordList .tabModulePerform{
+            line-height: 1;
+            cursor: pointer;
+            padding: 8px 12px;
+            margin: 0;
+            position: absolute;
+            left: 2px;
+            bottom: 2px;
+        }
+        .recordList .tabModulePerform.radius-4{
+            border-top-left-radius:0;
+            border-top-right-radius:0;
+        }
+        .recordList .tabModulePerform>i.ace-icon{
+            font-size: 180%;
+            line-height: 1;
+            float: right;
+            margin-right: 0;
+        }
+        .recordList .tabModulePerform div.tabModuleText{
+            float: left;
+            margin-right: 12px;
+            height: 25px;
+            line-height: 25px;
+        }
+        .YWPerBox span{
+            margin-right: 8px;
+        }
+        #YWSPBox{
+            display:none;
+        }
+        #ITS01,#ITS02{
+            display: none;
+        }
+        .btn.btn-app.radius-4{
+            -moz-border-radius: 4px; /* Firefox */
+            -webkit-border-radius: 4px; /* Safari 和 Chrome */
+            border-radius: 4px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+    </style>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="../assets/js/jquery.min.js"></script>
+    <!--<script src="js/consoleNot.js"></script>-->
+</head>
+<body class="no-skin">
+    <div id="Loading" style=""></div>
+    <div class="main-container" id="main-container">
+        <div class="main-content">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs" style="background:#1777e5;">
+                <script type="text/javascript">
+                        try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                        } catch(e) {}
+                    </script>
+                <ul class="breadcrumb">
+                    <li> <i class="ace-icon fa fa-home home-icon white"></i>
+                        <a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+                    </li>
+                    <li>
+                        <a href="#" class="white">IT服务 - 待审批</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row-fluid  page-content">
+                <div class="page-header" style="border-bottom:solid 1px #1777e5;margin-bottom:0;">
+                    <input type="hidden" id="begD" value="">
+                    <input type="hidden" id="endD" value="">
+                    <h1 style="font-family:Microsoft YaHei ! important;color:#1a1a1a;position: relative;">
+                        <span id="titleH1">IT服务 - 待审批</span>
+                        <!-- <small> <i class="ace-icon fa fa-angle-double-right"></i>
+                            自定义数据
+                        </small> -->
+                        <div style="position: absolute;right: 0;top: -8px;">
+                            <button class="btn btn-info pull-right" type="button" id="tongyi" onClick="WSubmitAll();">
+                                <i class="ace-icon fa fa-check bigger-110"></i>
+                                同意
+                            </button>
+                        </div>
+                    </h1>
+                </div>
+                <div class="tabbable">
+                    <div class="tab-content profile-edit-tab-content" style="border: none;">
+                        <!-- 首营企业待办 -->
+                        <div id="GSPTabNav_01" class="tab-pane in active">
+                            <div class="message-navbar clearfix" style="border:none;background:none;padding:0 12px;margin:0 0 8px;">
+                                <!-- #section:basics/content.searchbox -->
+                                <!-- <div class="nav-search minimized" style="float:left;right:auto;left:auto;top:7px;bottom:auto;">
+                                    <form class="form-search" onsubmit="return false;">
+                                        <span class="input-icon">
+                                            <input type="text" id="SearchContent" autocomplete="off" onfocus="adstF(this)" onblur="adstB(this)" class="input-small nav-search-input" placeholder="查询待办事项..." onkeypress="toSearch(this.value)">
+                                            <i class="ace-icon fa fa-search nav-search-icon"></i>
+                                        </span>
+                                    </form>
+                                </div> -->
+                                <!-- <div class="message-bar bigger-150" style="height:42px;line-height:42px;color:#1777e5;">IT服务 - 待审批</div> -->
+                                
+                                <!-- /.nav-search -->
+                                <!-- /section:basics/content.searchbox --> 
+                            </div>
+                            <div style="border-bottom: 1px solid #7ea8fb;">
+                                <table id="sample-table-2" class="table table-striped table-bordered table-hover tableShow" style="margin-bottom:0px;">
+                                    <thead>
+                                        <tr>
+                                            <th class="center" style="width:50px;">
+                                                <label class="position-relative">
+                                                    <input type="checkbox" name="bhgpAll" id="bhgpAll" onclick="ChkAllClick(this);" class="ace toggle-all" />
+                                                    <span class="lbl"></span>
+                                                </label>
+                                            </th>
+                                            <th width="14%">
+                                                <span class="Beyond">问题分类</span>
+                                            </th>
+                                            <th width="28%">
+                                                <span class="Beyond">IT技术支持处理意见</span>
+                                            </th>
+                                            <th width="16%">
+                                                <span class="Beyond">用户</span>
+                                            </th>
+                                            <th width="18%">
+                                                <span class="Beyond">部门</span>
+                                            </th>
+                                            <th>提出时间</th>
+                                        </tr>
+                                        <tr class="TrInterval">
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="IT_List">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="border-bottom: 1px solid #7ea8fb;background-color:#EFF3F8;padding:12px 24px;border-top:none;overflow:hidden;">
+                        <div style="float:left;margin:0px;height:32px;">
+                            <label style="margin:0px;">
+                                <span style="float:left;height:32px;line-height:32px;">每页显示</span>
+                                <span style="float:left;margin:0 10px">
+                                    <select name="sample-table-2_length" id="InfoArticle" aria-controls="sample-table-2" class="form-control input-sm" style="height:32px;line-height:32px;">
+                                        <option onclick="changePageSize('10')" value="10">10</option>
+                                        <option onclick="changePageSize('20')" value="20">20</option>
+                                        <option onclick="changePageSize('30')" value="50">30</option>
+                                        <option onclick="changePageSize('50')" value="100">50</option>
+                                    </select>
+                                </span>
+                                <span style="float:left;height:32px;line-height:32px;">条</span>
+                            </label>
+                        </div>
+                        <ul class="pagination" id="page" style="float:right;margin:0px;">
+                            <li class="disabled" id="FirstPage">
+                                <a href="javascript:void(0);" onclick="PagJump()">
+                                    <i class="ace-icon fa fa-angle-double-left"></i>
+                                </a>
+                            </li>
+                            <li class="disabled" id="PrevPage">
+                                <a href="javascript:void(0);" onclick="PagJump()">
+                                    <i class="ace-icon fa fa-angle-left"></i>
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="javascript:void(0);">
+                                    <span id="CNum">1</span>
+                                    <span>/</span>
+                                    <span id="AllPage">1</span>
+                                </a>
+                            </li>
+                            <li id="NextPage">
+                                <a href="javascript:void(0);" onclick="PagJump()">
+                                    <i class="ace-icon fa fa-angle-right"></i>
+                                </a>
+                            </li>
+                            <li id="LastPage">
+                                <a href="javascript:void(0);" onclick="PagJump()">
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="YWSPBox" class="row-fluid page-content">
+        <div class="page-header" style="border-bottom:solid 1px #1777e5;">
+            <input type="hidden" id="begD" value="">
+            <input type="hidden" id="endD" value="">
+            <h1 style="color:#1a1a1a; padding-top: 2px;" id="titleH1">
+                转业务审批
+                <button type="button" class="close" onclick="Close_Enterprise()">
+                    <i class="ace-icon fa fa-times"></i>
+                </button>
+            </h1>
+        </div>
+        <div class="page-content-area" style="overflow: hidden;">
+            <div class="hr hr6 hr-dotted"></div>
+            <div class="col-xs-12 col-sm-12 form-group" style="padding: 4px 0px 4px 0px;">
+                <label class="col-sm-2 control-label">问题类型</label>
+                <div class="col-sm-10" style="padding: 4px 12px 5px 12px;" id="QuesTypeBox">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 form-group" style="padding: 4px 0px 4px 0px;">
+                <label class="col-sm-2 control-label">所属系统</label>
+                <div class="col-sm-10 System" style="padding: 1px 12px 0px 12px;" id="BelongSystypeBox">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 form-group" style="padding: 6px 0px 6px 0px;">
+                <label class="col-sm-2 control-label">客服处理意见</label>
+                <div class="col-sm-10 System" style="padding: 1px 12px 0px 12px;">
+                    <p class="alert alert-success" style="width:80%;margin: 0;" id="QuesContent">
+                        <!-- 客户申请进机房，请各位领导审批 -->
+                    </p>
+                </div>
+            </div>
+            <div id="ITS01">
+                <div class="col-xs-12 col-sm-12 form-group no-padding">
+                </div>
+            </div>
+            <div id="ITS02">
+                <div class="col-xs-12 col-sm-12 form-group no-padding">
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="../assets/js/jquery.min.js"></script>
+<!-- <![endif]-->
+<!--[if IE]>
+<script type="text/javascript">
+                window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");</script>
+<![endif]-->
+<!--<script type="text/javascript">
+if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>-->
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- page specific plugin scripts -->
+<script src="../assets/js/bootstrap-tag.min.js"></script>
+<script src="../assets/js/jquery.hotkeys.min.js"></script>
+<script src="../assets/js/bootstrap-wysiwyg.min.js"></script>
+<script src="../assets/js/jquery-ui.custom.min.js"></script>
+<script src="../assets/js/chosen.jquery.min.js"></script>
+<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="../assets/js/jquery.slimscroll.min.js"></script>
+<!-- ace scripts -->
+<script src="../assets/js/ace-elements.min.js"></script>
+<script src="../assets/js/ace.min.js"></script>
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    var bussnoArrITS01 = [];
+    var bussnoArrITS02 = [];
+    var length1 = 0;
+    function Close_Enterprise() {
+        layer.close(layer.index);
+    }
+    function CloseGritter(obj){
+        $.gritter.removeAll();
+    }
+    function CloseGritter_List(obj){
+        $.gritter.removeAll();
+        var userId = eachNum;
+        var bussType = 'ITS';
+        var beginDate = '';
+        var endDate = '';
+        var startPage = 1;
+        var pageSize = 10;
+        IT_WaitHandleList(userId,bussType,beginDate,endDate,startPage,pageSize);
+    }
+    //打开转业务审批
+    function OpenYWSPBox(bussNo,bussType,replyContent){
+    	//console.log(bussNo,bussType,replyContent,ITZC_quesTypeName,ITZC_belongSystypeName);
+    	//查询处理意见---------------------------------------
+    	$("#QuesContent").html(replyContent);
+    	//查询处理意见---------------------------------------
+    	
+        //查询审批路径---------------------------------------
+        var IT_Path_Return = getPath(eachNum,bussNo,bussType);
+        var IT_Path_Return = IT_Path_Return.output;
+        if( bussType == 1 ){
+            var ITS01Star = '';
+            var title = '';
+            var titleClass = '';
+            if( IT_Path_Return.type == 'S' ){
+                for( i=1;i<IT_Path_Return.procApprInfoList.length;i++ ){
+                    var apprResult = IT_Path_Return.procApprInfoList[i].apprResult;
+                    var apprStatus = '';
+                    if( apprResult.substring(apprResult.length-2,apprResult.length) == 02 ){
+                        title = '业务审批人';
+                        titleClass = 'IT_Title_02';
+                        apprStatus = '0';
+                    }else if( apprResult.substring(apprResult.length-2,apprResult.length) == 03 ){
+                        title = '技术支持';
+                        titleClass = 'IT_Title_03';
+                        apprStatus = '1';
+                    }else if( apprResult.substring(apprResult.length-2,apprResult.length) == 04 ){
+                        title = 'IT合规人';
+                        titleClass = 'IT_Title_04';
+                        apprStatus = '0';
+                    }else if( apprResult.substring(apprResult.length-2,apprResult.length) == 05 ){
+                        title = '执行人';
+                        titleClass = 'IT_Title_05';
+                        apprStatus = '1';
+                    }else if( apprResult.substring(apprResult.length-2,apprResult.length) == 06 ){
+                        title = '二线工程师';
+                        titleClass = 'IT_Title_05';
+                        apprStatus = '1';
+                    }
+                    
+                    if( IT_Path_Return.procApprInfoList[i].status == '0' ){
+                        ITS01Star +='<div class="col-xs-12 col-sm-12 form-group" style="padding: 4px 0px 4px 0px;">'
+                                +'<label class="col-sm-2 control-label '+titleClass+'">'+title+'</label>'
+                                +'<div class="col-sm-10 YWPerBox" style="padding: 2px 12px 1px 12px;">'
+                                    +'<span>'
+                                    +'<p class="alert alert-success" style="margin: 0;display: inline-block;padding: 4px 8px;">'
+                                        +''+IT_Path_Return.procApprInfoList[i].apprUsrId+'&nbsp;&nbsp;'+IT_Path_Return.procApprInfoList[i].apprUsrNm+''
+                                    +'</p></span>'
+                                    +'<span>'+(apprStatus == '1'?'待处理':'待审批')+'</span>'
+                                +'</div>'
+                            +'</div>'; 
+                    }else{
+                        ITS01Star +='<div class="col-xs-12 col-sm-12 form-group" style="padding: 4px 0px 4px 0px;">'
+                                +'<label class="col-sm-2 control-label '+titleClass+'">'+title+'</label>'
+                                +'<div class="col-sm-10 YWPerBox" style="padding: 2px 12px 1px 12px;">'
+                                    +'<span>'
+                                    +'<p class="alert alert-success" style="margin: 0;display: inline-block;padding: 4px 8px;">'
+                                        +''+IT_Path_Return.procApprInfoList[i].apprUsrId+'&nbsp;&nbsp;'+IT_Path_Return.procApprInfoList[i].apprUsrNm+''
+                                    +'</p></span>'
+                                    //五个：SM提交、RF拒绝、RT退回、CL取消、AG同意
+                                    if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'SM'){
+                                        ITS01Star+='<span>'+'提交'+'</span>'
+                                    }else if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'RF'){
+                                        ITS01Star+='<span>'+'拒绝'+'</span>'
+                                    }else if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'RT'){
+                                        ITS01Star+='<span>'+'退回'+'</span>'
+                                    }else if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'CL'){
+                                        ITS01Star+='<span>'+'取消'+'</span>'
+                                    }else if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'AG'){
+                                        ITS01Star+='<span>'+'同意'+'</span>'
+                                    }else{
+                                        ITS01Star+='<span>'+' '+'</span>'
+                                    }
+                                    ITS01Star+='<span>'+IT_Path_Return.procApprInfoList[i].comments+'</span>'
+                                    +'<span>'+IT_Path_Return.procApprInfoList[i].apprTm+'</span>'
+                                +'</div>'
+                            +'</div>';
+                    }
+                };
+                $("#ITS01 div").html(ITS01Star);
+                for( i=2;i<6;i++ ){
+                    var len = $('.IT_Title_0'+i+'').length;
+                    $('.IT_Title_0'+i+'').each(function(j, dom){
+                        if ( j != 0 ){
+                            $('.IT_Title_0'+i+'').eq(j).html('');
+                        }
+                    });
+                }
+                $("#ITS01").show();
+                $("#ITS02").hide();
+            }else{
+                $("#ITS01").hide();
+                $("#ITS02").hide();
+            }
+        }else{
+            var ITS02Star = '';
+            var title = '';
+            if( IT_Path_Return.type == 'S' ){
+                for( i=1;i<IT_Path_Return.procApprInfoList.length;i++ ){
+                    if( i == 1 ){
+                        title = '二线工程师';   
+                    }else{
+                        title = '';
+                    }
+                    if( IT_Path_Return.procApprInfoList[i].status == '0' ){
+                        ITS02Star +='<div class="col-xs-12 col-sm-12 form-group" style="padding: 4px 0px 4px 0px;">'
+                                +'<label class="col-sm-2 control-label">'+title+'</label>'
+                                +'<div class="col-sm-10 YWPerBox" style="padding: 2px 12px 1px 12px;">'
+                                    +'<span>'
+                                    +'<p class="alert alert-success" style="margin: 0;display: inline-block;padding: 4px 8px;">'
+                                        +''+IT_Path_Return.procApprInfoList[i].apprUsrId+'&nbsp;&nbsp;'+IT_Path_Return.procApprInfoList[i].apprUsrNm+''
+                                    +'</p></span>'
+                                    +'<span>待审批</span>'
+                                +'</div>'
+                            +'</div>'; 
+                    }else{
+                        ITS02Star +='<div class="col-xs-12 col-sm-12 form-group" style="padding: 4px 0px 4px 0px;">'
+                                +'<label class="col-sm-2 control-label">'+title+'</label>'
+                                +'<div class="col-sm-10 YWPerBox" style="padding: 2px 12px 1px 12px;">'
+                                    +'<span>'
+                                    +'<p class="alert alert-success" style="margin: 0;display: inline-block;padding: 4px 8px;">'
+                                        +''+IT_Path_Return.procApprInfoList[i].apprUsrId+'&nbsp;&nbsp;'+IT_Path_Return.procApprInfoList[i].apprUsrNm+''
+                                    +'</p></span>'
+                                    //五个：SM提交、RF拒绝、RT退回、CL取消、AG同意
+                                    if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'SM'){
+                                        ITS02Star+='<span>'+'提交'+'</span>'
+                                    }else if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'RF'){
+                                        ITS02Star+='<span>'+'拒绝'+'</span>'
+                                    }else if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'RT'){
+                                        ITS02Star+='<span>'+'退回'+'</span>'
+                                    }else if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'CL'){
+                                        ITS02Star+='<span>'+'取消'+'</span>'
+                                    }else if(IT_Path_Return.procApprInfoList[i].apprResult.substring(0,2) == 'AG'){
+                                        ITS02Star+='<span>'+'同意'+'</span>'
+                                    }else{
+                                        ITS02Star+='<span>'+' '+'</span>'
+                                    }
+                                    ITS02Star+='<span>'+IT_Path_Return.procApprInfoList[i].comments+'</span>'
+                                    +'<span>'+IT_Path_Return.procApprInfoList[i].apprTm+'</span>'
+                                +'</div>'
+                            +'</div>';
+                    }
+                };
+                $("#ITS02 div").html(ITS02Star);
+                $("#ITS02").show();
+                $("#ITS01").hide();
+            }else{
+                $("#ITS01").hide();
+                $("#ITS02").hide();
+            }
+        }
+        //查询审批路径---------------------------------------
+        var YWSPBox = $.layer({
+            type: 1,   //0-4的选择,
+            title: false,
+            border: [0],
+            closeBtn: [0],
+            shadeClose: true,
+            area: ['800px', 'auto'],
+            page: {dom : '#YWSPBox'}
+        });
+    }
+    //展开详情页
+    function Open_Detailed(obj){
+        var eachOrder = $(obj).closest('tr');
+        var bussNo = eachOrder.data('bussno');
+        var bussType = eachOrder.data('busstype');
+        var taskId = eachOrder.data('taskid');
+        var currStep = eachOrder.data('currstep');
+        var quesCid = eachOrder.data('quescid');
+        var reqUsrId =  eachOrder.data('requsrid');
+        var reqUsrNm = eachOrder.data('requsrnm');
+        if( $(obj).closest('tr').next('tr').hasClass('TrDetailed') ){
+            //显示
+            if( $(obj).closest('tr').hasClass('TdEach') ){
+                $(obj).closest('tr').removeClass('TdEach');
+                $(obj).closest('tr').next('tr.TrDetailed').hide();
+            }else{
+                $(obj).closest('tr').siblings().removeClass('TdEach');
+                $(obj).closest('tr').addClass('TdEach');
+                
+                $(obj).closest('tr').siblings('tr.TrDetailed').hide();
+                $(obj).closest('tr').next('tr.TrDetailed').show();
+            }
+        }else{
+            var target = document.getElementById("Loading");  
+            var spinner = new Spinner(opts).spin(target);
+            pagei = $.layer({
+                type: 1,   //0-4的选择,
+                title: false,
+                border: [0],
+                closeBtn: [0],
+                offset:['' , '47.8%'],
+                shadeClose: false,
+                area: ['auto', 'auto'],
+                page: {dom : '#Loading'}
+            });
+            setTimeout(function() {
+                //查询问题详情
+                var IT_WaitHandleDetailed_Return = WaitHandleDetailed_Request(quesCid,eachNum);
+                //console.log(IT_WaitHandleDetailed_Return);
+                var resultJson = IT_WaitHandleDetailed_Return.resultJson
+                ////console.log(resultJson);
+                //判断员工1、内部员工 2、外部员工]
+                if( resultJson.userInoutsideType == 1 ){
+                    var PerInfo = getPerInfo(IT_WaitHandleDetailed_Return.resultJson.raiserUserWorkCode);
+                    //console.log(PerInfo);
+                    PerInfo = PerInfo.ET_ZHR_ALL_INFO.item[0];
+                    var PerNmae = PerInfo.NACHN;
+                    var PerZZ_TEL = PerInfo.ZZ_TEL;
+                    var PerORGTX = showPost(PerInfo,'-');
+                    var PerSTLTX = PerInfo.STLTX;
+                }else{
+                    var PerNmae = resultJson.userName;
+                    var PerZZ_TEL = resultJson.cellPhone;
+                    var PerORGTX = resultJson.departmentName;
+                    var PerSTLTX = resultJson.jobTitle;
+                }
+                //查询审批路径
+                var IT_Path_Return = getPath(eachNum,bussNo,bussType);
+                ////console.log(IT_Path_Return);
+                var DetailedStr = '';
+                DetailedStr += '<tr class="TrDetailed" data-taskId="'+checkNoChar1(taskId)+'" data-currStep="'+checkNoChar1(currStep)+'" data-bussType="'+checkNoChar1(bussType)+'" data-reqUsrId="'+checkNoChar1(reqUsrId)+'" data-reqUsrNm="'+checkNoChar1(reqUsrNm)+'" data-bussNo="'+checkNoChar1(bussNo)+'">'
+                                +'<td colspan="6">'
+                                    +'<div id="" class="col-xs-12 panel-group accordion-style1 accordion-style2" style="margin-bottom: 0px;">'
+                //用户信息------------------------------------------------------------------------------
+                +'<div class="panel panel-default">'
+                    +'<div class="panel-heading">'
+                        +'<a href="#faq-1-1" data-parent="#faq-list-1" data-toggle="collapse" class="accordion-toggle">'
+                            +'<i class="ace-icon fa fa-chevron-down pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left" style="margin-top:2px;"></i>'
+                            +'<i class="ace-icon fa fa-user bigger-130"></i>'
+                            +'&nbsp; 用户信息'
+                        +'</a>'
+                    +'</div>'
+                    +'<div class="panel-collapse collapse in" id="faq-1-1">'
+                        +'<div class="panel-body">'
+                            +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                +'<label class="col-sm-2 control-label">用户</label>'
+                                +'<div class="col-sm-2">'
+                                    +'<span class="form-group-span">'+checkNoChar(PerNmae)+'</span>'
+                                +'</div>'
+                                +'<label class="col-sm-2 control-label">联系方式</label>'
+                                +'<div class="col-sm-2">'
+                                    +'<span class="form-group-span">'+checkNoChar(PerZZ_TEL)+'</span>'
+                                +'</div>'
+                            +'</div>'
+                            +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                +'<label class="col-sm-2 control-label">部门</label>'
+                                +'<div class="col-sm-2">'
+                                    +'<span class="form-group-span">'+checkNoChar(PerORGTX)+'</span>'
+                                +'</div>'
+                                +'<label class="col-sm-2 control-label">职务</label>'
+                                +'<div class="col-sm-2">'
+                                    +'<span class="form-group-span">'+checkNoChar(PerSTLTX)+'</span>'
+                                +'</div>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>'
+                +'</div>'
+                //用户信息------------------------------------------------------------------------------
+                
+                //工单基本信息--------------------------------------------------------------------------
+                +'<div class="panel panel-default">'
+                    +'<div class="panel-heading">'
+                        +'<a href="#faq-2-2" data-parent="#faq-list-2" data-toggle="collapse" class="accordion-toggle">'
+                            +'<i class="ace-icon fa fa-chevron-down pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left" style="margin-top:2px;"></i>'
+                            +'<i class="ace-icon fa fa-book bigger-130"></i>'
+                            +'&nbsp; 工单基本信息'
+                        +'</a>'
+                    +'</div>'
+                    +'<div class="panel-collapse collapse in" id="faq-2-2">'
+                        +'<div class="panel-body">'
+                            +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                +'<label class="col-sm-2 control-label">工单编号</label>'
+                                +'<div class="col-sm-2">'
+                                    +'<span class="form-group-span">'+resultJson.quesWorkCode+'</span>'
+                                +'</div>'
+                                +'<label class="col-sm-2 control-label">工单状态</label>'
+                                +'<div class="col-sm-2">'
+                                    +'<span class="form-group-span">'+resultJson.quesStateItName+'</span>'
+                                +'</div>'
+                                +'<label class="col-sm-2 control-label">预计反馈时间</label>'
+                                +'<div class="col-sm-2">'
+                                    +'<span class="form-group-span">'+formatUnix(resultJson.planRebackTime)+'</span>'
+                                +'</div>'
+                            +'</div>'
+                            +'<div class="col-xs-12 col-sm-12 form-group" style="padding: 4px 0px 4px 0px;">'
+                                +'<label class="col-sm-2 control-label">问题分类</label>'
+                                +'<div class="col-sm-10" style="padding: 4px 12px 5px 12px;">'
+                                if( resultJson.quesTypeInfos != null ){                            
+                                    for( i=0;i<resultJson.quesTypeInfos.length;i++ ){
+                                        DetailedStr +='<span class="label label-warning">'
+                                            +'<i class="ace-icon fa fa-exclamation-triangle bigger-120"></i>'
+                                            +'&nbsp;&nbsp;'+resultJson.quesTypeInfos[i].quesTypeName+''
+                                        +'</span>'
+                                        // if( resultJson.quesTypeInfos[i].quesTypeName == '系统问题' ){
+                                        //     DetailedStr +='<span class="label label-warning">'
+                                        //         +'<i class="ace-icon fa fa-exclamation-triangle bigger-120"></i>'
+                                        //         +'&nbsp;&nbsp;系统问题'
+                                        //     +'</span>'
+                                        // }else if( resultJson.quesTypeInfos[i].quesTypeName == '服务申请' ){
+                                        //     DetailedStr +='<span class="label label-success">'
+                                        //         +'<i class="ace-icon fa aift-servicerequest bigger-120"></i>'
+                                        //         +'&nbsp;&nbsp;服务申请'
+                                        //     +'</span>'
+                                        // }else if( resultJson.quesTypeInfos[i].quesTypeName == '咨询' ){
+                                        //     DetailedStr +='<span class="label label-info">'
+                                        //         +'<i class="ace-icon fa aift-consult bigger-120"></i>'
+                                        //         +'&nbsp;&nbsp;咨询'
+                                        //     +'</span>'
+                                        // }else if( resultJson.quesTypeInfos[i].quesTypeName == '投诉' ){
+                                        //     DetailedStr +='<span class="label label-danger">'
+                                        //         +'<i class="ace-icon fa aift-complaint bigger-120"></i>'
+                                        //         +'&nbsp;&nbsp;投诉'
+                                        //     +'</span>'
+                                        // }else if( resultJson.quesTypeInfos[i].quesTypeName == '新需求' ){
+                                        //     DetailedStr +='<span class="label label-pink">'
+                                        //         +'<i class="ace-icon fa aift-newdemand bigger-120"></i>'
+                                        //         +'&nbsp;&nbsp;新需求'
+                                        //     +'</span>'
+                                        // }else{
+                                        //     DetailedStr +='<span class="label label-purple">'
+                                        //         +'<i class="ace-icon fa aift-other bigger-120"></i>'
+                                        //         +'&nbsp;&nbsp;其他'
+                                        //     +'</span>'
+                                        // }
+                                    }
+                                }
+                                DetailedStr +='</div>'
+                            +'</div>'
+                            +'<div class="col-xs-12 col-sm-12 form-group" style="padding: 4px 0px 4px 0px;">'
+                                +'<label class="col-sm-2 control-label">所属系统</label>'
+                                +'<div class="col-sm-10 System" style="padding: 1px 12px 0px 12px;">'
+                                if( resultJson.belongSystypeInfos != null ){
+                                    for( i=0;i<resultJson.belongSystypeInfos.length;i++ ){
+                                        var btnBgColorArr = ["btn-default", "btn-primary", "btn-info", "btn-success", "btn-warning", "btn-danger", "btn-yellow", "btn-pink", "btn-purple", "btn-inverse"];
+                                        var xitong = resultJson.belongSystypeInfos[i].belongSystypeName == null?'其他':checkNoChar1(resultJson.belongSystypeInfos[i].belongSystypeName);
+                                        DetailedStr +='<button type="button" class="btn btn-white '+btnBgColorArr[i]+' btn-sm disabled" style="margin-right: 8px;">'+xitong+'</button>'
+                                    }
+                                }
+                                DetailedStr +='</div>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>'
+                +'</div>'
+                //工单基本信息--------------------------------------------------------------------------
+                
+                //沟通记录------------------------------------------------------------------------------
+                +'<div class="panel panel-default">'
+                    +'<div class="panel-heading">'
+                        +'<a href="#faq-3-3" data-parent="#faq-list-3" data-toggle="collapse" class="accordion-toggle">'
+                            +'<i class="ace-icon fa fa-chevron-down pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left" style="margin-top:2px;"></i>'
+                            +'<i class="ace-icon fa fa-list-alt bigger-130"></i>'
+                            +'&nbsp; 沟通记录'
+                        +'</a>'
+                    +'</div>'
+                    +'<div class="panel-collapse collapse in" id="faq-3-3">'
+                       +'<div class="panel-body">'
+                            //问题描述
+                            +'<div class="profile-activity clearfix">'
+                                +'<div class="recordList">'
+                                    +'<i class="pull-left fa aift-personal no-hover" style="font-size: 330%;color: #8a8a8a;"></i>'
+                                    +'<div class="Rtitle">'+resultJson.userName+'：'+resultJson.quesContent+'</div>'
+                                    +'<div class="time">'+formatUnix(resultJson.raiseDatetime)+'</div>'
+                                +'</div>'
+                            +'</div>'
+                            //问题补充
+                            if( resultJson.subQuesInfos != null ){
+                                for( i=0;i<resultJson.subQuesInfos.length;i++ ){
+                                    DetailedStr +='<div class="profile-activity clearfix">'
+                                                    +'<div class="recordList">'
+                                                        +'<i class="pull-left fa aift-personal no-hover" style="font-size: 330%;color: #8a8a8a;"></i>'
+                                                        +'<div class="Rtitle">'+resultJson.userName+'：'+resultJson.subQuesInfos[i].subQuesContent+'</div>'
+                                                        +'<div class="time">'+formatUnix(resultJson.subQuesInfos[i].subQuesDatetime)+'</div>'
+                                                    +'</div>'
+                                                +'</div>'
+                                }
+                            }
+                            //IT-技术支持-默认回复
+                            DetailedStr += '<div class="profile-activity clearfix">'
+                                            +'<div class="recordList">'
+                                                +'<i class="pull-left fa aift-custom no-hover" style="font-size: 330%;color: #91a7ff;"></i>'
+                                                +'<div class="Rtitle">IT技术支持：'+resultJson.answerObj[0].replyContent+'</div>'
+                                                +'<div class="time">'+formatUnix(resultJson.answerObj[0].replyDatetime)+'</div>'
+                                            +'</div>'
+                                        +'</div>'
+                            //问题回复
+                            if( resultJson.answerObj[0].answerReplyInfos != null ){
+                                //zhoulei-20160220-所属系统-其他-bug
+                                var ITZC_belongSystypeName = null;
+                                var ITZC_belongSystypeNameObj = resultJson.belongSystypeInfos;
+                                if(ITZC_belongSystypeNameObj && ITZC_belongSystypeNameObj.length){
+                                    ITZC_belongSystypeName = [];
+                                    for(var i in ITZC_belongSystypeNameObj){
+                                        if(ITZC_belongSystypeNameObj[i] && ITZC_belongSystypeNameObj[i].belongSystypeName && (typeof ITZC_belongSystypeNameObj[i].belongSystypeName) == "string"){
+                                            ITZC_belongSystypeName.push(ITZC_belongSystypeNameObj[i].belongSystypeName);
+                                        }
+                                    }
+                                    if(ITZC_belongSystypeName.length == 0){
+                                        ITZC_belongSystypeName = null;
+                                    }
+                                }
+                                
+                                for( i=0;i<resultJson.answerObj[0].answerReplyInfos.length;i++ ){
+                                    //console.log(i);
+                                    //问题提出人-回复
+                                    if( resultJson.answerObj[0].answerReplyInfos[i].replyWorkCode == resultJson.raiserUserWorkCode ){
+                                        DetailedStr += '<div class="profile-activity clearfix">'
+                                                        +'<div class="recordList">'
+                                                            +'<i class="pull-left fa aift-personal no-hover" style="font-size: 330%;color: #8a8a8a;"></i>'
+                                                            +'<div class="Rtitle">'+resultJson.userName+'：'+resultJson.answerObj[0].answerReplyInfos[i].replyContent+'</div>'
+                                                            +'<div class="time">'+formatUnix(resultJson.answerObj[0].answerReplyInfos[i].replyDatetime)+'</div>'
+                                                        +'</div>'
+                                                    +'</div>'
+                                    }
+                                    //IT客服-回复
+                                    else{
+                                        //有转流程
+                                        if( resultJson.answerObj[0].answerReplyInfos[i].flowCid != null ){
+                                            // var ProfileReturn = getProfile(resultJson.answerObj[0].answerReplyInfos[i].replyCid,eachNum);
+                                            //console.log(resultJson.answerObj[0].answerReplyInfos[i]);
+                                            var BoxColor = '';
+                                            //1、业务流程;2、二线流程
+                                            if( resultJson.answerObj[0].answerReplyInfos[i].flowType == 2 ){
+                                                //橙色
+                                                BoxColor = 'btn-warning';
+                                            }else{
+                                                //蓝色
+                                                BoxColor = 'btn-info';
+                                            }
+                                            //下一步审批人
+                                            if( resultJson.answerObj[0].answerReplyInfos[i].bussFlowState == 1 ){
+                                                var NextPer = getNextPer(eachNum,resultJson.answerObj[0].answerReplyInfos[i].flowCid,resultJson.answerObj[0].answerReplyInfos[i].flowType);
+                                                if( NextPer.output.routeList != undefined ){
+                                                    var nextPerTEXT = '';
+                                                    if( NextPer.output.routeList.length != undefined ){
+                                                    	for( j=0;j<NextPer.output.routeList.length;j++ ){
+                                                    	    if( j == Number(NextPer.output.routeList.length - 1) ){
+                                                    	        nextPerTEXT += NextPer.output.routeList[j].apprUsrNm;
+                                                    	    }else{
+                                                    	        nextPerTEXT += ''+NextPer.output.routeList[j].apprUsrNm+'、';
+                                                    	    }
+                                                    	}
+                                                    }else{
+                                                    	nextPerTEXT += NextPer.output.routeList.apprUsrNm;
+                                                    }
+                                                    if( NextPer.output.routeList.length == undefined ){
+                                                        if( NextPer.output.routeList.roleType == "02" || NextPer.output.routeList.roleType=="04"){
+                                                            var apprResult='审批'; 
+                                                        }else if( NextPer.output.routeList.roleType=="03"|| NextPer.output.routeList.roleType=="05"|| NextPer.output.routeList.roleType=="06"){
+                                                            var apprResult='处理'; 
+                                                        }
+                                                    }else{
+                                                        if( NextPer.output.routeList[0].roleType == "02" || NextPer.output.routeList[0].roleType=="04"){
+                                                            var apprResult='审批'; 
+                                                        }else if( NextPer.output.routeList[0].roleType=="03"|| NextPer.output.routeList[0].roleType=="05"|| NextPer.output.routeList[0].roleType=="06"){
+                                                            var apprResult='处理'; 
+                                                        }
+                                                    }
+                                                    var PathInfo = '待&nbsp;&nbsp;'+nextPerTEXT+'&nbsp;&nbsp;'+apprResult+'';
+                                                }else{
+                                                    var PathInfo = checkNoChar1(resultJson.answerObj[0].answerReplyInfos[i].bussFlowStateName);
+                                                }
+                                            }else{
+                                                var PathInfo = checkNoChar1(resultJson.answerObj[0].answerReplyInfos[i].bussFlowStateName);
+                                            }
+                                            var reg = /\ /g;
+                                            var PathContent = resultJson.answerObj[0].answerReplyInfos[i].quickReplyContent;
+                                            var ITZC_quesTypeName = resultJson.answerObj[0].answerReplyInfos[i].quesTypeName;
+                                            //zhoulei-20160220-所属系统 其他-bug
+                                            //var ITZC_belongSystypeName = resultJson.answerObj[0].answerReplyInfos[i].belongSystypeName;
+                                            
+                                            //查询问题分类---------------------------------------
+                                            if( ITZC_quesTypeName != null ){
+                                                var QuesTypeStr = '';
+                                                for( j=0;j<ITZC_quesTypeName.length;j++ ){
+                                                    QuesTypeStr +='<span class="label label-warning">'
+                                                        +'<i class="ace-icon fa fa-exclamation-triangle bigger-120"></i>'
+                                                        +'&nbsp;&nbsp;'+ITZC_quesTypeName[j]+''
+                                                    +'</span>'
+                                                    // if( ITZC_quesTypeName[j] == '系统问题' ){
+                                                    //     QuesTypeStr +='<span class="label label-warning">'
+                                                    //         +'<i class="ace-icon fa fa-exclamation-triangle bigger-120"></i>'
+                                                    //         +'&nbsp;&nbsp;系统问题'
+                                                    //     +'</span>'
+                                                    // }else if( ITZC_quesTypeName[j] == '服务申请' ){
+                                                    //     QuesTypeStr +='<span class="label label-success">'
+                                                    //         +'<i class="ace-icon fa aift-servicerequest bigger-120"></i>'
+                                                    //         +'&nbsp;&nbsp;服务申请'
+                                                    //     +'</span>'
+                                                    // }else if( ITZC_quesTypeName[j] == '咨询' ){
+                                                    //     QuesTypeStr +='<span class="label label-info">'
+                                                    //         +'<i class="ace-icon fa aift-consult bigger-120"></i>'
+                                                    //         +'&nbsp;&nbsp;咨询'
+                                                    //     +'</span>'
+                                                    // }else if( ITZC_quesTypeName[j] == '投诉' ){
+                                                    //     QuesTypeStr +='<span class="label label-danger">'
+                                                    //         +'<i class="ace-icon fa aift-complaint bigger-120"></i>'
+                                                    //         +'&nbsp;&nbsp;投诉'
+                                                    //     +'</span>'
+                                                    // }else if( ITZC_quesTypeName[j] == '新需求' ){
+                                                    //     QuesTypeStr +='<span class="label label-pink">'
+                                                    //         +'<i class="ace-icon fa aift-newdemand bigger-120"></i>'
+                                                    //         +'&nbsp;&nbsp;新需求'
+                                                    //     +'</span>'
+                                                    // }else{
+                                                    //     QuesTypeStr +='<span class="label label-purple">'
+                                                    //         +'<i class="ace-icon fa aift-other bigger-120"></i>'
+                                                    //         +'&nbsp;&nbsp;其他'
+                                                    //     +'</span>'
+                                                    // }
+                                                }
+                                                $("#QuesTypeBox").html(QuesTypeStr);
+                                            }
+                                            //查询问题分类---------------------------------------
+                                            
+                                            //查询所属系统---------------------------------------
+                                            if( ITZC_belongSystypeName != null ){
+                                                var BelongSystypeStr = '';
+                                                // for( j=0;j<ITZC_belongSystypeName.length;j++ ){
+                                                    // var btnBgColorArr = ["btn-default", "btn-primary", "btn-info", "btn-success", "btn-warning", "btn-danger", "btn-yellow", "btn-pink", "btn-purple", "btn-inverse"];
+                                                    // var xitong = ITZC_belongSystypeName[j] == null?'其他':checkNoChar1(ITZC_belongSystypeName[j]);
+                                                    // BelongSystypeStr +='<button type="button" class="btn btn-white '+btnBgColorArr[j]+' btn-sm disabled" style="margin-right: 8px;">'+xitong+'</button>'
+                                                // }
+                                                //zhoulei-20160219-修改
+                                                for( j=0;j<ITZC_belongSystypeName.length;j++ ){
+                                                    if(ITZC_belongSystypeName[j] != null){
+                                                        var btnBgColorArr = ["btn-default", "btn-primary", "btn-info", "btn-success", "btn-warning", "btn-danger", "btn-yellow", "btn-pink", "btn-purple", "btn-inverse"];
+                                                        var xitong = ITZC_belongSystypeName[j] == null?'其他':checkNoChar1(ITZC_belongSystypeName[j]);
+                                                        BelongSystypeStr +='<button type="button" class="btn btn-white '+btnBgColorArr[j]+' btn-sm disabled" style="margin-right: 8px;">'+xitong+'</button>'
+                                                    }
+                                                    
+                                                }
+                                                $("#BelongSystypeBox").html(BelongSystypeStr);
+                                            }else{
+                                                var BelongSystypeStr ='<button type="button" class="btn btn-white btn-default btn-sm disabled" style="margin-right: 8px;">其他</button>';
+                                                $("#BelongSystypeBox").html(BelongSystypeStr);
+                                            }
+                                            //查询所属系统---------------------------------------
+                                            
+                                            PathContent = PathContent.replace(reg, "&nbsp;");
+                                            //console.log(resultJson.answerObj[0].answerReplyInfos[i].outFlowId);
+                                            if( resultJson.answerObj[0].answerReplyInfos[i].outFlowId == null ){
+                                                DetailedStr += '<div class="profile-activity clearfix">'
+                                                                +'<div class="recordList">'
+                                                                    +'<i class="pull-left fa aift-custom no-hover" style="font-size: 330%;color: #91a7ff;"></i>'
+                                                                    +'<div class="Rtitle">IT技术支持：'+resultJson.answerObj[0].answerReplyInfos[i].replyContent+'</div>'
+                                                                    +'<div class="time">'+formatUnix(resultJson.answerObj[0].answerReplyInfos[i].replyDatetime)+'</div>'
+                                                                +'</div>'
+                                                            +'</div>'
+                                            }else{
+                                                DetailedStr +='<div class="profile-activity clearfix">'
+                                                                +'<div class="recordList">'
+                                                                    +'<i class="pull-left fa aift-custom no-hover" style="font-size: 330%;color: #91a7ff;"></i>'
+                                                                    +'<div class="Rtitle">IT技术支持：'+resultJson.answerObj[0].answerReplyInfos[i].replyContent+'</div>'
+                                                                    +'<div style="display: inline-block;">'
+                                                                        +'<div class="tabModuleBox" onclick="OpenYWSPBox(\''+resultJson.answerObj[0].answerReplyInfos[i].flowCid+'\',\''+resultJson.answerObj[0].answerReplyInfos[i].flowType+'\',\''+resultJson.answerObj[0].answerReplyInfos[i].replyContent+'\');">'
+                                                                            +'<div class="btn '+BoxColor+' btn-app radius-4 tabModule" style="padding: 12px 12px 53px 12px;">'
+                                                                                +'<i class="ace-icon fa aift-project bigger-230"></i>'
+                                                                                +'<div class="tabModuleText">'
+                                                                                    +'<div title='+PathInfo+' style="display:block;white-space:nowrap; overflow:hidden;text-overflow:ellipsis;width:190px;">'+PathInfo+'</div>'
+                                                                                    +'<div title='+PathContent+' style="display:block;white-space:nowrap; overflow:hidden;text-overflow:ellipsis;width:190px;">'+PathContent+'</div>'
+                                                                                +'</div>'
+                                                                            +'</div>'
+                                                                            +'<div class="btn btn-light btn-app radius-4 tabModule tabModulePerform" onclick="">'
+                                                                                +'<i class="ace-icon fa fa-angle-right"></i>'
+                                                                                +'<div class="tabModuleText">'
+                                                                                    +'<div>'+resultJson.answerObj[0].answerReplyInfos[i].flowTypeName+'</div>'
+                                                                                +'</div>'
+                                                                            +'</div>'
+                                                                        +'</div>'
+                                                                        +'<div class="time">'+formatUnix(resultJson.answerObj[0].answerReplyInfos[i].replyDatetime)+'</div>'
+                                                                    +'</div>'
+                                                                +'</div>'
+                                                            +'</div>'
+                                            }
+                                        }
+                                        //无转流程
+                                        else{
+                                            //2016-02-22 增加图片回复的展示
+                                            //if(false){
+                                            if(resultJson.answerObj[0].answerReplyInfos[i].replyImagePath && resultJson.answerObj[0].answerReplyInfos[i].replyImagePath.length){
+                                                DetailedStr += '<div class="profile-activity clearfix">'
+                                                            +'<div class="recordList">'
+                                                                +'<i class="pull-left fa aift-custom no-hover" style="font-size: 330%;color: #91a7ff;"></i>'
+                                                                +'<div class="Rtitle">IT技术支持：'+checkNoChar1(resultJson.answerObj[0].answerReplyInfos[i].replyContent)+'</div>'
+                                                                +'<div style="padding:12px"><img src="'+resultJson.answerObj[0].answerReplyInfos[i].replyImagePath[0]+'" style="width:100px;height:100px;border-radius:0;max-width:100px"></div>'
+                                                                +'<div class="time">'+formatUnix(resultJson.answerObj[0].answerReplyInfos[i].replyDatetime)+'</div>'
+                                                            +'</div>'
+                                                        +'</div>';
+                                            }else{
+                                                DetailedStr += '<div class="profile-activity clearfix">'
+                                                            +'<div class="recordList">'
+                                                                +'<i class="pull-left fa aift-custom no-hover" style="font-size: 330%;color: #91a7ff;"></i>'
+                                                                +'<div class="Rtitle">IT技术支持：'+checkNoChar1(resultJson.answerObj[0].answerReplyInfos[i].replyContent)+'</div>'
+                                                                +'<div class="time">'+formatUnix(resultJson.answerObj[0].answerReplyInfos[i].replyDatetime)+'</div>'
+                                                            +'</div>'
+                                                        +'</div>';
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        DetailedStr +='</div>'
+                    +'</div>'
+                +'</div>' 
+                //沟通记录------------------------------------------------------------------------------
+                
+                //审批路径------------------------------------------------------------------------------
+                +'<div class="panel panel-default">'
+                    +'<div class="panel-heading">'
+                        +'<a href="#faq-4-4" data-parent="#faq-list-4" data-toggle="collapse" class="accordion-toggle collapsed">'
+                            +'<i class="ace-icon fa fa-chevron-left pull-right" data-icon-hide="ace-icon fa fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-left" style="margin-top:2px;"></i>'
+                            +'<i class="ace-icon fa fa-tasks bigger-130"></i>'
+                            +'&nbsp; 审批路径'
+                        +'</a>'
+                    +'</div>'
+                    +'<div class="panel-collapse collapse" id="faq-4-4">'
+                        +'<div class="panel-body widget-body" style="padding: 0px;">'
+                            +'<div class="widget-main" style="padding:0 24px;">'
+                                +'<table class="table" style="margin-bottom: 0;">'
+                                    +'<thead>'
+                                        +'<tr>'
+                                            +'<th class="center col-xs-3">处理时间</th>'
+                                            +'<th class="center col-xs-2">操作人</th>'
+                                            +'<th class="center col-xs-2">状态</th>'
+                                            +'<th class="center col-xs-2">处理信息</th>'
+                                            +'<th class="center col-xs-3">审批意见</th>'
+                                        +'</tr>'
+                                    +'</thead>'
+                                    +'<tbody>';
+                                    var apprResult = '';
+                                    var apprResultLast = '';
+                                    var apprResultArr = [];
+                                    var apprStatus = '';
+                                    var sp_status = '';
+                                    for (var i = 0; i < IT_Path_Return.output.procApprInfoList.length; i++) {
+                                        apprStatus = checkNoChar(IT_Path_Return.output.procApprInfoList[i].status);
+                                        apprResult = checkNoChar(IT_Path_Return.output.procApprInfoList[i].apprResult);
+                                        apprResultArr = apprResult.split("_");
+                                        if(apprResultArr.length){
+                                            apprResultLast = apprResultArr[apprResultArr.length-1];
+                                            if(apprResultLast == '03' || apprResultLast == '05' || apprResultLast == '06'){
+                                                sp_status = (apprStatus == '1'?'已处理':'未处理');
+                                            }else{
+                                                sp_status = (apprStatus == '1'?'已审批':'未审批');
+                                            }
+                                        }else{
+                                            sp_status = (apprStatus == '1'?'已审批':'未审批');
+                                        }
+                                        
+                                        DetailedStr += '<tr>'
+                                                    +'<td class="center">'+(checkNoChar(IT_Path_Return.output.procApprInfoList[i].apprTm) == undefined ? ' ':checkNoChar(IT_Path_Return.output.procApprInfoList[i].apprTm))+'</td>'
+                                                    +'<td class="center">'+(checkNoChar(IT_Path_Return.output.procApprInfoList[i].apprUsrNm) == undefined ? ' ':checkNoChar(IT_Path_Return.output.procApprInfoList[i].apprUsrNm))+'</td>'
+                                                    //+'<td class="center">'+(checkNoChar(IT_Path_Return.output.procApprInfoList[i].status) == '1'?'已审批':'未审批')+'</td>'
+                                                    +'<td class="center">'+sp_status+'</td>'
+                                                    //五个：SM提交、RF拒绝、RT退回、CL取消、AG同意
+                                                    if(IT_Path_Return.output.procApprInfoList[i].apprResult.substring(0,2) == 'SM'){
+                                                        DetailedStr+='<td class="center">'+'提交'+'</td>'
+                                                    }else if(IT_Path_Return.output.procApprInfoList[i].apprResult.substring(0,2) == 'RF'){
+                                                        DetailedStr+='<td class="center">'+'拒绝'+'</td>'
+                                                    }else if(IT_Path_Return.output.procApprInfoList[i].apprResult.substring(0,2) == 'RT'){
+                                                        DetailedStr+='<td class="center">'+'退回'+'</td>'
+                                                    }else if(IT_Path_Return.output.procApprInfoList[i].apprResult.substring(0,2) == 'CL'){
+                                                        DetailedStr+='<td class="center">'+'取消'+'</td>'
+                                                    }else if(IT_Path_Return.output.procApprInfoList[i].apprResult.substring(0,2) == 'AG'){
+                                                        DetailedStr+='<td class="center">'+'同意'+'</td>'
+                                                    }else{
+                                                        DetailedStr+='<td class="center">'+' '+'</td>'
+                                                    }
+                                                    DetailedStr+='<td class="center">'+(checkNoChar(IT_Path_Return.output.procApprInfoList[i].comments) == undefined ? ' ':checkNoChar(IT_Path_Return.output.procApprInfoList[i].comments))+'</td>'
+                                                +'</tr>'
+                                    }
+                                    DetailedStr+='</tbody>'
+                                +'</table>'
+                            +'</div>'
+                        +'</div>'
+                    +'</div>'
+                +'</div>'
+                //审批路径------------------------------------------------------------------------------
+                
+                //审批操作------------------------------------------------------------------------------
+                +'<div class="clearfix form-actions">'
+                    +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                        +'<label class="col-sm-2 control-label">审批意见</label>'
+                        +'<div class="col-sm-8">'
+                            +'<span class="form-group-span">'
+                                +'<textarea id="textarea" class="autosize-transition form-control" style="height:60px;color:#ccc;" onfocus="OpinionF(this)" onblur="OpinionB(this)">请详细描述审批意见,不得少于5个字并且不得多于100个字...</textarea>'
+                            +'</span>'
+                        +'</div>'
+                    +'</div>'
+                    +'<div class="col-xs-12 col-sm-12 form-group" style="padding:12px 0;">'
+                        +'<div class="col-sm-2"></div>'
+                        +'<div class="col-sm-4" style="text-align:center;">'
+                            +'<button class="btn btn-warning" type="button" id="WSubmit_RF" onclick="WSubmit(this,\'RF\')"> <i class="ace-icon fa fa-times bigger-110"></i>'
+                                +'拒绝'
+                            +'</button>'
+                        +'</div>'
+                        +'<div class="col-sm-4" style="text-align:center;">'
+                            +'<button class="btn btn-info" type="button" id="WSubmit_AG" onclick="WSubmit(this,\'AG\')"> <i class="ace-icon fa fa-check bigger-110"></i>'
+                                +'同意'
+                            +'</button>'
+                        +'</div>'
+                        +'<div class="col-sm-2"></div>'
+                    +'</div>'
+                +'</div>'
+                //审批操作------------------------------------------------------------------------------
+                                    +'</div>'
+                                +'</td>'
+                            +'<tr>';
+                $(obj).closest('tr').after(DetailedStr);
+                //显示
+                if( $(obj).closest('tr').hasClass('TdEach') ){
+                    $(obj).closest('tr').removeClass('TdEach');
+                    $(obj).closest('tr').next('tr.TrDetailed').hide();
+                }else{
+                    $(obj).closest('tr').siblings().removeClass('TdEach');
+                    $(obj).closest('tr').addClass('TdEach');
+                    
+                    $(obj).closest('tr').siblings('tr.TrDetailed').hide();
+                    $(obj).closest('tr').next('tr.TrDetailed').show();
+                }
+                spinner.spin();
+                layer.close(pagei);
+            }, 300 + parseInt(Math.random() * 300));
+        }
+    }
+    //IT服务审批
+    function WSubmit(obj,appType){
+        var eachOrder = $(obj).closest('tr');
+        var bussNo = eachOrder.data('bussno');
+        var bussType = eachOrder.data('busstype');
+        var taskId = eachOrder.data('taskid');
+        var currStep = eachOrder.data('currstep');
+        var quesCid = eachOrder.data('quescid');
+        var reqUsrId =  eachOrder.data('requsrid');
+        var reqUsrNm = eachOrder.data('requsrnm');
+        var opinion = $('#textarea').val();
+        if( appType == 'RF' ){
+            if( opinion == "请详细描述审批意见,不得少于5个字并且不得多于100个字..." ){
+                $.gritter.add({
+                    title: '审批提交错误',
+                    text: '请填写正确的审批理由',
+                    class_name: 'gritter-error gritter-center'
+                });
+            }else{
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    offset:['' , '47.8%'],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    //console.log(bussNo,bussType,taskId,appType,currStep,eachNum,opinion);
+                    var IT_Audit_Return = IT_Audit(bussNo,bussType,taskId,appType,currStep,eachNum,opinion);
+                    if( IT_Audit_Return.output.type == 'S' ){
+                        var userId = eachNum;
+                        var beginDate = '';
+                        var endDate = '';
+                        var startPage = 1;
+                        var pageSize = 10;
+                        IT_WaitHandleList(userId,'ITS',beginDate,endDate,startPage,pageSize);
+                        spinner.spin();
+                        layer.close(pagei);
+                        var unique_id = $.gritter.add({
+                            title: 'IT服务审批成功',
+                            text: '审批成功！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-success gritter-center'
+                        });
+                        setTimeout(function() {
+                            $.gritter.removeAll();
+                        }, 2000);
+                    }else{
+                        spinner.spin();
+                        layer.close(pagei);
+                        var unique_id = $.gritter.add({
+                            title: 'IT服务审批错误',
+                            text: '您当前审批的IT服务流程失败，'+IT_Audit_Return.output.message+'，请重试！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-error gritter-center'
+                        });
+                    }
+                }, 300 + parseInt(Math.random() * 300));
+            }
+        }else{
+            if( opinion == "请详细描述审批意见,不得少于5个字并且不得多于100个字..." ){
+                opinion = "同意";
+            }
+            var target = document.getElementById("Loading");  
+            var spinner = new Spinner(opts).spin(target);
+            pagei = $.layer({
+                type: 1,   //0-4的选择,
+                title: false,
+                border: [0],
+                closeBtn: [0],
+                offset:['' , '47.8%'],
+                shadeClose: false,
+                area: ['auto', 'auto'],
+                page: {dom : '#Loading'}
+            });
+            setTimeout(function() {
+                var IT_Audit_Return = IT_Audit(bussNo,bussType,taskId,appType,currStep,eachNum,opinion);
+                if( IT_Audit_Return.output.type == 'S' ){
+                    var userId = eachNum;
+                    var beginDate = '';
+                    var endDate = '';
+                    var startPage = 1;
+                    var pageSize = 10;
+                    IT_WaitHandleList(userId,'ITS',beginDate,endDate,startPage,pageSize);
+                    spinner.spin();
+                    layer.close(pagei);
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务审批成功',
+                        text: '审批成功！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-success gritter-center'
+                    });
+                    setTimeout(function() {
+                        $.gritter.removeAll();
+                    }, 2000);
+                }else{
+                    spinner.spin();
+                    layer.close(pagei);
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务审批错误',
+                        text: '您当前审批的IT服务流程失败，'+IT_Audit_Return.output.message+'，请重试！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-error gritter-center'
+                    });
+                }
+            }, 300 + parseInt(Math.random() * 300));
+        }
+    }
+    //IT服务批量审批
+    function WSubmitAll(obj){
+        $("#IT_List tr").each(function(){
+            if( $(this).hasClass('OnChecked') ){
+                if( $(this).data("busstype") == 'ITS01' ){
+                    bussnoArrITS01.push({
+                        bussNo: $(this).data("bussno")
+                    });
+                }else{
+                    bussnoArrITS02.push({
+                        bussNo: $(this).data("bussno")
+                    });
+                }
+            }
+        });
+        var IT_Audit_All_ReturnITS01 = '';
+        var IT_Audit_All_ReturnITS02 = '';
+        var target = document.getElementById("Loading");  
+        var spinner = new Spinner(opts).spin(target);
+        pagei = $.layer({
+            type: 1,   //0-4的选择,
+            title: false,
+            border: [0],
+            closeBtn: [0],
+            offset:['' , '47.8%'],
+            shadeClose: false,
+            area: ['auto', 'auto'],
+            page: {dom : '#Loading'}
+        });
+        setTimeout(function() {
+            if( bussnoArrITS01.length != 0 ){
+                IT_Audit_All_ReturnITS01 = IT_Audit_All('ITS01',bussnoArrITS01);
+            }else if( bussnoArrITS02.length != 0 ){
+                IT_Audit_All_ReturnITS02 = IT_Audit_All('ITS02',bussnoArrITS02);
+            }
+            spinner.spin();
+            layer.close(pagei);
+            if( IT_Audit_All_ReturnITS01 != '' && IT_Audit_All_ReturnITS02 != '' ){
+                if( IT_Audit_All_ReturnITS01.output.type == 'S' && IT_Audit_All_ReturnITS02.output.type == 'S' ){
+                    var userId = eachNum;
+                    var beginDate = '';
+                    var endDate = '';
+                    var startPage = 1;
+                    var pageSize = 10;
+                    IT_WaitHandleList(userId,'ITS',beginDate,endDate,startPage,pageSize);
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务批量审批成功',
+                        text: '审批成功！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-success gritter-center'
+                    });
+                    setTimeout(function() {
+                        $.gritter.removeAll();
+                    }, 2000);
+                }else if( IT_Audit_All_ReturnITS01.output.type != 'S' && IT_Audit_All_ReturnITS02.output.type == 'S' ){
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务批量审批提示',
+                        text: '您当前批量审批的IT服务流程中ITS01('+bussnoArrITS01.length+'条)审批失败，ITS02('+bussnoArrITS02.length+'条)审批成功！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_List(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-error gritter-center'
+                    });
+                }else if( IT_Audit_All_ReturnITS01.output.type == 'S' && IT_Audit_All_ReturnITS02.output.type != 'S' ){
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务批量审批提示',
+                        text: '您当前批量审批的IT服务流程中ITS01('+bussnoArrITS01.length+'条)审批成功，ITS02('+bussnoArrITS02.length+'条)审批失败！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_List(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-error gritter-center'
+                    });
+                }else if( IT_Audit_All_ReturnITS01.output.type != 'S' && IT_Audit_All_ReturnITS02.output.type != 'S' ){
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务批量审批错误',
+                        text: '您当前批量审批的IT服务流程中ITS01('+bussnoArrITS01.length+'条)审批失败，ITS02('+bussnoArrITS02.length+'条)审批失败！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-error gritter-center'
+                    });
+                }
+            }else if( IT_Audit_All_ReturnITS01 == '' && IT_Audit_All_ReturnITS02 != '' ){
+                if( IT_Audit_All_ReturnITS02.output.type == 'S' ){
+                    var userId = eachNum;
+                    var beginDate = '';
+                    var endDate = '';
+                    var startPage = 1;
+                    var pageSize = 10;
+                    IT_WaitHandleList(userId,'ITS',beginDate,endDate,startPage,pageSize);
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务批量审批成功',
+                        text: '审批成功！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-success gritter-center'
+                    });
+                    setTimeout(function() {
+                        $.gritter.removeAll();
+                    }, 2000);
+                }else{
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务批量审批错误',
+                        text: '您当前审批的IT服务流程失败，'+IT_Audit_All_ReturnITS02.output.message+'，请重试！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-error gritter-center'
+                    });
+                }
+            }else if( IT_Audit_All_ReturnITS01 != '' && IT_Audit_All_ReturnITS02 == '' ){
+                if( IT_Audit_All_ReturnITS01.output.type == 'S' ){
+                    var userId = eachNum;
+                    var beginDate = '';
+                    var endDate = '';
+                    var startPage = 1;
+                    var pageSize = 10;
+                    IT_WaitHandleList(userId,'ITS',beginDate,endDate,startPage,pageSize);
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务批量审批成功',
+                        text: '审批成功！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-success gritter-center'
+                    });
+                    setTimeout(function() {
+                        $.gritter.removeAll();
+                    }, 2000);
+                }else{
+                    var unique_id = $.gritter.add({
+                        title: 'IT服务批量审批错误',
+                        text: '您当前审批的IT服务流程失败，'+IT_Audit_All_ReturnITS01.output.message+'，请重试！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-error gritter-center'
+                    });
+                }
+            }
+        }, 300 + parseInt(Math.random() * 300));
+    }
+    //全选
+    function ChkAllClick(o){
+        var a = document.getElementsByName("bhgpID");
+        length1 = 0;
+        for (var i = 0; i < a.length; i++) {
+            a[i].checked = o.checked;
+            if( o.checked == true ){
+                $("#IT_List tr.TRList").addClass("OnChecked");
+                length1 += 1;
+            }else{
+                length1 = 0;
+                $("#IT_List tr.TRList").removeClass("OnChecked");
+            }
+        }
+    }
+    //单选
+    function ChkSonClick(o) {
+        var length2 = document.getElementsByName("bhgpID").length;
+        if (o.checked == true) {
+            length1 += 1;
+            $(o).closest('tr.TRList').addClass("OnChecked");
+        }
+        if (o.checked == false) {
+            length1 -= 1;
+            $(o).closest('tr.TRList').removeClass("OnChecked");
+        }
+        if (length1 === length2) {
+            $("#bhgpAll").attr("checked",true);
+        }
+        if (length1 !== length2) {
+            $("#bhgpAll").attr("checked",false);
+        }
+    }
+    //搜索框-选中焦点事件
+    function adstF(obj){
+        if( $(obj).val() == "查询待办事项..." ){
+            $(obj).val("");
+            $(obj).css({"color":"#444"});
+        }
+    }
+    //搜索框-取消焦点事件
+    function adstB(obj){
+        if( $(obj).val() == "" ){
+            $(obj).val("查询待办事项...");
+            $(obj).css({"color":"#ccc"});
+        }
+    }
+    //审批意见-选中焦点事件
+    function OpinionF(obj){
+        if( $(obj).val() == "请详细描述审批意见,不得少于5个字并且不得多于100个字..." ){
+            $(obj).val("");
+            $(obj).css({"color":"#444"});
+        }
+    }
+    //审批意见-取消焦点事件
+    function OpinionB(obj){
+        if( $(obj).val() == "" ){
+            $(obj).val("请详细描述审批意见,不得少于5个字并且不得多于100个字...");
+            $(obj).css({"color":"#ccc"});
+        }
+    }
+    //获取待审批列表
+    function IT_WaitHandleList(userId,bussType,beginDate,endDate,startPage,pageSize){
+        var IT_WaitHandleList_Return = WaitHandleList_Request(userId,bussType,beginDate,endDate,startPage,pageSize);
+        //console.log(IT_WaitHandleList_Return);
+        if( IT_WaitHandleList_Return.output.type == 'S' ) {
+            var OpinionDetailed = '';
+            var listStr = '';
+            var IT_taskList = IT_WaitHandleList_Return.output.taskList;
+
+            if( IT_taskList.length == undefined || IT_taskList == 1 ){
+                listStr += '<tr class="TRList" id="'+checkNoChar1(IT_taskList.bussNo)+'" data-taskId="'+checkNoChar1(IT_taskList.taskId)+'" data-currStep="'+checkNoChar1(IT_taskList.currStep)+'" data-bussType="'+checkNoChar1(IT_taskList.bussType)+'" data-reqUsrId="'+checkNoChar1(IT_taskList.reqUsrId)+'" data-reqUsrNm="'+checkNoChar1(IT_taskList.reqUsrNm)+'" data-bussNo="'+checkNoChar1(IT_taskList.bussNo)+'">'
+                        +'<td class="center" style="width:50px;">'
+                        +'<label class="position-relative">'
+                        +'<input type="checkbox" name="bhgpID" value="" onclick="ChkSonClick(this);" class="ace" />'
+                        +'<span class="lbl"></span>'
+                        +'</label>'
+                        +'</td>'
+                        +'<td title="" onclick=Open_Detailed(this)">'
+                        +'<span class="Beyond">'+checkNoChar1(IT_taskList.bussTypeName)+'</span>'
+                        +'</td>'
+                        +'<td title="" onclick="Open_Detailed(this)">'
+                        +'<span class="Beyond OpinionDetailed"></span>'
+                        +'</td>'
+                        +'<td title="" onclick="Open_Detailed(this)">'
+                        +'<span class="Beyond">'+checkNoChar1(IT_taskList.reqUsrNm)+'</span>'
+                        +'</td>'
+                        +'<td title="" onclick="Open_Detailed(this)">'
+                        +'<span class="Beyond">'+checkNoChar1(IT_taskList.deptName)+'</span>'
+                        +'</td>'
+                        +'<td title="" onclick="Open_Detailed(this)">'
+                        +'<span class="Beyond">'+checkNoChar1(IT_taskList.crtDate)+'</span>'
+                        +'</td>'
+                        +'</tr>'
+                        +'<tr class="TrInterval"><td></td></tr>';
+                $("#IT_List").html(listStr);
+                //查询处理意见
+                IT_WaitHandleOpinion_Return = WaitHandleOpinion_Request(IT_taskList.bussNo,eachNum);
+                if( IT_WaitHandleOpinion_Return.resultJson != null ){
+                    if( IT_WaitHandleOpinion_Return.resultCode == 100 ){
+                        if( IT_WaitHandleOpinion_Return.resultJson == null ){
+                            OpinionDetailed = '';
+                        }else{
+                            OpinionDetailed = IT_WaitHandleOpinion_Return.resultJson.quickReplyContent
+                        }
+                    }
+                    $('#'+IT_taskList.bussNo+'').attr("data-quesCid",IT_WaitHandleOpinion_Return.resultJson.quesCid);
+                    $('#'+IT_taskList.bussNo+'').find('.OpinionDetailed').html(OpinionDetailed);
+                }else{
+                    spinner.spin();
+                    layer.close(pagei);
+                }
+            }else{
+                var IT_WaitHandleOpinion_Return = '';
+                for( i=0;i<IT_taskList.length;i++ ){
+                    listStr += '<tr class="TRList" id="'+checkNoChar1(IT_taskList[i].bussNo)+'" data-taskId="'+checkNoChar1(IT_taskList[i].taskId)+'" data-currStep="'+checkNoChar1(IT_taskList[i].currStep)+'" data-bussType="'+checkNoChar1(IT_taskList[i].bussType)+'" data-reqUsrId="'+checkNoChar1(IT_taskList[i].reqUsrId)+'" data-reqUsrNm="'+checkNoChar1(IT_taskList[i].reqUsrNm)+'" data-bussNo="'+checkNoChar1(IT_taskList[i].bussNo)+'">'
+                            +'<td class="center" style="width:50px;">'
+                            +'<label class="position-relative">'
+                            +'<input type="checkbox" name="bhgpID" value="" onclick="ChkSonClick(this);" class="ace" />'
+                            +'<span class="lbl"></span>'
+                            +'</label>'
+                            +'</td>'
+                            +'<td title="" onclick=Open_Detailed(this)">'
+                            +'<span class="Beyond">'+checkNoChar1(IT_taskList[i].bussTypeName)+'</span>'
+                            +'</td>'
+                            +'<td title="" onclick="Open_Detailed(this)">'
+                            +'<span class="Beyond OpinionDetailed"></span>'
+                            +'</td>'
+                            +'<td title="" onclick="Open_Detailed(this)">'
+                            +'<span class="Beyond">'+checkNoChar1(IT_taskList[i].reqUsrNm)+'</span>'
+                            +'</td>'
+                            +'<td title="" onclick="Open_Detailed(this)">'
+                            +'<span class="Beyond">'+checkNoChar1(IT_taskList[i].deptName)+'</span>'
+                            +'</td>'
+                            +'<td title="" onclick="Open_Detailed(this)">'
+                            +'<span class="Beyond">'+checkNoChar1(IT_taskList[i].crtDate)+'</span>'
+                            +'</td>'
+                            +'</tr>'
+                            +'<tr class="TrInterval"><td></td></tr>';
+                }
+                $("#IT_List").html(listStr);
+                for( i=0;i<IT_taskList.length;i++ ){
+                    //查询处理意见
+                    IT_WaitHandleOpinion_Return = WaitHandleOpinion_Request(IT_taskList[i].bussNo,eachNum);
+                    //console.log(IT_WaitHandleOpinion_Return);
+                    if( IT_WaitHandleOpinion_Return.resultJson != null ){
+                        if( IT_WaitHandleOpinion_Return.resultCode == 100 ){
+                            if( IT_WaitHandleOpinion_Return.resultJson == null ){
+                                OpinionDetailed = '';
+                            }else{
+                                OpinionDetailed = IT_WaitHandleOpinion_Return.resultJson.quickReplyContent
+                            }
+                        }
+                        $('#'+IT_taskList[i].bussNo+'').attr("data-quesCid",IT_WaitHandleOpinion_Return.resultJson.quesCid);
+                        $('#'+IT_taskList[i].bussNo+'').find('.OpinionDetailed').html(OpinionDetailed);
+                    }else{
+                        spinner.spin();
+                        layer.close(pagei);
+                    }  
+                }
+            }
+            var AllPage = IT_WaitHandleList_Return.output.totalCount;
+            var PageNum = parseInt(AllPage)%parseInt(pageSize) == 0? parseInt(AllPage)/parseInt(pageSize):(Math.ceil(AllPage/pageSize));
+            $("#CNum").html(startPage);
+            $("#AllPage").html(PageNum);
+            if( startPage == '1' ){
+                if( startPage == PageNum ){
+                    $("#FirstPage").addClass("disabled");
+                    $("#PrevPage").addClass("disabled");
+                    $("#NextPage").addClass("disabled");
+                    $("#LastPage").addClass("disabled");
+                }else{
+                    $("#FirstPage").addClass("disabled");
+                    $("#PrevPage").addClass("disabled");
+                    $("#NextPage").removeClass("disabled");
+                    $("#LastPage").removeClass("disabled");
+                }
+            }else{
+                if( startPage == PageNum ){
+                    $("#FirstPage").removeClass("disabled");
+                    $("#PrevPage").removeClass("disabled");
+                    $("#NextPage").addClass("disabled");
+                    $("#LastPage").addClass("disabled");
+                }else{
+                    $("#FirstPage").removeClass("disabled");
+                    $("#PrevPage").removeClass("disabled");
+                    $("#NextPage").removeClass("disabled");
+                    $("#LastPage").removeClass("disabled");
+                }
+            }
+            var FirstPageNum = 1;
+            var PrevPage = parseInt(startPage) - 1;
+            var NextPageNum = parseInt(startPage) + 1;
+            var LastPage = parseInt(PageNum);
+            $("#FirstPage a").attr('onclick','PagJump(\''+FirstPageNum+'\',\''+pageSize+'\')');
+            $("#PrevPage a").attr('onclick','PagJump(\''+PrevPage+'\',\''+pageSize+'\')');
+            $("#NextPage a").attr('onclick','PagJump(\''+NextPageNum+'\',\''+pageSize+'\')');
+            $("#LastPage a").attr('onclick','PagJump(\''+LastPage+'\',\''+pageSize+'\')');
+            
+            $("#page").children("li").each(function(){
+                if( $(this).hasClass("disabled") ){
+                    $(this).children("a").attr('onclick','');
+                }
+            });
+        }else{
+            var unique_id = $.gritter.add({
+                title: 'IT服务待审批列表',
+                text: ''+IT_WaitHandleList_Return.output.message+'，请重试！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                sticky: true,
+                time: '',
+                class_name: 'gritter-error gritter-center'
+            });
+        }
+    }
+    //分页页码点击事件
+    function PagJump(startPage,pagesize){
+        var target = document.getElementById("Loading");  
+        var spinner = new Spinner(opts).spin(target);
+        pagei = $.layer({
+            type: 1,   //0-4的选择,
+            title: false,
+            border: [0],
+            closeBtn: [0],
+            offset:['' , '47.8%'],
+            shadeClose: false,
+            area: ['auto', 'auto'],
+            page: {dom : '#Loading'}
+        });
+        setTimeout(function() {
+            var userId = eachNum;
+            var bussType = 'ITS';
+            var beginDate = '';
+            var endDate = '';
+            //console.log(userId,bussType,beginDate,endDate,startPage,pagesize);
+            IT_WaitHandleList(userId,bussType,beginDate,endDate,startPage,pagesize);
+            spinner.spin();
+            layer.close(pagei);
+        }, 300 + parseInt(Math.random() * 300));
+    }
+    //每页显示条数
+    function changePageSize(pagesize){
+        var target = document.getElementById("Loading");  
+        var spinner = new Spinner(opts).spin(target);
+        pagei = $.layer({
+            type: 1,   //0-4的选择,
+            title: false,
+            border: [0],
+            closeBtn: [0],
+            offset:['' , '47.8%'],
+            shadeClose: false,
+            area: ['auto', 'auto'],
+            page: {dom : '#Loading'}
+        });
+        setTimeout(function() {
+            var userId = eachNum;
+            var bussType = 'ITS';
+            var beginDate = '';
+            var endDate = '';
+            var startPage = 1;
+            IT_WaitHandleList(userId,bussType,beginDate,endDate,startPage,pagesize);
+            spinner.spin();
+            layer.close(pagei);
+        }, 300 + parseInt(Math.random() * 300));
+    }
+    //初始化
+    jQuery(function($) {
+        //页面初始化
+        $.ajaxSetup({
+            contentType: 'application/json',
+            async:false,
+            error:function(){
+                alert(errMsg1);
+            },
+            timeout:timeout
+        });
+        //初始化加载待办列表
+        var target = document.getElementById("Loading");  
+        var spinner = new Spinner(opts).spin(target);
+        pagei = $.layer({
+            type: 1,   //0-4的选择,
+            title: false,
+            border: [0],
+            closeBtn: [0],
+            offset:['' , '47.8%'],
+            shadeClose: false,
+            area: ['auto', 'auto'],
+            page: {dom : '#Loading'}
+        });
+        setTimeout(function() {
+            var userId = eachNum;
+            var bussType = 'ITS';
+            var beginDate = '';
+            var endDate = '';
+            var startPage = 1;
+            var pageSize = 10;
+            IT_WaitHandleList(userId,bussType,beginDate,endDate,startPage,pageSize);
+            spinner.spin();
+            layer.close(pagei);
+        }, 300 + parseInt(Math.random() * 300));
+    });
+</script>
+<link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+<script type="text/javascript">ace.vars['base'] = '..';</script>
+<script src="../assets/js/ace/ace.onpage-help.js"></script>
+<script src="../docs/assets/js/rainbow.js"></script>
+<script src="../docs/assets/js/language/generic.js"></script>
+<script src="../docs/assets/js/language/html.js"></script>
+<script src="../docs/assets/js/language/css.js"></script>
+<script src="../docs/assets/js/language/javascript.js"></script>
+<script src="../layer/layer.min.js"></script>
+<script src="../myjs/backupNew.js"></script>
+<script src="../myjs/lexus.js"></script>
+<script src="../assets/js/jquery.gritter.min.js"></script>
+<script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+<script src="../assets/js/spin.min.js"></script>
+<script src="../myjs/loading.js"></script>
+<script src="js/IT_Service.js"></script>
+<style type="text/css" media="screen">
+    .xubox_shade, .xubox_layer{position:fixed; _position:fixed;}
+</style>
+</body>
+</html>

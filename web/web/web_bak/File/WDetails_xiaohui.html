@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="../assets/css/chosen.css" />
+        <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+        <link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
+        <!-- text fonts -->
+        <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="../assets/css/ace.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <!-- inline styles related to this page -->
+        <!-- ace settings handler -->
+        <script src="../assets/js/ace-extra.min.js"></script>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lte IE 8]>
+            <script src="../assets/js/html5shiv.js">
+            </script>
+            <script src="../assets/js/respond.min.js">
+            </script>
+        <![endif]-->
+        <title>
+            销毁待处理
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+            body{background:#fff;}
+            .page-content{padding:24px;}
+            .page-header{padding-bottom:12px;padding-top:0px;margin-bottom:0;}
+            .page-header h1{font-size:22px;}
+            .page-content-area{padding:12px 24px;}
+            .hr-dotted{border-style:dashed;border-color:#7ea8fb;display:inline-block;width:100%;}
+            .form-group{margin:0;}
+            .form-group label[class*=col-]{
+                padding-top:0px;
+                margin:0;
+                display:block;
+                padding:7px 12px 6px 12px;
+                text-align:right;
+                color:#4c4c4c;
+                font-size:14px;
+                font-weight:500;
+            }
+            .form-group-span {
+                padding:8px 0 7px 0;
+                display:block;
+                color:#030303;
+                font-size:14px;
+                font-weight:500;
+            }
+            .btn-info:active, .btn-info:hover, .open .btn-info.dropdown-toggle{
+                background-color:#1567c5!important;
+                border-color:#2e82ff;
+            }
+            .btn-info, .btn-info:focus {
+                background-color:#2e82ff!important;
+                border-color:#2e82ff;
+            }
+            .btn-warning:active, .btn-warning:hover, .open .btn-warning.dropdown-toggle{
+                background-color:#e0ab01!important;
+                border-color:#ffc300;
+            }
+            .btn-warning, .btn-warning:focus {
+                background-color:#ffc300!important;
+                border-color:#ffc300;
+            }
+            .widget-box.transparent>.widget-header{background:#f7f7f7;border-bottom:1px solid #1777e5;padding-left:12px;min-height:32px;}
+            .widget-box.transparent>.widget-header a{color:#333;}
+            .widget-box.transparent>.widget-header a:hover{color:#333;}
+            .widget-box.transparent>.widget-header h4{margin:6px 0;height:20px;line-height:20px;}
+            .widget-box.transparent>.widget-header .widget-toolbar{line-height:32px;}
+            .widget-body .table{border-top:none;}
+            .widget-body .table>thead>tr>td,.widget-body  .table>thead>tr>th{border-top:none;border-bottom:1px solid #1777e5;color:#333;}
+            .widget-body .table>tbody>tr>td,.widget-body  .table>tbody>tr>th{border-top:1px dashed #d6d6d6;color:#030303;}
+
+            /* */
+            .label-lg {
+                padding: .4em .6em .4em;
+                font-size: 13px;
+                line-height: 1.1;
+                height: 24px;
+                float: left;
+            }
+            .label-success {
+                background-color: #1777e5!important;
+            }
+            .label-success.arrowed-in:before {
+                border-color: #1777e5;
+            }
+            .label-success.arrowed-right:after {
+                border-left-color: #1777e5;
+            }
+            .paddin6-0{padding:6px 0;}
+            #SPYJList li a{cursor:pointer;}
+            .btn-group .btn-white.btn-info{color:#030303;}
+            .btn-group input#SPYJText{color:#030303;}
+            .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color:#f1f5fa;}
+            .table02.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color:#f7f7f7;}
+             /*table01*/
+             .table02{
+                margin:0;
+                border-bottom: none;
+             }
+            .table02>thead>tr>th{
+                text-align: left;
+                font-size:14px;
+                font-weight:500;
+                color: black;
+                padding-left: 20px;
+                background-color:#f7f7f7; 
+                border-left: none;
+                border-bottom: none;
+                /*border-right: 1px solid #ddd;*/
+                /*border: none;*/
+            }
+            .table02>thead>tr>th:first-child{
+                border-left: none;
+                padding-left: 20px;
+                text-align:left;
+            }
+            .table02>thead>tr>th:last-child{
+                text-align:left;
+                padding-left: 20px;
+            }
+            .table02>tbody>tr>td{
+                text-align: left;
+                font-size:14px;
+                font-weight:500;
+                padding-left: 20px;
+                vertical-align:middle;
+                background-color:#fff; 
+            }
+            .table02>tbody>tr:first-child,.table02>tbody>tr:first-child>td{
+                border-top: none;
+            }
+            .table02>tbody>tr>td:first-child{
+                border-left: none;
+                padding-left: 20px;
+                text-align:left;
+            }
+            .table02>tbody>tr>td:last-child{
+                text-align:left;
+                padding-left: 20px;
+            }
+            .table02>tbody>tr:last-child>td{
+                border-bottom: none;
+            }
+            .onXhmx{
+                display: block;
+            }
+            #xhmx{
+                position:absolute;top:20px;left:20px;background:#fff;width:800px;height:550px;z-index:10000;border:1px solid #ddd;padding:4px;
+            }
+            .xhmxTable1{
+                height:auto;
+            }
+            .xhmxTable_content1{
+                height:200px;overflow-y:scroll;
+            }
+            #SPYJList li a{cursor:pointer;}
+            #SPYJBox input[type=text]{
+                color: #cccccc;
+                font-family: "Microsoft YaHei";
+                border-color: #8fbcd9;
+            }
+            #shuoM01{display:none;}
+            .accordion-style1.panel-group .panel-heading .accordion-toggle{
+                font-weight: 400;
+            }
+            .panel-group {
+                margin-bottom: 0px;
+            }
+        </style>
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../myjs/lexus.js"></script>
+        <script src="../myjs/file.js"></script>
+        <link rel="stylesheet" href="css/custom.css" />
+    </head>
+    <body class="no-skin" style="overflow:hidden;">
+        <div id="tempDiv" style="display: none"></div>
+        <div id="Loading" style=""></div>
+        <div class="main-container xiaohui_iframe_div" id="main-container" style="overflow:hidden;">
+            <div class="main-content">
+                <div class="row-fluid  page-content">
+                    <div class="page-header" style="border-bottom:solid 1px #1777e5;">
+                        <input type="hidden" id="begD" value="">
+                        <input type="hidden" id="endD" value="">
+                        <h1 style="color:#1a1a1a; padding-top: 2px;" id="titleH1">
+                            销毁待处理
+                            <button type="button" class="close" onclick="Close_Enterprise()">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                        </h1>
+                    </div>
+                    <div class="page-content-area">
+                        <div class="hr hr6 hr-dotted"></div>
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">鉴定方案</label>
+                            <div class="col-sm-6">
+                                <span class="form-group-span" id="JUDGE_NAME"></span>
+                            </div>
+                            <label class="col-sm-2 control-label">档案类型</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="ARCHIVE_TYPE_ID"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">鉴定时间</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="JUDGE_DATE"></span>
+                            </div>
+                            <label class="col-sm-2 control-label">鉴定目的</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="JUDGE_PURPOSE"></span>
+                            </div>
+                            <label class="col-sm-2 control-label">鉴定部门</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="JUDGE_DEPT"></span>
+                            </div>                           
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div><!--分割线-->
+                        
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">监销人</label>
+                            <div class="col-sm-2">
+                                <span class="form-group-span" id="JUDGE_USER"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 form-group paddin6-0">
+                            <label class="col-sm-2 control-label">鉴定概况</label>
+                            <div class="col-sm-6">
+                                <span class="form-group-span" id="JUDGE_SUMMARY"></span>
+                            </div>
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div><!--分割线-->
+                        <div class="col-xs-12 col-sm-12 form-group" style="margin:12px 0;">
+                            <div id="accordion" class="accordion-style1 panel-group">
+                                <div class="panel panel-default" style="border:none;">
+                                    <div class="panel-heading" style="position:relative" >
+                                        <h4 class="panel-title" >
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="border:none;background-color:#1777e5;color:#fff;padding:15px;">  
+                                            &nbsp;销毁明细
+                                               <i class="bigger-110 ace-icon fa fa-chevron-up" data-icon-hide="ace-icon fa  fa-chevron-down" data-icon-show="ace-icon fa fa-chevron-up" style="opacity:1;color:#fff;margin: 8px;position:absolute;top:15%;right:0;"></i>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div class="panel-collapse collapse" id="collapseOne" style="height: auto;border:1px solid #ddd;">
+                                        <div class="panel-body" style="border:none;padding:0;">
+                                            <div class="xhmxTable1" style="">
+                                                <div class="" style="width:100%;padding-right:17px;background-color:#f1f5fa;border-bottom:1px solid #ddd;">
+                                                     <table id="" class="table table02 table-bordered" style="border:none;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="col-xs-2"><span>存档名称</span></th>
+                                                                <th class="col-xs-2"><span>存档编号</span></th>
+                                                                <th class="col-xs-6"><span>销毁原因</span></th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                                <div id="listDiv" class="xhmxTable_content1" style="width:100%;border:none;">
+                                                    <!--table id="" class="table table-hover table02 table-bordered" style="border:none;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="col-xs-2"><span>全宗号</span></td>
+                                                                <td class="col-xs-2"><span>2121</span></td>
+                                                                <td class="col-xs-6"><span>销毁原因销毁原因销毁原因销毁原因销毁原因销毁原因销毁原因销毁原因销毁原因销毁原因销毁原因销毁原因</span></td>
+                                                            </tr> 
+                                                            <tr>
+                                                                <td class="col-xs-2"><span>全宗号</span></td>
+                                                                <td class="col-xs-2"><span>2121</span></td>
+                                                                <td class="col-xs-6"><span>销毁原因销毁原因</span></td>
+                                                            </tr> 
+                                                            <tr>
+                                                                <td class="col-xs-2"><span>全宗号</span></td>
+                                                                <td class="col-xs-2"><span>2121</span></td>
+                                                                <td class="col-xs-6"><span>销毁原因销毁原因</span></td>
+                                                            </tr> 
+                                                            <tr>
+                                                                <td class="col-xs-2"><span>全宗号</span></td>
+                                                                <td class="col-xs-2"><span>2121</span></td>
+                                                                <td class="col-xs-6"><span>销毁原因销毁原因</span></td>
+                                                            </tr> 
+                                                            <tr>
+                                                                <td class="col-xs-2"><span>全宗号</span></td>
+                                                                <td class="col-xs-2"><span>2121</span></td>
+                                                                <td class="col-xs-6"><span>销毁原因销毁原因</span></td>
+                                                            </tr> 
+                                                            <tr>
+                                                                <td class="col-xs-2"><span>全宗号</span></td>
+                                                                <td class="col-xs-2"><span>2121</span></td>
+                                                                <td class="col-xs-6"><span>销毁原因销毁原因</span></td>
+                                                            </tr> 
+                                                         
+                                                        </tbody>
+                                                    </table-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div><!--分割线-->
+                        <div class="col-xs-12 col-sm-12 form-group" style="margin:12px 0;">
+                            <div class="widget-box transparent" style="border:1px solid #d6d6d6;">
+                                <div class="widget-header">
+                                    <a class="hidecollapsed" data-action="collapse" style="display:inline-block;width:100%;">
+                                        <h4 class="hidecollapsed widget-title lighter" style="float:left; padding-top: 2px;">
+                                            审批路径
+                                        </h4>
+                                    </a>
+                                </div>
+                                <div class="widget-body" id="splj">
+                                    <div class="widget-main" style="padding:0 24px;" id="ProcPathQryList">
+                                        <!--table class="table" style="margin-bottom:2px;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center col-xs-3">处理时间</th>
+                                                    <th class="center col-xs-2">操作人</th>
+                                                    <th class="center col-xs-2">状态</th>
+                                                    <th class="center col-xs-2">处理信息</th>
+                                                    <th class="center col-xs-3">审批意见</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="center">2015-04-21 15:00:41</td>
+                                                    <td class="center">季亚伟</td>
+                                                    <td class="center">已审批</td>
+                                                    <td class="center">提交</td>
+                                                    <td class="center">提交</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="center">2015-04-21 15:03:57</td>
+                                                    <td class="center">季亚伟</td>
+                                                    <td class="center">已审批</td>
+                                                    <td class="center">同意</td>
+                                                    <td class="center">同意</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="center">2015-04-21 15:04:47</td>
+                                                    <td class="center">孟丽</td>
+                                                    <td class="center">已审批</td>
+                                                    <td class="center">拒绝</td>
+                                                    <td class="center">242332qefq</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="center"> </td>
+                                                    <td class="center">吴二文</td>
+                                                    <td class="center">未审批</td>
+                                                    <td class="center"> </td>
+                                                    <td class="center"> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hr hr6 hr-dotted"></div><!--分割线-->
+                        <div class="col-xs-12 col-sm-12 form-group" style="padding:12px 0;">
+                            <label class="col-sm-2 control-label">审批意见</label>
+                            <div class="col-sm-6" id="SPYJBox">
+                                <input type="text" id="SPYJText" placeholder="请填写或选择审批意见" onfocus="phClear(this)" onblur="phJR(this)" value="请填写或选择审批意见" class="" style="float:left;height:34px;text-align:left;width:80%;" />
+                                <div class="btn-group" style="float:left;margin-left:2px;">
+                                    <button class="btn btn-info btn-white" style="display:none;">Info</button>
+                                    <button id="SPYJBtn" onclick="OpenSPYJList()" data-toggle="dropdown" class="btn btn-info btn-white dropdown-toggle">
+                                        <span class="ace-icon fa fa-caret-down icon-only"></span>
+                                    </button>
+                                    <ul id="SPYJList" class="dropdown-menu dropdown-info dropdown-menu-right" style="left:0;">
+                                        <li><a onclick="OnSPYJText(this)">--</a></li>
+                                        <li><a onclick="OnSPYJText(this)">同意</a></li>
+                                        <li><a onclick="OnSPYJText(this)">保管期限延长至15年</a></li>
+                                        <li><a onclick="OnSPYJText(this)">保管期限延长至30年</a></li>
+                                        <li><a onclick="OnSPYJText(this)">保管期限延长至永久</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="text-align:right;">
+                                <button class="btn btn-info" type="button" id="" onclick="doSubmit(0)">
+                                    <i class="ace-icon glyphicon glyphicon-time bigger-110"></i>
+                                    延长保管
+                                </button>
+                            </div>
+                            <div class="col-sm-2" style="text-align:right;">
+                                <button class="btn btn-info" type="button" style="width:114px;" id="" onclick="doSubmit(1)" >
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    同意销毁
+                                </button>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+                        
+                        <div class="hr hr6 hr-dotted"></div><!--分割线-->    
+                        <div class="col-xs-12" id="shuoM01" style="text-align:right;">
+                            <span>说明：</span><span><span id="DelayedText">延长保管</span>时，请填写审批意见。</span>
+                        </div>     
+                        <div class="hr hr6 hr-dotted" style="border:#fff;margin:0;padding:0;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------------------------------------------------------------------------------->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <!-- <![endif]-->
+        <!--[if IE]>
+            <script type="text/javascript">
+                window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+            </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <!-- page specific plugin scripts -->
+        <script src="../assets/js/bootstrap-tag.min.js"></script>
+        <script src="../assets/js/jquery.hotkeys.min.js"></script>
+        <script src="../assets/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="../assets/js/jquery-ui.custom.min.js"></script>
+        <script src="../assets/js/chosen.jquery.min.js"></script>
+        <script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="../assets/js/jquery.slimscroll.min.js"></script>
+        <!-- ace scripts -->
+        <script src="../assets/js/ace-elements.min.js"></script>
+        <script src="../assets/js/ace.min.js"></script>
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+        var ifSP = false;
+            function CloseGritter(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+                window.location.reload();
+            }
+            function WindowClose(){
+                window.close();
+            }
+            function Close_Enterprise() {
+                var main = $(window.parent.document).find("iframe");
+                main.parent().parent().prevAll(".main-container").css({"height":"auto"});
+                var index = parent.layer.getFrameIndex(window.name);
+                $(document.body).parent().remove();//弹出iframe后input无法输入问题解决方案2014-11-11
+                parent.layer.close(index);
+            }
+            function adstF(obj){
+                if( $(obj).val() == "请详细描述审批意见,不得少于5个字并且不得多于100个字..." ){
+                    $(obj).val("");
+                    $(obj).css({"color":"#444"});
+                }
+            }
+            function adstB(obj){
+                if( $(obj).val() == "" ){
+                    $(obj).val("请详细描述审批意见,不得少于5个字并且不得多于100个字...");
+                    $(obj).css({"color":"#ccc"});
+                }
+            }
+            //延时操作
+            function Delayed(){
+                if( $("#SPYJText").val() == "" || $("#SPYJText").val() == $("#SPYJText").attr('placeholder')){
+                    $("#shuoM01").show();
+                    $("#DelayedText").text("延时保管");
+                }else{
+                    $("#shuoM01").hide();
+                    $("#DelayedText").text("");
+                }
+            }
+            //placeHoder兼容
+            function phJR(obj){
+                /*失去焦点时触发*/
+                var oldValue = $(obj).val();
+                $(obj).css({"border-color":"#8fbcd9"});
+                if( oldValue == "" || oldValue == "请填写或选择审批意见" ){
+                    $(obj).css({"color":"#ccc"});
+                    $(obj).val("请填写或选择审批意见");
+                }
+            }
+            function phClear(obj){
+                /*进入焦点时触发*/
+                var oldValue = $(obj).val();
+                $(obj).css({"border-color":"#f59942"});
+                if( oldValue == "请填写或选择审批意见" ){
+                    $(obj).css({"color":"#030303"});
+                    $(obj).val("")
+                }  
+            }
+            
+             //展开审批意见列表
+            function OpenSPYJList(){
+                var SPYJWidth = $("#SPYJText").outerWidth();
+                $("#SPYJList").width(SPYJWidth-3);
+                $("#SPYJList").css({"left":-SPYJWidth-1});
+                $("#SPYJList").css({"top":-$("#SPYJList").outerHeight()-4});
+            }
+            //选择审批意见
+            function OnSPYJText(obj){
+                $("#SPYJText").css({"color":"#030303"});
+                $("#SPYJText").val($(obj).text());
+            }
+            //Open销毁明细
+            function Open_xhmx(obj){
+                // var xhmxWidth = $("#xhmx").width();    
+                // //var xhmxHeight01 = $(window.parent.document).find("iframe");
+                // // var xhmxHeight = $(window).height();
+                // var xhmxHeight = $("#xhmx").height();
+                // console.log(xhmxWidth,xhmxHeight);
+
+                // $.layer({
+                //     type: 1,   //0-4的选择,
+                //     title: false,
+                //     border: [0],
+                //     closeBtn: true,
+                //     shadeClose: true,
+                //     offset: ['65px',''],
+                //     area: [xhmxWidth+'px', xhmxHeight+'px'],
+                //     page: {dom : '#xhmx'}
+                // });
+                var main = $(window.parent.document).find("iframe");
+                var mainheight = $(document).height();
+                var mainwidth = $(document).width();
+                $("#xhmx").show();
+                $("#xhmx").css({"top":(mainheight-600)/2});
+                $("#xhmx").css({"left":(mainwidth-800)/2});
+            }
+            function navTabs(obj){
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    //$("#titleH1").text($(obj).find("span").eq(0).text()+'待处理');
+                    //alert(123);
+                    // if( $(obj).find("span").eq(0).text() == "首营企业待办" ){
+                    //     var bussType = 'G001';
+                    // }else if( $(obj).find("span").eq(0).text() == "首营客户待办" ){
+                    //     var bussType = 'G003';
+                    // }else if( $(obj).find("span").eq(0).text() == "首营品种待办" ){
+                    //     var bussType = 'G002';
+                    // }else if( $(obj).find("span").eq(0).text() == "不合格品待办" ){
+                    //     var bussType = 'G007';
+                    // }
+                    // localStorage.removeItem("bussType");
+                    // localStorage.bussType = JSON.stringify(bussType);
+                    // GSP_W_ID_List(1,10,bussType);
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            }
+
+            //展开销毁明细
+            // function Open_xhmx989(){
+            //     var xhmxWidth = $(".page-content-area").width();
+            //     // alert(xhmxWidth);
+            //     var xhmxHeight01 = $(window.parent.document).find("iframe");
+            //     var xhmxHeight = xhmxHeight01.height();
+            //     // var xhmxHeight = xhmxHeight01.height();               
+            //     $.layer({
+            //         type: 2,
+            //         border: [0],
+            //         title: false,
+            //         shadeClose: true,
+            //         closeBtn: false,
+            //         // shade: [0.6, '#000'],
+            //         offset: ['65px',''],
+            //         // area: [xhmxWidth+'px', xhmxHeight+'px'],
+            //         area: [(xhmxWidth - 50) +'px', '500px'],
+            //         iframe: { src: './WDetails_xiaohuiMX.html' }
+            //     });
+            // }
+
+
+            //Close销毁明细
+            // function Close_xhmx(){
+            //     layer.close(pageiXHMX);
+            // }
+            //初始化
+            jQuery(function($) {
+                //页面初始化
+                $.ajaxSetup({
+                    contentType: 'application/json',
+                    async:false,
+                    error:function(){
+                        alert(errMsg1);
+                    },
+                    timeout:timeout
+                });
+
+                //var Hscroll = $("#main-container").outerHeight() - 140;
+                //alert(Hscroll);
+                //滚动条
+                // $('#profile-feed-1').ace_scroll({
+                //     size: Hscroll,
+                //     mouseWheelLock: true,
+                //     alwaysVisible : true,
+                //     styleClass: 'scroll-visible'
+                // });
+               
+                //palacehoder兼容
+                /*进入焦点时触发*/
+                 // $("#SPYJText").focus(function(){
+                 //    var oldValue = $(this).val();
+                 //    if(oldValue == $(this).attr('placeholder')){
+                 //        // alert(11);
+                 //        $(this).val("");
+                 //    }
+                 // });  
+                /*失去焦点时触发*/
+                 // $("#SPYJText").blur(function(){
+                 //    var oldValue = $(this).val();
+                 //    if( oldValue == "" || oldValue == $(this).attr('placeholder')){
+                 //        // alert(11);
+                 //        $(this).val(oldValue);
+                 //    }
+                 // });
+                
+                
+                //弹出层默认高度设置
+                // $(window.parent.document).find("iframe").load(function(){
+                //     var main = $(window.parent.document).find("iframe");
+                //     var mainheight = $(document).height();if(!placeholderSupport())
+                //     main.height(mainheight);
+                //     main.parent().height(mainheight);
+                //     main.parent().parent().height(mainheight);
+                //     main.parent().parent().prev(".xubox_shade").height(mainheight+100);
+                //     main.parent().parent().prevAll(".main-container").height(mainheight+100);
+                // });
+
+                //动态获取frame高度
+                var xubox_shade =  $(window.parent.document).find(".xubox_shade");
+                var bodyHeight = $(window.parent.document).height();
+                $(window.parent.document).find("iframe").load(function(){
+                    var main = $(window.parent.document).find("iframe");
+                    var mainheight = $(document).height();
+                    if(mainheight < bodyHeight){
+                        xubox_shade.height(bodyHeight);
+                    }else{
+                        xubox_shade.height(mifH+40);
+                    }
+                    main.height(mainheight);
+                });
+                setInterval(function() {
+                    var main = $(window.parent.document).find("iframe");
+                    var mifH = $(".xiaohui_iframe_div").outerHeight();
+                    if(mifH < bodyHeight){
+                        xubox_shade.height(bodyHeight);
+                    }else{
+                        xubox_shade.height(mifH+40);
+                    }
+                    main.height(mifH);
+                },10);
+                
+                 //获取详情
+                var file_spData = JSON.parse(localStorage.file_spData);
+                var bussNo = file_spData.bussNo;
+                var dtJSON = getDetail(bussNo.split("_")[0],"FMS_DEST");
+                if(dtJSON.status != "0"){
+                    layer.alert('请勿擅自修改请求信息，您的本次操作已被记录',8,function(){
+                        window.close();
+                    });
+                }else{
+                    $('#tempDiv').html(dtJSON.return);
+                    //用下面的方式获取详情字段
+                    var JUDGE_NAME = $('#tempDiv').find("NAME").html();//鉴定方案
+                    var ARCHIVE_TYPE_ID = $('#tempDiv').find("ARCHIVE_TYPE_ID").html();//档案类型
+                    var JUDGE_DATE = $('#tempDiv').find("JUDGE_DATE").html();//鉴定时间
+                    var JUDGE_PURPOSE = $('#tempDiv').find("JUDGE_PURPOSE").html();//鉴定目的
+                    var JUDGE_DEPT = $('#tempDiv').find("JUDGE_DEPT").html();//鉴定部门
+                    var JUDGE_USER = file_spData.reqUsrNm+" "+$('#tempDiv').find("JUDGE_USER").html();//鉴定人
+                    var JUDGE_SUMMARY = $('#tempDiv').find("JUDGE_SUMMARY").html();//鉴定概况
+                    
+                    
+                    $('#JUDGE_NAME').html(JUDGE_NAME);
+                    $('#ARCHIVE_TYPE_ID').html(ARCHIVE_TYPE_ID);
+                    $('#JUDGE_DATE').html(JUDGE_DATE);
+                    $('#JUDGE_PURPOSE').html(JUDGE_PURPOSE);
+                    $('#JUDGE_DEPT').html(JUDGE_DEPT);
+                    $('#JUDGE_USER').html(JUDGE_USER);
+                    $('#JUDGE_SUMMARY').html(JUDGE_SUMMARY);
+                    
+                    var listsStr = '';
+                    var listNo = 0;
+                    $('#tempDiv').find("ITEMS").find("ITEM").each(function(i){
+                        listNo ++ ;
+                        listsStr += '<tr>'
+                        +'<td class="col-xs-2"><span>'+$(this).find("TITLE_PROPER").html()+'</span></td>'
+                        +'<td class="col-xs-2"><span>'+$(this).find("ARCHIVE_NO").html()+'</span></td>'
+                        +'<td class="col-xs-6"><span>'+$(this).find("DESTROY_REASON").html()+'</span></td>'
+                        +'</tr>';
+                    });
+                    
+                    if(listNo>0){
+                        listsStr = '<table id="" class="table table-hover table02 table-bordered" style="border:none;">'
+                        +'<tbody>'
+                        +listsStr
+                        +'</tbody>'
+                        +'</table>';
+                    }
+                    $('#listDiv').html(listsStr);
+                    
+                }
+                
+                //获取审批路径
+                var spListJSON = getSPList(localStorage.pernrBase?localStorage.pernrBase:'',"FMS_DEST",bussNo);
+                
+                if (spListJSON.status == '0') {
+                    var spListStr = "";
+                    spListStr += '<table class="table" style="margin-bottom:2px;">'
+                    +'<thead><tr>'
+                    +'<th class="center col-xs-3">处理时间</th>'
+                    +'<th class="center col-xs-2">操作人</th>'
+                    +'<th class="center col-xs-2">状态</th>'
+                    +'<th class="center col-xs-2">处理信息</th>'
+                    +'<th class="center col-xs-3">审批意见</th>'
+                    +'</tr></thead>'
+                    +'<tbody>';
+                    var spListArr = [];
+                    var spListItem = spListJSON.output.procApprInfoList;
+                    if(undefined != spListItem.length){
+                        spListArr = spListItem;
+                    }else{
+                        spListArr.push(spListItem);
+                    }
+                    var spType = "";
+                    var spCon = "";
+                    var appTm = "";
+                    for(var i in spListArr){
+                        spType = "";
+                        spCon = "";
+                        appTm = "";
+                        if("1" == spListArr[i].status){
+                            if(spListArr[i].apprResult == "AG"){
+                                spType = "同意";
+                            }else if(spListArr[i].apprResult == "RT"){
+                                spType = "拒绝";
+                            }else if(spListArr[i].apprResult == "SM"){
+                                spType = "提交";
+                            }
+                            appTm = spListArr[i].apprTm.substr(0,16);
+                            spCon = (undefined != spListArr[i].comments?spListArr[i].comments:"");
+                        }
+                        
+                        spListStr += '<tr>'
+                        +'<td class="center">'+appTm+'</td>'
+                        +'<td class="center">'+spListArr[i].apprUsrNm+'</td>'
+                        +'<td class="center">'+(spListArr[i].status == '1'?'已审批':'未审批')+'</td>'
+                        +'<td class="center">'+spType+'</td>'
+                        +'<td class="center">'+spCon+'</td>'
+                        +'</tr>';
+                        
+                    }
+                    spListStr += '</tbody>'
+                    +'</table>';
+                    $('#ProcPathQryList').html(spListStr);
+                }else{
+                    $("#ProcPathQryList").html("已取消");
+                }
+
+                });
+                
+             //流程审批
+            function doSubmit(tyType){
+                if(ifSP){
+                    return;
+                }
+                ifSP = true;
+                var PsTop = $(window.parent.document).find("iframe").parent().parent().parent().parent().scrollTop();
+                if( PsTop == '0' ){
+                    PsTop = $(window.parent.document).find("iframe").parent().parent().parent().scrollTop();
+                }
+                
+                var opinion = $("#SPYJText").val().replace("请填写或选择审批意见","");
+                if(tyType == 0){
+                    if(opinion == ""){
+                        window.parent.goToTop();
+                        $.gritter.add({
+                            title: '提示信息',
+                            text: '请输入审批意见',
+                            class_name: 'gritter-error'
+                        });
+                        ifSP = false;
+                        return;
+                    }
+                }else{
+                    if(opinion == ""){
+                        opinion = "同意";
+                    }
+                }
+                
+                
+                var spJSON = JSON.parse(localStorage.file_spData);
+                var submitJSON = doFileSub(localStorage.pernrBase?localStorage.pernrBase:'',"FMS_DEST",spJSON.bussNo,spJSON.taskId,spJSON.currStep,tyType,opinion);
+                
+                if(submitJSON.status == "0"){
+                    $.gritter.add({
+                        title: '成功操作提示信息',
+                        text: '审批成功',
+                        class_name: 'gritter-success gritter-center'
+                    });
+                    $(".gritter-center").css({"top":PsTop+200});
+                    setTimeout(function(){
+                       window.parent.IframeNavTabs("FMS_DEST");
+                    },1500);
+                }else{
+                    $.gritter.add({
+                            title: '提示信息',
+                            text: '操作失败，请稍后再试',
+                            class_name: 'gritter-error'
+                        });
+                    $(".gritter-center").css({"top":PsTop+200});
+                    ifSP = false;
+                }
+            }
+        </script>
+        <link rel="stylesheet" href="../assets/css/ace.onpage-help.css">
+        <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css">
+        <script type="text/javascript">ace.vars['base'] = '..';</script>
+        <script src="../assets/js/ace/ace.onpage-help.js"></script>
+        <script src="../docs/assets/js/rainbow.js"></script>
+        <script src="../docs/assets/js/language/generic.js"></script>
+        <script src="../docs/assets/js/language/html.js"></script>
+        <script src="../docs/assets/js/language/css.js"></script>
+        <script src="../docs/assets/js/language/javascript.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>代申请</title>
+
+		<meta name="description" content="Common UI Features &amp; Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+		<style>
+			/* some elements used in demo only */
+			.spinner-preview {
+				width: 100px;
+				height: 100px;
+				text-align: center;
+				margin-top: 60px;
+			}
+			
+			.dropdown-preview {
+				margin: 0 5px;
+				display: inline-block;
+			}
+			.dropdown-preview  > .dropdown-menu {
+				display: block;
+				position: static;
+				margin-bottom: 5px;
+			}
+			.w-left{
+				width:180px;
+			}
+			.border-top-none{
+				border-top:none;
+			}
+		</style>
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js?v=20141224"></script>
+        <script src="./myjs/lexus.js?v=20141224"></script>
+		
+		<script>
+			//关闭弹出层
+			function closeLay(){
+				var index = parent.layer.getFrameIndex(window.name);
+				$(document.body).parent().remove();//弹出iframe后input无法输入问题解决方案2014-11-11
+				parent.layer.close(index);
+			};
+			
+			//保存修改
+			function saveZXLD(){
+				var ldPlans = $('#plans').val();
+				var ldPlansName = $('#plansName').val();
+				if(ldPlans == '' || ldPlansName == ''){
+					$.gritter.add({
+						title: '人员信息选择错误',
+						text: '请选择正确的人员信息',
+						class_name: 'gritter-error'
+					});
+					return;
+				}else{
+					layer.close();
+
+					var perJSON = submit_5_3(ldPlans);
+					if(perJSON.status == '0'){
+						var thisPerItem = perJSON.EASY_TAB.item;
+						if(thisPerItem.length>0){
+							if(parent.location.href.indexOf('vacationAsk')>-1){
+								//调休天数计算
+								var useTimeJSON = submit_8_1(ldPlans);
+								if(useTimeJSON.status == '0'){
+									if(undefined != useTimeJSON.T_OT_QA.item && useTimeJSON.T_OT_QA.item.length>0){
+										parent.$('#txTime').val(useTimeJSON.T_OT_QA.item[0].P_OT_QA_NUM);
+										if(parent.$('#typeId').val() == '9130'){
+											parent.$('#typeIntro').html('剩余加班调休时数：<span class="infobox-data-number line-height-1 bigger-200" style="color:#9abc32;">&nbsp;&nbsp;'+parent.$('#txTime').val()+'&nbsp;&nbsp;</span>小时。');
+										}
+									}
+									
+								}
+								var nxjTimeJSON = submit_8_11(ldPlans);
+                                if(nxjTimeJSON.status == '0'){
+                                    if(undefined != nxjTimeJSON.T_YEAR_QA.item && nxjTimeJSON.T_YEAR_QA.item.length>0){
+                                        parent.$('#nxjTime').val(nxjTimeJSON.T_YEAR_QA.item[0].ZDAYS);
+                                        if(parent.$('#typeId').val() == '9140'){
+                                            parent.$('#typeIntro').html('年休假剩余天数：<span class="infobox-data-number line-height-1 bigger-200" style="color:#9abc32;">&nbsp;&nbsp;'+parent.$('#nxjTime').val()+'&nbsp;&nbsp;</span>天。');
+                                        }
+                                        
+                                    }
+                                        
+                                }
+								// if(parent.$('#typeId').val() == '9140'){
+								    // var nxjTimeJSON = submit_8_11(ldPlans);
+								    // if(nxjTimeJSON.status == '0'){
+								        // if(undefined != nxjTimeJSON.T_YEAR_QA.item && nxjTimeJSON.T_YEAR_QA.item.length>0){
+								            // parent.$('#nxjTime').val(nxjTimeJSON.T_YEAR_QA.item[0].ZDAYS);
+								            // parent.$('#typeIntro').html('年休假剩余天数：<span class="infobox-data-number line-height-1 bigger-200" style="color:#9abc32;">&nbsp;&nbsp;'+parent.$('#nxjTime').val()+'&nbsp;&nbsp;</span>天。');
+								        // }
+// 								        
+								    // }
+// 								    
+								// }
+								
+							}
+							var thisPer = thisPerItem[0];
+							parent.$('#sqr').val(parseInt(ldPlans)+'     '+ldPlansName);
+							parent.$('#sqPernr').val(parseInt(ldPlans));
+							parent.$('#sqName').val(ldPlansName);
+							parent.$('#gs').html(checkNoChar(thisPer.BUTXT));
+							parent.$('#bm').html(checkNoChar(thisPer.BUMEN));
+							parent.$('#gw').html(checkNoChar(thisPer.PLSTX));
+							parent.$('#dh').val(checkNoChar(thisPer.TELL));
+						}else{
+							$.gritter.add({
+								title: '错误信息提示',
+								text: '数据初始化异常',
+								class_name: 'gritter-error'
+							});
+							return false;
+						}
+						
+					}else{
+						$.gritter.add({
+								title: '错误信息提示',
+								text: '数据初始化异常',
+								class_name: 'gritter-error'
+							});
+							return false;
+					}
+
+					closeLay();
+				}
+			}
+			
+			//回车搜索功能
+			function toSearch(sval){
+				if(event.keyCode==13){
+					//alert(111)
+					search(sval);
+				}else{
+					return;
+				}
+			}
+			
+			//查询人员
+			function search(thisval){
+				if(thisval == $('#hiddenText').val()){
+					return;
+				}
+				 $('#hiddenText').val(thisval);
+				if(thisval.length < 1){
+					layer.alert('请至少输入6位工号或者1个中文字符', 5);
+					return;
+				}
+				if(!isNaN(thisval) && thisval.length<6){
+					layer.alert('请至少输入6位工号或者1个中文字符', 5);
+					return;
+				}
+				var loading = layer.load('查询中，请稍后');
+				
+				var kqPerLists = JSON.parse(localStorage.kqPerLists);
+				var rearchLists = [];
+				for(var kq=0;kq<kqPerLists.length;kq++){
+					if(kqPerLists[kq].ZZ_SUB_OBJ.indexOf(thisval)>-1 || kqPerLists[kq].ZZ_SUB_OBJT.indexOf(thisval)>-1){
+						rearchLists.push(kqPerLists[kq]);
+					}
+				}
+				
+				if(rearchLists.length == 0){
+					layer.alert('没有查询到相关人员', 8);
+				}else{
+					var perLists = '';
+					for( var k in rearchLists ){
+					perLists += '<tr>'
+					+'<td class="center">'
+					+'<label class="position-relative">'
+					+'<input type="radio" class="ace" name="ldRadio" onclick="choosePer(\''+checkNoChar(rearchLists[k].ZZ_SUB_OBJ)+'\',\''+checkNoChar(rearchLists[k].ZZ_SUB_OBJT)+'\')"/>'
+					+'<span class="lbl"></span>'
+					+'</label>'
+					+'</td>'
+					+'<td>'+parseInt(checkNoChar(rearchLists[k].ZZ_SUB_OBJ))+'</td>'
+					+'<td>'+checkNoChar(rearchLists[k].ZZ_SUB_OBJT)+'</td>'
+					+'<td>'+checkNoChar(rearchLists[k].ZZ_OBJT)+'</td>'
+					+'</tr>';
+				}
+				$('#perLists').html(perLists);
+				}
+				
+				
+//				var c = submit_4_2(thisval,localStorage.pernrBase?localStorage.pernrBase:'');
+//				if(rearchJSON.status == '0'){
+//					var rearchData = rearchJSON.T_PERNR.item;
+//					var perLists = '';
+//					for(var i=0,l=rearchData.length;i<l;i++){
+//						perLists += '<tr>'
+//						+'<td class="center">'
+//						+'<label class="position-relative">'
+//						+'<input type="radio" class="ace" name="ldRadio" onclick="choosePer(\''+checkNoChar(rearchData[i].PLANS)+'\')"/>'
+//						+'<span class="lbl"></span>'
+//						+'</label>'
+//						+'</td>'
+//						+'<td>'
+//						+'<a>'+parseInt(checkNoChar(rearchData[i].PERNR))+'</a>'
+//						+'</td>'
+//						+'<td>'+checkNoChar(rearchData[i].NACHN)+'</td>'
+//						+'<td class="hidden-480">'+checkNoChar(rearchData[i].PBTXT)+'</td>'
+//						+'<td>'+checkNoChar(rearchData[i].ORGTX)+'</td>'
+//						+'<td class="hidden-480">'+checkNoChar(rearchData[i].PLSTX)+'</td>'
+//						+'</tr>';													
+//																			
+//					}
+//					$('#perLists').html(perLists);
+//				}else{
+//					layer.alert('没有查询到相关人员', 8);
+//				}
+				layer.close(loading);
+				//layer.close(loading);
+				$('#plans').val('');
+			}
+			
+			//人员信息
+			function choosePer(plans,name){
+				$('#plans').val(plans);
+				$('#plansName').val(name);
+			}
+		</script>
+	</head>
+
+	<body class="no-skin">
+		<div id="Loading" style="margin-left:-28px;margin-top:40px;">		
+		</div>
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container main_iframe_div" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="#">人员列表</a>
+						</li>
+
+					</ul><!-- /.breadcrumb -->
+					<button class="btn border-none" style="float:right;" id="abc" onclick="closeLay()">
+						<i class="glyphicon glyphicon-remove align-top"></i>
+					</button>
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+					
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						
+
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="row">
+															<div class="col-sm-12">
+																<div class="profile-user-info">
+
+
+
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 关键字 </div>
+																		<input type="hidden" id="plans" value="">
+																		<input type="hidden" id="plansName" value="">
+																		<div class="profile-info-value">
+																			<form onsubmit="return false;">
+																			<span class="input-icon input-icon-right">
+																				<input type="text" id="searchText" onkeypress="toSearch(this.value)" onchange="search(this.value)" onblur="search(this.value)">
+																				<i class="ace-icon fa fa-search" onclick="search($('#searchText').val())"></i>
+																				<input type="hidden" id="hiddenText" value="">
+																			</span>
+																			</form>
+																		</div>
+																	</div>
+																</div>
+																	<div class="row" style="margin-top:10px;max-height:260px;overflow:auto;">
+																	<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+																		<thead>
+																			<tr>
+																				<th class="center col-xs-2">
+																					<label class="position-relative">
+																					</label>
+																				</th>
+																				<th class="col-xs-3">人员工号</th>
+																				<th class="col-xs-3">姓名</th>
+																				<th class="col-xs-4">岗位</th>
+																			</tr>
+																		</thead>
+																		<tbody id="perLists">
+																		</tbody>
+																	</table>
+															
+																	</div>
+																	
+																	
+																	
+																	
+																<div class="profile-user-info" style="text-align:right;margin-top:10px;">	
+																	<button class="btn btn-info" type="button" onclick="saveZXLD()">
+																		<i class="ace-icon fa fa-check bigger-110"></i>
+																		确定
+																	</button>
+																</div>
+															</div>
+														</div>
+								
+								<script type="text/javascript">
+									var $path_assets = "./assets";//this will be used in gritter alerts containing images
+								</script>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="./assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/bootbox.min.js"></script>
+		<script src="./assets/js/jquery.easypiechart.min.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>
+		<script src="./assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="./assets/js/spin.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+				/**
+				$('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+				  console.log(e.target.getAttribute("href"));
+				})
+					
+				$('#accordion').on('shown.bs.collapse', function (e) {
+					console.log($(e.target).is('#collapseTwo'))
+				});
+				*/
+				
+				$('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+					if($(e.target).attr('href') == "#home") drawChartNow();
+				})
+			
+				
+				/**
+					//go to next tab, without user clicking
+					$('#myTab > .active').next().find('> a').trigger('click');
+				*/
+			
+			
+				$('#accordion-style').on('click', function(ev){
+					var target = $('input', ev.target);
+					var which = parseInt(target.val());
+					if(which == 2) $('#accordion').addClass('accordion-style2');
+					 else $('#accordion').removeClass('accordion-style2');
+				});
+				
+				//$('[href="#collapseTwo"]').trigger('click');
+			
+			
+				var oldie = /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase());
+				$('.easy-pie-chart.percentage').each(function(){
+					$(this).easyPieChart({
+						barColor: $(this).data('color'),
+						trackColor: '#EEEEEE',
+						scaleColor: false,
+						lineCap: 'butt',
+						lineWidth: 8,
+						animate: oldie ? false : 1000,
+						size:75
+					}).css('color', $(this).data('color'));
+				});
+			
+				$('[data-rel=tooltip]').tooltip();
+				$('[data-rel=popover]').popover({html:true});
+			
+			
+				$('#gritter-regular').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a regular notice!',
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="blue">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar1.png',
+						sticky: false,
+						time: '',
+						class_name: (!$('#gritter-light').get(0).checked ? 'gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+				$('#gritter-sticky').on(ace.click_event, function(){
+					var unique_id = $.gritter.add({
+						title: 'This is a sticky notice!',
+						text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="red">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar.png',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-without-image').on(ace.click_event, function(){
+					$.gritter.add({
+						// (string | mandatory) the heading of the notification
+						title: 'This is a notice without an image!',
+						// (string | mandatory) the text inside the notification
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="orange">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						class_name: 'gritter-success' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-max3').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a notice with a max of 3 on screen at one time!',
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="green">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar3.png',
+						sticky: false,
+						before_open: function(){
+							if($('.gritter-item-wrapper').length >= 3)
+							{
+								return false;
+							}
+						},
+						class_name: 'gritter-warning' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-center').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a centered notification',
+						text: 'Just add a "gritter-center" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+						class_name: 'gritter-info gritter-center' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+				
+				$('#gritter-error').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a warning notification',
+						text: 'Just add a "gritter-light" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+						class_name: 'gritter-error' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+					
+			
+				$("#gritter-remove").on(ace.click_event, function(){
+					$.gritter.removeAll();
+					return false;
+				});
+					
+			
+				///////
+			
+			
+				$("#bootbox-regular").on(ace.click_event, function() {
+					bootbox.prompt("What is your name?", function(result) {
+						if (result === null) {
+							
+						} else {
+							
+						}
+					});
+				});
+					
+				$("#bootbox-confirm").on(ace.click_event, function() {
+					bootbox.confirm("Are you sure?", function(result) {
+						if(result) {
+							//
+						}
+					});
+				});
+				
+			/**
+				$("#bootbox-confirm").on(ace.click_event, function() {
+					bootbox.confirm({
+						message: "Are you sure?",
+						buttons: {
+						  confirm: {
+							 label: "OK",
+							 className: "btn-primary btn-sm",
+						  },
+						  cancel: {
+							 label: "Cancel",
+							 className: "btn-sm",
+						  }
+						},
+						callback: function(result) {
+							if(result) alert(1)
+						}
+					  }
+					);
+				});
+			**/
+					
+				$("#bootbox-options").on(ace.click_event, function() {
+					bootbox.dialog({
+						message: "<span class='bigger-110'>I am a custom dialog with smaller buttons</span>",
+						buttons: 			
+						{
+							"success" :
+							 {
+								"label" : "<i class='ace-icon fa fa-check'></i> Success!",
+								"className" : "btn-sm btn-success",
+								"callback": function() {
+									//Example.show("great success");
+								}
+							},
+							"danger" :
+							{
+								"label" : "Danger!",
+								"className" : "btn-sm btn-danger",
+								"callback": function() {
+									//Example.show("uh oh, look out!");
+								}
+							}, 
+							"click" :
+							{
+								"label" : "Click ME!",
+								"className" : "btn-sm btn-primary",
+								"callback": function() {
+									//Example.show("Primary button");
+								}
+							}, 
+							"button" :
+							{
+								"label" : "Just a button...",
+								"className" : "btn-sm"
+							}
+						}
+					});
+				});
+			
+			
+			
+				$('#spinner-opts small').css({display:'inline-block', width:'60px'})
+			
+				var slide_styles = ['', 'green','red','purple','orange', 'dark'];
+				var ii = 0;
+				$("#spinner-opts input[type=text]").each(function() {
+					var $this = $(this);
+					$this.hide().after('<span />');
+					$this.next().addClass('ui-slider-small').
+					addClass("inline ui-slider-"+slide_styles[ii++ % slide_styles.length]).
+					css({'width':'125px'}).slider({
+						value:parseInt($this.val()),
+						range: "min",
+						animate:true,
+						min: parseInt($this.data('min')),
+						max: parseInt($this.data('max')),
+						step: parseFloat($this.data('step')),
+						slide: function( event, ui ) {
+							$this.val(ui.value);
+							spinner_update();
+						}
+					});
+				});
+			
+			
+			
+			
+			
+				$.fn.spin = function(opts) {
+					this.each(function() {
+					  var $this = $(this),
+						  data = $this.data();
+			
+					  if (data.spinner) {
+						data.spinner.stop();
+						delete data.spinner;
+					  }
+					  if (opts !== false) {
+						data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+					  }
+					});
+					return this;
+				};
+			
+				function spinner_update() {
+					var opts = {};
+					$('#spinner-opts input[type=text]').each(function() {
+						opts[this.name] = parseFloat(this.value);
+					});
+					$('#spinner-preview').spin(opts);
+				}
+			
+			
+			
+				$('#id-pills-stacked').removeAttr('checked').on('click', function(){
+					$('.nav-pills').toggleClass('nav-stacked');
+				});
+			
+			//初始化页面数据
+			$.ajaxSetup({
+				contentType: 'application/json',
+				async:false,
+				error:function(){
+					alert(errMsg1);
+				},
+				timeout:timeout
+			});
+			//获取人员列表
+			//var k = localStorage["k"];
+			var per_OBJID = [];
+			var per_OBJID1 = JSON.parse(localStorage.per_OBJID);
+			var perLists = '';
+			var perItem = [];
+			if(undefined == per_OBJID1.length){
+				per_OBJID.push(per_OBJID1);
+			}else{
+				per_OBJID = per_OBJID1;
+			}
+			setTimeout(function() {
+				var opts = {            
+		            lines: 10, // 花瓣数目
+		            length: 0, // 花瓣长度
+		            width: 10, // 花瓣宽度
+		            radius: 20, // 花瓣距中心半径
+		            corners: 1, // 花瓣圆滑度 (0-1)
+		            rotate: 0, // 花瓣旋转角度
+		            direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+		            color: '#2679b5', // 花瓣颜色
+		            speed: 1, // 花瓣旋转速度
+		            trail: 60, // 花瓣旋转时的拖影(百分比)
+		            shadow: false, // 花瓣是否显示阴影
+		            hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+		            className: 'spinner', // spinner css 样式名称
+		            zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+		            top: '-100', // spinner 相对父容器Top定位 单位 px
+		            left: '0'// spinner 相对父容器Left定位 单位 px
+		        };
+		        var target = document.getElementById("Loading");  
+		        var spinner = new Spinner(opts).spin(target);
+				pagei = $.layer({
+					type: 1,   //0-4的选择,
+					title: false,
+					border: [0],
+					closeBtn: [0],
+					shadeClose: false,
+					area: ['auto', 'auto'],
+					page: {dom : '#Loading'}
+				});
+				setTimeout(function() {
+					for(var po in per_OBJID){
+						var perAskJSON = submit_4_10(per_OBJID[po].OBJID);
+					
+						if(perAskJSON.status != '-1' && undefined != perAskJSON.ITAB_PERNR.item){
+							var ITAB_PERNR = perAskJSON.ITAB_PERNR.item;
+							perItem = $.merge(perItem, ITAB_PERNR);
+							
+							
+							// for( var k in ITAB_PERNR ){
+							// 	perLists += '<tr>'
+							// 	+'<td class="center">'
+							// 	+'<label class="position-relative">'
+							// 	+'<input type="radio" class="ace" name="ldRadio" onclick="choosePer(\''+checkNoChar(ITAB_PERNR[k].ZZ_SUB_OBJ)+'\',\''+checkNoChar(ITAB_PERNR[k].ZZ_SUB_OBJT)+'\')"/>'
+							// 	+'<span class="lbl"></span>'
+							// 	+'</label>'
+							// 	+'</td>'
+							// 	+'<td>'+parseInt(checkNoChar(ITAB_PERNR[k].ZZ_SUB_OBJ))+'</td>'
+							// 	+'<td>'+checkNoChar(ITAB_PERNR[k].ZZ_SUB_OBJT)+'</td>'
+							// 	+'<td>'+checkNoChar(ITAB_PERNR[k].ZZ_OBJT)+'</td>'
+							// 	+'</tr>';
+							// }
+							// $('#perLists').html(perLists);
+						}
+					}
+					localStorage.removeItem('kqPerLists');
+					localStorage.setItem('kqPerLists',JSON.stringify(perItem));
+					spinner.spin();
+					layer.close(pagei);
+				}, 300 + parseInt(Math.random() * 300));
+			},100);
+			// localStorage.removeItem("closeDH");
+			// localStorage.closeDH = JSON.stringify('onclose');
+		});
+		</script>
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+		<!--JWW-2014-10-09-->
+		<script type="text/javascript">
+			$(window.parent.document).find("iframe").load(function(){
+				var main = $(window.parent.document).find("iframe");
+				var mainheight = $(document).height();
+				main.height(mainheight);
+			});
+			setInterval(function() {
+				var main = $(window.parent.document).find("iframe");
+				var mifH = $(".main_iframe_div").outerHeight();
+				//console.log(mifH);
+				main.height(mifH);
+			},10);
+		</script>
+	</body>
+</html>

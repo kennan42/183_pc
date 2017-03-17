@@ -1,0 +1,47 @@
+/*2014-01-21-JWW*/
+body{font-family:"Microsoft YaHei";}
+.header-container>.top-header .top-nav{
+	padding:0px;
+}
+.header-container>.top-header .menu-button{
+	float:right;margin-top:8px;position:relative;right:0;top:0;
+}
+.app>.header-container.header-fixed+.main-container{
+	padding-top:50px;
+}
+@media (max-width: 767px){
+	.on-canvas #nav-container {
+		display: block;
+		position: fixed;
+		top: 50px;
+		bottom: 0;
+		float: none;
+	}
+}
+	
+.CustomBreadC{float:left;background-color:#242633;margin-bottom:0px;padding:15px 15px;color:#fafafa;}
+.CustomBreadC li{height:20px;line-height:20px;font-size:14px;}
+.CustomBreadC li i{font-size:20px;margin-left:4px;margin-right:10px;vertical-align:top;}
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

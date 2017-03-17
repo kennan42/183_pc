@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			
+	function Submit(){
+	 	var a= {"ImJcode":"88739120000088619660"};
+		var aa=JSON.stringify(a)
+		var authrUrl = "http://10.10.1.183/zddc/ZDDC_GET_JCODE_FLOW_INFO";
+		$.getJSON(authrUrl,function(data){
+			if(data.status==0){
+				alert(111);
+			}else{
+				alert(222);
+			}
+		},'json',function(e){
+			getJSONError(e,authrUrl);
+		},'POST',a,'');
+ 	}	
+		</script>
+	</head>
+	<body>
+		
+	</body>
+<html>

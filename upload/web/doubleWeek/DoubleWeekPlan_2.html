@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+    <link rel="stylesheet" href="../assets/css/chosen.css" />
+    <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+    <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+    <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+    <link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
+    <!-- text fonts -->
+    <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="../assets/css/uncompressed/daterangepicker-bs3.css"/>
+    <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+    <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="../assets/css/fullcalendar.css" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="../assets/css/ace.min.css" />
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-part2.min.css" />
+    <![endif]-->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    <!-- ace settings handler -->
+    <script src="../assets/js/ace-extra.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+    queries -->
+    <!--[if lte IE 8]>
+    <script src="../assets/js/html5shiv.js">
+    </script>
+    <script src="../assets/js/respond.min.js">
+    </script>
+    <![endif]-->
+    <title>
+        意见反馈
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+        body{
+            background-color:#e4e6e9;
+            min-height:100%;
+            padding-bottom:0;
+            /*font-family:'Open Sans';*/
+            font-family: "Arial","Microsoft YaHei";
+            font-size:13px;
+            color:#393939;
+            line-height:1.5
+        }
+        h1,h2,h3,h4,h5,h6{font-family: "Arial","Microsoft YaHei";}
+        table#DoubleWeek thead tr th{text-align:center;vertical-align:middle;}
+        .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{border-bottom-width:1px;}
+        table#DoubleWeek tbody tr td{text-align:center;padding:0;margin:0;vertical-align:middle;height:60px;}
+        .table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color:#fff;}
+        /*.table-bordered>tbody>tr>td{background-color:#f9f9f9;}*/
+        .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color:#fff !important;}
+        /*.table-hover>tbody>tr>td.tdDay:hover{background-color:#f0f0f0 !important;}*/
+
+        .fc-border-separate th.fc-day-header{height:40px;text-align:center;padding:0;margin:0;vertical-align:middle;}
+
+
+        .row{float:left;width:100%;margin:0;position:relative;}
+        .page-content{overflow:hidden;}
+        #AddPer{display:none;}
+        #PerList>.PerBox{margin-top:-40px;}
+        #PerList>.PerBox:first-child{margin:0;}
+        .fc-day{background-color:#fff;}
+        .modal{z-index:100001;}
+        .modal-backdrop.in{z-index:100000;}
+        .external-event-box{float:left;width:20%;padding:0 12px;}
+        .external-event{margin:0;}
+        #gritter-notice-wrapper{z-index:100000;}
+        /*.fc-border-separate th.fc-day-header{*/
+            /*width:7.1428% !important;    float: left;*/
+            /*line-height: 40px;}*/
+    </style>
+    <script src="../assets/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        //管理口令
+        var CTTQ_Password = 'cttq.admin';//cttq.admin.information
+    </script>
+</head>
+
+<body class="no-skin">
+    <div id="Loading" style=""></div>
+    <div class="main-container" id="main-container">
+        <div class="main-content">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs" style="background:#1777e5;">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch(e) {}
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon white">
+                        </i>
+                        <a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+                    </li>
+                    <li>
+                        <a href="#" class="white">
+                            双周滚动计划
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.breadcrumb -->
+                <!-- /section:basics/content.searchbox -->
+            </div>
+            <div class="row-fluid page-content" style="padding-bottom:0;">
+                <div class="page-header" style="border-bottom:solid 1px #1777e5;">
+                    <h1 style="font-family:Microsoft YaHei ! important;color:#1a1a1a;overflow: hidden;">
+                        <span id="titleH1" style="height:33px;line-height:33px;">任务管理</span>
+                        <small>
+                            <i class="ace-icon fa fa-angle-double-right">
+                            </i>
+                            请输入管理口令
+                        </small>
+                        <div class="btn-group col-sm-2" id="AddPer" style="float:right;padding:0;">
+                            <div class="col-sm-12" style="padding:0;">
+                                <button class="btn btn-primary col-sm-12" type="button" onclick="AddPer(this);" style="height:32px;padding:0;">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    添加新成员
+                                </button>
+                            </div>
+                        </div>
+                        <div class="btn-group col-sm-4" id="PassWordBox" style="float:right;padding:0;">
+                            <div class="col-sm-6" style="padding:0;">
+                                <input type="password" id="PassWordNum" class="col-sm-12" onKeyPress="enter(this);" style="padding:6px;height:32px;text-align:center;float:right;" placeholder="请输入管理口令">
+                            </div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4" style="padding:0;">
+                                <button class="btn btn-primary col-sm-12" type="button" onclick="PassWordCheck(this);" style="height:32px;padding:0;">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    Login
+                                </button>
+                            </div>
+                        </div>
+                    </h1>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="row" style="margin-bottom:20px;">
+                    <div id="external-events">
+                        <div class="external-event-box">
+                            <div class="external-event label-success" data-class="label-success">
+                                <i class="ace-icon fa fa-arrows"></i>
+                                UI设计
+                            </div>
+                        </div>
+                        <div class="external-event-box">
+                            <div class="external-event label-info" data-class="label-info">
+                                <i class="ace-icon fa fa-arrows"></i>
+                                前端开发
+                            </div>
+                        </div>
+                        <div class="external-event-box">
+                            <div class="external-event label-purple" data-class="label-purple">
+                                <i class="ace-icon fa fa-arrows"></i>
+                                后台开发
+                            </div>
+                        </div>
+                        <div class="external-event-box">
+                            <div class="external-event label-danger" data-class="label-danger">
+                                <i class="ace-icon fa fa-arrows"></i>
+                                项目管理
+                            </div>
+                        </div>
+                        <div class="external-event-box">
+                            <div class="external-event label-pink" data-class="label-pink">
+                                <i class="ace-icon fa fa-arrows"></i>
+                                产品设计
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin:0;">
+                    <div class="col-xs-12">
+                        <div style="width:333px;margin:16px auto;overflow:hidden;">
+                            <span class="fc-state-default fc-corner-left" id="PrevMonthBox" unselectable="on" style="float:left;margin-left:0;">
+                                <span class="fc-button fc-button-prev" style="float:left;" onclick="prevMonth()">
+                                    <span class="fc-icon fc-icon-left-single-arrow"></span>
+                                </span>
+                            </span>
+                            <h3 id="title_DoubleWeek" style="float:left;width:260px;text-align:center;margin:0;">
+                                
+                            </h3>
+                            <span class="fc-state-default fc-corner-right" id="NextMonthBox" unselectable="on" style="float:left;margin-left:0;">
+                                <span class="fc-button fc-button-next" style="float:left;" onclick="nextMonth()">
+                                    <span class="fc-icon fc-icon-right-single-arrow"></span>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row" id="PerList">
+                        <!-- <div class="row PerBox" style="z-index:10000;">
+                            <div class="col-sm-2" style="padding:0;width:13%;">
+                                <table class="fc-border-separate" style="width:100%" cellspacing="0">
+                                    <thead>
+                                        <tr class="fc-first fc-last">
+                                            <th class="fc-day-header fc-sun fc-widget-header fc-first" style="width:50%;">工号</th>
+                                            <th class="fc-day-header fc-mon fc-widget-header fc-last" style="width:50%;border-right:none;">姓名</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="fc-week fc-first fc-last">
+                                            <td class="fc-day fc-sun fc-widget-content fc-future fc-first">
+                                                <div style="min-height:69px;line-height:69px;text-align: center;">
+                                                    8104524
+                                                </div>
+                                            </td>
+                                            <td class="fc-day fc-sat fc-widget-content fc-future fc-last" style="border-right:none;">
+                                                <div style="min-height:69px;line-height:69px;text-align: center;">
+                                                    贾韦韦
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-5 DoubleWeek" data-year="2015" data-month="11" data-date="22" style="padding:0;width:43.5%;margin-left:-1px;"></div>
+                            <div class="col-sm-5 DoubleWeek" data-year="2015" data-month="11" data-date="29" style="padding:0;width:43.5%;margin-left:-2px;"></div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div id="addBox">
+        123123
+    </div> -->
+    <!------------------------------------------------------------------------------------------->
+    <!-- basic scripts -->
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+    </script>
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../assets/js/uncompressed/date-time/moment_ch.js"></script>
+    <script type="text/javascript" src="../assets/js/uncompressed/date-time/daterangepicker_ch.js"></script>
+    <!-- page specific plugin scripts -->
+    <script src="../assets/js/bootstrap-tag.min.js"></script>
+    <script src="../assets/js/jquery.hotkeys.min.js"></script>
+    <script src="../assets/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="../assets/js/jquery-ui.custom.min.js"></script>
+    <script src="../assets/js/chosen.jquery.min.js"></script>
+    <script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="../assets/js/jquery.slimscroll.min.js"></script>
+    <!-- ace scripts -->
+    <script src="../assets/js/ace-elements.min.js"></script>
+    <script src="../assets/js/ace.min.js"></script>
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript">
+        /**
+         * 将yyyy-mm-dd hh:mm:ss格式化成Unix时间戳，ms为单位
+         * @param string yyyy-mm-dd hh:mm:ss格式的字符串
+         * @returns {number}
+         */
+        function changeTimeToUnix(string) {
+            var f = string.split(' ', 2);
+            var d = (f[0] ? f[0] : '').split('-', 3);
+            var t = (f[1] ? f[1] : '').split(':', 3);
+            return (new Date(
+                    parseInt(d[0], 10) || null,
+                    (parseInt(d[1], 10) || 1) - 1,
+                    parseInt(d[2], 10) || null,
+                    parseInt(t[0], 10) || null,
+                    parseInt(t[1], 10) || null,
+                    parseInt(t[2], 10) || null
+            )).getTime();
+        }
+        /**
+         * 将Unix时间戳格式化成 yyyy年mm月dd日<br>hh:mm
+         * @param time Unix时间戳，单位ms
+         * @returns {string} yyyy年mm月dd日<br>hh:mm
+         */
+        function formatUnix(time) {
+            var date = new Date(time);
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 101 + '').substr(1);
+            var day = (date.getDate() + 100 + '').substr(1);
+            var hour = (date.getHours() + 100 + '').substr(1);
+            var minute = (date.getMinutes() + 100 + '').substr(1);
+            var seconds = (date.getSeconds() + 100 + '').substr(1);
+            var html = year + '-' + month + '-' + day + '&nbsp;&nbsp;' + hour + ':' + minute + ':' + seconds;
+            var time = [];
+            time.push({
+                'year':year,
+                'month':month,
+                'day':day,
+                'hour':hour,
+                'minute':minute,
+                'seconds':seconds
+            });
+            return time;
+        }
+        //修改权限
+        var ModifyType = false;
+        //回车事件
+        function enter(){
+            if (event.keyCode == 13) {
+                PassWordCheck();
+            } else {
+                return;
+            }
+        }
+        //管理口令校验
+        function PassWordCheck(obj){
+            $("#PassWordNum").blur();
+            if( $("#PassWordNum").val() == CTTQ_Password ){
+                ModifyType = true;
+                $("#PassWordBox").hide();
+                $("#AddPer").show();
+                //初始化拖拽
+                Initialize_Draggable();
+            }else{
+                var unique_id = $.gritter.add({
+                    title: '管理口令错误',
+                    text: '您输入的管理口令有误，暂无法修改！<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-warning" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                    sticky: true,
+                    time: '',
+                    class_name: 'gritter-error gritter-center'
+                });
+            }
+        };
+        //关闭消息提示框
+        function CloseGritter(obj){
+            $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                $(obj).parents(".gritter-item-wrapper").remove();
+            });
+        };
+        //获取人员列表
+        function getAllUser(){
+            $.post("/rollingPlan/getAllUser",'{}',function(data){
+                if( data.status == 0 ){
+                    var data = data.data;
+                    var ListStr = '';
+                    var date = new Date();
+                    var dd = date.getDate();
+                    var mm = date.getMonth();
+                    var yy = date.getFullYear();
+                    //console.log(data);
+                    for( i=0;i<data.length;i++ ){
+                        var Zindex = 10000 - i;
+                        ListStr += '<div class="row PerBox" style="z-index:'+Zindex+';">' +
+                                '<div class="col-sm-2" style="padding:0;width:13%;">' +
+                                '<table class="fc-border-separate" style="width:100%" cellspacing="0">' +
+                                '<thead>' +
+                                '<tr class="fc-first fc-last">' +
+                                '<th class="fc-day-header fc-sun fc-widget-header fc-first" style="width:50%;">工号</th>' +
+                                '<th class="fc-day-header fc-mon fc-widget-header fc-last" style="width:50%;border-right:none;">姓名</th>' +
+                                '</tr>' +
+                                '</thead>' +
+                                '<tbody>' +
+                                '<tr class="fc-week fc-first fc-last">' +
+                                '<td class="fc-day fc-sun fc-widget-content fc-future fc-first">' +
+                                '<div style="min-height:89px;line-height:89px;text-align: center;">' +
+                                ''+data[i].userId+'' +
+                                '</div>' +
+                                '</td>' +
+                                '<td class="fc-day fc-sat fc-widget-content fc-future fc-last" style="border-right:none;">' +
+                                '<div style="min-height:89px;line-height:89px;text-align: center;">' +
+                                ''+data[i].userName+'' +
+                                '</div>' +
+                                '</td>' +
+                                '</tr>' +
+                                '</tbody>' +
+                                '</table>' +
+                                '</div>' +
+                                '<div class="col-sm-12 DoubleWeek '+data[i].userId+'" data-year="'+yy+'" data-month="'+mm+'" data-date="'+dd+'" data-userId="'+data[i].userId+'" data-userName="'+data[i].userName+'" style="padding:0;width:87%;margin-left:-1px;"></div>' +
+                        		'</div>';
+                    }
+                    $("#PerList").html(ListStr);
+                }
+            });
+        }
+        //获取任务
+        function getAllTask(){
+            $.post("/rollingPlan/getAllTask",'{}',function(data){
+                if( data.status == 0 ){
+                    var data = data.data;
+                    for( i=0;i<data.length;i++ ){
+                        //console.log(data[i]);
+                        var id = data[i].userId;
+                        var startTime = formatUnix(data[i].taskStartDate);
+                        startTime = startTime[0];
+                        $('.'+id+'').fullCalendar('renderEvent',
+                                {
+                                    title: ''+data[i].taskDesc+'',
+                                    start: new Date(startTime.year, Number(Number(startTime.month)-1), startTime.day),
+                                    end: new Date(startTime.year, Number(Number(startTime.month)-1), Number(Number(startTime.day)+Number(data[i].taskDays)-1)),
+                                    taskID: data[i]._id,
+                                    taskDays: data[i].taskDays,
+                                    className: data[i].frozenFlag
+                                },
+                                true // make the event "stick"
+                        );
+                    }
+                }
+            });
+        }
+        //初始化拖拽事件
+        function Initialize_Draggable(){
+            /* 拖拽
+             -----------------------------------------------------------------*/
+            $('#external-events div.external-event').each(function() {
+                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                // it doesn't need to have a start or end
+                var eventObject = {
+                    title: $.trim($(this).text()) // use the element's text as the event title
+                };
+                // store the Event Object in the DOM element so we can get to it later
+                $(this).data('eventObject', eventObject);
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                    zIndex: 100002,
+                    revert: true,      // will cause the event to go back to its
+                    revertDuration: 0  //  original position after the drag
+                });
+            });
+        }
+        //上一个月
+    	function prevMonth(){
+        	$('.DoubleWeek').fullCalendar('prev');
+            $('#title_DoubleWeek').html($('.DoubleWeek').children('table.fc-header').find('span.fc-header-title').children('h2').html());
+        }
+    	//下一个月
+        function nextMonth(){
+        	$('.DoubleWeek').fullCalendar('next');
+        	$('#title_DoubleWeek').html($('.DoubleWeek').children('table.fc-header').find('span.fc-header-title').children('h2').html());
+        }
+        //添加人员
+        function AddPer(){
+            // var pagei = $.layer({
+            //     type: 1,   //0-4的选择,
+            //     title: false,
+            //     border: [0],
+            //     closeBtn: [0],
+            //     shadeClose: false,
+            //     area: ['auto', 'auto'],
+            //     page: {dom : '#addBox'}
+            // });
+            // var paramJSon = {
+            //     "userId":'8104524',
+            //     "userName":'贾韦韦',
+            //     "userType":'10',
+            //     "company":'正大天晴'
+            // }
+            // $.post("/rollingPlan/addUser",JSON.stringify(paramJSon),function(data){
+            //     //console.log(data);
+            // });
+        }
+        //初始化
+        jQuery(function($){
+        	var opts = {            
+                lines: 10, // 花瓣数目
+                length: 0, // 花瓣长度
+                width: 10, // 花瓣宽度
+                radius: 20, // 花瓣距中心半径
+                corners: 1, // 花瓣圆滑度 (0-1)
+                rotate: 0, // 花瓣旋转角度
+                direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                color: '#2679b5', // 花瓣颜色
+                speed: 1, // 花瓣旋转速度
+                trail: 60, // 花瓣旋转时的拖影(百分比)
+                shadow: false, // 花瓣是否显示阴影
+                hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                className: 'spinner', // spinner css 样式名称
+                zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                top: '-100', // spinner 相对父容器Top定位 单位 px
+                left: '-30'// spinner 相对父容器Left定位 单位 px
+            };
+            var target = document.getElementById("Loading");  
+            var spinner = new Spinner(opts).spin(target);
+    		pagei = $.layer({
+    			type: 1,   //0-4的选择,
+    			title: false,
+    			border: [0],
+    			closeBtn: [0],
+    			shadeClose: false,
+    			area: ['auto', 'auto'],
+    			page: {dom : '#Loading'}
+    		});
+    		setTimeout(function() {
+    	        // ajax 页面初始化
+    	        $.ajaxSetup({
+    	            contentType: 'application/json',
+    	            async:false,
+    	            error:function(){
+    	                alert(errMsg1);
+    	            },
+    	            timeout:timeout
+    	        });
+    	        //获取人员列表
+    	        getAllUser();
+    	
+    	        /* 初始化日历
+    	         -----------------------------------------------------------------*/
+    	        $('.DoubleWeek').each(function(){
+    	            var d = $(this).data('date');
+    	            var m = $(this).data('month');
+    	            var y = $(this).data('year');
+    	
+    	            var calendar = $(this).fullCalendar({
+    					header: {
+    						left: '',
+    						center: 'title'
+    					},
+    	                defaultView: 'basicWeek',
+    	                height: '168',
+    	                year: y,
+    	                month: m,
+    	                date: d,
+    	                editable: true,
+    	                droppable: true,
+    	                selectable: true,
+    	                drop: function(date, allDay, event, bb, cc, dd) {
+    		            	if( ModifyType == true ){
+    		            		// retrieve the dropped element's stored Event Object
+    		                    var originalEventObject = $(this).data('eventObject');
+    		                    var $extraEventClass = $(this).attr('data-class');
+    		                    // we need to copy it, so that multiple events don't have a reference to the same object
+    		                    var copiedEventObject = $.extend({}, originalEventObject);
+    		                    //console.log(date,allDay,originalEventObject,$extraEventClass,copiedEventObject);
+    		                    // assign it the date that was reported
+    		                    copiedEventObject.start = date;
+    		                    copiedEventObject.allDay = allDay;
+    		                    if($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
+    		                    // render the event on the calendar
+    		                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+    		                    calendar.fullCalendar('renderEvent', copiedEventObject, true);
+    		                    // is the "remove after drop" checkbox checked?
+    		                    if ($('#drop-remove').is(':checked')) {
+    		                        // if so, remove the element from the "Draggable Events" list
+    		                        $(this).remove();
+    		                    }
+    		                    //console.log($extraEventClass);
+    		                    var date = copiedEventObject.start;
+    		                    var dd = date.getDate();
+    		                    var mm = date.getMonth() + 1;
+    		                    var yy = date.getFullYear();
+    		                    var taskStartDate = ''+yy+'-'+mm+'-'+dd+' 00:00:00';
+    		                    taskStartDate = changeTimeToUnix(taskStartDate);
+    		                    var paramJSon = {
+    		                        "userId": calendar.data('userid'),
+    		                        "userName": calendar.data('username'),
+    		                        "taskType": '100',
+    		                        "taskDesc": copiedEventObject.title,
+    		                        "taskStartDate": taskStartDate,
+    		                        "taskDays": '1',
+    		                        "frozenFlag": $extraEventClass
+    		                    }
+    		                    $.post("/rollingPlan/addTask",JSON.stringify(paramJSon),function(data){
+    		                    });
+    		            	}
+    	                },
+    	                //添加新任务
+    	                select: function(start, end, allDay, jsEvent, view ) {
+    	                	if( ModifyType == true ){
+    		                    var DoubleWeek =  $(this)[0].element.parents('div.DoubleWeek');
+    		                    bootbox.prompt("New Event Title:", function(title) {
+    		                        if (title !== null) {
+    		                            calendar.fullCalendar('renderEvent',
+    		                                    {
+    		                                        title: title,
+    		                                        start: start,
+    		                                        end: end,
+    		                                        taskID: '123'
+    		                                    },
+    		                                    true // make the event "stick"
+    		                            );
+    		                            var date = start;
+    		                            var dd = date.getDate();
+    		                            var mm = date.getMonth() + 1;
+    		                            var yy = date.getFullYear();
+    		                            var taskStartDate = ''+yy+'-'+mm+'-'+dd+' 00:00:00';
+    		                            taskStartDate = changeTimeToUnix(taskStartDate);
+    		                            var paramJSon = {
+    		                                "userId": DoubleWeek.data('userid'),
+    		                                "userName": DoubleWeek.data('username'),
+    		                                "taskType": '100',
+    		                                "taskDesc": title,
+    		                                "taskStartDate": taskStartDate,
+    		                                "taskDays": '1',
+    		                                "frozenFlag": '10'
+    		                            }
+    		                            $.post("/rollingPlan/addTask",JSON.stringify(paramJSon),function(data){
+    		                            });
+    		                        }
+    		                    });
+    		                    calendar.fullCalendar('unselect');
+    	                   }
+    	                },
+    	                //标题修改----任务详细内容修改
+    	                eventClick: function(calEvent, jsEvent, view) {
+    	                	if( ModifyType == true ){
+    		                    var modal =
+    		                            '<div class="modal fade">\
+    		                                <div class="modal-dialog">\
+    		                                    <div class="modal-content">\
+    		                                        <div class="modal-body">\
+    		                                            <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;">&times;</button>\
+    		                                            <form class="no-margin">\
+    		                                                <label>Change event name &nbsp;</label>\
+    		                                                <input class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
+    		                                                <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
+    		                                            </form>\
+    		                                        </div>\
+    		                                        <div class="modal-footer">\
+    		                                            <button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
+    		                                            <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
+    		                                        </div>\
+    		                                    </div>\
+    		                                </div>\
+    		                            </div>';
+    		                    var modal = $(modal).appendTo('body');
+    		                    //保存事件
+    		                    modal.find('form').on('submit', function(ev){
+    		                        ev.preventDefault();
+    		                        calEvent.title = $(this).find("input[type=text]").val();
+    		                        calendar.fullCalendar('updateEvent', calEvent);
+    		                        modal.modal("hide");
+    		
+    		                        var paramJSon = {
+    		                            "taskId": calEvent.taskID,
+    		                            "newTaskDesc": $(this).find("input[type=text]").val()
+    		                        }
+    		                        $.post("/rollingPlan/updateTaskDesc",JSON.stringify(paramJSon),function(data){
+    		                            //console.log(data);
+    		                        });
+    		                    });
+    		                    //删除事件
+    		                    modal.find('button[data-action=delete]').on('click', function() {
+    		                        calendar.fullCalendar('removeEvents' , function(ev){
+    		                            return (ev._id == calEvent._id);
+    		                        })
+    		                        modal.modal("hide");
+    		
+    		                        var paramJSon = {
+    		                            "taskId": calEvent.taskID
+    		                        }
+    		                        $.post("/rollingPlan/deleteTask",JSON.stringify(paramJSon),function(data){
+    		                            //console.log(data);
+    		                        });
+    		                    });
+    		                    modal.modal('show').on('hidden', function(){
+    		                        modal.remove();
+    		                    });
+    		                    //console.log(calEvent.id);
+    		                    //console.log(jsEvent);
+    		                    //console.log(view);
+    		
+    		                    // change the border color just for fun
+    		                    //$(this).css('border-color', 'red');
+    		               }
+    	                },
+    	                //长度拖拽----任务持续时间修改
+    	                eventResize: function(event, dayDelta, minuteDelta, revertFunc, jsEvent, ui, view){
+    	                	if( ModifyType == true ){
+    		                    var startTime = event.start;
+    		                    var endTime = event.end;
+    		                    //console.log(startTime,endTime,event.taskDays);
+    		                    var poorTime = '';
+    		                    if( endTime == null ){
+    		                        poorTime = 1;
+    		                    }else{
+    		                        poorTime = endTime.getTime() - startTime.getTime();
+    		                        poorTime = Math.floor(poorTime/(24*3600*1000));
+    		                        if( event.taskDays == 1 ){
+    		                            poorTime = Number(poorTime) + Number(event.taskDays);
+    		                        }else{
+    		                            poorTime = Number(poorTime) + Number(event.taskDays) - Number(1);
+    		                        }
+    		                    }
+    		
+    		                    var paramJSon = {
+    		                        "taskId": event.taskID,
+    		                        "newTaskDays": poorTime
+    		                    }
+    		                    $.post("/rollingPlan/updateTaskDays",JSON.stringify(paramJSon),function(data){
+    		                        //console.log(data);
+    		                    });
+    		                }
+    	                },
+    	                //位置拖拽----任务起始时间修改
+    	                eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view){
+    	                	if( ModifyType == true ){
+    		                    var startTime = event.start;
+    		                    var dd = startTime.getDate();
+    		                    var mm = startTime.getMonth() + 1;
+    		                    var yy = startTime.getFullYear();
+    		                    var taskStartDate = ''+yy+'-'+mm+'-'+dd+' 00:00:00';
+    		                    taskStartDate = changeTimeToUnix(taskStartDate);
+    		                    var paramJSon = {
+    		                        "taskId": event.taskID,
+    		                        "newTaskStartDate": taskStartDate
+    		                    }
+    		                    $.post("/rollingPlan/updateTaskStartTime",JSON.stringify(paramJSon),function(data){
+    		                        //console.log(data);
+    		                    });
+    	                   }
+    	                }
+    	            });
+    	            $('#title_DoubleWeek').html($(this).children('table.fc-header').find('span.fc-header-title').children('h2').html());
+    	            $(this).children('table.fc-header').hide();
+    	        })
+    	        //获取任务
+    	        getAllTask();
+    	        spinner.spin();
+    			layer.close(pagei);
+    		}, 300 + parseInt(Math.random() * 300));
+        });
+    </script>
+    <link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+    <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+    <script type="text/javascript">ace.vars['base'] = '..';</script>
+    <script src="../assets/js/ace/ace.onpage-help.js"></script>
+    <script src="../docs/assets/js/rainbow.js"></script>
+    <script src="../docs/assets/js/language/generic.js"></script>
+    <script src="../docs/assets/js/language/html.js"></script>
+    <script src="../docs/assets/js/language/css.js"></script>
+    <script src="../docs/assets/js/language/javascript.js"></script>
+    <script src="../layer/layer.min.js"></script>
+    <script src="../myjs/backupNew.js"></script>
+    <script src="../myjs/lexus.js"></script>
+    <script src="../assets/js/jquery.gritter.min.js"></script>
+    <script src="../assets/js/fullcalendar.min_week_2.js"></script>
+    <script src="../assets/js/bootbox.min.js"></script>
+    <script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+    <script src="../assets/js/spin.min.js"></script>
+</body>
+</html>

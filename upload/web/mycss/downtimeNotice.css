@@ -1,0 +1,50 @@
+#tbody td {
+    line-height: 32px;
+}
+
+.widget-header > h4 {
+    float: left;
+}
+
+.btn-new {
+    margin: 2px 20px;
+    float: right;
+}
+.thead-title {
+    width: 15%;
+}
+
+.thead-content {
+    width: 20%;
+}
+
+.thead-iflist {
+    width: 10%;
+}
+
+.thead-date {
+    width: 10%;
+}
+
+.thead-contact-person {
+    width: 20%;
+}
+
+.thead-op {
+    width: 22%;
+}
+
+.tool-bar {
+    width: 100%;
+    height: 20px;
+}
+
+.input-required {
+    color: #ff0000;
+    margin: 0 0 0 2px;
+}
+
+.item-title {
+    width: 80px;
+    display: inline-block;
+}

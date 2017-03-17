@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meap>
+    <interfaces>
+        <interface>
+            <name>if_ZMM_VENDER_LISTS</name>
+            <path>ZMM_VENDER_LISTS</path>
+            <method>POST</method>
+            <public>false</public>
+        </interface>
+        <interface>
+            <name>if_ZMM_VENDER_ACC_SUBMIT</name>
+            <path>ZMM_VENDER_ACC_SUBMIT</path>
+            <method>POST</method>
+            <public>false</public>
+        </interface>
+        <interface>
+            <name>if_ZMM_VENDER_GET_CHANGE</name>
+            <path>ZMM_VENDER_GET_CHANGE</path>
+            <method>POST</method>
+            <public>false</public>
+        </interface>
+    </interfaces>
+</meap>

@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>修改办公地</title>
+
+		<meta name="description" content="Common UI Features &amp; Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+		<style>
+			/* some elements used in demo only */
+			.spinner-preview {
+				width: 100px;
+				height: 100px;
+				text-align: center;
+				margin-top: 60px;
+			}
+			
+			.dropdown-preview {
+				margin: 0 5px;
+				display: inline-block;
+			}
+			.dropdown-preview  > .dropdown-menu {
+				display: block;
+				position: static;
+				margin-bottom: 5px;
+			}
+			.w-left{
+				width:180px;
+			}
+			.border-top-none{
+				border-top:none;
+			}
+		</style>
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js?v=20141224"></script>
+        <script src="./myjs/lexus.js?v=20141224"></script>
+		
+		<script>
+			//选择省后显示名字并加载市区
+			function showOnCZD(spanId,spanVal,zid,nextSpan){
+				$('#'+spanId).html(spanVal);
+				$('#city_czd_show').html('请选择');
+				$('#country_czd_show').html('请选择');
+				$('#country_czd').html('');
+				$('#czdId').val('');
+				if(nextSpan){
+					var cityJSON = submit_5_1('2',zid);
+					if(cityJSON.status == '0'){
+						var cities = cityJSON.T_BASE.item;
+						var citiesLi = '';
+						for(var k in cities){
+							citiesLi += '<li>'
+							+'<a href="#" onclick="showOnCZD1(\'city_czd_show\',\''+cities[k].ZNANM+'\',\''+cities[k].ZID+'\',\'city_czd\')">'+cities[k].ZNANM+'</a>'
+							+'</li>';
+						}
+						
+						$('#city_czd').html(citiesLi);
+						
+																									
+																								
+					}else{
+						var unique_id = $.gritter.add({
+							title: '系统警告信息提示',
+							text: '数据初始化异常，请联系管理员<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+							sticky: true,
+							time: '',
+							class_name: 'gritter-info gritter-center'
+						});
+					}
+				}
+			}
+			//选择市后显示名字并加载县
+			function showOnCZD1(spanId,spanVal,zid,nextSpan){
+				$('#'+spanId).html(spanVal);
+				$('#country_czd_show').html('请选择');
+				$('#czdId').val('');
+				if(nextSpan){
+					var countryJSON = submit_5_1('3',zid);
+					if(countryJSON.status == '0'){
+						var countries = countryJSON.T_BASE.item;
+						var countriesLi = '';
+						for(var k in countries){
+							countriesLi += '<li>'
+							+'<a href="#" onclick="showOnCZD2(\'country_czd_show\',\''+countries[k].ZNANM+'\',\''+countries[k].ZID+'\')">'+countries[k].ZNANM+'</a>'
+							+'</li>';
+						}
+						
+						$('#country_czd').html(countriesLi);
+						
+																									
+																								
+					}else{
+						var unique_id = $.gritter.add({
+							title: '系统警告信息提示',
+							text: '数据初始化异常，请联系管理员<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+							sticky: true,
+							time: '',
+							class_name: 'gritter-info gritter-center'
+						});
+					}
+				}
+			}
+			
+			//选择县后显示名字
+			function showOnCZD2(spanId,spanVal,zid,nextSpan){
+				$('#'+spanId).html(spanVal);
+				$('#czdId').val(zid);
+			}
+			//第二办公地
+			//选择省后显示名字并加载市区
+			function showOnCZDTWO(spanId,spanVal,zid,nextSpan){
+				$('#'+spanId).html(spanVal);
+				$('#city_czd1_show').html('请选择');
+				$('#country_czd1_show').html('请选择');
+				$('#country_czd1').html('');
+				$('#czd1Id').val('');
+				if(nextSpan){
+					var cityJSON = submit_5_1('2',zid);
+					if(cityJSON.status == '0'){
+						var cities = cityJSON.T_BASE.item;
+						var citiesLi = '';
+						for(var k in cities){
+							citiesLi += '<li>'
+							+'<a href="#" onclick="showOnCZDTWO1(\'city_czd1_show\',\''+cities[k].ZNANM+'\',\''+cities[k].ZID+'\',\'city_czd1\')">'+cities[k].ZNANM+'</a>'
+							+'</li>';
+						}
+						
+						$('#city_czd1').html(citiesLi);
+						
+																									
+																								
+					}else{
+						var unique_id = $.gritter.add({
+							title: '系统警告信息提示',
+							text: '数据初始化异常，请联系管理员<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+							sticky: true,
+							time: '',
+							class_name: 'gritter-info gritter-center'
+						});
+					}
+				}
+			}
+			//选择市后显示名字并加载县
+			function showOnCZDTWO1(spanId,spanVal,zid,nextSpan){
+				$('#'+spanId).html(spanVal);
+				$('#country_czd1_show').html('请选择');
+				$('#czd1Id').val('');
+				if(nextSpan){
+					var countryJSON = submit_5_1('3',zid);
+					if(countryJSON.status == '0'){
+						var countries = countryJSON.T_BASE.item;
+						var countriesLi = '';
+						for(var k in countries){
+							countriesLi += '<li>'
+							+'<a href="#" onclick="showOnCZDTWO2(\'country_czd1_show\',\''+countries[k].ZNANM+'\',\''+countries[k].ZID+'\')">'+countries[k].ZNANM+'</a>'
+							+'</li>';
+						}
+						
+						$('#country_czd1').html(countriesLi);
+						
+																									
+																								
+					}else{
+						var unique_id = $.gritter.add({
+							title: '系统警告信息提示',
+							text: '数据初始化异常，请联系管理员<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+							sticky: true,
+							time: '',
+							class_name: 'gritter-info gritter-center'
+						});
+					}
+				}
+			}
+			
+			//选择县后显示名字
+			function showOnCZDTWO2(spanId,spanVal,zid,nextSpan){
+				$('#'+spanId).html(spanVal);
+				$('#czd1Id').val(zid);
+			}
+			
+			//关闭弹出层
+			function closeLay(){
+				var index = parent.layer.getFrameIndex(window.name);
+				$(document.body).parent().remove();//弹出iframe后input无法输入问题解决方案2014-11-11
+				parent.layer.close(index);
+			}
+
+			function CloseGritter(obj){
+				$(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+					$(obj).parents(".gritter-item-wrapper").remove();
+				});
+			}
+			function WindowClose(){
+				window.close();
+			}
+			
+			//保存修改
+			function saveCZD(){
+				//alert($('#czdId').val()+"|"+$('#czd1Id').val())
+				
+				var pernr = '';
+				var P_ZZ_LDBG = '';
+				var P_ZZ_CZDC = '';
+				if (localStorage.perOnShow) {
+					var thisPer = JSON.parse(localStorage.perOnShow);
+					pernr = parseInt(checkNoChar(thisPer.PERNR));
+					P_ZZ_CZDC = checkNoChar(thisPer.ZZ_CZDC);
+				}else{
+					var unique_id = $.gritter.add({
+						title: '系统登录错误提示',
+						text: '没有获取到人员信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+					return false;
+				}
+				
+				if($('#czdId').val() != ''){
+					P_ZZ_CZDC = $('#czdId').val();
+				}
+				
+				if($('#czd1Id').val() == '' && $('#isLDBG').is(':checked')){
+					$.gritter.add({
+						title: '第二办公地选择错误',
+						text: '请选择第二办公地',
+						class_name: 'gritter-error'
+					});
+					return false;
+				}
+				
+				if($('#isLDBG').is(':checked')){
+					P_ZZ_LDBG = 'X';
+				}
+				var paramJSon = {
+					"IT_EXTENDMAP":{
+													"item": [{
+														"FIELDNAME":'',
+														"VALUE":''
+													}]
+													},
+					"I_PUBLIC":{
+						"CHANNELSERIALNO":'',
+						"ORIGINATETELLERID":'',
+						"ZDOMAIN":'100',
+						"I_PAGENO":'',
+						"I_PAGESIZE":'',
+						"ZVERSION":''
+					},
+					"P_BEGDA":getToday8(),
+					"P_ENDDA":'99991231',
+					"P_PERNR":pernr,
+					"P_ZZ_CZDC":P_ZZ_CZDC,
+					"P_ZZ_CZDC1":$('#czd1Id').val(),
+					"P_ZZ_LDBG":P_ZZ_LDBG
+				};
+				
+				var modifyJSON = submit_4_3(paramJSon);
+				if(modifyJSON.status == '0'){
+					//scrollTo(0,0);
+					// aa = layer.alert('保存成功', 1,function(){
+					// 	layer.close(aa);
+					// 	window.parent.getPer(pernr);
+					// 	closeLay();
+					// });
+					var unique_id = $.gritter.add({
+						title: '办公地保存提示',
+						text: '保存成功<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);LeadershipSave(\''+pernr+'\');"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+				}else{
+					closeLay();
+					// layer.alert('修改失败，请稍后重试', 8);
+					var unique_id = $.gritter.add({
+						title: '办公地保存提示',
+						text: '修改失败，请稍后重试<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+				}
+			}
+			function LeadershipSave(PERNR){
+				//alert(PERNR);
+				window.parent.getPer(PERNR);
+				closeLay();
+			}
+		</script>
+	</head>
+
+	<body class="no-skin">
+
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="#">修改常驻地和第二办公地</a>
+						</li>
+
+					</ul><!-- /.breadcrumb -->
+					<button class="btn border-none" style="float:right;" onclick="closeLay()">
+						<i class="glyphicon glyphicon-remove align-top"></i>
+					</button>
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+					
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						
+
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="row">
+															<div class="col-sm-12">
+																	<div class="profile-user-info">
+																	<div class="profile-info-row">
+																		<div class="profile-info-name w-left"> 人员编号 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="PERNR"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name border-top-none"> 姓名 </div>
+	
+																		<div class="profile-info-value border-top-none" >
+																			<span id="NACHN"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 原常驻地 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_CZD"></span>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name border-top-none"> 省份/直辖市 </div>
+	
+																		<div class="profile-info-value border-top-none">
+																			<div class="btn-group">
+																				<button data-toggle="dropdown" class="btn dropdown-toggle">
+																					<span id="province_czd_show">请选择</span>
+																					<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																				</button>
+								
+																				<ul class="dropdown-menu dropdown-default" id="province_czd" style="max-height:300px;overflow-y:scroll;">
+																					
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name border-top-none"> 城市 </div>
+	
+																		<div class="profile-info-value border-top-none">
+																			<div class="btn-group">
+																				<button data-toggle="dropdown" class="btn dropdown-toggle">
+																					<span id="city_czd_show">请选择</span>
+																					<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																				</button>
+								
+																				<ul class="dropdown-menu dropdown-default" id="city_czd" style="max-height:300px;overflow-y:scroll;">
+																					
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name border-top-none"> 县/区 </div>
+	
+																		<div class="profile-info-value border-top-none">
+																			<div class="btn-group">
+																				<button data-toggle="dropdown" class="btn dropdown-toggle">
+																					<span id="country_czd_show">请选择</span>
+																					<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																				</button>
+								
+																				<ul class="dropdown-menu dropdown-default" id="country_czd" style="max-height:300px;overflow-y:scroll;">
+																					
+																				</ul>
+																				<input type="hidden" id="czdId" value="">
+																			</div>
+																		</div>
+																	</div>
+																	
+																	
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name"> 原第二办公地 </div>
+	
+																		<div class="profile-info-value">
+																			<span id="ZZ_CZD1"></span>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name border-top-none"> 两地办公标识 </div>
+	
+																		<div class="profile-info-value border-top-none">
+																			<div class="checkbox">
+																				<label>
+																					<input name="form-field-checkbox" type="checkbox" class="ace" id="isLDBG">
+																					<span class="lbl"> 两地</span>
+																				</label>
+																			</div>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name border-top-none"> 省份/直辖市 </div>
+	
+																		<div class="profile-info-value border-top-none">
+																			<div class="btn-group dropup">
+																				<button data-toggle="dropdown" class="btn dropdown-toggle">
+																					<span id="province_czd1_show">请选择</span>
+																					<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																				</button>
+								
+																				<ul class="dropdown-menu dropdown-default" id="province_czd1" style="max-height:300px;overflow-y:scroll;">
+																					
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name border-top-none"> 城市 </div>
+	
+																		<div class="profile-info-value border-top-none">
+																			<div class="btn-group dropup">
+																				<button data-toggle="dropdown" class="btn dropdown-toggle">
+																					<span id="city_czd1_show">请选择</span>
+																					<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																				</button>
+								
+																				<ul class="dropdown-menu dropdown-default" id="city_czd1" style="max-height:300px;overflow-y:scroll;">
+																					
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	
+																	<div class="profile-info-row">
+																		<div class="profile-info-name border-top-none"> 县/区 </div>
+	
+																		<div class="profile-info-value border-top-none">
+																			<div class="btn-group dropup">
+																				<button data-toggle="dropdown" class="btn dropdown-toggle">
+																					<span id="country_czd1_show">请选择</span>
+																					<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																				</button>
+								
+																				<ul class="dropdown-menu dropdown-default" id="country_czd1" style="max-height:300px;overflow-y:scroll;">
+																					
+																				</ul>
+																				<input type="hidden" id="czd1Id" value="">
+																			</div>
+																		</div>
+																	</div>
+																	
+																	
+																	
+																	
+																</div>
+																<div class="profile-user-info" style="text-align:right">	
+																		<button class="btn btn-info" type="button" onclick="saveCZD()">
+																			<i class="ace-icon fa fa-check bigger-110"></i>
+																			保存
+																		</button>
+																		
+																	</div>
+															</div>
+														</div>
+								
+								<script type="text/javascript">
+									var $path_assets = "./assets";//this will be used in gritter alerts containing images
+								</script>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="./assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/bootbox.min.js"></script>
+		<script src="./assets/js/jquery.easypiechart.min.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>
+		<script src="./assets/js/spin.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+				/**
+				$('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+				  console.log(e.target.getAttribute("href"));
+				})
+					
+				$('#accordion').on('shown.bs.collapse', function (e) {
+					console.log($(e.target).is('#collapseTwo'))
+				});
+				*/
+				
+				$('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+					if($(e.target).attr('href') == "#home") drawChartNow();
+				})
+			
+				
+				/**
+					//go to next tab, without user clicking
+					$('#myTab > .active').next().find('> a').trigger('click');
+				*/
+			
+			
+				$('#accordion-style').on('click', function(ev){
+					var target = $('input', ev.target);
+					var which = parseInt(target.val());
+					if(which == 2) $('#accordion').addClass('accordion-style2');
+					 else $('#accordion').removeClass('accordion-style2');
+				});
+				
+				//$('[href="#collapseTwo"]').trigger('click');
+			
+			
+				var oldie = /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase());
+				$('.easy-pie-chart.percentage').each(function(){
+					$(this).easyPieChart({
+						barColor: $(this).data('color'),
+						trackColor: '#EEEEEE',
+						scaleColor: false,
+						lineCap: 'butt',
+						lineWidth: 8,
+						animate: oldie ? false : 1000,
+						size:75
+					}).css('color', $(this).data('color'));
+				});
+			
+				$('[data-rel=tooltip]').tooltip();
+				$('[data-rel=popover]').popover({html:true});
+			
+			
+				$('#gritter-regular').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a regular notice!',
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="blue">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar1.png',
+						sticky: false,
+						time: '',
+						class_name: (!$('#gritter-light').get(0).checked ? 'gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+				$('#gritter-sticky').on(ace.click_event, function(){
+					var unique_id = $.gritter.add({
+						title: 'This is a sticky notice!',
+						text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="red">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar.png',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-without-image').on(ace.click_event, function(){
+					$.gritter.add({
+						// (string | mandatory) the heading of the notification
+						title: 'This is a notice without an image!',
+						// (string | mandatory) the text inside the notification
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="orange">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						class_name: 'gritter-success' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-max3').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a notice with a max of 3 on screen at one time!',
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="green">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar3.png',
+						sticky: false,
+						before_open: function(){
+							if($('.gritter-item-wrapper').length >= 3)
+							{
+								return false;
+							}
+						},
+						class_name: 'gritter-warning' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-center').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a centered notification',
+						text: 'Just add a "gritter-center" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+						class_name: 'gritter-info gritter-center' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+				
+				$('#gritter-error').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a warning notification',
+						text: 'Just add a "gritter-light" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+						class_name: 'gritter-error' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+					
+			
+				$("#gritter-remove").on(ace.click_event, function(){
+					$.gritter.removeAll();
+					return false;
+				});
+					
+			
+				///////
+			
+			
+				$("#bootbox-regular").on(ace.click_event, function() {
+					bootbox.prompt("What is your name?", function(result) {
+						if (result === null) {
+							
+						} else {
+							
+						}
+					});
+				});
+					
+				$("#bootbox-confirm").on(ace.click_event, function() {
+					bootbox.confirm("Are you sure?", function(result) {
+						if(result) {
+							//
+						}
+					});
+				});
+				
+			/**
+				$("#bootbox-confirm").on(ace.click_event, function() {
+					bootbox.confirm({
+						message: "Are you sure?",
+						buttons: {
+						  confirm: {
+							 label: "OK",
+							 className: "btn-primary btn-sm",
+						  },
+						  cancel: {
+							 label: "Cancel",
+							 className: "btn-sm",
+						  }
+						},
+						callback: function(result) {
+							if(result) alert(1)
+						}
+					  }
+					);
+				});
+			**/
+					
+				$("#bootbox-options").on(ace.click_event, function() {
+					bootbox.dialog({
+						message: "<span class='bigger-110'>I am a custom dialog with smaller buttons</span>",
+						buttons: 			
+						{
+							"success" :
+							 {
+								"label" : "<i class='ace-icon fa fa-check'></i> Success!",
+								"className" : "btn-sm btn-success",
+								"callback": function() {
+									//Example.show("great success");
+								}
+							},
+							"danger" :
+							{
+								"label" : "Danger!",
+								"className" : "btn-sm btn-danger",
+								"callback": function() {
+									//Example.show("uh oh, look out!");
+								}
+							}, 
+							"click" :
+							{
+								"label" : "Click ME!",
+								"className" : "btn-sm btn-primary",
+								"callback": function() {
+									//Example.show("Primary button");
+								}
+							}, 
+							"button" :
+							{
+								"label" : "Just a button...",
+								"className" : "btn-sm"
+							}
+						}
+					});
+				});
+			
+			
+			
+				$('#spinner-opts small').css({display:'inline-block', width:'60px'})
+			
+				var slide_styles = ['', 'green','red','purple','orange', 'dark'];
+				var ii = 0;
+				$("#spinner-opts input[type=text]").each(function() {
+					var $this = $(this);
+					$this.hide().after('<span />');
+					$this.next().addClass('ui-slider-small').
+					addClass("inline ui-slider-"+slide_styles[ii++ % slide_styles.length]).
+					css({'width':'125px'}).slider({
+						value:parseInt($this.val()),
+						range: "min",
+						animate:true,
+						min: parseInt($this.data('min')),
+						max: parseInt($this.data('max')),
+						step: parseFloat($this.data('step')),
+						slide: function( event, ui ) {
+							$this.val(ui.value);
+							spinner_update();
+						}
+					});
+				});
+			
+			
+			
+			
+			
+				$.fn.spin = function(opts) {
+					this.each(function() {
+					  var $this = $(this),
+						  data = $this.data();
+			
+					  if (data.spinner) {
+						data.spinner.stop();
+						delete data.spinner;
+					  }
+					  if (opts !== false) {
+						data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+					  }
+					});
+					return this;
+				};
+			
+				function spinner_update() {
+					var opts = {};
+					$('#spinner-opts input[type=text]').each(function() {
+						opts[this.name] = parseFloat(this.value);
+					});
+					$('#spinner-preview').spin(opts);
+				}
+			
+			
+			
+				$('#id-pills-stacked').removeAttr('checked').on('click', function(){
+					$('.nav-pills').toggleClass('nav-stacked');
+				});
+			
+			//初始化页面数据
+$.ajaxSetup({
+	contentType: 'application/json',
+	async:false,
+	error:function(){
+				var unique_id = $.gritter.add({
+						title: '系统警告信息提示',
+						text: ''+errMsg1+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+	},
+	timeout:timeout
+ });
+ 		
+		
+		if(localStorage.perOnShow){
+			var thisPer = JSON.parse(localStorage.perOnShow);
+			$('#PERNR').html(parseInt(checkNoChar(thisPer.PERNR)));
+			$('#NACHN').html(checkNoChar(thisPer.NACHN));
+			$('#ZZ_CZD').html(checkNoChar(thisPer.ZZ_CZD));
+			$('#ZZ_CZD1').html(checkNoChar(thisPer.ZZ_CZD1));
+		}else{
+			var unique_id = $.gritter.add({
+						title: '系统登录错误提示',
+						text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+		}
+		
+		
+		//初始化省
+		var provinceJSON = submit_5_1('1','');
+		if(provinceJSON.status == '0'){
+			var provinces = provinceJSON.T_BASE.item;
+			var provincesLi = '';
+			var provincesLi1 = '';
+			for(var k in provinces){
+				provincesLi += '<li>'
+				+'<a href="#" onclick="showOnCZD(\'province_czd_show\',\''+provinces[k].ZNANM+'\',\''+provinces[k].ZID+'\',\'city_czd\')">'+provinces[k].ZNANM+'</a>'
+				+'</li>';
+				provincesLi1 += '<li>'
+				+'<a href="#" onclick="showOnCZDTWO(\'province_czd1_show\',\''+provinces[k].ZNANM+'\',\''+provinces[k].ZID+'\',\'city_czd1\')">'+provinces[k].ZNANM+'</a>'
+				+'</li>';
+			}
+			
+			$('#province_czd').html(provincesLi);
+			$('#province_czd1').html(provincesLi1);
+																						
+																					
+		}else{
+					var unique_id = $.gritter.add({
+						title: '系统警告信息提示',
+						text: '数据初始化异常，请联系管理员<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+		}
+		
+			});
+		</script>
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+		<!--JWW-2014-10-09-->
+		<script type="text/javascript">
+			$(window.parent.document).find("iframe").load(function(){
+				var main = $(window.parent.document).find("iframe");
+				var mainheight = $(document).height();
+				main.height(mainheight);
+			});
+		</script>
+	</body>
+</html>

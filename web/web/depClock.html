@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>团队考勤</title>
+
+		<meta name="description" content="3 styles with inline editable feature" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+		<link rel="stylesheet" href="./assets/css/select2.css" />
+		<link rel="stylesheet" href="./assets/css/datepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-editable.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+
+		<script src="./assets/js/fuelux/data/fuelux.tree-sample-demo-data.js"></script>
+		<script src="./assets/js/fuelux/fuelux.tree.min.js"></script>
+		<script src="./assets/js/spin.min.js"></script>
+		<style>
+			html{background-color:#E3E3E3; font-size:14px; color:#000; font-family:'微软雅黑'}
+			a,a:hover{ text-decoration:none;}
+			pre{font-family:'微软雅黑'}
+			.box{padding:20px; background-color:#fff; margin:50px 100px; border-radius:5px;}
+			.box a{padding-right:15px;}
+			#about_hide{display:none}
+			.layer_text{background-color:#fff; padding:20px;}
+			.layer_text p{margin-bottom: 10px; text-indent: 2em; line-height: 23px;}
+			.button{display:inline-block; *display:inline; *zoom:1; line-height:30px; padding:0 20px; background-color:#56B4DC; color:#fff; font-size:14px; border-radius:3px; cursor:pointer; font-weight:normal;}
+			.imgs img{width:300px;}
+
+			.border-none{
+				border:none;
+			}
+			.no-skin .nav-list>li .submenu>li>a.blue{color:#4b88b7;
+				background-color:#C9DBED;}
+			.tree .tree-folder .tree-folder-box{
+        		width:100%;height:30px;padding:0;
+        	}
+			.tree .tree-folder .tree-folder-icon{
+				float:left;padding:5px 0;width:26px;text-align:center;
+			}
+			.tree .tree-folder .tree-folder-icon i.ace-icon:first-child{
+				margin: -1px 0 0 -1px;
+			}
+			.tree .tree-folder .tree-folder-text{
+				float:left;padding:5px 0;width:calc(100% - 26px);text-indent:2px;display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+			}
+			.tree .tree-folder .tree-folder-text i{
+				margin-right:3px;width:15px;height:13px;text-align: center;
+			}
+			.tree .tree-folder .tree-folder-header:hover{
+				background:none;
+			}
+			.tree .tree-folder .tree-folder-icon:hover{
+				background-color: #F0F7FC;
+			}
+			.tree .tree-folder .tree-folder-text:hover{
+				background-color: #F0F7FC;
+			}
+			.tree .tree-item-box{
+				padding: 0;height: 30px;width:100%;border:none;
+			}
+			.tree .tree-item .tree-item-icon{
+				width:26px;float: left;padding:5px 0;text-align:center;border:none;display:none;
+			}
+			.tree .tree-item .tree-item-name{
+				width:100%;/*width:calc(100% - 26px);*/float:left;margin-left:0;padding:5px 0;border:none;text-indent:2px;line-height:22px;display:block;white-space:nowrap;overflow:hidden; text-overflow:ellipsis;
+			}
+			.tree .tree-item .tree-item-name i{
+				margin-right:3px;width:15px;height:13px;text-align: center;
+			}
+			.tree .tree-item-icon:before,.tree .tree-item-name:before{
+				border:none;
+			}
+			.tree .tree-item:hover{
+				background: none;
+			}
+			.tree .tree-item-icon:hover,.tree .tree-item-name:hover{
+				background-color: #F0F7FC;
+			}
+			.tree .tree-selected .tree-item-icon>.ace-icon:first-child{
+				background-color: #F9A021;
+			    border-color: #F9A021;
+			    color: #FFF;
+			}
+			.tree .tree-selected{
+				background:none;
+			}
+			.tree .tree-folder .tree-folder-content .tree-item.treeOn{
+				color: #2b7dbc;
+				background-color: #e5eff8;
+			}
+			.tree .tree-folder .tree-folder-content .tree-item.treeOn:hover{
+				color: #2b7dbc;
+				background-color: #e5eff8;
+			}
+			#xubox_shade1{height:100%;}
+		</style>
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js?v=20150831"></script>
+        <script src="./myjs/lexus.js?v=20141224"></script>
+		<script>
+			function onblue(obj){
+				$("#bumenUl").find("a").removeClass("blue");
+				$(obj).addClass("blue");
+			};
+			//请求组织树
+			function getOrg(orgId){
+				if( $('#'+orgId).prev(".tree-folder-box").hasClass("open") ){
+					$('#'+orgId).prev(".tree-folder-box").removeClass("open");
+					$('#'+orgId).prev(".tree-folder-box").children(".tree-folder-icon").children("i").removeClass("tree-minus");
+					$('#'+orgId).prev(".tree-folder-box").children(".tree-folder-icon").children("i").addClass("tree-plus");
+					$('#'+orgId).hide();
+				}else{
+					//获取当前的点击项的所有同级DOM
+					var AtSame = $('#'+orgId).parent(".tree-folder").siblings(".tree-folder");
+					AtSame.find(".tree-folder-box").removeClass("open");
+					AtSame.find(".tree-folder-box").children(".tree-folder-icon").children("i").removeClass("tree-minus");
+					AtSame.find(".tree-folder-box").children(".tree-folder-icon").children("i").addClass("tree-plus");
+					AtSame.find(".tree-folder-content").hide();
+
+					if($('#'+orgId).html() != ''){
+						$('#'+orgId).prev(".tree-folder-box").addClass("open");
+						$('#'+orgId).prev(".tree-folder-box").children(".tree-folder-icon").children("i").removeClass("tree-plus");
+						$('#'+orgId).prev(".tree-folder-box").children(".tree-folder-icon").children("i").addClass("tree-minus");
+						$('#'+orgId).show();
+					}else{
+						//加载动画开启
+						$('#'+orgId).next(".tree-loader").show();
+						setTimeout(function() {
+							var orgJSON = submit_4_1_xin(orgId);
+							var liStr = '';
+							if( orgJSON.P_PER_TAB.item != undefined ){
+								if(orgJSON.P_PER_TAB.item.length == undefined){   //有下属
+									var P_PER_TAB = orgJSON.P_PER_TAB.item;
+									//for(var k in P_PER_TAB){
+										liStr +='<div class="tree-item tree-item-box" onclick="getPer(\''+checkNoChar(P_PER_TAB.PERNR)+'\',this);onblue(this);" style="display: block;">'
+							                        +'<div class="tree-item tree-item-icon"><i class=" ace-icon ace-icon fa fa-times"></i></div>'
+							                        +'<div class="tree-item tree-item-name">'
+							                            +'<i class="menu-icon fa fa-user"></i>'
+							                            +'<span>'+parseInt(checkNoChar(P_PER_TAB.PERNR))+'  '+checkNoChar(P_PER_TAB.NACHN)+'</span>'
+							                        +'</div>'
+							                    +'</div>';
+									//}
+								}else{
+									var P_PER_TAB = orgJSON.P_PER_TAB.item;
+									for(var k in P_PER_TAB){
+										liStr +='<div class="tree-item tree-item-box" onclick="getPer(\''+checkNoChar(P_PER_TAB[k].PERNR)+'\',this);onblue(this);" style="display: block;">'
+							                        +'<div class="tree-item tree-item-icon"><i class=" ace-icon ace-icon fa fa-times"></i></div>'
+							                        +'<div class="tree-item tree-item-name">'
+							                            +'<i class="menu-icon fa fa-user"></i>'
+							                            +'<span>'+parseInt(checkNoChar(P_PER_TAB[k].PERNR))+'  '+checkNoChar(P_PER_TAB[k].NACHN)+'</span>'
+							                        +'</div>'
+							                    +'</div>';
+									}
+								}
+							}
+							if( orgJSON.P_ORG_TAB.item != undefined ){
+								if(orgJSON.P_ORG_TAB.item.length != '0'){   //有部门
+									var P_ORG_TAB = orgJSON.P_ORG_TAB.item;
+									for(var k in P_ORG_TAB){
+										var ZNEXT = checkNoChar(P_ORG_TAB[k].ZNEXT);
+										var ZNEPER = checkNoChar(P_ORG_TAB[k].ZNEPER);
+										if(ZNEXT == 'X' ||  ZNEPER == 'X'){
+											liStr +='<div class="tree-folder" style="display: block;">'
+									    			+'<div class="tree-folder-header tree-folder-box">'
+									            		+'<div class="tree-folder-header tree-folder-icon" onclick="getOrg(\''+checkNoChar(P_ORG_TAB[k].ORGEH)+'\')"><i class="ace-icon tree-plus"></i></div>'
+									            		+'<div class="tree-folder-header tree-folder-text" onclick="getOrg(\''+checkNoChar(P_ORG_TAB[k].ORGEH)+'\')">'
+										                    +'<span>'+checkNoChar(P_ORG_TAB[k].ORGEH_TXT)+'</span>'
+										                +'</div>'
+									            	+'</div>'
+									                +'<div class="tree-folder-content" id="'+checkNoChar(P_ORG_TAB[k].ORGEH)+'" style="display: block;">'
+									                +'</div>'
+									                +'<div class="tree-loader" style="display:none;">'
+												        +'<div class="tree-loading">'
+												            +'<i class="ace-icon fa fa-refresh fa-spin blue"></i>'
+												        +'</div>'
+												    +'</div>'
+									            +'</div>';
+										}else{
+											liStr +='<div class="tree-folder" style="display: block;">'
+									    			+'<div class="tree-folder-header tree-folder-box">'
+									            		+'<div class="tree-folder-header tree-folder-text" style="width: 100%;padding-left: 2px;">'
+										                    +'<span>'+checkNoChar(P_ORG_TAB[k].ORGEH_TXT)+'</span>'
+										                +'</div>'
+									            	+'</div>'
+									                +'<div class="tree-folder-content" id="'+checkNoChar(P_ORG_TAB[k].ORGEH)+'" style="display: block;">'
+									                +'</div>'
+									                +'<div class="tree-loader" style="display:none;">'
+												        +'<div class="tree-loading">'
+												            +'<i class="ace-icon fa fa-refresh fa-spin blue"></i>'
+												        +'</div>'
+												    +'</div>'
+									            +'</div>';
+										}
+									}
+								}
+							}	
+							$('#'+orgId).prev(".tree-folder-box").addClass("open");
+							$('#'+orgId).prev(".tree-folder-box").children(".tree-folder-icon").children("i").removeClass("tree-plus");
+							$('#'+orgId).prev(".tree-folder-box").children(".tree-folder-icon").children("i").addClass("tree-minus");
+							$('#'+orgId).show();
+							//加载动画关闭动画
+							$('#'+orgId).next(".tree-loader").hide();
+							$('#'+orgId).html(liStr);
+							var TreeMaxHeight = $("#TreeMaxHeight").outerHeight();
+							var max = 600;
+							if( TreeMaxHeight >= max ){
+								$("#TreeMaxHeight").css({"overflow-y":"scroll"});
+								$("#TreeMaxHeight").css({"max-height":"600px"});
+							}else{
+								$("#TreeMaxHeight").css({"overflow-y":"visible"});
+								$("#TreeMaxHeight").css({"max-height":"auto"});
+							}
+						}, 300 + parseInt(Math.random() * 300));
+					}
+						
+				}
+				var TreeMaxHeight = $("#TreeMaxHeight").outerHeight();
+				var max = 600;
+				if( TreeMaxHeight >= max ){
+					$("#TreeMaxHeight").css({"overflow-y":"scroll"});
+					$("#TreeMaxHeight").css({"max-height":"600px"});
+				}else{
+					$("#TreeMaxHeight").css({"overflow-y":"visible"});
+					$("#TreeMaxHeight").css({"max-height":"auto"});
+				}
+			}
+			
+			
+			//直属下属可以请求到他的直属下属
+			function getPer1(pernr){
+				getPer(pernr,obj);
+				
+				if(trim($('#'+pernr).html()) != ''){
+						return;
+					}
+					
+					var orgJSON = submit_4_1(pernr);
+					var liStr = '';
+					if(checkNoChar(orgJSON.FLAG_PERNR) == 'X'){   //有下属
+						var P_PER_TAB = orgJSON.P_PER_TAB.item;
+						
+						for(var k in P_PER_TAB){
+							liStr += '<li class="">'
+							+'<a href="#" onclick="getPer(\''+checkNoChar(P_PER_TAB[k].PERNR)+'\',this);onblue(this);"><i class=" fa fa-user"></i>'
+							+'<span class="menu-text">　'+parseInt(checkNoChar(P_PER_TAB[k].PERNR))+'  '+checkNoChar(P_PER_TAB[k].NACHN)+'</span>'
+							+'</a>'
+							+'<b class="arrow"></b>'
+							+'</li>';
+						}
+						
+					
+					}
+					
+					$('#'+pernr).html(liStr);
+			}
+		
+		
+			function getPer(pernr,obj){
+				if( $("#HCYear").val() != '' || $("#HCMonth").val() != '' ){
+					var y = $("#HCYear").val();
+					var m = $("#HCMonth").val();
+				}else{
+					var d = new Date();
+					var y = d.getFullYear();
+					var m = d.getMonth();
+				}
+				localStorage.removeItem("depPernr");
+				localStorage.depPernr = JSON.stringify(pernr);
+				window.frames["depData"].location.href="/web/depClockData.html?y="+y+"&m="+m+"&p="+pernr;
+
+				//组织树选中变色
+				$(".tree .tree-folder .tree-folder-content .tree-item").removeClass("treeOn");
+				$(obj).addClass("treeOn");
+				//window.$('body,html').animate({scrollTop:0},10);
+				var opts = {            
+		            lines: 10, // 花瓣数目
+		            length: 0, // 花瓣长度
+		            width: 10, // 花瓣宽度
+		            radius: 20, // 花瓣距中心半径
+		            corners: 1, // 花瓣圆滑度 (0-1)
+		            rotate: 0, // 花瓣旋转角度
+		            direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+		            color: '#2679b5', // 花瓣颜色
+		            speed: 1, // 花瓣旋转速度
+		            trail: 60, // 花瓣旋转时的拖影(百分比)
+		            shadow: false, // 花瓣是否显示阴影
+		            hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+		            className: 'spinner', // spinner css 样式名称
+		            zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+		            top: '-100', // spinner 相对父容器Top定位 单位 px
+		            left: '-30'// spinner 相对父容器Left定位 单位 px
+		        };
+		        var target = document.getElementById("Loading");  
+		        var spinner = new Spinner(opts).spin(target);
+				pagei = $.layer({
+					type: 1,   //0-4的选择,
+					title: false,
+					border: [0],
+					closeBtn: [0],
+					shadeClose: false,
+					area: ['auto', 'auto'],
+					page: {dom : '#Loading'}
+				});
+				setTimeout(function() {
+					spinner.spin();
+					layer.close(pagei);
+				}, 2000);
+			}
+			
+			function CloseGritter(obj){
+				$(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+					$(obj).parents(".gritter-item-wrapper").remove();
+				});
+			}
+			function WindowClose(){
+				window.close();
+			}
+
+			function CloseGritter(obj){
+				$(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+					$(obj).parents(".gritter-item-wrapper").remove();
+				});
+			}
+			function WindowClose(){
+				window.close();
+			}
+			function test11(){
+//				getOverView("pre");
+//				$('#calendar').fullCalendar('gotoDate',new Date(2014,6));
+	//window.location.href="/web/calendar.html";
+			}
+
+			function FopenDay(y,m,d){
+				$.layer({
+				    type: 2,
+				    shadeClose: true,
+				    title: false,
+				    closeBtn: [0, false],
+				    shade: [0.8, '#000'],
+				    border: [0],
+				    offset: ['20px',''],
+				    area: ['700px','auto'],/* ($(window).height() - 50) +'px'*/
+				    iframe: {src: '/web/depPerTest.html?y='+y+'&m='+m+'&d='+d}
+				});
+			}
+
+			function HCDate(y,m){
+				$("#HCYear").val(y);
+				$("#HCMonth").val(m);
+			}
+			
+			//搜索  年月
+			function changeY(thisy){
+				if($('#searchY').html() == thisy){
+					return;
+				}
+				window.location.href="/web/perAttendance.html?y="+thisy+"&m="+$('#showM').val();
+			}
+			function changeM(thism){
+				if(parseInt($('#searchM').html()) == parseInt(thism)){
+					return;
+				}
+				window.location.href="/web/perAttendance.html?y="+$('#showY').val()+"&m="+(parseInt(thism)-1);
+			}
+		</script>
+	</head>
+
+	<body class="no-skin">
+		<div id="Loading" style="display:none;">		
+		</div>
+		<input type="hidden" id="HCYear" value="">
+		<input type="hidden" id="HCMonth" value="">
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="#" id="qiyemenghu" onclick="MHUrl()">企业信息门户</a>
+						</li>
+
+						<li>
+							<a href="#">团队管理</a>
+						</li>
+					</ul><!-- /.breadcrumb -->
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1 style="font-family:Microsoft YaHei ! important;">
+								团队考勤
+								<small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									用于部门经理和考勤员查看本部门员工的日常考勤情况
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+			            	<div class="col-sm-12">
+			                	<div class="row">
+			                		<div class="col-sm-12">
+										<button class="btn btn-info" onclick="window.parent.location.href='/web/depAttendance.html'">考勤异常</button>
+										<button class="btn btn-primary">刷卡信息</button>
+										<button class="btn btn-info" onclick="window.parent.location.href='/web/depVacation.html'">休假信息</button>
+										<button class="btn btn-info" onclick="window.parent.location.href='/web/depTravel.html'">差旅信息</button>
+										<button class="btn btn-info" onclick="window.parent.location.href='/web/depOvertime.html'">加班信息</button>
+			                        </div>
+			                    </div>
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+
+						<div class="row" style="margin:0;">
+							<div class="col-sm-3" style="width:25%;padding:0;margin-top: 36px;">
+								<div class="widget-box widget-color-blue2">
+									<div class="widget-header">
+										<h4 class="widget-title lighter smaller">我的团队</h4>
+									</div>
+
+									<div class="widget-body">
+									    <div class="widget-main padding-8" id="TreeMaxHeight" style="max-height:704px;overflow-y:scroll;">
+									        <div id="tree1" class="tree tree-selectable">
+									            
+									        </div>
+									        	<!-- <div class="tree-folder" style="display: block;">
+									            	<div class="tree-folder-header tree-folder-box">
+									            		<div class="tree-folder-header tree-folder-icon"><i class="ace-icon tree-minus"></i></div>
+									            		<div class="tree-folder-header tree-folder-text">
+										                    <i class="menu-icon fa fa-sitemap"></i>
+										                    <span>信息技术中心互联网应用技术部</span>
+										                </div>
+									            	</div>
+									                <div class="tree-folder-content" style="display: block;">
+									                    <div class="tree-item tree-item-box" style="display: block;">
+									                        <div class="tree-item tree-item-icon"><i class=" ace-icon ace-icon fa fa-times"></i></div>
+									                        <div class="tree-item tree-item-name">
+									                            <i class="menu-icon fa fa-user"></i>
+									                            <span>徐锐</span>
+									                        </div>
+									                    </div>
+									                    <div class="tree-item tree-item-box" style="display: block;">
+									                        <div class="tree-item tree-item-icon"><i class=" ace-icon ace-icon fa fa-times"></i></div>
+									                        <div class="tree-item tree-item-name">
+									                            <i class="menu-icon fa fa-user"></i>
+									                            <span>王莹</span>
+									                        </div>
+									                    </div>
+									                    <div class="tree-item tree-item-box" style="display: block;">
+									                        <div class="tree-item tree-item-icon"><i class=" ace-icon ace-icon fa fa-times"></i></div>
+									                        <div class="tree-item tree-item-name">
+									                            <i class="menu-icon fa fa-user"></i>
+									                            <span>郑怀亮</span>
+									                        </div>
+									                    </div>
+									                    <div class="tree-item tree-item-box tree-selected" style="display: block;">
+									                        <div class="tree-item tree-item-icon"><i class=" ace-icon fa fa-check"></i></div>
+									                        <div class="tree-item tree-item-name">
+									                            <i class="menu-icon fa fa-user"></i>
+									                            <span>吴斌</span>
+									                        </div>
+									                    </div>
+									                    <div class="tree-folder" style="display: block;">
+											            	<div class="tree-folder-header tree-folder-box">
+											            		<div class="tree-folder-header tree-folder-icon"><i class="ace-icon tree-plus"></i></div>
+											            		<div class="tree-folder-header tree-folder-text">
+												                    <i class="menu-icon fa fa-sitemap"></i>
+												                    <span>程序开发与业务分析部</span>
+												                </div>
+											            	</div>
+											                <div class="tree-folder-content" style="display: block;">
+											                </div>
+											            </div>
+									                </div>
+									                <div class="tree-loader">
+									                	<div class="tree-loading">
+									                		<i class="ace-icon fa fa-refresh fa-spin blue"></i>
+									                	</div>
+									                </div>
+									            </div>
+									            <div class="tree-folder" style="display: block;">
+									            	<div class="tree-folder-header tree-folder-box">
+									            		<div class="tree-folder-header tree-folder-icon"><i class="ace-icon tree-plus"></i></div>
+									            		<div class="tree-folder-header tree-folder-text">
+										                    <i class="menu-icon fa fa-sitemap"></i>
+										                    <span>互联网应用技术部</span>
+										                </div>
+									            	</div>
+									                <div class="tree-folder-content" style="display: block;">
+									                </div>
+									            </div>
+									            <div class="tree-folder" style="display: block;">
+									            	<div class="tree-folder-header tree-folder-box">
+									            		<div class="tree-folder-header tree-folder-icon"><i class="ace-icon tree-plus"></i></div>
+									            		<div class="tree-folder-header tree-folder-text">
+										                    <i class="menu-icon fa fa-sitemap"></i>
+										                    <span>SAP应用技术部</span>
+										                </div>
+									            	</div>
+									                <div class="tree-folder-content" style="display: block;">
+									                </div>
+									            </div>
+									            <div class="tree-folder" style="display: block;">
+									            	<div class="tree-folder-header tree-folder-box">
+									            		<div class="tree-folder-header tree-folder-icon"><i class="ace-icon tree-plus"></i></div>
+									            		<div class="tree-folder-header tree-folder-text">
+										                    <i class="menu-icon fa fa-sitemap"></i>
+										                    <span>IT基础架构部</span>
+										                </div>
+									            	</div>
+									                <div class="tree-folder-content" style="display: block;">
+									                </div>
+									            </div> -->
+									    </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-9" id="depClock_row" style="widht:75%;padding:0;">
+								<iframe src="/web/depClockData.html" width="100%" height="" name="depData" scrolling="no" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+							</div>
+						</div>
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+		</div><!-- /.main-container -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+		<script type="text/javascript">
+		 window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="./assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>
+		<script src="./assets/js/bootbox.min.js"></script>
+		<script src="./assets/js/jquery.easypiechart.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="./assets/js/jquery.hotkeys.min.js"></script>
+		<script src="./assets/js/bootstrap-wysiwyg.min.js"></script>
+		<script src="./assets/js/select2.min.js"></script>
+		<script src="./assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="./assets/js/x-editable/bootstrap-editable.min.js"></script>
+		<script src="./assets/js/x-editable/ace-editable.min.js"></script>
+		<script src="./assets/js/jquery.maskedinput.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+				var opts = {            
+		            lines: 10, // 花瓣数目
+		            length: 0, // 花瓣长度
+		            width: 10, // 花瓣宽度
+		            radius: 20, // 花瓣距中心半径
+		            corners: 1, // 花瓣圆滑度 (0-1)
+		            rotate: 0, // 花瓣旋转角度
+		            direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+		            color: '#2679b5', // 花瓣颜色
+		            speed: 1, // 花瓣旋转速度
+		            trail: 60, // 花瓣旋转时的拖影(百分比)
+		            shadow: false, // 花瓣是否显示阴影
+		            hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+		            className: 'spinner', // spinner css 样式名称
+		            zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+		            top: '-100', // spinner 相对父容器Top定位 单位 px
+		            left: '-30'// spinner 相对父容器Left定位 单位 px
+		        };
+		        var target = document.getElementById("Loading");  
+		        var spinner = new Spinner(opts).spin(target);
+				pagei = $.layer({
+					type: 1,   //0-4的选择,
+					title: false,
+					border: [0],
+					closeBtn: [0],
+					shadeClose: false,
+					area: ['auto', 'auto'],
+					page: {dom : '#Loading'}
+				});
+				setTimeout(function() {
+					//editables on first profile page
+					$.fn.editable.defaults.mode = 'inline';
+					$.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
+				    $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="ace-icon fa fa-check"></i></button>'+
+				                                '<button type="button" class="btn editable-cancel"><i class="ace-icon fa fa-times"></i></button>';
+				    $('#age').editable({
+				        type: 'spinner',
+						name : 'age',
+						spinner : {
+							min : 16,
+							max : 99,
+							step: 1,
+							on_sides: true
+							//,nativeUI: true//if true and browser support input[type=number], native browser control will be used
+						}
+					});
+					//初始化页面数据
+					$.ajaxSetup({
+						contentType: 'application/json',
+						async:false,
+						error:function(){
+							var unique_id = $.gritter.add({
+								title: '系统警告信息提示',
+								text: ''+errMsg1+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+								sticky: true,
+								time: '',
+								class_name: 'gritter-info gritter-center'
+							});
+						},
+						timeout:timeout
+					 });
+					//初始化部门树
+					var p_obj = localStorage.pernrBase?localStorage.pernrBase:'';
+					var orgJSON = submit_4_1(p_obj);
+					var liStr = '';
+					
+					var ifKQYJSON = submit_7_1(p_obj);
+					if(ifKQYJSON.status != '0'){
+						if(checkNoChar(orgJSON.FLAG_PERNR) != 'X'){
+							// layer.alert('您不具有权限查看团队考勤',8,function(){
+							// 	window.parent.close();
+							// });
+							var unique_id = $.gritter.add({
+								title: '系统警告信息提示',
+								text: '您不具有权限查看团队考勤<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+								sticky: true,
+								time: '',
+								class_name: 'gritter-info gritter-center'
+							});
+						}
+					}else{
+						//orgJSON = submit_4_1(checkNoChar(ifKQYJSON.E_OBJID));
+						$('#ifKQY').val('1');
+						var temp_objidItem1 = ifKQYJSON.ET_OBJID.item;
+						var temp_objidItem = [];
+						if(undefined == temp_objidItem1.length){
+							temp_objidItem.push(temp_objidItem1);
+						}else{
+							temp_objidItem = temp_objidItem1;
+						}
+						for(var oi in temp_objidItem){
+							liStr +='<div class="tree-folder" style="display: block;">'
+					    			+'<div class="tree-folder-header tree-folder-box">'
+					            		+'<div class="tree-folder-header tree-folder-icon" onclick="getOrg(\''+checkNoChar(temp_objidItem[oi].OBJID)+'\')"><i class="ace-icon tree-plus"></i></div>'
+					            		+'<div class="tree-folder-header tree-folder-text" onclick="getOrg(\''+checkNoChar(temp_objidItem[oi].OBJID)+'\')">'
+						                    +'<span>'+checkNoChar(temp_objidItem[oi].ORGTX)+'</span>'
+						                +'</div>'
+					            	+'</div>'
+					                +'<div class="tree-folder-content" id="'+checkNoChar(temp_objidItem[oi].OBJID)+'" style="display: none;">'
+					                +'</div>'
+					                +'<div class="tree-loader" style="display:none;">'
+								        +'<div class="tree-loading">'
+								            +'<i class="ace-icon fa fa-refresh fa-spin blue"></i>'
+								        +'</div>'
+								    +'</div>'
+					            +'</div>';
+						}
+					}
+					if(checkNoChar(orgJSON.FLAG_ORGEH) == 'X'){   //有部门
+						var P_ORG_TAB = orgJSON.P_ORG_TAB.item;
+						for(var k in P_ORG_TAB){
+							liStr +='<div class="tree-folder" style="display: block;">'
+					    			+'<div class="tree-folder-header tree-folder-box">'
+					            		+'<div class="tree-folder-header tree-folder-icon" onclick="getOrg(\''+checkNoChar(P_ORG_TAB[k].ORGEH)+'\')"><i class="ace-icon tree-plus"></i></div>'
+					            		+'<div class="tree-folder-header tree-folder-text" onclick="getOrg(\''+checkNoChar(P_ORG_TAB[k].ORGEH)+'\')">'
+						                    +'<span>'+checkNoChar(P_ORG_TAB[k].ORGEH_TXT)+'</span>'
+						                +'</div>'
+					            	+'</div>'
+					                +'<div class="tree-folder-content" id="'+checkNoChar(P_ORG_TAB[k].ORGEH)+'" style="display: block;">'
+					                +'</div>'
+					                +'<div class="tree-loader" style="display:none;">'
+								        +'<div class="tree-loading">'
+								            +'<i class="ace-icon fa fa-refresh fa-spin blue"></i>'
+								        +'</div>'
+								    +'</div>'
+					            +'</div>';
+						}
+					}
+					if(checkNoChar(orgJSON.FLAG_PERNR) == 'X'){   //有直属下属   单独结构展示
+						var P_PER_TAB = orgJSON.P_PER_TAB.item;
+						liStr +='<div class="tree-folder" style="display: block;">'
+			    			+'<div class="tree-folder-header tree-folder-box">'
+			            		+'<div class="tree-folder-header tree-folder-icon" onclick="getOrg(\'zsxs\')"><i class="ace-icon tree-plus"></i></div>'
+			            		+'<div class="tree-folder-header tree-folder-text" onclick="getOrg(\''+checkNoChar(P_ORG_TAB[k].ORGEH)+'\')">'
+				                    +'<span>直属下属</span>'
+				                +'</div>'
+			            	+'</div>'
+			                +'<div class="tree-folder-content" id="zsxs" style="display:none;">'
+			                for(var k in P_PER_TAB){
+			                	liStr +='<div class="tree-item tree-item-box" onclick="getPer(\''+checkNoChar(P_PER_TAB[k].PERNR)+'\',this);onblue(this);" style="display: block;">'
+			                        +'<div class="tree-item tree-item-icon"><i class=" ace-icon ace-icon fa fa-times"></i></div>'
+			                        +'<div class="tree-item tree-item-name">'
+			                            +'<i class="menu-icon fa fa-user"></i>'
+			                            +'<span>'+parseInt(checkNoChar(P_PER_TAB[k].PERNR))+'  '+checkNoChar(P_PER_TAB[k].NACHN)+'</span>'
+			                        +'</div>'
+			                    +'</div>'
+			                }
+			                +'</div>'
+			                +'<div class="tree-loader" style="display:none;">'
+						        +'<div class="tree-loading">'
+						            +'<i class="ace-icon fa fa-refresh fa-spin blue"></i>'
+						        +'</div>'
+						    +'</div>'
+			            +'</div>';
+					}
+					$('#tree1').html(liStr);
+					var TreeMaxHeight = $("#TreeMaxHeight").outerHeight();
+					var max = 600;
+					if( TreeMaxHeight >= max ){
+						$("#TreeMaxHeight").css({"overflow-y":"scroll"});
+						$("#TreeMaxHeight").css({"max-height":"600px"});
+					}else{
+						$("#TreeMaxHeight").css({"overflow-y":"visible"});
+						$("#TreeMaxHeight").css({"max-height":"auto"});
+					}
+					spinner.spin();
+					layer.close(pagei);
+				}, 300 + parseInt(Math.random() * 300));
+			});
+			// setInterval(function() {
+			// 	// var mH = $("#depClock_row").outerHeight();
+			// 	// var mH = mH + 177;
+			// 	// var mifH = $(".xubox_layer").find("iframe").outerHeight();
+			// 	// if( mifH <= mH ){
+			// 	// 	$(".xubox_shade").height(mH);
+			// 	// }else{
+			// 	// 	$(".xubox_shade").height(mifH+90);
+			// 	// };
+			// },10);
+		</script>
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

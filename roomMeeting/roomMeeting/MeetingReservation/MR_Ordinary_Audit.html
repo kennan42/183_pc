@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>会议室预定后台管理-我的预定</title> 
+		<meta name="description" content="Common Buttons &amp; Icons" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+		<!-- page specific plugin styles -->
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../assets/css/ace.min.css" />
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="../assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+		<![endif]-->
+		<!-- inline styles related to this page -->
+		<!-- ace settings handler -->
+		<script src="../assets/js/ace-extra.min.js"></script>
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="../assets/js/html5shiv.js"></script>
+		<script src="../assets/js/respond.min.js"></script>
+		<![endif]-->
+		<script src='../assets/js/jquery.min.js'></script>
+		<script src="../layer/layer.min.js"></script>
+
+		<script src="../myjs/backupNew.js"></script>
+		<script src="../myjs/lexus.js"></script>
+		
+		<!-- ace settings handler -->
+		<script src="../assets/js/ace-extra.min.js"></script>
+		<script src="../assets/js/bootstrap-tag.min.js"></script>
+
+		<!-- 加载自定义样式 -->
+    	<link rel="stylesheet" href="css/custom.css">
+    	<style type="text/css">
+			.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+				vertical-align:middle;text-align:center;
+			}
+			.table>tbody>tr>td>p, .table>tbody>tr>th{
+				margin-bottom:0px;
+			}
+			.btn-success{
+				background-color: #629b58 !important;
+				border-color: #629b58
+			}
+			.btn-success:focus {
+				background-color: #629b58 !important;
+				border-color: #87b87f
+			}
+			.table>tbody>tr{
+				cursor:pointer;
+			}
+			.widget-color-blue2>.widget-header {
+				background: #2577e3;
+				border-color: #2577e3;
+			}
+    	</style>
+	</head>
+
+	<body class="no-skin">
+		<div class="main-container" id="main-container">
+			<!-- /section:basics/sidebar -->
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs" style="background:#2577e3;">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch(e) {}
+					</script>
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon white">
+							</i>
+							<a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+						</li>
+						<li>
+							<i class="ace-icon fa fa-table home-icon white">
+							</i>
+							<a href="MR_Ordinary_MettingList.html" class="white">
+								会议室列表
+							</a>
+						</li>
+						<li>
+							<a href="#" class="white">
+								审核中
+							</a>
+						</li>
+					</ul>
+					<!-- /.breadcrumb -->
+					<!-- /section:basics/content.searchbox -->
+				</div>
+				<div class="page-content">
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1 style="font-family:Microsoft YaHei ! important;">
+								<a href="MR_Ordinary_MettingList.html">会议室列表</a>
+								<small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									<a href="#">审核中</a>
+								</small>
+							</h1>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="tab-pane fade in active">
+						            <div class="row">
+										<div class="col-xs-12">
+											<div class="widget-box widget-color-blue2">
+												<div class="widget-header widget-header-blue widget-header-flat">
+													<h5 class="widget-title bigger lighter">
+														<i class="ace-icon fa fa-table"></i>
+														审核中列表
+													</h5>
+												</div>
+												<div id="sample-table-2_wrapper" class="dataTables_wrapper form-inline no-footer">
+												<div class="row" style="padding-top:0px;padding-bottom:0px;">
+													<table id="sample-table-2" class="table table-striped table-bordered table-hover"
+													style="margin-bottom:0px;">
+														<thead>
+															<tr>	
+																<th width="15%">会议时间</th>
+																<th width="25%">预定会议室名称</th>
+																<th width="25%">会议主题</th>
+																<th width="20%">会议级别</th>
+																<th width="10%">操作</th>
+															</tr>
+														</thead>
+														<tbody id="Audit">
+															
+														</tbody>
+													</table>
+												</div>
+												<div class="row" style="border-left:1px solid #e0e0e0;border-right:1px solid #e0e0e0;padding-top:17px;">
+													<div class="col-xs-6">
+														<div class="dataTables_length" id="sample-table-2_length">
+															<label style="margin-top:4px;">
+                                                                每页显示
+                                                                <select name="sample-table-2_length" aria-controls="sample-table-2"
+																		class="form-control input-sm sample-table-2_length" onchange="changeNum();">
+                                                                    <option value="10" id="select_10">
+                                                                        10
+                                                                    </option>
+                                                                    <option value="25" id="select_25">
+                                                                        25
+                                                                    </option>
+                                                                    <option value="50" id="select_50">
+                                                                        50
+                                                                    </option>
+                                                                    <option value="100" id="select_100">
+                                                                        100
+                                                                    </option>
+                                                                </select>
+                                                                条
+                                                            </label>
+														</div>
+													</div>
+													<div class="col-xs-6">
+														<div class="dataTables_paginate paging_simple_numbers" id="sample-table-2_paginate">
+															<ul class="pagination">
+																<table cellspacing="0" cellpadding="0" border="0" style="table-layout:auto;" class="ui-pg-table">
+																	<tbody>
+																	<tr>
+																		<td id="first-pager" class="ui-pg-button ui-corner-all">
+																			<span class="ui-icon ace-icon fa fa-angle-double-left bigger-140"onclick="firstPages()"></span>
+																		</td>
+																		<td id="prev-pager" class="ui-pg-button ui-corner-all">
+																			<span class="ui-icon ace-icon fa fa-angle-left bigger-140" onclick="prevPage()"></span>
+																		</td>
+																		<td dir="ltr" style="line-height: inherit;">
+																			<span style="margin-top: 3px; float: left; display: inline-block;">&nbsp;第</span>
+																			<input id="current-page" style="height: 25px; line-height: 12px;" onchange="changePage(this.value)" type="text" size="1">
+																			<span style="margin-top: 3px; float: right; display: inline-block;">页&nbsp;</span>
+																		</td>
+																		<td id="next-pager" class="ui-pg-button ui-corner-all">
+																			<span class="ui-icon ace-icon fa fa-angle-right bigger-140" onclick="nextPages()"></span>
+																		</td>
+																		<td id="last-pager" class="ui-pg-button ui-corner-all">
+																			<span class="ui-icon ace-icon fa fa-angle-double-right bigger-140" onclick="lastPage()"></span>
+																		</td>
+																		<td dir="ltr">
+																			&nbsp;共&nbsp;<span id="page-count"></span>&nbsp;页
+																		</td>
+																	</tr>
+																	</tbody>
+																</table>
+															</ul>
+														</div>
+													</div>
+												</div>
+												</div>
+											</div>
+										</div>
+									</div>
+						        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
+
+
+		<!-- basic scripts -->
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+		<!-- <![endif]-->
+		<!--[if IE]>
+		<script type="text/javascript">
+		 window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>"+"<"+"/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<!-- page specific plugin scripts -->
+		<!-- ace scripts -->
+		<script src="../assets/js/ace-elements.min.js"></script>
+		<script src="../assets/js/ace.min.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '.'; </script>
+		<script src="../assets/js/ace/elements.onpage-help.js"></script>
+		<script src="../assets/js/jquery.gritter.min.js"></script>
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			//审核中列表弹出详情
+			function ToAuditDetails(obj){
+				window.open("MR_Ordinary_MySchedule.html?auditId=" + obj);
+			}
+
+			// 新增会议室弹出框
+			function NewRoom() {
+				$.layer({
+				    type: 2,
+				    border: [0],
+				    title: false,
+				    shadeClose: true,
+				    closeBtn: false,
+				    shade: [0.8, '#000'],
+				    offset: ['20px',''],
+				    area: ['800px','600px'],
+				    iframe: {src: 'MR_Admin_NewRoom.html'}
+				});
+			};
+			function stopPropagation() {
+			    if (event.stopPropagation)
+			        event.stopPropagation();
+			    else
+			        event.cancelBubble = true;
+			}
+			function cancel(obj){
+				stopPropagation();
+			    var id=$(obj).attr("rel");
+			    $.layer({
+			        shade: [0],
+			        area: ['auto','auto'],
+			        dialog: {
+			            msg: '您确定要取消会议室吗？',
+			            btns: 2,                    
+			            type: 4,
+			            btn: ['是','否'],
+			            yes: function(){
+			                
+			                var paramJSon = {
+			                    "meetBookId":id,
+			                };
+			                $.post("/meet/cancalMeetBook",JSON.stringify(paramJSon),function(data){
+			                data= typeof(data) == 'string'?$.parseJSON(data):data;
+			                    if(data.status==0){
+			                        layer.msg('取消预定会议室成功', 1, 1);
+			                        location.reload();
+			                    }else{
+			                        layer.msg(data.msg, 1, 1);
+			                    }
+			                });
+			            }, no: function(){
+			            }
+			        }
+			    });
+			   
+			    
+			}
+            
+            //初始化页面数据
+            $.ajaxSetup({
+                contentType: 'application/json',
+                async:false,
+                error:function(){
+                    var unique_id = $.gritter.add({
+                        title: '系统警告信息提示',
+                        text: ''+errMsg1+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                },
+                timeout:timeout
+             });
+
+
+            
+            //初始化数据
+			jQuery(function($) {
+				var pageNum = 1;
+				var num = 10;
+                searchMeetingRoomList(localStorage["pernrBase"],num,pageNum);
+			});
+
+			//更换显示页数
+			function changeNum(){
+				var pageNum = 1;
+				var pageSize = $(".sample-table-2_length").val();
+				var name = $("input[name=search]").val();
+				searchMeetingRoomList(localStorage["pernrBase"], pageSize, pageNum);
+			}
+
+			// 首页
+			function firstPages() {
+				var pageSize = $(".sample-table-2_length").val();
+				var pageNum = 1;
+				var name = $("input[name=search]").val();
+				$("#current-page").val(1);
+				searchMeetingRoomList(localStorage["pernrBase"],pageSize,pageNum);
+			}
+
+			// 尾页
+			function lastPage() {
+				var pageSize = $(".sample-table-2_length").val();
+				var pageNum = $("#page-count").html();
+				searchMeetingRoomList(localStorage["pernrBase"],pageSize,pageNum);
+			}
+
+			// 上一页
+			function prevPage() {
+				var pageSize = $(".sample-table-2_length").val();
+				var currentPage = $("#current-page").val();
+				var pageNum = currentPage - 1;
+				if(pageNum < 0) {
+					pageNum = 1;
+				}
+				var name = $("input[name=search]").val();
+				searchMeetingRoomList(localStorage["pernrBase"],pageSize,pageNum);
+			}
+
+			//下一页
+			function nextPages(){
+				var pageSize = $(".sample-table-2_length").val();
+				var totalPages = $("#page-count").html();
+				var currentPage = $("#current-page").val();
+				var pageNum = parseInt(currentPage) + 1;
+				if(pageNum > totalPages) {
+					pageNum = totalPages;
+				}
+				var name = $("input[name=search]").val();
+				searchMeetingRoomList(localStorage["pernrBase"],pageSize,pageNum);
+			}
+
+			// 检查 首页尾页上一页下一页是否可用
+			function checkDisable() {
+				var pageNum = $("#current-page").val();
+				var totalPages = parseInt($("#page-count").html());
+
+				$("#first-pager").removeClass("ui-state-disabled");
+				$("#prev-pager").removeClass("ui-state-disabled");
+				$("#next-pager").removeClass("ui-state-disabled");
+				$("#last-pager").removeClass("ui-state-disabled");
+				if(pageNum <= 1) {
+					$("#first-pager").addClass("ui-state-disabled");
+					$("#prev-pager").addClass("ui-state-disabled");
+				}
+				if (pageNum == totalPages) {
+					$("#next-pager").addClass("ui-state-disabled");
+					$("#last-pager").addClass("ui-state-disabled");
+				}
+			}
+
+			// 跳转指定页面
+			function changePage(pageNum) {
+				var totalpages = $("#page-count").html();
+				pageNum = parseInt(pageNum);
+
+				if(isNaN(pageNum) || pageNum < 1) {
+					pageNum = 1;
+				}
+				if(pageNum > totalpages) {
+					pageNum = totalpages;
+				}
+				var pageSize = $(".sample-table-2_length").val();
+				var name = $("input[name=search]").val();
+				searchMeetingRoomList(localStorage["pernrBase"],pageSize,pageNum);
+			}
+
+            //调去查询查询接口
+            function searchMeetingRoomList(userId,pageSize,pageNum){
+                var paramJSon = {
+                    "userId":userId,
+                    "state":1,
+                    "pageSize":pageSize,
+                    "pageNum":pageNum
+                };
+			    $.post("/meet/resultOfMeet",JSON.stringify(paramJSon),function(data){
+                    data= typeof(data) == 'string'?$.parseJSON(data):data;
+                    var MeetingRoomList = "";
+                    if(data.status == '0'){
+                        $.each(data.data,function(n,value) {   
+                           var startTime=formatDate(value['startTime']);
+                           var endTime=formatDate(value['endTime']);
+                           MeetingRoomList +='<tr onclick="ToAuditDetails('+"'"+value['_id']+"'"+')">'
+									+'<td title="" style="padding:12px 8px;">'
+										+'<p>'
+											+'<span>'
+												+startTime
+											+'</span>'
+										+'</p>'
+										+'<p style="padding:2px 0;"><i class="fa fa-arrow-down" style="font-size:14px;color:#6fa836"></i></p>'
+										+'<p>'
+											+'<span>'
+												+endTime
+											+'</span>'
+										+'</p>'
+									+'</td>'
+									+'<td title="">'
+										+value['name']
+									+'</td>'
+									+'<td title="">'
+										+value['topic']
+									+'</td>'
+									+'<td title="">'
+										+(value['type'] == null ? '' : value['type'])
+									+'</td>'
+									+'<td title="">'
+										+'<button class="btn btn-danger cancel" onclick="cancel(this)" type="reset" rel="'+value['_id']+'">'
+		                                    +'<i class="ace-icon fa fa-times"></i>'
+		                                        +'取消'
+		                                +'</button>'
+									+'</td>'
+								+'</tr>'
+                           
+                        });
+                        $("#Audit").children().remove();
+                        $("#Audit").append(MeetingRoomList);
+
+						if(data.pages == 0) {
+							pageNum = 0;
+						}
+						$("#current-page").val(pageNum);
+						$("#page-count").html(data.pages);
+						checkDisable();
+                    } 
+			    });
+            }
+
+            
+            //补零
+             function Appendzero (obj) {
+                if (obj < 10) return "0" + obj; else return obj;
+             }
+              
+            //时间戳格式化成正式时间可是
+            function formatDate(now){    
+                var time = new Date(now);
+                var ymdhis = "";
+                ymdhis += time.getFullYear() + "-";
+                ymdhis += Appendzero((time.getMonth()+1)) + "-";
+                ymdhis += Appendzero(time.getDate());
+                ymdhis += " " + Appendzero(time.getHours()) + ":";
+                ymdhis += Appendzero(time.getMinutes()) + ":";
+                ymdhis += Appendzero(time.getSeconds());
+                return ymdhis;
+             }
+
+        </script>
+
+		<link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="../assets/js/ace/ace.onpage-help.js"></script>
+		<script src="../docs/assets/js/rainbow.js"></script>
+		<script src="../docs/assets/js/language/generic.js"></script>
+		<script src="../docs/assets/js/language/html.js"></script>
+		<script src="../docs/assets/js/language/css.js"></script>
+		<script src="../docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

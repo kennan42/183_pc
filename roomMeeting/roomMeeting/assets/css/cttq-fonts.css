@@ -1,0 +1,76 @@
+@font-face {
+	font-family: 'CTTQ';
+	src:url('../fonts/CTTQ.eot?-7q9x1z');
+	src:url('../fonts/CTTQ.eot?#iefix-7q9x1z') format('embedded-opentype'),
+		url('../fonts/CTTQ.woff?-7q9x1z') format('woff'),
+		url('../fonts/CTTQ.ttf?-7q9x1z') format('truetype'),
+		url('../fonts/CTTQ.svg?-7q9x1z#CTTQ') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.cttq-icon {
+	font-family: 'CTTQ';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.cttq-projector:before {
+	content: "\f2001";
+}
+
+.cttq-2001:before {
+	content: "\f2001";
+}
+
+.cttq-video:before {
+	content: "\f2002";
+}
+
+.cttq-2002:before {
+	content: "\f2002";
+}
+
+.cttq-wi-fi:before {
+	content: "\f2003";
+}
+
+.cttq-2003:before {
+	content: "\f2003";
+}
+
+.cttq-desktop-microphone:before {
+	content: "\f2004";
+}
+.cttq-2004:before {
+	content: "\f2004";
+}
+
+.cttq-wireless-microphone:before {
+	content: "\f2005";
+}
+.cttq-2005:before {
+	content: "\f2005";
+}
+
+.cttq-notebook-computer:before {
+	content: "\f2006";
+}
+.cttq-2006:before {
+	content: "\f2006";
+}
+
+.cttq-whiteboard:before {
+	content: "\f2007";
+}
+.cttq-2007:before {
+	content: "\f2007";
+}

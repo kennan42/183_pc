@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8"/>
+    <title>测试-主页</title>
+
+    <meta name="description" content="Large &amp; Small"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./assets/css/font-awesome.min.css"/>
+
+    <!-- page specific plugin styles -->
+
+    <!-- text fonts -->
+    <link rel="stylesheet" href="./assets/css/ace-fonts.css"/>
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="./assets/css/ace-part2.min.css"/>
+    <![endif]-->
+    <link rel="stylesheet" href="./assets/css/ace-skins.min.css"/>
+    <link rel="stylesheet" href="./assets/css/ace-rtl.min.css"/>
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="./assets/css/ace-ie.min.css"/>
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+    <script src="./assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+    <!--[if lte IE 8]>
+    <script src="./assets/js/html5shiv.min.js"></script>
+    <script src="./assets/js/respond.min.js"></script>
+    <![endif]-->
+    <script src='./assets/js/jquery.min.js'></script>
+    <script src="./layer/layer.min.js"></script>
+    <script src="./myjs/backupNew.js?v=20141224"></script>
+    <script src="./myjs/lexus.js?v=20141224"></script>
+    <script>
+        function loadPer() {
+            thislayer = $.layer({
+                type: 2,
+                shadeClose: true,
+                title: false,
+                closeBtn: [0, false],
+                shade: [0.8, '#000'],
+                border: [0],
+                offset: ['20px', ''],
+                area: ['600px', ($(window).height() - 50) + 'px'],
+                iframe: {src: '/web/perTest.html'}
+            });
+        }
+
+
+        function test() {
+            alert(document.cookie);
+        }
+    </script>
+    <style type="text/css">
+        .pricing-span {
+            margin-top: 12px;
+        }
+
+        .row {
+            margin: 0 12px;
+        }
+
+        .header {
+            margin: 12px 0 0 0;
+            font-weight: 400;
+            border-width: 1px;
+        }
+
+        .widget-title {
+            color: #fff;
+        }
+
+        #numAdmin {
+            display: none;
+        }
+
+        .widget-box {
+            cursor: pointer;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="no-skin">
+<!-- /section:basics/navbar.layout -->
+<div class="main-container" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <div class="main-content">
+        <!-- #section:basics/content.breadcrumbs -->
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="#" id="qiyemenghu" onclick="MHUrl()">企业信息门户</a>
+                </li>
+                <li>
+                    <a href="#">主页</a>
+                </li>
+            </ul>
+            <!-- /.breadcrumb -->
+            <!-- #section:basics/content.searchbox -->
+            <!-- /section:basics/content.searchbox -->
+        </div>
+        <!-- /section:basics/content.breadcrumbs -->
+        <div class="page-content">
+            <!-- #section:settings.box -->
+            <!-- /section:settings.box -->
+            <div class="page-content-area">
+                <div class="row">
+                    <div style="width:90%;margin:0 auto;">
+                        <h3 class="header smaller lighter blue">01 人力资源</h3>
+                        <div class="row">
+                            <!-- #section:pages/pricing.small-body -->
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('/web/perHrDetail.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">个人人事</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> perHrDetail</li>
+                                                    <li> 基本信息</li>
+                                                    <li> 教育经历</li>
+                                                    <li> 培训经历</li>
+                                                    <li> 简历</li>
+                                                    <!-- <li> 10.1前版本不包含银行卡信息 </li> -->
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('/web/depHrDetail.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">部门人事</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> depHrDetail</li>
+                                                    <li> 部门组织结构</li>
+                                                    <li> 直属下属以及下属的下属</li>
+                                                    <li> 修改常驻地</li>
+                                                    <li> 人事信息</li>
+                                                    <!-- <li> 修改直线领导（需核对接口） </li> -->
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-blue"
+                                         onclick="window.open('/web/overtimeAsk.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">加班申请</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> overtimeAsk</li>
+                                                    <li> 自助申请</li>
+                                                    <li> 考勤员代申请</li>
+                                                    <li> 多人加班申请</li>
+                                                    <li> 加班时间选择</li>
+                                                    <!-- <li> 加班内容 </li> -->
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-primary">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-green"
+                                         onclick="window.open('/web/vacationAsk.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">休假申请</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> vacationAsk</li>
+                                                    <li> 自助申请</li>
+                                                    <li> 考勤员代申请</li>
+                                                    <li> 全天非全天选择</li>
+                                                    <li> 附件上传</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-success">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-grey"
+                                         onclick="window.open('/web/depAttendance.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">团队管理</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> depAttendance.html</li>
+                                                    <li> 考勤异常</li>
+                                                    <li> 刷卡信息</li>
+                                                    <li> 休假信息</li>
+                                                    <li> 差旅信息</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-grey">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('/web/perAttendance.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">个人考勤</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> perAttendance</li>
+                                                    <li> 刷卡数据</li>
+                                                    <li> 处理考勤异</li>
+                                                    <li> 补签卡</li>
+                                                    <li> 排班信息</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('/web/DayEach.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">销售人员月度考勤</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> DayEach</li>
+                                                    <li> 填报考勤</li>
+                                                    <li> 考勤查询</li>
+                                                    <li> 考勤提交</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <h3 class="header smaller lighter blue">02 审核</h3>
+                        <div class="row">
+                            <!-- #section:pages/pricing.small-body -->
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('/web/waVacation.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">统一待办</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> waVacation</li>
+                                                    <li> 休假</li>
+                                                    <li> 加班</li>
+                                                    <li> 考勤异常</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('/web/aaVacation.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">已办</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> aaVacation</li>
+                                                    <li> 休假</li>
+                                                    <li> 加班</li>
+                                                    <li> 考勤异常</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <h3 class="header smaller lighter blue">03 供应商主数据</h3>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('/web/gys_dataAdd.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">供应商主数据申请</h5>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> gys_dataAdd</li>
+                                                    <li> 新增</li>
+                                                    <li> 扩充</li>
+                                                    <li> 修改</li>
+                                                    <li> 冻结</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('/web/gys_WaitHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">供应商统一待办</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> gys_WaitHandle</li>
+                                                    <li> 新增</li>
+                                                    <li> 扩充</li>
+                                                    <li> 修改</li>
+                                                    <li> 冻结</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-blue"
+                                         onclick="window.open('/web/gys_AlreadyHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">供应商已办</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> gys_AlreadyHandle</li>
+                                                    <li> 新增</li>
+                                                    <li> 扩充</li>
+                                                    <li> 修改</li>
+                                                    <li> 冻结</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-primary">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <h3 class="header smaller lighter blue">04 档案管理</h3>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('/web/File/WaitHandleList.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">档案-待审</h5>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> WaitHandleList</li>
+                                                    <li> &nbsp;</li>
+                                                    <li> &nbsp;</li>
+                                                    <li> &nbsp;</li>
+                                                    <li> &nbsp;</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('/web/File/AlreadyHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">档案一已办</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> AlreadyHandle</li>
+                                                    <li> &nbsp;</li>
+                                                    <li> &nbsp;</li>
+                                                    <li> &nbsp;</li>
+                                                    <li> &nbsp;</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <h3 class="header smaller lighter blue" id="NameHYS">05 会议室预定 (<span>普通用户</span>)</h3>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 pricing-span-body hide" id="meetRoomAdmin">
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('../roomMeeting/MeetingReservation/MR_Admin_WaitHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">会议室待审核列表</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> WaitHandle</li>
+                                                    <li style="font-weight:bold;"> 会议室管理员</li>
+                                                    <li> 审核</li>
+                                                    <li> 会议室</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('../roomMeeting/MeetingReservation/MR_Admin_AlreadyHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">会议室已审核列表</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> AlreadyHandle</li>
+                                                    <li style="font-weight:bold;"> 会议室管理员</li>
+                                                    <li> 查看已审核</li>
+                                                    <li> 会议室</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 pricing-span-body hide" id="guishudiAdmin">
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('../roomMeeting/MeetingReservation/MR_Admin_MeetingRoom.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">会议室列表</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> MettingList</li>
+                                                    <li style="font-weight:bold;"> 归属地管理员</li>
+                                                    <li> 会议室列表</li>
+                                                    <li> 视频会议室</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 pricing-span-body hide" id="meetRoomService">
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('../roomMeeting/MeetingReservation/MR_Admin_Service.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">服务会议室列表</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> Service</li>
+                                                    <li style="font-weight:bold;"> 服务人员</li>
+                                                    <li> 服务会议室列表</li>
+                                                    <li> &nbsp; </li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 pricing-span-body" id="Ordinary">
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('../roomMeeting/MeetingReservation/MR_Ordinary_MettingList.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">会议室列表</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> MettingList</li>
+                                                    <li style="font-weight:bold;"> 普通用户</li>
+                                                    <li> 会议室列表</li>
+                                                    <li> 视频会议室</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('../roomMeeting/MeetingReservation/MR_Ordinary_AuditSuccess.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">预订成功列表</h5>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> AuditSuccess</li>
+                                                    <li style="font-weight:bold;"> 普通用户</li>
+                                                    <li> 会议室</li>
+                                                    <li> 预订成功</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-blue"
+                                         onclick="window.open('../roomMeeting/MeetingReservation/MR_Ordinary_Audit.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">审核中列表</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> Audit</li>
+                                                    <li style="font-weight:bold;"> 普通用户</li>
+                                                    <li> 查看审核中</li>
+                                                    <li> 会议室</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-primary">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-green"
+                                         onclick="window.open('../roomMeeting/MeetingReservation/MR_Ordinary_AuditFailure.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">已完成列表</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> AuditFailure</li>
+                                                    <li style="font-weight:bold;"> 普通用户</li>
+                                                    <li> 查看已完成</li>
+                                                    <li> 会议室</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-success">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="header smaller lighter blue">06 GSP审批业务</h3>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('../web/GSP/WaitHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">GSP待审批列表</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> WaitHandle</li>
+                                                    <li> 首营企业</li>
+                                                    <li> 首营客户</li>
+                                                    <li> 首营品种</li>
+                                                    <li> 不合格品</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('../web/GSP/AlreadyHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">GSP已审批列表</h5>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> AlreadyHandle</li>
+                                                    <li> 首营企业</li>
+                                                    <li> 首营客户</li>
+                                                    <li> 首营品种</li>
+                                                    <li> 不合格品</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <h3 class="header smaller lighter blue">07 IT服务</h3>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('../web/IT_Service/WaitHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">IT服务待审批列表</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> WaitHandle</li>
+                                                    <li> 转业务审批</li>
+                                                    <li> 转二线工程师</li>
+                                                    <li> &nbsp;</li>
+                                                    <li> &nbsp;</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('../web/IT_Service/AlreadyHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">IT服务已审批列表</h5>
+                                        </div>
+
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> AlreadyHandle</li>
+                                                    <li> 转业务审批</li>
+                                                    <li> 转二线工程师</li>
+                                                    <li> &nbsp;</li>
+                                                    <li> &nbsp;</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <h3 class="header smaller lighter blue hide" id="welcomepage">08 后台管理</h3>
+                        <div class="row hide">
+                            <!-- #section:pages/pricing.small-body -->
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('/web/Upload.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">宣传页后台管理</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> Upload</li>
+                                                    <li> 移动端</li>
+                                                    <li> 欢迎页图片</li>
+                                                    <li> 上传</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('/web/welcomePageManager.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">多欢迎页后台管理</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> Upload</li>
+                                                    <li> 移动端</li>
+                                                    <li> 欢迎页图片</li>
+                                                    <li> 上传</li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <h3 class="header smaller lighter blue hide" id="personal">09 个人中中心</h3>
+                        <div class="row hide">
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('../web/opinionFeedback/WaitHandle.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">意见反馈</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> opinionFeedback</li>
+                                                    <li> WaitHandle</li>
+                                                    <li> 意见待回复</li>
+                                                    <li> 意见已回复</li>
+                                                    <li> </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <h3 class="header smaller lighter blue hide" id="downtimeNotice">10 停机公告</h3>
+                        <div class="row hide">
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('./downtimeNotice.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">停机公告管理</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> downtimeNotice</li>
+                                                    <li>停机公告新增</li>
+                                                    <li>停机公告删除</li>
+                                                    <li>停机公告修改</li>
+                                                    <li></li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pricing-span">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('./downInterfaceManagement.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">停机接口管理</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> downtimeNotice</li>
+                                                    <li>停机接口新增</li>
+                                                    <li>停机接口删除</li>
+                                                    <li>停机接口修改</li>
+                                                    <li></li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <h3 class="header smaller lighter blue hide" id="jurisdiction">999 权限管理</h3>
+                        <div class="row hide">
+                            <!-- #section:pages/pricing.small-body -->
+                            <div class="col-xs-12 col-sm-12 pricing-span-body">
+
+                                <div class="pricing-span" id="jurisdictionManager">
+                                    <div class="widget-box pricing-box-small widget-color-red3"
+                                         onclick="window.open('./jurisdictionManager.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">权限管理</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> jurisdictionManager</li>
+                                                    <li> PC 端</li>
+                                                    <li> &nbsp; </li>
+                                                    <li> &nbsp; </li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-danger">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pricing-span" id="jurisdictionUserManager">
+                                    <div class="widget-box pricing-box-small widget-color-orange"
+                                         onclick="window.open('./jurisdictionUserManager.html')">
+                                        <div class="widget-header">
+                                            <h5 class="widget-title bigger lighter">用户权限管理</h5>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main no-padding">
+                                                <ul class="list-unstyled list-striped pricing-table">
+                                                    <li> jurisdictionUserManager</li>
+                                                    <li> PC 端</li>
+                                                    <li> &nbsp; </li>
+                                                    <li> &nbsp; </li>
+                                                    <li> &nbsp; </li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="javascript:void(0);" class="btn btn-block btn-sm btn-warning">
+                                                    <span>进入</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.page-content-area -->
+        </div>
+        <!-- /.page-content -->
+    </div>
+    <!-- /.main-content -->
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div>
+<!-- /.main-container -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>" + "<" + "/script>");
+</script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>" + "<" + "/script>");
+</script>
+<![endif]-->
+<script type="text/javascript">
+    if ('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+</script>
+<script src="./assets/js/bootstrap.min.js"></script>
+
+<!-- page specific plugin scripts -->
+
+<!-- ace scripts -->
+<script src="./assets/js/ace-elements.min.js"></script>
+<script src="./assets/js/ace.min.js"></script>
+<script type="text/javascript">
+    $(window).load(function () {
+        //页面初始化
+        $.ajaxSetup({
+            contentType: 'application/json',
+            async: false,
+            error: function () {
+                alert(errMsg1);
+            },
+            timeout: timeout
+        });
+        var pernrBase = localStorage["pernrBase"];
+        var paramJSon = {
+            "userId": pernrBase
+        };
+        $.post("/meet/ifAdmin", JSON.stringify(paramJSon), function (persTimeData) {
+            //var persTimeData = JSON.parse(persTimeData);
+            if (persTimeData.status == '0') {
+                for (i = 0; i < persTimeData.roles.length; i++) {
+                    if (persTimeData.roles[i] == 'meetRoomAdmin') {//会议室管理员
+                        $("#meetRoomAdmin").removeClass("hide");
+                        if (persTimeData.roles.length != '0') {
+                            var NameHYS = $("#NameHYS span").html();
+                            if (NameHYS == '普通用户') {
+                                $("#NameHYS span").html('会议室管理员');
+                            } else {
+                                $("#NameHYS span").html('' + NameHYS + ' and 会议室管理员');
+                            }
+                        }
+                    } else if (persTimeData.roles[i] == 'guishudiAdmin') {//归属地管理员
+                        $("#guishudiAdmin").removeClass("hide");
+                        if (persTimeData.roles.length != '0') {
+                            var NameHYS = $("#NameHYS span").html();
+                            if (NameHYS == '普通用户') {
+                                $("#NameHYS span").html('归属地管理员');
+                            } else {
+                                $("#NameHYS span").html('' + NameHYS + ' and 归属地管理员');
+                            }
+                        }
+                    } else if (persTimeData.roles[i] == 'meetRoomService') {//服务人员
+                        $("#meetRoomService").removeClass("hide");
+                        if (persTimeData.roles.length != '0') {
+                            var NameHYS = $("#NameHYS span").html();
+                            if (NameHYS == '普通用户') {
+                                $("#NameHYS span").html('服务人员');
+                            } else {
+                                $("#NameHYS span").html('' + NameHYS + ' and 服务人员');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        $.post("/base/jurisdictionUser",
+                JSON.stringify({
+                    op: "getByUserId",
+                    userId: pernrBase
+                }),
+                function (data) {
+                    if(data.status == 0) {
+                        if(data.data.admin == 1) {
+                            $("#jurisdiction").removeClass("hide").next().removeClass("hide");
+                        }
+                        if(data.data.welcomepage == 1) {
+                            $("#welcomepage").removeClass("hide").next().removeClass("hide");
+                        }
+                        if(data.data.personal == 1) {
+                            $("#personal").removeClass("hide").next().removeClass("hide");
+                        }
+                        if(data.data.downtimeNotice == 1) {
+                            $("#downtimeNotice").removeClass("hide").next().removeClass("hide");
+                        }
+                    }
+                }
+        );
+    });
+</script>
+
+<!-- inline scripts related to this page -->
+
+<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+<link rel="stylesheet" href="./assets/css/ace.onpage-help.css"/>
+<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css"/>
+
+<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+<script src="./assets/js/ace/elements.onpage-help.js"></script>
+<script src="./assets/js/ace/ace.onpage-help.js"></script>
+<script src="./docs/assets/js/rainbow.js"></script>
+<script src="./docs/assets/js/language/generic.js"></script>
+<script src="./docs/assets/js/language/html.js"></script>
+<script src="./docs/assets/js/language/css.js"></script>
+<script src="./docs/assets/js/language/javascript.js"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<title>所属系统维护 - IT服务工作台</title>
+
+<div id="breadcrumbs" class="breadcrumbs">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
+    </script>
+    <ul class="breadcrumb">
+        <li>
+            <img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong>
+            <a href="index.html">
+                首页
+            </a>
+        </li>
+        <li>数据配置</li>
+        <li class="active">所属系统维护</li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3 class="header smaller lighter blue">所属系统维护</h3>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-xs-5">
+                    <button class="btn btn-white btn-blue btn-no-border" id="addsystem">
+                        <i class="ace-icon fa fa-plus  align-top bigger-125 icon-on-right"></i>
+                        新增所属系统
+                    </button>
+                </div>
+                <div class="col-xs-1"></div>
+
+            </div>
+        </div>
+        <hr/>
+
+        <div class="table-header">
+            所属系统维护列表
+        </div>
+
+        <div>
+            <table id="customers_list_table" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>所属系统</th>
+                    <th>默认显示</th>
+                    <th>显示排列</th>
+                    <th>创建时间</th>
+                    <th>启用状态</th>
+                    <th >操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增所属系统</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>所属系统标签*</h4>
+                        <input type="text" value="" id="belongSystypeName"  class="form-control input-inline">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>默认排序</h4>
+                        <label>
+                            <input type="checkbox" id="seqValueDefault" class="ace">
+                            <span class="lbl" style="margin-left: 10px;">是</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>排列编号</h4>
+                        <input type="text" value="" id="sortCode"  class="form-control input-inline">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="modalAddSubmit" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var scripts = [null, "../assets/js/jquery.dataTables.min.js", "../assets/js/jquery.dataTables.bootstrap.js", null];
+    ace.load_ajax_scripts(scripts, function() {
+        jQuery(function ($) {
+            init();
+            function init()
+            {
+                var table;
+                $.ajax({
+                    type: "POST",
+                    url: it_service_url.BelongSysTypeList,
+                    data: '{"belongSystypeState":"2"}',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        table = $('#customers_list_table').dataTable({
+                            destroy: true,
+                             paging: true,
+                            bAutoWidth: false,
+                            "oLanguage": {
+                                "sSearch": "搜索",
+                                "sLengthMenu": "每页显示 _MENU_ 条记录",
+                                "sZeroRecords": "抱歉， 没有找到",
+                                "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+                                "sInfoEmpty": "没有数据",
+                                "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+                                "oPaginate": {
+                                    "sFirst": "首页",
+                                    "sPrevious": "前一页",
+                                    "sNext": "后一页",
+                                    "sLast": "尾页"
+                                },
+                                "sZeroRecords": "没有检索到数据"
+                            },
+                            "data": result.resultJson,
+                            "columns": [
+                                {"data": "indexNo"},
+                                {"data": "belongSystypeName"},
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        var state=o.viewState==1?"是":"否";
+                                        return state;
+                                    }
+                                },
+                                {"data": "seqVal"},
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        return getLocalTime(o.updateDatetime);
+                                    }
+                                },
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        if(o.enableState==1){
+                                            return '<span class="label label-success arrowed-in arrowed-in-right">启用</span>';
+                                        }
+                                        else{
+                                            return '<span class="label label-warning">停用</span>';
+                                        }
+                                    }
+                                },
+                                {
+                                    "mData": null,
+                                    "bSortable": false,
+                                    "mRender": function (o) {
+                                        var returnStr='<button class="btn btn-sm btn-success btn-round restartSys"  data-id='+o.belongSystypeCid+'>启用</button>';
+                                        returnStr+='<button class="btn btn-white btn-default btn-round pauseSys"  style="margin-left:5px;"  data-id='+o.belongSystypeCid+'>停用</button>';
+                                        returnStr+='<button class="btn btn-white btn-warning btn-round deleteSys" style="margin-left:5px;"  data-id='+o.belongSystypeCid+' >删除</button>';
+                                        return returnStr;
+                                    }
+                                }
+                            ]
+                        });
+                        $('#customers_list_table tbody').on('click', 'tr', function () {
+                            $(".it-service-highlight").each(function(){
+                                $(this).removeClass('it-service-highlight');
+                            });
+                            $(this).toggleClass('it-service-highlight');
+                        });
+
+                        $('#button').click(function () {
+                            alert(table.rows('.it-service-highlight').data().length + ' row(s) it-service-highlight');
+                        });
+                    }
+                });
+            }
+
+
+            //新增系统
+            $("#addsystem").click(function(){
+                $("#modalAdd").modal();
+            });
+
+            $("#modalAddSubmit").click(function(){
+                var belongSystypeName=$("#belongSystypeName").val();
+                var seqValueDefault=0;
+                if(document.getElementById('seqValueDefault').checked){
+                    seqValueDefault=1;
+                }
+                else{
+                    seqValueDefault=2;
+                }
+                var sortCode=$("#sortCode").val();
+                //判断
+                if(belongSystypeName=="")
+                {
+                    AlertTips("请填写完整带*的信息");
+                    return false;
+                }
+
+                var data = "{";
+                data += "\"belongSystypeName\":\"" + belongSystypeName + "\",";
+                data += "\"seqValueDefault\":\"" + seqValueDefault + "\",";
+                data += "\"sortCode\":\"" + sortCode + "\",";
+                data += "\"operaterWorkCode\":\"" + currentUser.userWorkCode + "\",";
+                data += "\"createrUserName\":\"" + currentUser.userName+ "\"";
+                data += "}";
+
+                $.ajax({
+                    type:"POST",
+                    url:it_service_url.AddBelongSysType,
+                    contentType: "application/json; charset=utf-8",
+                    async:false,
+                    data: data,
+                    success:function(result){
+                        $("#modalAdd").modal('hide');
+
+                        if(result.resultJson.code==1) {
+                            AlertTips("系统创建成功",init);
+                        }
+                        if(result.resultJson.code==2) {
+                            AlertTips("系统创建失败",init);
+                        }
+                    }
+                });
+            });
+
+            //启用
+            $("body").on("click",".restartSys",function(){
+                UpdateStatus(1,$(this).data("id"));
+            });
+            //停用
+            $("body").on("click",".pauseSys",function(){
+                UpdateStatus(0,$(this).data("id"));
+            });
+
+            function UpdateStatus(param,id)
+            {
+                    var belongSystypeCid=id;
+                    var data = "{";
+                    data += "\"belongSystypeCid\":\"" + belongSystypeCid + "\",";
+                    data += "\"operaterWorkCode\":\"" + currentUser.userWorkCode + "\",";
+                    data += "\"operateStateType\":\"" + param + "\"";
+                    data += "}";
+
+                    $.ajax({
+                        type:"POST",
+                        url:it_service_url.UpdateSysTypeState,
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                        data: data,
+                        success:function(result){
+                            if(result.resultJson.code==1){
+                                AlertTips("修改成功",init);
+                            }
+                            else{
+                                AlertTips("修改失败",init);
+                            }
+
+                        }
+                    });
+           }
+
+            //删除
+            $("body").on("click",".deleteSys",function(){
+                    var belongSystypeCid=$(this).data("id");
+                    var data = "{";
+                    data += "\"belongSystypeCid\":\"" + belongSystypeCid + "\",";
+                    data += "\"operaterWorkCode\":\"" + currentUser.userWorkCode + "\"";
+                    data += "}";
+
+                    $.ajax({
+                        type:"POST",
+                        url:it_service_url.DeleteBelongSysType,
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                        data: data,
+                        success:function(result){
+                            if(result.resultJson.code==1){
+                                AlertTips("删除成功",init);
+                            }
+                           else{
+                                AlertTips("删除失败",init);
+                            }
+                        }
+                    });
+            });
+
+        });
+    });
+</script>

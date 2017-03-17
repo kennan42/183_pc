@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="../assets/css/chosen.css" />
+        <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+        <link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
+        <!-- text fonts -->
+        <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="../assets/css/ace.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+
+        <link rel="stylesheet" href="../assets/css/uncompressed/daterangepicker-bs3.css"/>
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <!-- inline styles related to this page -->
+        <!-- ace settings handler -->
+        <script src="../assets/js/ace-extra.min.js"></script>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lte IE 8]>
+            <script src="../assets/js/html5shiv.js">
+            </script>
+            <script src="../assets/js/respond.min.js">
+            </script>
+        <![endif]-->
+        <title>
+            GSP-首营已办事项
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+            .btn-info:active, .btn-info:hover, .open .btn-info.dropdown-toggle{
+                background-color:#1567c5!important;
+                border-color:#2e82ff;
+            }
+            .btn-info, .btn-info:focus {
+                background-color:#2e82ff!important;
+                border-color:#2e82ff;
+            }
+            .nav-tabs>li{margin-right:4px;margin-bottom:-2px;}
+            .nav-tabs>li.active{margin-bottom:-1px;}
+            .tab-content.profile-edit-tab-content{border:1px solid #7ea8fb;border-width:1px 0 0 0;-webkit-box-shadow:none;box-shadow:none;}
+            .nav-tabs>li>a{padding: 14px 34px 14px 26px;font-size:16px;overflow:hidden;}  
+            .nav-tabs>li>a>.ace-icon{float:left;margin-right:6px;}
+            .nav-tabs>li>a>span{float:left;margin-top:1px;}
+            .nav-tabs{border-color:#7ea8fb;border-bottom: 1px solid #7ea8fb;}
+            .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+                color:#1777e5;
+                border-color:#7ea8fb #7ea8fb transparent;
+                border-top:2px solid #1777e5;  
+            }
+            .nav-tabs>li>a, .nav-tabs>li>a:focus{
+                color:#1777e5;
+                border-color:#7ea8fb;
+                background-color: #fff;
+            }
+            .nav-tabs>li>a:hover{border-color:#7ea8fb;color:#1777e5;}
+
+            .tab-content.profile-edit-tab-content{padding:8px 0;padding-bottom: 0px;}
+            .table-bordered{border:none;}
+            .table-bordered>thead>tr{border-top: 1px solid #ddd;}
+            .table-bordered>thead>tr,.table-bordered>tbody>tr{border:1px solid #ddd;border-width:0 1px;}
+            .table-bordered>thead>tr.TrInterval,.table-bordered>tbody>tr.TrInterval{border:none;}
+            .table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color:#fff;}
+            .table-bordered>tbody>tr.TrInterval>td,.table-bordered>thead>tr.TrInterval>th{border:none;padding:0;height:4px;background:#fff;}
+            .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color:#e1e4fa;}
+            .table-hover>tbody>tr:hover>td.TrInterval, .table-hover>tbody>tr:hover>th.TrInterval{background-color:#fff;}
+            .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th{
+                cursor:pointer;
+            }
+            .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+                border-width:1px 0;
+            }
+            .table>thead>tr{background-image:none;background-color:#1777e5;color:#fff;}
+            .table>thead>tr>th{font-weight:normal;}
+            .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+                padding:10px 8px;vertical-align:middle;
+            }
+            .table{font-size:14px;}
+            .table>tbody>tr>td>span.Beyond{vertical-align:middle;padding-top:1px;margin-top:2px;display:inline-block;}
+            .table>thead>tr>th>span.Beyond{vertical-align:middle;padding-top:1px;margin-top:1px;display:inline-block;}
+
+            .dropdown-menu{min-width:80px;}
+            .message-bar{position:absolute;margin-left:-58px;left:50%;}
+            .pagination>li.active>a{
+                background-color:#1777e5;
+            }
+            .pagination>li.active>a:hover{
+                background-color:#1777e5;
+            }
+            .overflowspan{
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .daterangepicker.opensright .ranges{float:none;}
+            .daterangepicker .ranges{float:none;margin:0;width:auto;}
+            .daterangepicker .daterangepicker_start_input label, .daterangepicker .daterangepicker_end_input label{width:auto;}
+            .daterangepicker.opensright:before{right:9px;left:auto;}
+            .daterangepicker.opensright:after{right:10px;left:auto;}
+            .daterangepicker .calendar-time{display:none;}
+            .daterangepicker .ranges .range_inputs .cancelBtn{padding:2px 12px;}
+            .daterangepicker .ranges .range_inputs .applyBtn{padding:2px 12px;}
+            .daterangepicker .ranges .input-mini{margin-bottom:4px;}
+
+            .badge {
+                position: absolute !important;
+                top: 2px;
+                right: 2px;
+                padding: 1px 3px;
+                text-align: center;
+                font-size: 12px;
+                color: #FFF;
+            }
+            canvas{display:none;}
+            .main-container{background:#fff;} 
+        </style>
+        <script src="../assets/js/jquery.min.js"></script>
+        <script>
+            
+        </script>
+    </head>
+    
+    <body class="no-skin" onresize="Reizes();">
+        <div id="Loading" style=""></div>
+        <div class="main-container" id="main-container">
+            <div class="main-content">
+                <!-- #section:basics/content.breadcrumbs -->
+                <div class="breadcrumbs" id="breadcrumbs" style="background:#1777e5;">
+                    <script type="text/javascript">
+                        try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                        } catch(e) {}
+                    </script>
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon white">
+                            </i>
+                            <a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+                        </li>
+                        <li>
+                            <a href="#" class="white">
+                                GSP审批业务
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.breadcrumb -->
+                    <!-- /section:basics/content.searchbox -->
+                </div>
+                <div class="row-fluid  page-content">
+                    <div class="page-header" style="border-bottom:solid 1px #1777e5;">
+                        <input type="hidden" id="begD" value="">
+                        <input type="hidden" id="endD" value="">
+                        <h1 style="font-family:Microsoft YaHei ! important;color:#1a1a1a;">
+                            <span id="titleH1">首营企业已办</span>
+                            <!-- <small>
+                                <i class="ace-icon fa fa-angle-double-right">
+                                </i>
+                                自定义数据
+                            </small> -->
+                            <div class="btn-group" style="float:right;">
+                                <div class="col-sm-10" id="selfDate" style="display:none;width:auto;">
+                                    <!-- <div class="col-sm-2" style="width:204px">
+                                        <div class="input-group">
+                                            <input class="form-control date-picker" onpropertychange="calRange()" id="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar bigger-110 blue"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-1" style="width:10px;margin-right:10px;margin-top:10px">至</label>
+                                    <div class="col-sm-2" style="width:204px">
+                                        <div class="input-group">
+                                            <input class="form-control date-picker" id="id-date-picker-2" type="text" data-date-format="yyyy-mm-dd" onpropertychange="calRange()">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar bigger-110 blue"></i>
+                                            </span>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-sm-2" style="width:300px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar bigger-110"></i>
+                                            </span>
+                                            <input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2" style="width:auto;">
+                                        <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle" style="width:118px;">
+                                            <span id="showD">30天内</span>
+                                            <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" style="width:118px;left:auto;">
+                                            <li>
+                                                <a href="###" onclick="changeShowD('30')">30天内</a>
+                                            </li>
+                                            <li>
+                                                <a href="###" onclick="changeShowD('90')">90天内</a>
+                                            </li>
+                                            <li>
+                                                <a href="###" onclick="changeShowD('00')">自定义</a>
+                                            </li>
+                                        </ul>
+                                </div>
+                                <input type="hidden" id="begD" value="">
+                                <input type="hidden" id="endD" value="">
+                            </div>
+                        </h1>
+                    </div>
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs padding-12">
+                            <li class="active" onclick="navTabs(this)">
+                                <a data-toggle="tab" href="#GSPTabNav_01">
+                                    <i class="green ace-icon fa fa-building-o bigger-120" style="color:#1777e5;"></i>
+                                    <span>首营企业已办</span>
+                                    <span class="badge badge-important" id="AqiyeCount"></span>
+                                </a>
+                            </li>
+                            <li class="" onclick="navTabs(this)">
+                                <a data-toggle="tab" href="#GSPTabNav_02">
+                                    <i class="ace-icon fa fa-user bigger-120" style="color:#ffb752;"></i>
+                                    <span>首营客户已办</span>
+                                    <span class="badge badge-important" id="AkehuCount"></span>
+                                </a>
+                            </li>
+                            <li class="" onclick="navTabs(this)">
+                                <a data-toggle="tab" href="#GSPTabNav_03">
+                                    <i class="ace-icon fa fa-th-large bigger-120" style="color:#c64bd6;"></i>
+                                    <span style="margin-top:0;">首营品种已办</span>
+                                    <span class="badge badge-important" id="ApinzhongCount"></span>
+                                </a>
+                            </li>
+                            <li class="" onclick="navTabs(this)">
+                                <a data-toggle="tab" href="#GSPTabNav_04">
+                                    <i class="ace-icon fa fa-tags bigger-120" style="color:#9585bf"></i>
+                                    <span>不合格品已办</span>
+                                    <span class="badge badge-important" id="AbuhegeCount"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content profile-edit-tab-content">
+                            <!-- 首营企业已办 -->
+                            <div id="GSPTabNav_01" class="tab-pane in active">
+                                <div class="message-navbar clearfix" style="border:none;background:none;padding:0 12px;margin:0 0 8px;height:42px;">
+                                    <div class="nav-search minimized" style="float:left;right:auto;left:auto;top:7px;bottom:auto;">
+                                        <form class="form-search" onsubmit="return false;">
+                                            <span class="input-icon">
+                                                <input type="text" id="G001Search" autocomplete="off" onfocus="adstF(this)" onblur="adstB(this)" class="input-small nav-search-input" placeholder="查询已办事项..." onkeypress="toSearch(this.value)">
+                                                <i class="ace-icon fa fa-search nav-search-icon"></i>
+                                            </span>
+                                        </form>
+                                    </div>
+                                    <div class="message-bar bigger-150" style="height:42px;line-height:42px;color:#1777e5;">
+                                        首营企业已办
+                                    </div>
+                                </div>
+                                <div id="WaitHandleList_G001">
+                                    
+                                </div>
+                            </div>
+                            <div id="GSPTabNav_02" class="tab-pane in">
+                                <div class="message-navbar clearfix" style="border:none;background:none;padding:0 12px;margin:0 0 8px;height:42px;">
+                                    <!-- #section:basics/content.searchbox -->
+                                    <div class="nav-search minimized" style="float:left;right:auto;left:auto;top:7px;bottom:auto;">
+                                        <form class="form-search" onsubmit="return false;">
+                                            <span class="input-icon">
+                                                <input type="text" autocomplete="off" class="input-small nav-search-input" placeholder="查询已办事项..." id="G002Search" onfocus="adstF(this)" onblur="adstB(this)" onkeypress="toSearch(this.value)">
+                                                <i class="ace-icon fa fa-search nav-search-icon"></i>
+                                            </span>
+                                        </form>
+                                    </div>
+                                    <div class="message-bar bigger-150" style="height:42px;line-height:42px;color:#1777e5;">
+                                        首营客户已办
+                                    </div>
+                                    <!-- /.nav-search -->
+                                    <!-- /section:basics/content.searchbox -->
+                                </div>
+                                <div id="WaitHandleList_G003">
+                                   
+                                </div>
+                            </div>
+                            <div id="GSPTabNav_03" class="tab-pane in">
+                                <div class="message-navbar clearfix" style="border:none;background:none;padding:0 12px;margin:0 0 8px;height:42px;">
+                                    <!-- #section:basics/content.searchbox -->
+                                    <div class="nav-search minimized" style="float:left;right:auto;left:auto;top:7px;bottom:auto;">
+                                        <form class="form-search" onsubmit="return false;">
+                                            <span class="input-icon">
+                                                <input type="text" autocomplete="off" class="input-small nav-search-input" placeholder="查询已办事项..." id="G003Search" onfocus="adstF(this)" onblur="adstB(this)" onkeypress="toSearch(this.value)">
+                                                <i class="ace-icon fa fa-search nav-search-icon"></i>
+                                            </span>
+                                        </form>
+                                    </div>
+                                    <div class="message-bar bigger-150" style="height:42px;line-height:42px;color:#1777e5;">
+                                        首营品种已办
+                                    </div>
+                                    <!-- /.nav-search -->
+                                    <!-- /section:basics/content.searchbox -->
+                                </div>
+                                <div id="WaitHandleList_G002">
+                                    
+                                </div>
+                            </div>
+                            <div id="GSPTabNav_04" class="tab-pane in">
+                                <div class="message-navbar clearfix" style="border:none;background:none;padding:0 12px;margin:0 0 8px;height:42px;">
+                                    <!-- #section:basics/content.searchbox -->
+                                    <div class="nav-search minimized" style="float:left;right:auto;left:auto;top:7px;bottom:auto;">
+                                        <form class="form-search" onsubmit="return false;">
+                                            <span class="input-icon">
+                                                <input type="text" autocomplete="off" class="input-small nav-search-input" placeholder="查询已办事项..." id="G007Search" onfocus="adstF(this)" onblur="adstB(this)" onkeypress="toSearch(this.value)">
+                                                <i class="ace-icon fa fa-search nav-search-icon"></i>
+                                            </span>
+                                        </form>
+                                    </div>
+                                    <div class="message-bar bigger-150" style="height:42px;line-height:42px;color:#1777e5;">
+                                        不合格品已办
+                                    </div>
+                                    <!-- /.nav-search -->
+                                    <!-- /section:basics/content.searchbox -->
+                                </div>
+                                <div id="WaitHandleList_G007">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div style="border-bottom: 1px solid #7ea8fb;background-color:#EFF3F8;padding:12px 24px;border-top: 1px solid #7ea8fb;overflow:hidden;">
+                            <div style="float:left;margin:0px;height:32px;">
+                                <label style="margin:0px;">
+                                    <span style="float:left;height:32px;line-height:32px;">每页显示</span>
+                                    <span style="float:left;margin:0 10px">
+                                        <select name="sample-table-2_length" id="InfoArticle" aria-controls="sample-table-2" class="form-control input-sm" style="height:32px;line-height:32px;">
+                                            <option onclick="changePageSize('10')" value="10">10</option>
+                                            <option onclick="changePageSize('20')" value="20">20</option>
+                                            <option onclick="changePageSize('50')" value="50">50</option>
+                                            <option onclick="changePageSize('100')" value="100">100</option>
+                                        </select> 
+                                    </span>
+                                    <span style="float:left;height:32px;line-height:32px;">条</span>
+                                </label>
+                            </div>
+                            <!-- <div style="float:right;margin-left:20px;height:32px;">
+                                <label style="margin:0px;">
+                                    <span style="float:left;height:32px;line-height:32px;">共</span>
+                                    <span style="float:left;height:32px;margin:0 6px;line-height:32px;font-size:16px;font-weight:bold;color:#1777e5;">10</span>
+                                    <span style="float:left;height:32px;line-height:32px;">页</span>
+                                </label>
+                            </div> -->
+                            <ul class="pagination" id="page" style="float:right;margin:0px;">
+                                <li class="disabled" id="FirstPage">
+                                    <a href="javascript:void(0);" onclick="PagJump()">
+                                        <i class="ace-icon fa fa-angle-double-left"></i>
+                                    </a>
+                                </li>
+                                <li class="disabled" id="PrevPage">
+                                    <a href="javascript:void(0);" onclick="PagJump()">
+                                        <i class="ace-icon fa fa-angle-left"></i>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="javascript:void(0);">
+                                        <span id="CNum">1</span>
+                                        <span>/</span>
+                                        <span id="AllPage">1</span>
+                                    </a>
+                                </li>
+                                <li id="NextPage">
+                                    <a href="javascript:void(0);" onclick="PagJump()">
+                                        <i class="ace-icon fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                                <li id="LastPage">
+                                    <a href="javascript:void(0);" onclick="PagJump()">
+                                        <i class="ace-icon fa fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------------------------------------------------------------------------------->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <!-- <![endif]-->
+        <!--[if IE]>
+            <script type="text/javascript">
+                window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+            </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../assets/js/uncompressed/date-time/moment_ch.js"></script>
+        <script type="text/javascript" src="../assets/js/uncompressed/date-time/daterangepicker_ch.js"></script>
+        <!-- page specific plugin scripts -->
+        <script src="../assets/js/bootstrap-tag.min.js"></script>
+        <script src="../assets/js/jquery.hotkeys.min.js"></script>
+        <script src="../assets/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="../assets/js/jquery-ui.custom.min.js"></script>
+        <script src="../assets/js/chosen.jquery.min.js"></script>
+        <script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="../assets/js/jquery.slimscroll.min.js"></script>
+        <!-- ace scripts -->
+        <script src="../assets/js/ace-elements.min.js"></script>
+        <script src="../assets/js/ace.min.js"></script>
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            function CloseGritter(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+                window.location.reload();
+            }
+            function CloseGritter_two(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+            }
+            function WindowClose(){
+                window.close();
+            }
+
+            function adstF(obj){
+                if( $(obj).val() == "查询已办事项..." ){
+                    $(obj).val("");
+                    $(obj).css({"color":"#444"});
+                }
+            }
+            function adstB(obj){
+                if( $(obj).val() == "" ){
+                    $(obj).val("查询已办事项...");
+                    $(obj).css({"color":"#ccc"});
+                }
+            }
+
+            //选择显示时间段
+            function changeShowD(flag) {
+                var bussType = JSON.parse(localStorage["bussType"]);
+                var thisYear = new Date().getFullYear();
+                var thisMonth = new Date().getMonth() + 1;
+                var thisDay = new Date().getDate();
+                if (flag == '90') {
+                    $('#showD').html('90天内');
+                    $('#selfDate').hide();
+                    $('#begD').val(getbeg90());
+                    $('#endD').val(getToday8());
+                    var opts = {            
+                        lines: 10, // 花瓣数目
+                        length: 0, // 花瓣长度
+                        width: 10, // 花瓣宽度
+                        radius: 20, // 花瓣距中心半径
+                        corners: 1, // 花瓣圆滑度 (0-1)
+                        rotate: 0, // 花瓣旋转角度
+                        direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                        color: '#2679b5', // 花瓣颜色
+                        speed: 1, // 花瓣旋转速度
+                        trail: 60, // 花瓣旋转时的拖影(百分比)
+                        shadow: false, // 花瓣是否显示阴影
+                        hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                        className: 'spinner', // spinner css 样式名称
+                        zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                        top: '-100', // spinner 相对父容器Top定位 单位 px
+                        left: '0'// spinner 相对父容器Left定位 单位 px
+                    };
+                    var target = document.getElementById("Loading");  
+                    var spinner = new Spinner(opts).spin(target);
+                    pagei = $.layer({
+                        type: 1,   //0-4的选择,
+                        title: false,
+                        border: [0],
+                        closeBtn: [0],
+                        shadeClose: false,
+                        area: ['auto', 'auto'],
+                        page: {dom : '#Loading'}
+                    });
+                    setTimeout(function() {
+                        GSP_A_ID_List(1,10,bussType,getbeg90(),getToday8());
+                        spinner.spin();
+                        layer.close(pagei);
+                    }, 300 + parseInt(Math.random() * 300));
+                } else if (flag == '30') {
+                    $('#showD').html('30天内');
+                    $('#selfDate').hide();
+                    $('#begD').val(getbeg30());
+                    $('#endD').val(getToday8());
+                    var opts = {            
+                        lines: 10, // 花瓣数目
+                        length: 0, // 花瓣长度
+                        width: 10, // 花瓣宽度
+                        radius: 20, // 花瓣距中心半径
+                        corners: 1, // 花瓣圆滑度 (0-1)
+                        rotate: 0, // 花瓣旋转角度
+                        direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                        color: '#2679b5', // 花瓣颜色
+                        speed: 1, // 花瓣旋转速度
+                        trail: 60, // 花瓣旋转时的拖影(百分比)
+                        shadow: false, // 花瓣是否显示阴影
+                        hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                        className: 'spinner', // spinner css 样式名称
+                        zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                        top: '-100', // spinner 相对父容器Top定位 单位 px
+                        left: '0'// spinner 相对父容器Left定位 单位 px
+                    };
+                    var target = document.getElementById("Loading");  
+                    var spinner = new Spinner(opts).spin(target);
+                    pagei = $.layer({
+                        type: 1,   //0-4的选择,
+                        title: false,
+                        border: [0],
+                        closeBtn: [0],
+                        shadeClose: false,
+                        area: ['auto', 'auto'],
+                        page: {dom : '#Loading'}
+                    });
+                    setTimeout(function() {
+                        GSP_A_ID_List(1,10,bussType,getbeg30(),getToday8());
+                        spinner.spin();
+                        layer.close(pagei);
+                    }, 300 + parseInt(Math.random() * 300));
+                } else {
+                    //自定义
+                    $('#selfDate').show();
+                    $('#showD').html('自定义时间段');
+                }
+            }
+            //自定义时间段
+            function TimePeriod() {
+                var bussType = JSON.parse(localStorage["bussType"]);
+                var begD = $('input[name=daterangepicker_start]').val();
+                var endD = $('input[name=daterangepicker_end]').val();
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    GSP_A_ID_List(1,10,bussType,begD.replace(/-/g, ''), endD.replace(/-/g, ''));
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            }
+
+            //tab标签页切换文字 并加载数据
+            function navTabs(obj){
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    $("#titleH1").text($(obj).find("span").eq(0).text());
+                    if( $(obj).find("span").eq(0).text() == "首营企业已办" ){
+                        var bussType = 'G001';
+                        $('#showD').html('30天内');
+                        $('#selfDate').hide();
+                    }else if( $(obj).find("span").eq(0).text() == "首营客户已办" ){
+                        var bussType = 'G003';
+                        $('#showD').html('30天内');
+                        $('#selfDate').hide();
+                    }else if( $(obj).find("span").eq(0).text() == "首营品种已办" ){
+                        var bussType = 'G002';
+                        $('#showD').html('30天内');
+                        $('#selfDate').hide();
+                    }else if( $(obj).find("span").eq(0).text() == "不合格品已办" ){
+                        var bussType = 'G007';
+                        $('#showD').html('30天内');
+                        $('#selfDate').hide();
+                    }
+                    localStorage.removeItem("bussType");
+                    localStorage.bussType = JSON.stringify(bussType);
+                    GSP_A_ID_List(1,10,bussType,StartDate,EndDate);
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            }
+
+            //刷新GSP已办ID列表-返回ID数组
+            function GSP_A_ID_List(CNum,pagesize,bussType,begD,endD){ // CNum 第几页 pagesize 页大小 bussType 类型 begD开始时间 endD结束时间
+                //保存已办列表的多有ID
+                var bussnoArr = [];
+
+                var AqiyeCount = GSPsubmit_A_1(localStorage.pernrBase?localStorage.pernrBase:'','G001',begD,endD,'1','1');
+                if (AqiyeCount.output.message != "服务调用成功") {
+                    $("#AqiyeCount").html('0');
+                }else{
+                    $("#AqiyeCount").html(AqiyeCount.output.totalCount);
+                }
+                
+                var AkehuCount = GSPsubmit_A_1(localStorage.pernrBase?localStorage.pernrBase:'','G003',begD,endD,'1','1');
+                if (AkehuCount.output.message != "服务调用成功") {
+                    $("#AkehuCount").html('0');
+                }else{
+                    $("#AkehuCount").html(AkehuCount.output.totalCount);
+                }
+                
+                var ApinzhongCount = GSPsubmit_A_1(localStorage.pernrBase?localStorage.pernrBase:'','G002',begD,endD,'1','1');
+                if (ApinzhongCount.output.message != "服务调用成功") {
+                    $("#ApinzhongCount").html('0');
+                }else{
+                    $("#ApinzhongCount").html(ApinzhongCount.output.totalCount);
+                }
+                
+                var AbuhegeCount = GSPsubmit_A_1(localStorage.pernrBase?localStorage.pernrBase:'','G007',begD,endD,'1','1');
+                if (AbuhegeCount.output.message != "服务调用成功") {
+                    $("#AbuhegeCount").html('0');
+                }else{
+                    $("#AbuhegeCount").html(AbuhegeCount.output.totalCount);
+                }
+
+                var GSP_A_ListJSON = GSPsubmit_A_1(localStorage.pernrBase?localStorage.pernrBase:'',bussType,begD,endD,CNum,pagesize);
+                if (GSP_A_ListJSON.status == '0') {
+                    var cpTaskList = GSP_A_ListJSON.output.cpTaskList;
+                    if (cpTaskList.length == undefined) {
+                        bussnoArr.push({
+                            "APPID":cpTaskList.bussNo
+                        });
+                    }else{
+                        for (var i = 0; i < cpTaskList.length; i++) {
+                            bussnoArr.push({
+                                "APPID":cpTaskList[i].bussNo
+                            });
+                        }
+                    }
+                    //分页
+                    var AllPage = GSP_A_ListJSON.output.totalCount;
+                    var PageNum = parseInt(AllPage)%parseInt(pagesize) == 0? parseInt(AllPage)/parseInt(pagesize):(parseInt(AllPage/pagesize)+1);
+                    $("#CNum").html(CNum);
+                    $("#AllPage").html(PageNum);
+                    if( CNum == '1' ){
+                        if( CNum == PageNum ){
+                            $("#FirstPage").addClass("disabled");
+                            $("#PrevPage").addClass("disabled");
+                            $("#NextPage").addClass("disabled");
+                            $("#LastPage").addClass("disabled");
+                        }else{
+                            $("#FirstPage").addClass("disabled");
+                            $("#PrevPage").addClass("disabled");
+                            $("#NextPage").removeClass("disabled");
+                            $("#LastPage").removeClass("disabled");
+                        }
+                    }else{
+                        if( CNum == PageNum ){
+                            $("#FirstPage").removeClass("disabled");
+                            $("#PrevPage").removeClass("disabled");
+                            $("#NextPage").addClass("disabled");
+                            $("#LastPage").addClass("disabled");
+                        }else{
+                            $("#FirstPage").removeClass("disabled");
+                            $("#PrevPage").removeClass("disabled");
+                            $("#NextPage").removeClass("disabled");
+                            $("#LastPage").removeClass("disabled");
+                        }
+                    }
+                    var FirstPageNum = 1;
+                    var PrevPage = parseInt(CNum) - 1;
+                    var NextPageNum = parseInt(CNum) + 1;
+                    var LastPage = parseInt(PageNum);
+                    $("#FirstPage a").attr('onclick','PagJump(\''+FirstPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                    $("#PrevPage a").attr('onclick','PagJump(\''+PrevPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                    $("#NextPage a").attr('onclick','PagJump(\''+NextPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                    $("#LastPage a").attr('onclick','PagJump(\''+LastPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                    
+                    $("#page").children("li").each(function(){
+                        if( $(this).hasClass("disabled") ){
+                            $(this).children("a").attr('onclick','');
+                        }
+                    })
+                    GSP_A_line_List(bussType,bussnoArr);
+                }else{
+                    if( bussType == 'G001' ){
+                        sqTYPE = "首营企业已办"
+                    }else if( bussType == 'G002' ){
+                        sqTYPE = "首营品种已办"
+                    }else if( bussType == 'G003' ){
+                        sqTYPE = "首营客户已办"
+                    }else if( bussType == 'G007' ){
+                        sqTYPE = "不合格品已办"
+                    }
+                    // var unique_id = $.gritter.add({
+                    //     title: 'GSP'+sqTYPE+'',
+                    //     text: ''+GSP_A_ListJSON.output.message+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_two(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                    //     sticky: true,
+                    //     time: '',
+                    //     class_name: 'gritter-info gritter-center'
+                    // });
+                    $('#WaitHandleList_'+bussType+'').html("");
+                }
+            }
+
+            //刷新GSP详情列表-返回line列表
+            function GSP_A_line_List(bussType,bussnoArr){
+                if( bussType == 'G001' ){ // 首营企业列表
+                    sqTYPE = "首营企业申请";
+                    var GSP_A_gysvendListsJSON = GSPsubmit_A_G001(bussnoArr);
+                    if( GSP_A_gysvendListsJSON.status == '0' ){
+                        var GSPAList= GSP_A_gysvendListsJSON.ET_ZGSPWF001.item;
+                        // 缓存
+                        localStorage.removeItem("GSPAList");
+                        localStorage.GSPAList = JSON.stringify(GSPAList);
+                        // 列表拼接
+                        var GWaitHandleList = "";
+                        GWaitHandleList+='<table id="sample-table-2" class="table table-striped table-bordered table-hover tableShow" style="margin-bottom:0px;">'
+                                            +'<thead>'
+                                                +'<tr>'
+                                                    +'<th class="center" style="width:25px;"></th>'
+                                                    +'<th width="14%"><span class="Beyond">申请类型</span></th>'
+                                                    +'<th width="28%"><span class="Beyond">主数据名称</span></th>'
+                                                    +'<th width="16%"><span class="Beyond">申请人姓名</span></th>'
+                                                    +'<th width="18%"><span class="Beyond">申请日期</span></th>'
+                                                    +'<th>备注</th>'
+                                                +'</tr><tr class="TrInterval"><th></th></tr>'
+                                            +'</thead>'
+                                            +'<tbody>'
+                                            for (var i = 0; i < GSPAList.length; i++) {
+                                                GWaitHandleList+='<tr>'
+                                                                +'<td class="center"></td>'
+                                                                +'<td title='+sqTYPE+' onclick="Open_Detailed(\''+bussType+'\')">'
+                                                                    +'<span class="Beyond">'+sqTYPE+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].NAME1)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].NAME1)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].APPLY_NAME)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].APPLY_NAME)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].APPLY_DATE)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].APPLY_DATE)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].ZMARK)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].ZMARK)+'</span>'
+                                                                +'</td>'
+                                                            +'</tr><tr class="TrInterval"><td></td></tr>'
+                                            };
+                                            +'</tbody>'
+                                        +'</table>'
+                                        $('#WaitHandleList_'+bussType+'').html(GWaitHandleList);
+                    }else{
+                        // var unique_id = $.gritter.add({
+                        //     title: 'GSP'+sqTYPE+'',
+                        //     text: ''+GSP_A_gysvendListsJSON.ES_PUBLIC.MESSAGE+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_two(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        //     sticky: true,
+                        //     time: '',
+                        //     class_name: 'gritter-info gritter-center'
+                        // });
+                        $('#WaitHandleList_'+bussType+'').html("");
+                    }
+                }else if( bussType == 'G002' ){ // 首营品种申请列表
+                    sqTYPE = "首营品种申请";
+                    var GSP_A_gysvendListsJSON = GSPsubmit_A_G002(bussnoArr);
+                    if( GSP_A_gysvendListsJSON.status == '0' ){
+                        var GSPAList= GSP_A_gysvendListsJSON.ET_ZGSPWF003.item;
+                        // 缓存
+                        localStorage.removeItem("GSPAList");
+                        localStorage.GSPAList = JSON.stringify(GSPAList);
+                        // 列表拼接
+                        var GWaitHandleList = "";
+                        GWaitHandleList+='<table id="sample-table-2" class="table table-striped table-bordered table-hover tableShow" style="margin-bottom:0px;">'
+                                            +'<thead>'
+                                                +'<tr>'
+                                                    +'<th class="center" style="width:25px;"></th>'
+                                                    +'<th width="14%"><span class="Beyond">申请类型</span></th>'
+                                                    +'<th width="28%"><span class="Beyond">主数据名称</span></th>'
+                                                    +'<th width="16%"><span class="Beyond">申请人姓名</span></th>'
+                                                    +'<th width="18%"><span class="Beyond">申请日期</span></th>'
+                                                    +'<th>备注</th>'
+                                                +'</tr><tr class="TrInterval"><th></th></tr>'
+                                            +'</thead>'
+                                            +'<tbody>'
+                                            for (var i = 0; i < GSPAList.length; i++) {
+                                                GWaitHandleList+='<tr>'
+                                                                +'<td class="center"></td>'
+                                                                +'<td title='+sqTYPE+' onclick="Open_Detailed(\''+bussType+'\')">'
+                                                                    +'<span class="Beyond">'+sqTYPE+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].MAKTX)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].MAKTX)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].APPLY_NAME)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].APPLY_NAME)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].APPLY_DATE)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].APPLY_DATE)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].ZMARK)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].ZMARK)+'</span>'
+                                                                +'</td>'
+                                                            +'</tr><tr class="TrInterval"><td></td></tr>'
+                                            };
+                                            +'</tbody>'
+                                        +'</table>'
+                                        $('#WaitHandleList_'+bussType+'').html(GWaitHandleList);
+                    }else{
+                        // var unique_id = $.gritter.add({
+                        //     title: 'GSP'+sqTYPE+'',
+                        //     text: ''+GSP_A_gysvendListsJSON.ES_PUBLIC.MESSAGE+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_two(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        //     sticky: true,
+                        //     time: '',
+                        //     class_name: 'gritter-info gritter-center'
+                        // });
+                        $('#WaitHandleList_'+bussType+'').html("");
+                    }
+                }else if( bussType == 'G003' ){ // 首营客户申请列表
+                    sqTYPE = "首营客户申请";
+                    var GSP_A_gysvendListsJSON = GSPsubmit_A_G003(bussnoArr);
+                    if( GSP_A_gysvendListsJSON.status == '0' ){
+                        var GSPAList= GSP_A_gysvendListsJSON.ET_ZGSPWF004.item;
+                        // 缓存
+                        localStorage.removeItem("GSPAList");
+                        localStorage.GSPAList = JSON.stringify(GSPAList);
+                        // 列表拼接
+                        var GWaitHandleList = "";
+                        GWaitHandleList+='<table id="sample-table-2" class="table table-striped table-bordered table-hover tableShow" style="margin-bottom:0px;">'
+                                            +'<thead>'
+                                                +'<tr>'
+                                                    +'<th class="center" style="width:25px;"></th>'
+                                                    +'<th width="14%"><span class="Beyond">申请类型</span></th>'
+                                                    +'<th width="28%"><span class="Beyond">主数据名称</span></th>'
+                                                    +'<th width="16%"><span class="Beyond">申请人姓名</span></th>'
+                                                    +'<th width="18%"><span class="Beyond">申请日期</span></th>'
+                                                    +'<th>备注</th>'
+                                                +'</tr><tr class="TrInterval"><th></th></tr>'
+                                            +'</thead>'
+                                            +'<tbody>'
+                                            for (var i = 0; i < GSPAList.length; i++) {
+                                                GWaitHandleList+='<tr>'
+                                                                +'<td class="center"></td>'
+                                                                +'<td title='+sqTYPE+' onclick="Open_Detailed(\''+bussType+'\')">'
+                                                                    +'<span class="Beyond">'+sqTYPE+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].NAME1)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].NAME1)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].APPLY_NAME)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].APPLY_NAME)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].APPLY_DATE)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].APPLY_DATE)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList[i].ZMARK)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList[i].ZMARK)+'</span>'
+                                                                +'</td>'
+                                                            +'</tr><tr class="TrInterval"><td></td></tr>'
+                                            };
+                                            +'</tbody>'
+                                        +'</table>'
+                                        $('#WaitHandleList_'+bussType+'').html(GWaitHandleList);
+                    }else{
+                        // var unique_id = $.gritter.add({
+                        //     title: 'GSP'+sqTYPE+'',
+                        //     text: ''+GSP_A_gysvendListsJSON.ES_PUBLIC.MESSAGE+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_two(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        //     sticky: true,
+                        //     time: '',
+                        //     class_name: 'gritter-info gritter-center'
+                        // });
+                        $('#WaitHandleList_'+bussType+'').html("");
+                    }
+                }else if( bussType == 'G007' ){ // 首营不合格品报损申请列表
+                    sqTYPE = "不合格品报损申请";
+                    var GSP_A_gysvendListsJSON = GSPsubmit_A_G007(bussnoArr);
+                    if( GSP_A_gysvendListsJSON.status == '0' ){
+                        var GSPAList = GSP_A_gysvendListsJSON;
+                        // 缓存
+                        localStorage.removeItem("GSPAList");
+                        localStorage.GSPAList = JSON.stringify(GSPAList);
+                        // 列表拼接
+                        var GWaitHandleList = "";
+                        GWaitHandleList+='<table id="sample-table-7" class="table table-striped table-bordered table-hover tableShow" style="margin-bottom:0px;">'
+                                            +'<thead>'
+                                                +'<tr>'
+                                                    +'<th class="center" style="width:25px;"></th>'
+                                                    +'<th width="14%"><span class="Beyond">申请类型</span></th>'
+                                                    +'<th width="28%" id="TbTd"><span class="Beyond">主数据名称</span></th>'
+                                                    +'<th width="16%"><span class="Beyond">申请人姓名</span></th>'
+                                                    +'<th width="18%"><span class="Beyond">申请日期</span></th>'
+                                                    +'<th>备注</th>'
+                                                +'</tr><tr class="TrInterval"><th></th></tr>'
+                                            +'</thead>'
+                                            +'<tbody>'
+                                            for (var i = 0; i < GSPAList.ET_HEAD.item.length; i++) {
+                                                var NotZuNum = "";
+                                                GWaitHandleList+='<tr>'
+                                                                +'<td class="center"></td>'
+                                                                +'<td title='+sqTYPE+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+sqTYPE+'</span>'
+                                                                +'</td>'
+                                                                for (var j = 0; j < GSPAList.ET_ITEM.item.length; j++) {
+                                                                    if( checkNoChar(GSPAList.ET_ITEM.item[j].APPLY_ID) == checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_ID) ){
+                                                                        if( NotZuNum == "" ){
+                                                                            NotZuNum = ''+checkNoChar(GSPAList.ET_ITEM.item[j].MAKTX)+'';
+                                                                        }else{
+                                                                            NotZuNum = ''+NotZuNum+'，'+checkNoChar(GSPAList.ET_ITEM.item[j].MAKTX)+'';
+                                                                        }
+                                                                    }
+                                                                };
+                                                                GWaitHandleList+='<td title='+NotZuNum+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_ID)+')">'
+                                                                    +'<span class="TdSpan" class="Beyond">'+NotZuNum+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_NAME)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_NAME)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_DATE)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_DATE)+'</span>'
+                                                                +'</td>'
+                                                                +'<td title='+checkNoChar(GSPAList.ET_HEAD.item[i].ZMARK)+' onclick="Open_Detailed(\''+bussType+'\','+checkNoChar(GSPAList.ET_HEAD.item[i].APPLY_ID)+')">'
+                                                                    +'<span class="Beyond">'+checkNoChar(GSPAList.ET_HEAD.item[i].ZMARK)+'</span>'
+                                                                +'</td>'
+                                                            +'</tr><tr class="TrInterval"><td></td></tr>'
+                                            };
+                                            +'</tbody>'
+                                        +'</table>'
+                                        $('#WaitHandleList_'+bussType+'').html(GWaitHandleList);
+                                        Reizes();
+                    }else{
+                        // var unique_id = $.gritter.add({
+                        //     title: 'GSP'+sqTYPE+'',
+                        //     text: ''+GSP_A_gysvendListsJSON.ES_PUBLIC.MESSAGE+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_two(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        //     sticky: true,
+                        //     time: '',
+                        //     class_name: 'gritter-info gritter-center'
+                        // });
+                        $('#WaitHandleList_'+bussType+'').html("");
+                    }
+                }
+            }
+
+            //分页页码点击事件
+            function PagJump(CNum,pagesize,bussType){
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    if( bussType == "G001" ){
+                        var sval = $("#G001Search").val();
+                    }else if( bussType == "G002" ){
+                        var sval = $("#G002Search").val();
+                    }else if( bussType == "G003" ){
+                        var sval = $("#G003Search").val();
+                    }else if( bussType == "G007" ){
+                        var sval = $("#G007Search").val();
+                    }
+                    if( sval == "查询已办事项..." ){
+                        sval = "";
+                    }
+                    if( sval == "" ){
+                        GSP_A_ID_List(CNum,pagesize,bussType);
+                    }else{
+                        search(CNum,pagesize,bussType,sval);
+                    }
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            }
+            //每页显示条数
+            function changePageSize(pagesize){
+                var bussType = JSON.parse(localStorage["bussType"]);
+                if( bussType == "G001" ){
+                    var sval = $("#G001Search").val();
+                }else if( bussType == "G002" ){
+                    var sval = $("#G002Search").val();
+                }else if( bussType == "G003" ){
+                    var sval = $("#G003Search").val();
+                }else if( bussType == "G007" ){
+                    var sval = $("#G007Search").val();
+                }
+                if( sval == "查询已办事项..." ){
+                    sval = "";
+                }
+                if( sval == "" ){
+                    GSP_A_ID_List(1,pagesize,bussType);
+                }else{
+                    search(1,pagesize,bussType,sval);
+                }
+            }
+
+            //回车搜索功能
+            function toSearch(sval){
+                if(event.keyCode==13){
+                    var opts = {            
+                        lines: 10, // 花瓣数目
+                        length: 0, // 花瓣长度
+                        width: 10, // 花瓣宽度
+                        radius: 20, // 花瓣距中心半径
+                        corners: 1, // 花瓣圆滑度 (0-1)
+                        rotate: 0, // 花瓣旋转角度
+                        direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                        color: '#2679b5', // 花瓣颜色
+                        speed: 1, // 花瓣旋转速度
+                        trail: 60, // 花瓣旋转时的拖影(百分比)
+                        shadow: false, // 花瓣是否显示阴影
+                        hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                        className: 'spinner', // spinner css 样式名称
+                        zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                        top: '-100', // spinner 相对父容器Top定位 单位 px
+                        left: '0'// spinner 相对父容器Left定位 单位 px
+                    };
+                    var target = document.getElementById("Loading");  
+                    var spinner = new Spinner(opts).spin(target);
+                    pagei = $.layer({
+                        type: 1,   //0-4的选择,
+                        title: false,
+                        border: [0],
+                        closeBtn: [0],
+                        shadeClose: false,
+                        area: ['auto', 'auto'],
+                        page: {dom : '#Loading'}
+                    });
+                    setTimeout(function() {
+                        if( $("#titleH1").text() == "首营企业已办" ){
+                            var bussType = 'G001';
+                        }else if( $("#titleH1").text() == "首营客户已办" ){
+                            var bussType = 'G003';
+                        }else if( $("#titleH1").text() == "首营品种已办" ){
+                            var bussType = 'G002';
+                        }else if( $("#titleH1").text() == "不合格品已办" ){
+                            var bussType = 'G007';
+                        }
+                        search(1,1,bussType,sval);
+                        spinner.spin();
+                        layer.close(pagei);
+                    }, 300 + parseInt(Math.random() * 300));
+                }else{
+                    return;
+                }
+            }
+            function search(CNum,pagesize,bussType,sval){
+                var STATUS = '1';//审批状态(1是完成，2是未完成，空或0是全部)
+                //var bussType = JSON.parse(localStorage["bussType"]);
+                var bussnoArr = [];//保存已办列表的所有id
+                if(bussType == 'G001'){ // 企业已办
+                    var GSP_A_ListsJSON = GSPsubmit_ASearch_G001(CNum,pagesize,sval,STATUS);
+                    if(GSP_A_ListsJSON.status == '0'){
+                        var waitTaskList = GSP_A_ListsJSON.ET_ZGSPWF001.item;
+                        if( waitTaskList.length == undefined ){
+                            bussnoArr.push({
+                                "APPID":waitTaskList.APPLY_ID
+                            });
+                            //subAll[waitTaskList.bussNo] = waitTaskList;
+                        }else{
+                            for(var i = 0; i < waitTaskList.length; i++){
+                                bussnoArr.push({
+                                    "APPID":waitTaskList[i].APPLY_ID
+                                });
+                                //subAll[waitTaskList[i].bussNo] = waitTaskList[i];
+                            }
+                        }
+                        var AllPage = GSP_A_ListsJSON.ES_PUBLIC.TOTALSIZE;
+                        // var pageAll = parseInt(total)%parseInt(pageSize) == 0? parseInt(total)/parseInt(pageSize):(parseInt(total/pageSize)+1);
+                        var PageNum = parseInt(AllPage)%parseInt(pagesize) == 0? parseInt(AllPage)/parseInt(pagesize):(parseInt(AllPage/pagesize)+1);
+                        $("#CNum").html(CNum);
+                        $("#AllPage").html(PageNum);
+                        if( CNum == '1' ){
+                            if( CNum == PageNum ){
+                                $("#FirstPage").addClass("disabled");
+                                $("#PrevPage").addClass("disabled");
+                                $("#NextPage").addClass("disabled");
+                                $("#LastPage").addClass("disabled");
+                            }else{
+                                $("#FirstPage").addClass("disabled");
+                                $("#PrevPage").addClass("disabled");
+                                $("#NextPage").removeClass("disabled");
+                                $("#LastPage").removeClass("disabled");
+                            }
+                        }else{
+                            if( CNum == PageNum ){
+                                $("#FirstPage").removeClass("disabled");
+                                $("#PrevPage").removeClass("disabled");
+                                $("#NextPage").addClass("disabled");
+                                $("#LastPage").addClass("disabled");
+                            }else{
+                                $("#FirstPage").removeClass("disabled");
+                                $("#PrevPage").removeClass("disabled");
+                                $("#NextPage").removeClass("disabled");
+                                $("#LastPage").removeClass("disabled");
+                            }
+                        }
+                        var FirstPageNum = 1;
+                        var PrevPage = parseInt(CNum) - 1;
+                        var NextPageNum = parseInt(CNum) + 1;
+                        var LastPage = parseInt(PageNum);
+                        $("#FirstPage a").attr('onclick','PagJump(\''+FirstPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#PrevPage a").attr('onclick','PagJump(\''+PrevPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#NextPage a").attr('onclick','PagJump(\''+NextPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#LastPage a").attr('onclick','PagJump(\''+LastPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        
+                        $("#page").children("li").each(function(){
+                            if( $(this).hasClass("disabled") ){
+                                $(this).children("a").attr('onclick','');
+                            }
+                        })
+                        GSP_A_line_List(bussType,bussnoArr);
+                    }else{
+                        if( bussType == 'G001' ){
+                            sqTYPE = "首营企业已办"
+                        }else if( bussType == 'G002' ){
+                            sqTYPE = "首营品种已办"
+                        }else if( bussType == 'G003' ){
+                            sqTYPE = "首营客户已办"
+                        }else if( bussType == 'G007' ){
+                            sqTYPE = "不合格品已办"
+                        }
+                        var unique_id = $.gritter.add({
+                            title: 'GSP'+sqTYPE+'搜索错误',
+                            text: ''+GSP_A_ListsJSON.ES_PUBLIC.MESSAGE+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_two(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-info gritter-center'
+                        });
+                    }
+                }else if(bussType == 'G002'){ // 品种已办
+                	var GSP_A_ListsJSON = GSPsubmit_ASearch_G002(CNum,pagesize,sval,STATUS);
+                    if(GSP_A_ListsJSON.status == '0'){
+                        var waitTaskList = GSP_A_ListsJSON.ET_ZGSPWF003.item;
+                        if( waitTaskList.length == undefined ){
+                            bussnoArr.push({
+                                "APPID":waitTaskList.APPLY_ID
+                            });
+                            //subAll[waitTaskList.bussNo] = waitTaskList;
+                        }else{
+                            for(var i = 0; i < waitTaskList.length; i++){
+                                bussnoArr.push({
+                                    "APPID":waitTaskList[i].APPLY_ID
+                                });
+                                //subAll[waitTaskList[i].bussNo] = waitTaskList[i];
+                            }
+                        }
+                        var AllPage = GSP_A_ListsJSON.ES_PUBLIC.TOTALSIZE;
+                        // var pageAll = parseInt(total)%parseInt(pageSize) == 0? parseInt(total)/parseInt(pageSize):(parseInt(total/pageSize)+1);
+                        var PageNum = parseInt(AllPage)%parseInt(pagesize) == 0? parseInt(AllPage)/parseInt(pagesize):(parseInt(AllPage/pagesize)+1);
+                        $("#CNum").html(CNum);
+                        $("#AllPage").html(PageNum);
+                        if( CNum == '1' ){
+                            if( CNum == PageNum ){
+                                $("#FirstPage").addClass("disabled");
+                                $("#PrevPage").addClass("disabled");
+                                $("#NextPage").addClass("disabled");
+                                $("#LastPage").addClass("disabled");
+                            }else{
+                                $("#FirstPage").addClass("disabled");
+                                $("#PrevPage").addClass("disabled");
+                                $("#NextPage").removeClass("disabled");
+                                $("#LastPage").removeClass("disabled");
+                            }
+                        }else{
+                            if( CNum == PageNum ){
+                                $("#FirstPage").removeClass("disabled");
+                                $("#PrevPage").removeClass("disabled");
+                                $("#NextPage").addClass("disabled");
+                                $("#LastPage").addClass("disabled");
+                            }else{
+                                $("#FirstPage").removeClass("disabled");
+                                $("#PrevPage").removeClass("disabled");
+                                $("#NextPage").removeClass("disabled");
+                                $("#LastPage").removeClass("disabled");
+                            }
+                        }
+                        var FirstPageNum = 1;
+                        var PrevPage = parseInt(CNum) - 1;
+                        var NextPageNum = parseInt(CNum) + 1;
+                        var LastPage = parseInt(PageNum);
+                        $("#FirstPage a").attr('onclick','PagJump(\''+FirstPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#PrevPage a").attr('onclick','PagJump(\''+PrevPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#NextPage a").attr('onclick','PagJump(\''+NextPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#LastPage a").attr('onclick','PagJump(\''+LastPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        
+                        $("#page").children("li").each(function(){
+                            if( $(this).hasClass("disabled") ){
+                                $(this).children("a").attr('onclick','');
+                            }
+                        })
+                        GSP_A_line_List(bussType,bussnoArr);
+                    }else{
+                        if( bussType == 'G001' ){
+                            sqTYPE = "首营企业已办"
+                        }else if( bussType == 'G002' ){
+                            sqTYPE = "首营品种已办"
+                        }else if( bussType == 'G003' ){
+                            sqTYPE = "首营客户已办"
+                        }else if( bussType == 'G007' ){
+                            sqTYPE = "不合格品已办"
+                        }
+                        var unique_id = $.gritter.add({
+                            title: 'GSP'+sqTYPE+'搜索错误',
+                            text: ''+GSP_A_ListsJSON.ES_PUBLIC.MESSAGE+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_two(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-info gritter-center'
+                        });
+                    }
+                }else if(bussType == 'G003'){ // 客户已办
+                    var GSP_A_ListsJSON = GSPsubmit_ASearch_G003(CNum,pagesize,sval,STATUS);
+                    if(GSP_A_ListsJSON.status == '0'){
+                        var waitTaskList = GSP_A_ListsJSON.ET_ZGSPWF004.item;
+                        if( waitTaskList.length == undefined ){
+                            bussnoArr.push({
+                                "APPID":waitTaskList.APPLY_ID
+                            });
+                            //subAll[waitTaskList.bussNo] = waitTaskList;
+                        }else{
+                            for(var i = 0; i < waitTaskList.length; i++){
+                                bussnoArr.push({
+                                    "APPID":waitTaskList[i].APPLY_ID
+                                });
+                                //subAll[waitTaskList[i].bussNo] = waitTaskList[i];
+                            }
+                        }
+                        var AllPage = GSP_A_ListsJSON.ES_PUBLIC.TOTALSIZE;
+                        // var pageAll = parseInt(total)%parseInt(pageSize) == 0? parseInt(total)/parseInt(pageSize):(parseInt(total/pageSize)+1);
+                        var PageNum = parseInt(AllPage)%parseInt(pagesize) == 0? parseInt(AllPage)/parseInt(pagesize):(parseInt(AllPage/pagesize)+1);
+                        $("#CNum").html(CNum);
+                        $("#AllPage").html(PageNum);
+                        if( CNum == '1' ){
+                            if( CNum == PageNum ){
+                                $("#FirstPage").addClass("disabled");
+                                $("#PrevPage").addClass("disabled");
+                                $("#NextPage").addClass("disabled");
+                                $("#LastPage").addClass("disabled");
+                            }else{
+                                $("#FirstPage").addClass("disabled");
+                                $("#PrevPage").addClass("disabled");
+                                $("#NextPage").removeClass("disabled");
+                                $("#LastPage").removeClass("disabled");
+                            }
+                        }else{
+                            if( CNum == PageNum ){
+                                $("#FirstPage").removeClass("disabled");
+                                $("#PrevPage").removeClass("disabled");
+                                $("#NextPage").addClass("disabled");
+                                $("#LastPage").addClass("disabled");
+                            }else{
+                                $("#FirstPage").removeClass("disabled");
+                                $("#PrevPage").removeClass("disabled");
+                                $("#NextPage").removeClass("disabled");
+                                $("#LastPage").removeClass("disabled");
+                            }
+                        }
+                        var FirstPageNum = 1;
+                        var PrevPage = parseInt(CNum) - 1;
+                        var NextPageNum = parseInt(CNum) + 1;
+                        var LastPage = parseInt(PageNum);
+                        $("#FirstPage a").attr('onclick','PagJump(\''+FirstPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#PrevPage a").attr('onclick','PagJump(\''+PrevPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#NextPage a").attr('onclick','PagJump(\''+NextPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#LastPage a").attr('onclick','PagJump(\''+LastPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        
+                        $("#page").children("li").each(function(){
+                            if( $(this).hasClass("disabled") ){
+                                $(this).children("a").attr('onclick','');
+                            }
+                        })
+                        GSP_A_line_List(bussType,bussnoArr);
+                    }else{
+                        if( bussType == 'G001' ){
+                            sqTYPE = "首营企业已办"
+                        }else if( bussType == 'G002' ){
+                            sqTYPE = "首营品种已办"
+                        }else if( bussType == 'G003' ){
+                            sqTYPE = "首营客户已办"
+                        }else if( bussType == 'G007' ){
+                            sqTYPE = "不合格品已办"
+                        }
+                        var unique_id = $.gritter.add({
+                            title: 'GSP'+sqTYPE+'搜索错误',
+                            text: ''+GSP_A_ListsJSON.ES_PUBLIC.MESSAGE+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_two(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-info gritter-center'
+                        });
+                    }
+                }else if(bussType == 'G007'){ // 不合格已办
+                    var GSP_A_ListsJSON = GSPsubmit_ASearch_G007(CNum,pagesize,sval,STATUS);
+                    if(GSP_A_ListsJSON.status == '0'){
+                        var waitTaskList = GSP_A_ListsJSON.ET_HEAD.item;
+                        if( waitTaskList.length == undefined ){
+                            bussnoArr.push({
+                                "APPID":waitTaskList.APPLY_ID
+                            });
+                            //subAll[waitTaskList.bussNo] = waitTaskList;
+                        }else{
+                            for(var i = 0; i < waitTaskList.length; i++){
+                                bussnoArr.push({
+                                    "APPID":waitTaskList[i].APPLY_ID
+                                });
+                                //subAll[waitTaskList[i].bussNo] = waitTaskList[i];
+                            }
+                        }
+                        var AllPage = GSP_A_ListsJSON.ES_PUBLIC.TOTALSIZE;
+                        // var pageAll = parseInt(total)%parseInt(pageSize) == 0? parseInt(total)/parseInt(pageSize):(parseInt(total/pageSize)+1);
+                        var PageNum = parseInt(AllPage)%parseInt(pagesize) == 0? parseInt(AllPage)/parseInt(pagesize):(parseInt(AllPage/pagesize)+1);
+                        $("#CNum").html(CNum);
+                        $("#AllPage").html(PageNum);
+                        if( CNum == '1' ){
+                            if( CNum == PageNum ){
+                                $("#FirstPage").addClass("disabled");
+                                $("#PrevPage").addClass("disabled");
+                                $("#NextPage").addClass("disabled");
+                                $("#LastPage").addClass("disabled");
+                            }else{
+                                $("#FirstPage").addClass("disabled");
+                                $("#PrevPage").addClass("disabled");
+                                $("#NextPage").removeClass("disabled");
+                                $("#LastPage").removeClass("disabled");
+                            }
+                        }else{
+                            if( CNum == PageNum ){
+                                $("#FirstPage").removeClass("disabled");
+                                $("#PrevPage").removeClass("disabled");
+                                $("#NextPage").addClass("disabled");
+                                $("#LastPage").addClass("disabled");
+                            }else{
+                                $("#FirstPage").removeClass("disabled");
+                                $("#PrevPage").removeClass("disabled");
+                                $("#NextPage").removeClass("disabled");
+                                $("#LastPage").removeClass("disabled");
+                            }
+                        }
+                        var FirstPageNum = 1;
+                        var PrevPage = parseInt(CNum) - 1;
+                        var NextPageNum = parseInt(CNum) + 1;
+                        var LastPage = parseInt(PageNum);
+                        $("#FirstPage a").attr('onclick','PagJump(\''+FirstPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#PrevPage a").attr('onclick','PagJump(\''+PrevPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#NextPage a").attr('onclick','PagJump(\''+NextPageNum+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        $("#LastPage a").attr('onclick','PagJump(\''+LastPage+'\',\''+pagesize+'\',\''+bussType+'\')');
+                        
+                        $("#page").children("li").each(function(){
+                            if( $(this).hasClass("disabled") ){
+                                $(this).children("a").attr('onclick','');
+                            }
+                        })
+                        GSP_A_line_List(bussType,bussnoArr);
+                    }else{
+                        if( bussType == 'G001' ){
+                            sqTYPE = "首营企业已办"
+                        }else if( bussType == 'G002' ){
+                            sqTYPE = "首营品种已办"
+                        }else if( bussType == 'G003' ){
+                            sqTYPE = "首营客户已办"
+                        }else if( bussType == 'G007' ){
+                            sqTYPE = "不合格品已办"
+                        }
+                        var unique_id = $.gritter.add({
+                            title: 'GSP'+sqTYPE+'搜索错误',
+                            text: ''+GSP_A_ListsJSON.ES_PUBLIC.MESSAGE+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter_two(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-info gritter-center'
+                        });
+                    }
+                }
+            }
+
+            //展开详情页
+            function Open_Detailed(bussType,appluid){
+                var GSPAList = JSON.parse(localStorage["GSPAList"]); // 获取缓存
+               	if (bussType == 'G007') { // 不合格品已办单条详细详细
+               		for (var j = 0; j < GSPAList.ET_HEAD.item.length; j++) {
+               			if (GSPAList.ET_HEAD.item[j].APPLY_ID == appluid) {
+               				//缓存选中ID
+			                localStorage.removeItem("GSPAListID");
+			                localStorage.GSPAListID = JSON.stringify(appluid);
+	               			$.layer({
+	                            type: 2,
+	                            border: [0],
+	                            title: false,
+	                            shadeClose: true,
+	                            closeBtn: false,
+	                            shade: [0.6, '#000'],
+	                            offset: ['26px',''],
+	                            area: ['1000px',($(window).height() - 52) +'px'],
+	                            iframe: { src: './ADetails_Drugs.html' }
+	                        });
+	               		};
+               		};
+               	}else{
+	                for (var i = 0; i < GSPAList.length; i++ ){ 
+	                    if (GSPAList[i].APPLY_ID == appluid) { //判断是否为选中列
+	                    	//缓存选中ID
+			                localStorage.removeItem("GSPAListID");
+			                localStorage.GSPAListID = JSON.stringify(i);
+	                        //判断标签页弹出相应弹出框
+	                        if( bussType == 'G001' ){ // 首营企业已办单条详细详细
+	                            iframesrc='./ADetails_Enterprise.html';
+	                        }else if( bussType == 'G002' ){ // 首营品种已办单条详细详细
+	                        	iframesrc='./ADetails_Varieties.html';
+	                        }else if( bussType == 'G003' ){ // 首营客户已办单条详细详细
+	                            iframesrc='./ADetails_Customer.html';
+	                        }
+	                        $.layer({
+	                            type: 2,
+	                            border: [0],
+	                            title: false,
+	                            shadeClose: true,
+	                            closeBtn: false,
+	                            shade: [0.6, '#000'],
+	                            offset: ['26px',''],
+	                            area: ['1000px',($(window).height() - 52) +'px'],
+	                            iframe: { src: iframesrc }
+	                        });
+	                    };
+	                }
+	            }
+            }
+
+            // 主数据名称溢出部分成...
+            function Reizes () {
+                if (document.getElementById("TbTd") != undefined || document.getElementById("TbTd") != null) {
+                    var w = $(window).width();
+                    var CountSpan = $(".TdSpan");
+                    for (var i = 0; i < CountSpan.length; i++) {
+                        CountSpan.eq(i).css({"width":w*0.28});
+                        CountSpan.eq(i).addClass("overflowspan");
+                    };
+                };
+            }
+
+            //初始化
+            jQuery(function($) {
+                $('#id-date-range-picker-1').daterangepicker({
+                    timePicker: true,
+                    timePickerIncrement: 30,
+                    format: 'YYYY-MM-DD'
+                }, function(start, end, label) {
+                    console.log(start.toISOString(), end.toISOString(), label);
+                });
+
+                //登录工号获取
+                var localCookie = document.cookie;
+                var cookie_user = '';
+                if(localCookie.length > 0 && localCookie.indexOf('userid')>-1){
+                    localCookie = localCookie.split(';');
+                    for(var lc in localCookie){
+                        if(localCookie[lc].indexOf('userid=')>-1){
+                            cookie_user = localCookie[lc];
+                            break;
+                        }
+                    } 
+                    if(cookie_user == ''){
+                        var unique_id = $.gritter.add({
+                            title: '系统登录错误提示',
+                            text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-info gritter-center'
+                        });
+                    }else{
+                        cookie_user = trim(cookie_user).substring(7);
+                        localStorage.removeItem('pernrBase');
+                        localStorage.setItem('pernrBase',cookie_user);
+                    }
+                }else{
+                    var unique_id = $.gritter.add({
+                        title: '系统登录错误提示',
+                        text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                }
+                //页面初始化
+                $.ajaxSetup({
+                    contentType: 'application/json',
+                    async:false,
+                    error:function(){
+                        alert(errMsg1);
+                    },
+                    timeout:timeout
+                });
+
+                //默认显示30天内的数据
+                var thisYear = new Date().getFullYear();
+                var thisMonth = new Date().getMonth() + 1;
+                var thisDay = new Date().getDate();
+
+                var begD = '' + getbeg30().substring(0, 4) + '-' + getbeg30().substring(4, 6) + '-' + getbeg30().substring(6, 8) + ''; 
+                var endD = new Date();
+                endD.setYear(thisYear);
+                endD.setMonth(thisMonth - 1);
+                endD.setDate(thisDay);
+                var begD = new Date(begD);
+                var endD = new Date(endD);
+
+                var begDMonth = (begD.getMonth() + 1) < 10 ? ("0" + (begD.getMonth() + 1)) : (begD.getMonth() + 1);
+                var begDDay = (begD.getDate()) < 10 ? ("0" + (begD.getDate())) : (begD.getDate());
+                StartDate = '' + begD.getFullYear() + '' + begDMonth + '' + begDDay + ''; // 开始时间
+
+                var endDMonth = (endD.getMonth() + 1) < 10 ? ("0" + (endD.getMonth() + 1)) : (endD.getMonth() + 1);
+                var endDDay = (endD.getDate()) < 10 ? ("0" + (endD.getDate())) : (endD.getDate());
+                EndDate = '' + endD.getFullYear() + '' + endDMonth + '' + endDDay + ''; // 结束时间
+
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    // W GSP已办
+                    // A GSP已办
+                    //默认GSP文档类型G001(首营企业)
+                    var bussType = 'G001';
+                    localStorage.removeItem("bussType");
+                    localStorage.bussType = JSON.stringify(bussType);
+                    // 获取GSP已审批ID列表-GSP_A_ID_List()
+                    GSP_A_ID_List(1,10,bussType,StartDate,EndDate);
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            });
+        </script>
+        <link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+        <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+        <script type="text/javascript">ace.vars['base'] = '..';</script>
+        <script src="../assets/js/ace/ace.onpage-help.js"></script>
+        <script src="../docs/assets/js/rainbow.js"></script>
+        <script src="../docs/assets/js/language/generic.js"></script>
+        <script src="../docs/assets/js/language/html.js"></script>
+        <script src="../docs/assets/js/language/css.js"></script>
+        <script src="../docs/assets/js/language/javascript.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../myjs/backupNew.js"></script>
+        <script src="../myjs/gys.js"></script>
+        <script src="../myjs/lexus.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+        <script src="../myjs/GSP.js"></script>
+        <script src="../myjs/GSP1.js"></script>
+        <script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+        <script src="../assets/js/spin.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>会议室预定后台管理-我的预定会议室详情</title> 
+		<meta name="description" content="Common Buttons &amp; Icons" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+		<!-- page specific plugin styles -->
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../assets/css/ace.min.css" />
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="../assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+		<![endif]-->
+		<!-- inline styles related to this page -->
+		<!-- ace settings handler -->
+		<script src="../assets/js/ace-extra.min.js"></script>
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="../assets/js/html5shiv.js"></script>
+		<script src="../assets/js/respond.min.js"></script>
+		<![endif]-->
+		<script src='../assets/js/jquery.min.js'></script>
+		<script src="../layer/layer.min.js"></script>
+		
+		<script src="../myjs/backupNew.js"></script>
+		<script src="../myjs/lexus.js"></script>
+		
+		<!-- ace settings handler -->
+		<script src="../assets/js/ace-extra.min.js"></script>
+		<script src="../assets/js/bootstrap-tag.min.js"></script>
+
+		<!-- 加载自定义样式 -->
+    	<link rel="stylesheet" href="css/custom.css">
+		<link rel="stylesheet" href="../assets/css/cttq-fonts.css">
+    	<style type="text/css">
+			.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+				/*vertical-align:middle;text-align:center;*/
+				border: 1px dotted #DCEBF7;
+				padding: 8px;
+				line-height: 1.42857143;
+				vertical-align: top;
+			}
+			.table>tbody{border: 1px solid #DCEBF7;}
+
+			.table>tbody>tr>td>p, .table>tbody>tr>th{
+				/*margin-bottom:0px;*/
+			}
+			.btn-success{
+				background-color: #629b58 !important;
+				border-color: #629b58
+			}
+			.btn-success:focus {
+				background-color: #629b58 !important;
+				border-color: #87b87f
+			}
+			.table>tbody>tr{
+				/*cursor:pointer;*/
+			}
+			.tooltip-info+.tooltip.bottom .tooltip-arrow, .tooltip.tooltip-info.bottom .tooltip-arrow{
+				border-bottom-color:#428bca;
+			}
+			.tooltip-info+.tooltip>.tooltip-inner, .tooltip.tooltip-info>.tooltip-inner{
+				background-color:#428bca;
+				border-radius: 4px;
+			}
+			.action-buttons a{float:left;display:block;}
+			.PortraitHead{
+				float: left;
+				margin-right: 10px;
+				width: 48px;
+				height: 48px;
+				/*overflow: hidden;*/
+				position: relative;
+				/*border: 1px solid #C9D6E5;*/
+				/*border-radius: 100%;*/
+			}
+			.PortraitHead div img{
+				width: 48px;
+				height: 48px;
+				overflow: hidden;
+				position: relative;
+				border: 1px solid #C9D6E5;
+				border-radius: 100%;
+			}
+			.tooltip.PortraitHead_Admin{
+				position:absolute;/*top:22px;left:-166px;*/top:62px;left:-126px;visibility:hidden;
+				/*opacity:0.0;
+				-moz-transition:all 0.5s ease;
+				-webkit-transition:all 0.5s ease;
+				-o-transition:all 0.5s ease;*/
+			}
+			.tooltip.PortraitHead_AdminHover{
+				visibility:visible;
+				/*opacity:1;
+				top:62px;left:-126px;*/
+			}
+			.tooltip.bottom{
+				padding:0;margin:0;
+			}
+			.PortraitHead_Admin .tooltip-inner{
+				background-color:#fff;padding:0;max-width:300px;text-shadow:none;margin:0;color:#000;width:300px;
+			}
+			.PortraitHead_Admin .widget-header{
+				padding:0;
+			}
+			.tooltip.bottom .tooltip-arrow{
+				top:-27px;z-index:1000;margin-left:-13px;
+				border-width:14px;border-bottom-color:#ccc;
+			}
+			.tooltip.bottom .tatwoA{
+				border-bottom-color:#f7f7f7;top:-26px;
+			}
+			/*焦点图*/
+			.bigImg img{width:100%;}
+
+			.miniImgBox{margin-right:4px;width:80px;height:80px;}
+			.miniImgBox img{border:2px solid #ccc;width:100%;}
+			#miniImgLine .active img{border:2px solid #e4393c;}
+			.miniBoxButton{height:80px;}
+			.miniBoxButton button{padding:0;margin:0;width:100%;height:100%;vertical-align:middle;line-height:70px;text-align:center;cursor:pointer;border:none;background-color:#f5f5f5 !important;color:#000 !important;}
+			.miniBoxButton button.btn-grey:focus{
+				background-color:#888 !important;
+				color:#fff !important;
+			}
+			.miniBoxButton button.btn-grey:hover, .miniBoxButton button.btn-grey:active{
+				color:#fff !important;
+			}
+
+			.miniBoxButton button i{font-size:100%!important;}
+			#miniImgLine{position:absolute;}
+
+
+			.tabletd{color: #336199;text-align:right;width: 110px !important;}
+			.widget-body .table {border-top: none;}
+			.table>tbody>tr>td>label{padding-right: 16px;}
+			.profile-info-value {
+				display: table-cell;
+				padding: 3px 12px 3px 0px;
+				border-top: none;
+			}
+
+			@media(max-width: 991px){
+				.tabledd{min-width: 70px;}
+			}
+			/* 会议室信息*/
+			.profile-user-info-striped .profile-info-name {
+				color: #303030;
+				background-color: white;
+				border-top: 1px dotted #D5E4F1;
+			}
+			.widget-color-blue2>.widget-header {
+				background: #2577e3;
+				border-color: #2577e3;
+			}
+			.editable {
+				line-height: 26px;;
+			}
+    	</style>
+	</head>
+
+	<body class="no-skin">
+		<div class="main-container" id="main-container">
+			<!-- /section:basics/sidebar -->
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs" style="background:#2577e3;">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch(e) {}
+					</script>
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon white">
+							</i>
+							<a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+						</li>
+						<li>
+							<a href="#" class="white">
+								我的预定会议室详情
+							</a>
+						</li>
+					</ul>
+					<!-- /.breadcrumb -->
+					<!-- /section:basics/content.searchbox -->
+				</div>
+				<div class="page-content">
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1 style="font-family:Microsoft YaHei ! important;">
+								我的预定会议室详情
+								<!--small><i class="ace-icon fa fa-angle-double-right"></i>
+									自定义内容
+								</small-->
+							</h1>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="col-xs-12" style="margin-bottom: 30px;">
+									
+									<div class="widget-box widget-color-blue2">
+										<div class="widget-header widget-header-blue widget-header-flat">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-table"></i>
+												我的预定会议室详情
+											</h5>
+										</div>
+										<div class="widget-body">
+											<div class="widget-main">
+												<div class="widget-main row" style="margin:0;">
+
+													<div class="row">
+														<div class="col-xs-12">
+															<table class="table" style="margin-bottom: 0px;">
+																<tbody>
+																	<!--<tr>-->
+																		<!--<td class="tabletd tabledd" style="width:8%">会议主题</td>-->
+																		<!--<td style="width:42%"><label id="topic"></label></td>-->
+
+																		<!--<td class="tabletd tabledd" style="width:8%;border: none;">会议级别</td>-->
+																		<!--<td style="width:42%"><label id="type"></label></td>-->
+																	<!--</tr>-->
+																	<tr>
+																		<td class="tabletd">会议主题</td>
+																		<td><label id="topic"></label></td>
+
+																		<td class="tabletd">会议级别</td>
+																		<td><label id="type"></label></td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">最高级别</td>
+																		<td><label id="level"></label></td>
+
+																		<td class="tabletd">参会人数</td>
+																		<td><label id="userNumber"></label></td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">开始时间</td>
+																		<td><label id="startTime"></label></td>
+
+																		<td class="tabletd">结束时间</td>
+																		<td><label id="endTime"></label></td>
+																	</tr>
+																	<tr>
+																		<td class="tabletd">对应连接会议室</td>
+																		<td id="otherMeetingroom" colspan="3"></td>
+																	</tr>
+																	<tr id="ldate" style="display: none;">
+																		<td></td>
+																		<td>共<label id="">&nbsp;4.0&nbsp;</label>小时</td>
+																		<td style="border: none"></td>
+																		<td style="border: none"></td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">服务人员</td>
+																		<td id="servicePersonal" colspan="3" style="border: none">
+																			
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">技术支持</td>
+																		<td id="technicist" colspan="3">
+																			
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">会议用品</td>
+																		<td id="goods" colspan="3">
+																			
+																		</td>
+																	</tr>
+
+																	<tr id="upfile">
+																		<td class="tabletd">席位卡</td>
+																		<td id="xiweika"colspan="3"></td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">预约备注</td>
+																		<td id="remark" colspan="3">
+																			
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">审批意见</td>
+																		<td id="Comments" colspan="3">
+																			
+																		</td>
+																	</tr>
+
+																	
+																</tbody>
+															</table>
+														</div>
+													</div>
+
+												</div>
+												
+											</div>
+										</div>
+									</div>
+
+									<div class="widget-box widget-color-blue2" style="margin-top:16px;">
+										<div class="widget-header widget-header-blue widget-header-flat">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-table"></i>
+												会议室信息
+											</h5>
+										</div>
+										<div class="widget-body">
+											<div class="widget-main row" style="margin:0;padding:24px 12px;">
+												<div class="col-xs-12 col-sm-4 center">
+													<!-- 大图 -->
+													<div class="bigImg" id="bigImg">
+														
+													</div>
+													<!-- 小图滚动切换 -->
+													<div class="row miniImg no-margin" style="padding:12px 0 0 0;">
+														<div class="col-sm-1 no-padding">
+															<div class="miniBoxButton" style="margin-right:6px;">
+																<button class="btn btn-grey" id="miniBoxButton_left">
+																	<i class="ace-icon fa fa-chevron-left" style="margin:0;"></i>
+																</button>
+															</div>
+														</div>
+														<div class="col-sm-10 no-padding" id="" style="overflow:hidden;height:80px;position:relative;">
+															<div style="width:9999px;" id="miniImgLine">
+																
+															</div>
+														</div>
+														<div class="col-sm-1 no-padding">
+															<div class="miniBoxButton" style="margin-left:6px;">
+																<button class="btn btn-grey" id="miniBoxButton_right">
+																	<i class="ace-icon fa fa-chevron-right" style="margin:0;"></i>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-8">
+													<h3 class="header smaller lighter blue profile-user-info" style="margin-bottom:12px;">会议室信息</h3>
+													<div class="col-xs-12 col-sm-12" style="padding:0;">
+														<div class="profile-user-info profile-user-info-striped" style="font-size:14px;">
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 归属地： </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="guishudiName"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议室： </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="name"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议室地址： </div>
+
+																<div class="profile-info-value">
+																	<i class="fa fa-map-marker light-orange bigger-110"></i>
+																	<span class="editable" id="address"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议室类型： </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="needApply"></span>
+																</div>
+															</div>
+                                                            <div class="profile-info-row">
+																<div class="profile-info-name"> 会议室级别： </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="huiyijibie"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 容纳人数： </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="capacity"></span>
+																</div>
+															</div>
+															
+															<div class="profile-info-row">
+                                                                <div class="profile-info-name"> 会议室描述： </div>
+
+                                                                <div class="profile-info-value">
+                                                                    <span class="editable" id="desc"></span>
+                                                                </div>
+                                                            </div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 清场时间： </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="clearMinute"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议设备： </div>
+
+																<div class="profile-info-value">
+																	<span class="editable action-buttons" id="iconImg">
+																		
+																	</span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 管理员： </div>
+
+																<div class="profile-info-value" id="admin_info">
+																	
+																	
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
+
+
+		<!-- basic scripts -->
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+		<!-- <![endif]-->
+		<!--[if IE]>
+		<script type="text/javascript">
+		 window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>"+"<"+"/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<!-- page specific plugin scripts -->
+		<!-- ace scripts -->
+		<script src="../assets/js/fullcalendar.min.js"></script>
+		<script src="../assets/js/ace-elements.min.js"></script>
+		<script src="../assets/js/ace.min.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '.'; </script>
+		<script src="../assets/js/ace/elements.onpage-help.js"></script>
+		<script src="../assets/js/jquery.gritter.min.js"></script>
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			//鼠标经过预览图片函数
+			function preview(img){
+				$("#bigImg img").attr("src",$(img).attr("src"));
+				$(".miniImgBox").removeClass("active");
+				$(img).parent().addClass("active");
+			}
+			//图片预览小图移动效果,页面加载时触发
+			$(function(){
+				var tempLength = 0; //临时变量,当前移动的长度
+				var moveNum = 1; //每次移动的数量
+				var moveTime = 300; //移动速度,毫秒
+				var scrollDiv = $("#miniImgLine"); //进行移动动画的容器
+				var scrollItems = $("#miniImgLine .miniImgBox"); //移动容器里的集合
+				var moveLength = scrollItems.eq(0).width() * moveNum + 4; //计算每次移动的长度
+				var countLength = scrollItems.length * scrollItems.eq(0).width(); //计算总长度,总个数*单个长度
+
+				$("#miniImgLine .miniImgBox").last().insertBefore($("#miniImgLine .miniImgBox").first());
+				scrollDiv.css({"left":-moveLength});
+				  
+				//下一张
+				$("#miniBoxButton_right").bind("click",function(){
+					if( !scrollDiv.is(":animated") ){
+						$("#miniImgLine .miniImgBox").first().insertAfter($("#miniImgLine .miniImgBox").last());
+						scrollDiv.css({"left":0});
+						scrollDiv.animate({left:-moveLength}, moveTime);
+					}
+				});
+				//上一张
+				$("#miniBoxButton_left").bind("click",function(){
+					if( !scrollDiv.is(":animated") ){
+						$("#miniImgLine .miniImgBox").last().insertBefore($("#miniImgLine .miniImgBox").first());
+						scrollDiv.css({"left":-2*moveLength});
+						scrollDiv.animate({left:-moveLength}, moveTime);
+					}
+				});
+			});
+
+			jQuery(function ($) {
+				//alert(localStorage["auditId"]);
+				//初始化页面数据
+				$.ajaxSetup({
+					contentType: 'application/json',
+					async: false,
+					error: function () {
+						var unique_id = $.gritter.add({
+							title: '系统警告信息提示',
+							text: '' + errMsg1 + '<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+							sticky: true,
+							time: '',
+							class_name: 'gritter-info gritter-center'
+						});
+					},
+					timeout: timeout
+				});
+
+
+				var paramJSon = {
+					"scheduleId": getQueryString("auditId")
+				}
+				$.post("/meet/searchSchedule", JSON.stringify(paramJSon), function (data) {
+					if (data.status == 0) {
+						$("#guishudiName").text(data.data.meetRoom.guishudiName);
+						$("#name").text(data.data.meetRoom.name);
+						$("#address").text(data.data.meetRoom.address);
+						$("#capacity").text(data.data.meetRoom.capacity);
+						$("#desc").text(data.data.meetRoom.desc);
+						$("#needApply").text(data.data.meetRoom.needApply == 1 ? '需要审批' : '不需要审批');
+						$("#clearMinute").text(data.data.meetRoom.clearMinute + '分钟');
+						var huiyijibie = data.data.meetRoom.level == 1 ? '高规格会议' : '普通会议';
+						$("#huiyijibie").text(huiyijibie)
+						$("#topic").text(data.data.topic);
+						$("#type").text(data.data.type);
+						$("#level").text(data.data.level);
+						$("#userNumber").text(data.data.userNumber);
+						$("#startTime").text(formatDate(data.data.startTime));
+						$("#endTime").text(formatDate(data.data.endTime));
+						$("#remark").text(data.data.remark);
+						var  seatCard = '';
+                        if(data.data.seatCard != '' && data.data.seatCard != undefined){
+							var seatCard = '<a href="' + data.data.seatCard + '" target="_blank">点击下载</a>'
+						}
+						$("#xiweika").html(seatCard);
+						$("#Comments").text(data.data.comments);
+						if(data.otherMeetRooms) {
+							$.each(data.otherMeetRooms, function (n, value) {
+								$("#otherMeetingroom").append(value.name + " ");
+							});
+						}
+						var servicePersonal = '';
+						for (var i = 0; i < data.data.servicePersonal.length; i++) {
+							servicePersonal += '<label style="width:80px"><span class="lbl">' + data.data.servicePersonal[i]['userName'] + '</span></label>';
+						}
+						$("#servicePersonal").append(servicePersonal);
+
+						var technicist = '';
+						for (var i = 0; i < data.data.technicist.length; i++) {
+							technicist += '<label style="width:80px"><span class="lbl">' + data.data.technicist[i]['userName'] + '</span></label>';
+						}
+						$("#technicist").append(technicist);
+
+						var goods = '';
+						for (var i = 0; i < data.data.goods.length; i++) {
+							goods += '<label style="width:80px"><span class="lbl">' + data.data.goods[i]['name'] + '</span></label>';
+						}
+						$("#goods").append(goods);
+
+						var bigImg = '';
+						var smallImg = '';
+						for (var i = 0; i < data.data.meetRoom.image.length; i++) {
+							if (i == 0) {
+								bigImg += '<img src="' + data.data.meetRoom.image[i]['imageURL'] + '" alt="">';
+								smallImg += '<div class="col-sm-3 no-padding miniImgBox active"><img src="' + data.data.meetRoom.image[i]['imageURL'] + '" alt="" onmousemove="preview(this);"></div>';
+							} else {
+								smallImg += '<div class="col-sm-3 no-padding miniImgBox"><img src="' + data.data.meetRoom.image[i]['imageURL'] + '" alt="" onmousemove="preview(this);"></div>';
+							}
+						}
+						$("#bigImg").append(bigImg);
+						$("#miniImgLine").append(smallImg);
+						var iconImg = '';
+						for (var i = 0; i < data.data.meetRoom.device.length; i++) {
+							iconImg += '<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="' + data.data.meetRoom.device[i]['name'] + '"><i class="cttq-icon cttq-' + data.data.meetRoom.device[i]['code'] + ' fa fa-rss-square text-primary bigger-200"></i></a>';
+						}
+						$("#iconImg").append(iconImg);
+						//alert(data.data.meetRoom.admin);
+						var adminHtml = '';
+						//alert(data.data.meetRoom.admin[0]['userId']);
+						for (var j = 0; j < data.data.meetRoom.admin.length; j++) {
+							var headP = getHead(data.data.meetRoom.admin[j]['userId']);
+							adminHtml += '<div class="PortraitHead" rel="' + data.data.meetRoom.admin[j]['userId'] + '">'
+							+ '<div>'
+							+ '<img alt="" src="' + headP + '">'
+							+ '</div>'
+							+ '<div class="tooltip fade bottom in PortraitHead_Admin">'
+							+ '<div class="tooltip-arrow"></div>'
+							+ '<div class="tooltip-arrow tatwoA"></div>'
+							+ '<div class="tooltip-inner widget-box">'
+							+ '<div class="widget-header widget-header-flat">'
+							+ '<h4 class="widget-title smaller">'
+							+ '管理员详细信息'
+							+ '</h4>'
+							+ '</div>'
+							+ '<div class="widget-body">'
+							+ '<div class="widget-main profile-user-info profile-user-info-striped" style="width:100%;border:none;font-size:14px;">'
+							+ '<div class="profile-info-row">'
+							+ '<div class="profile-info-name"> 姓名： </div>'
+
+							+ '<div class="profile-info-value" style="text-align: left;">'
+							+ '<span class="editable admin_name" id=""></span>'
+							+ '</div>'
+							+ '</div>'
+							+ '<div class="profile-info-row">'
+							+ '<div class="profile-info-name"> 部门： </div>'
+
+							+ '<div class="profile-info-value" style="text-align: left;">'
+							+ '<span class="editable admin_bumen" id=""></span>'
+							+ '</div>'
+							+ '</div>'
+							+ '<div class="profile-info-row">'
+							+ '<div class="profile-info-name"> 电话： </div>'
+
+							+ '<div class="profile-info-value" style="text-align: left;">'
+							+ '<span class="editable admin_tel" id=""></span>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>'
+							+ '</div>';
+						}
+						$("#admin_info").append(adminHtml);
+					} else {
+						alert(data.msg);
+					}
+
+				});
+
+				//页面初始化
+				$('[data-rel=tooltip]').tooltip();
+				$('[data-rel=popover]').popover({html: true});
+				$(".PortraitHead").each(function (i) {
+
+					$(this).hover(function () {
+
+						var PERNR = $(this).attr('rel');
+						var paramJSon = {
+							"IS_PUBLIC": {
+								"FLOWNO": "",
+								"PERNR": "",
+								"ZDOMAIN": "400",
+								"I_PAGENO": "",
+								"I_PAGESIZE": ""
+							},
+							"P_DATE": "",
+							"P_PERNR": {
+								"item": [{
+									"PERNR": PERNR
+								}]
+							}
+
+						};
+						$.post("/zhr/ZHR_GET_PER_EASY_INFO", JSON.stringify(paramJSon), function (data) {
+
+							if (data.RETURN_SUBRC == 0) {
+								$(".admin_name").eq(i).text(data.EASY_TAB.item[0]['NACHN']);
+								$(".admin_bumen").eq(i).text(data.EASY_TAB.item[0]['BUMEN']);
+							}
+
+						});
+						$(this).children(".PortraitHead_Admin").addClass("PortraitHead_AdminHover");
+					}, function () {
+						$(this).children(".PortraitHead_Admin").removeClass("PortraitHead_AdminHover");
+					})
+				});
+			})
+
+			// 获取请求链接中的指定参数的值
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return r[2];
+				return null;
+			}
+
+			function getHead(pernr){
+                //var imgsrc = '../assets/avatars/avatar5.png';
+                var imgsrc = "../assets/avatars/dp.png";
+                var url = "/zhrmss/ZHRMMS_GET_PHOTO_URL?P_PERNR="+pernr;
+                $.getJSON(url,function(data){
+                    if (data.status == '0') {
+                        var dataUrl = data.url;
+                        if(dataUrl != undefined && dataUrl != ""){
+                            imgsrc = dataUrl;
+                        }
+                    }
+                    },'json',function(e){
+                    getJSONError(e,url);
+                },'GET','',true);
+                return imgsrc;
+            }
+
+            //补零
+             function Appendzero (obj) {
+                if (obj < 10) return "0" + obj; else return obj;
+             }
+              
+            //时间戳格式化成正式时间可是
+            function formatDate(now){    
+                var time = new Date(now);
+                var ymdhis = "";
+                ymdhis += time.getFullYear() + "-";
+                ymdhis += Appendzero((time.getMonth()+1)) + "-";
+                ymdhis += Appendzero(time.getDate());
+                ymdhis += " " + Appendzero(time.getHours()) + ":";
+                ymdhis += Appendzero(time.getMinutes()) + ":";
+                ymdhis += Appendzero(time.getSeconds());
+                return ymdhis;
+             }
+		</script>
+
+		<link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+		
+		<!-- 焦点图 -->
+		<script src="../myjs/jquery.jqzoom.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="../assets/js/ace/ace.onpage-help.js"></script>
+		<script src="../docs/assets/js/rainbow.js"></script>
+		<script src="../docs/assets/js/language/generic.js"></script>
+		<script src="../docs/assets/js/language/html.js"></script>
+		<script src="../docs/assets/js/language/css.js"></script>
+		<script src="../docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

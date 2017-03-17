@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>会议室预定后台管理-会议室已审核详情</title> 
+		<meta name="description" content="Common Buttons &amp; Icons" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+		<!-- page specific plugin styles -->
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../assets/css/ace.min.css" />
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="../assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+		<![endif]-->
+		<!-- inline styles related to this page -->
+		<!-- ace settings handler -->
+		<script src="../assets/js/ace-extra.min.js"></script>
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="../assets/js/html5shiv.js"></script>
+		<script src="../assets/js/respond.min.js"></script>
+		<![endif]-->
+		<script src='../assets/js/jquery.min.js'></script>
+		<script src="../layer/layer.min.js"></script>
+		
+		<script src="../myjs/backupNew.js"></script>
+		<script src="../myjs/lexus.js"></script>
+		
+		<!-- ace settings handler -->
+		<script src="../assets/js/ace-extra.min.js"></script>
+		<script src="../assets/js/bootstrap-tag.min.js"></script>
+
+		<!-- 加载自定义样式 -->
+    	<link rel="stylesheet" href="css/custom.css">
+    	<style type="text/css">
+			.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+				border: 1px dotted #DCEBF7;
+				padding: 8px;
+				line-height: 1.42857143;
+				vertical-align: top;
+			}
+			.table>tbody{border: 1px solid #DCEBF7;}
+
+			.table>tbody>tr>td>p, .table>tbody>tr>th{
+				/*margin-bottom:0px;*/
+			}
+			.btn-success{
+				background-color: #629b58 !important;
+				border-color: #629b58
+			}
+			.btn-success:focus {
+				background-color: #629b58 !important;
+				border-color: #87b87f
+			}
+			.table>tbody>tr{
+				/*cursor:pointer;*/
+			}
+			.tooltip-info+.tooltip.bottom .tooltip-arrow, .tooltip.tooltip-info.bottom .tooltip-arrow{
+				border-bottom-color:#428bca;
+			}
+			.tooltip-info+.tooltip>.tooltip-inner, .tooltip.tooltip-info>.tooltip-inner{
+				background-color:#428bca;
+				border-radius: 4px;
+			}
+			.action-buttons a{float:left;display:block;}
+			.PortraitHead{
+				float:left;margin-right:10px;width:48px;position:relative;
+			}
+			.PortraitHead img{
+				border: 1px solid #C9D6E5;
+				border-radius: 100%;
+				max-width: 48px;
+				margin-right: 10px;
+				margin-left: 0px;
+				box-shadow: none;
+			}
+			.tooltip.PortraitHead_Admin{
+				position:absolute;/*top:22px;left:-166px;*/top:62px;left:-126px;visibility:hidden;
+				/*opacity:0.0;
+				-moz-transition:all 0.5s ease;
+				-webkit-transition:all 0.5s ease;
+				-o-transition:all 0.5s ease;*/
+			}
+			.tooltip.PortraitHead_AdminHover{
+				visibility:visible;
+				/*opacity:1;
+				top:62px;left:-126px;*/
+			}
+			.tooltip.bottom{
+				padding:0;margin:0;
+			}
+			.PortraitHead_Admin .tooltip-inner{
+				background-color:#fff;padding:0;max-width:300px;text-shadow:none;margin:0;color:#000;width:300px;
+			}
+			.PortraitHead_Admin .widget-header{
+				padding:0;
+			}
+			.tooltip.bottom .tooltip-arrow{
+				top:-27px;z-index:1000;margin-left:-13px;
+				border-width:14px;border-bottom-color:#ccc;
+			}
+			.tooltip.bottom .tatwoA{
+				border-bottom-color:#f7f7f7;top:-26px;
+			}
+			/*焦点图*/
+			.bigImg img{width:100%;}
+
+			.miniImgBox{margin-right:4px;width:80px;height:80px;}
+			.miniImgBox img{border:2px solid #ccc;width:100%;}
+			#miniImgLine .active img{border:2px solid #e4393c;}
+			.miniBoxButton{height:80px;}
+			.miniBoxButton button{padding:0;margin:0;width:100%;height:100%;vertical-align:middle;line-height:70px;text-align:center;cursor:pointer;border:none;background-color:#f5f5f5 !important;color:#000 !important;}
+			.miniBoxButton button.btn-grey:focus{
+				background-color:#888 !important;
+				color:#fff !important;
+			}
+			.miniBoxButton button.btn-grey:hover, .miniBoxButton button.btn-grey:active{
+				color:#fff !important;
+			}
+
+			.miniBoxButton button i{font-size:100%!important;}
+			#miniImgLine{position:absolute;}
+
+			.tabletd{color: #667E99;text-align: -webkit-right;}
+
+			.widget-body .table {border-top: none;}
+
+			/*.table>tbody>tr>td>label{width: 80px;}*/
+
+			.profile-info-value {
+				display: table-cell;
+				padding: 3px 12px 3px 0px;
+				border-top: none;
+			}
+
+			@media(max-width: 991px){
+				.tabledd{min-width: 70px;}
+			}
+    	</style>
+	</head>
+
+	<body class="no-skin">
+		<div class="main-container" id="main-container">
+			<!-- /section:basics/sidebar -->
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs" style="background:#438eb9;">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch(e) {}
+					</script>
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon white">
+							</i>
+							<a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+						</li>
+						<li>
+							<a href="#" class="white">
+								会议室已审核详情
+							</a>
+						</li>
+					</ul>
+					<!-- /.breadcrumb -->
+					<!-- /section:basics/content.searchbox -->
+				</div>
+				<div class="page-content">
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1 style="font-family:Microsoft YaHei ! important;">
+								会议室已审核详情
+								<small><i class="ace-icon fa fa-angle-double-right"></i>
+									自定义内容
+								</small>
+							</h1>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="col-xs-12" style="margin-bottom: 38px;">
+
+									<div class="widget-box widget-color-blue2">
+										<div class="widget-header widget-header-blue widget-header-flat">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-table"></i>
+												预约信息
+											</h5>
+										</div>
+										<div class="widget-body">
+											<div class="widget-main">
+												<div class="widget-main row" style="margin:0;">
+
+													<div class="row">
+														<div class="col-xs-12">
+															<table class="table" style="margin-bottom: 0px;">
+																<tbody>
+																	<tr>
+																		<td style="border-right: none;">
+																			<div class="PortraitHead" style="padding-top: 25%; float: right; margin-right: 2px;">
+																				<img alt="" src="../assets/avatars/avatar5.png">
+																			</div>
+																		</td>
+																		<td colspan="3" style="border: none;">
+																			<div class="profile-info-value" style="padding-left: 0;">
+																				<div class="profile-info-value">
+																					<h3 style="margin-top: 0px;">徐锐</h3>
+																				</div>
+																				<div class="profile-info-value">
+																					<span>8104889</span>
+																				</div>
+																				<div class="profile-info-value" style="display:-webkit-box">
+																					<span>信息中心</span>
+																				</div>
+																				<div class="profile-info-value">
+																					<span>13813800060</span>
+																				</div>
+																			</div>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td class="tabletd tabledd" style="width:8%">会议主题</td>
+																		<td style="width:42%"><label id=""> 迈向绿色低碳之路,深化产业变革,永续和谐发展 </label></td>
+
+																		<td class="tabletd tabledd" style="width:8%">会议类型</td>
+																		<td style="width:42%"><label id=""> 外部高层会议 </label></td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">最高级别</td>
+																		<td><label id=""> 总经理 </label></td>
+
+																		<td class="tabletd">参会人数</td>
+																		<td><label id=""> 18 </label></td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">开始时间</td>
+																		<td><label id=""> 2015-1-16  12：30 </label></td>
+
+																		<td class="tabletd">结束时间</td>
+																		<td><label id=""> 2015-1-16  16：30 </label></td>
+																	</tr>
+
+																	<tr id="ldate" style="display: none;">
+																		<td></td>
+																		<td>共<label id="">&nbsp;4.0&nbsp;</label>小时</td>
+																		<td style="border: none"></td>
+																		<td style="border: none"></td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">服务人员</td>
+																		<td id="" colspan="3" style="border: none">
+																			<label>
+																				<span class="lbl" style="width: 80px;"> 何佳欢 </span>
+																			</label>
+																			<label>
+																				<span class="lbl" style="width: 80px;"> 徐栋 </span>
+																			</label>
+																			<label>
+																				<span class="lbl" style="width: 80px;"> 何佳欢 </span>
+																			</label>
+																			<label>
+																				<span class="lbl" style="width: 80px;"> 徐栋 </span>
+																			</label>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">技术支持</td>
+																		<td id="" colspan="3">
+																			<label>
+																				<span class="lbl" style="width: 80px;"> 徐栋 </span>
+																			</label>
+																			<label>
+																				<span class="lbl" style="width: 80px;"> 刘现状 </span>
+																			</label>
+																			<label>
+																				<span class="lbl" style="width: 80px;"> 徐栋 </span>
+																			</label>
+																			<label>
+																				<span class="lbl" style="width: 80px;"> 刘现状 </span>
+																			</label>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">会议设备</td>
+																		<td id="" colspan="3">
+																			<span class="editable action-buttons" id="">
+																				<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																					<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																				</a>
+																				<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																					<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																				</a>
+																				<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																					<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																				</a>
+																				<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																					<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																				</a>
+																				<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																					<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																				</a>
+																				<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																					<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																				</a>
+																			</span>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">会议用品</td>
+																		<td id="" colspan="3">
+																			<label>
+																				<span class="lbl"> 茶叶 </span>
+																			</label>
+																			<label>
+																				<span class="lbl"> 咖啡 </span>
+																			</label>
+																			<label>
+																				<span class="lbl"> 矿泉水 </span>
+																			</label>
+																			<label>
+																				<span class="lbl"> 茶点 </span>
+																			</label>
+																			<label>
+																				<span class="lbl"> 水果 </span>
+																			</label>
+																			<label>
+																				<span class="lbl"> 面巾纸 </span>
+																			</label>
+																			<label>
+																				<span class="lbl"> 席位卡 </span>
+																			</label>
+																		</td>
+																	</tr>
+
+																	<tr id="upfile" style="display: none;">
+																		<td colspan="3">上传席位卡</td>
+																		<td id=""><input type="file"></td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">预约备注</td>
+																		<td id="" colspan="3">
+																			请您帮我们准备扫描仪、鲜花谢谢！
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td class="tabletd">审批意见</td>
+																		<td id="" colspan="3">
+																			不好意思本会议室不提供扫描仪设备、鲜花用品，请您自带谢谢！
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="widget-box widget-color-blue2" style="margin-top:16px;">
+										<div class="widget-header widget-header-blue widget-header-flat">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-table"></i>
+												会议室详情
+											</h5>
+										</div>
+										<div class="widget-body">
+											<div class="widget-main row" style="margin:0;padding:24px 12px;">
+												<div class="col-xs-12 col-sm-4 center">
+													<!-- 大图 -->
+													<div class="bigImg" id="bigImg">
+														<img src="images/image-1.jpg" alt="">
+													</div>
+													<!-- 小图滚动切换 -->
+													<div class="row miniImg no-margin" style="padding:12px 0 0 0;">
+														<div class="col-sm-1 no-padding">
+															<div class="miniBoxButton" style="margin-right:6px;">
+																<button class="btn btn-grey" id="miniBoxButton_left">
+																	<i class="ace-icon fa fa-chevron-left" style="margin:0;"></i>
+																</button>
+															</div>
+														</div>
+														<div class="col-sm-10 no-padding" id="" style="overflow:hidden;height:80px;position:relative;">
+															<div style="width:9999px;" id="miniImgLine">
+																<div class="col-sm-3 no-padding miniImgBox active">
+																	<img src="images/thumb-1.jpg" alt="" onmousemove="preview(this);">
+																</div>
+																<div class="col-sm-3 no-padding miniImgBox">
+																	<img src="images/thumb-2.jpg" alt="" onmousemove="preview(this);">
+																</div>
+																<div class="col-sm-3 no-padding miniImgBox">
+																	<img src="images/thumb-3.jpg" alt="" onmousemove="preview(this);">
+																</div>
+																<div class="col-sm-3 no-padding miniImgBox">
+																	<img src="images/thumb-4.jpg" alt="" onmousemove="preview(this);">
+																</div>
+																<div class="col-sm-3 no-padding miniImgBox">
+																	<img src="images/thumb-5.jpg" alt="" onmousemove="preview(this);">
+																</div>
+																<div class="col-sm-3 no-padding miniImgBox">
+																	<img src="images/thumb-6.jpg" alt="" onmousemove="preview(this);">
+																</div>
+															</div>
+														</div>
+														<div class="col-sm-1 no-padding">
+															<div class="miniBoxButton" style="margin-left:6px;">
+																<button class="btn btn-grey" id="miniBoxButton_right">
+																	<i class="ace-icon fa fa-chevron-right" style="margin:0;"></i>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-8" style="padding:0;">
+													<h3 class="header smaller lighter blue profile-user-info" style="margin-bottom:12px;">会议室信息</h3>
+													<div class="col-xs-12 col-sm-12" style="padding:0;">
+														<div class="profile-user-info profile-user-info-striped" style="font-size:14px;">
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 归属地 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="">连云港海州区</span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议室地址 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="">6150会议室</span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议室 </div>
+
+																<div class="profile-info-value">
+																	<i class="fa fa-map-marker light-orange bigger-110"></i>
+																	<span class="editable" id="">主楼3层</span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议室类型 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="">需要申请</span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 容纳人数 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="">50人以上</span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 清场时间 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="">5分钟</span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议设备 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable action-buttons" id="">
+																		<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																			<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																		</a>
+																		<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																			<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																		</a>
+																		<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																			<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																		</a>
+																		<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																			<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																		</a>
+																		<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																			<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																		</a>
+																		<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="asdfasdfasdf">
+																			<i class="ace-icon fa fa-rss-square text-primary bigger-200"></i>
+																		</a>
+																	</span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 管理员 </div>
+
+																<div class="profile-info-value">
+																	<div class="PortraitHead">
+																		<img alt="" src="../assets/avatars/avatar5.png">
+																		<div class="tooltip fade bottom in PortraitHead_Admin">
+																			<div class="tooltip-arrow"></div>
+																			<div class="tooltip-arrow tatwoA"></div>
+																			<div class="tooltip-inner widget-box">
+																				<div class="widget-header widget-header-flat">
+																					<h4 class="widget-title smaller">
+																						管理员详细信息
+																					</h4>
+																				</div>
+																				<div class="widget-body">
+																					<div class="widget-main profile-user-info profile-user-info-striped" style="width:100%;border:none;font-size:14px;">
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 姓名 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">郑怀亮</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 部门 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">信息技术中心</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 电话 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">+815097236781</span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="PortraitHead">
+																		<img alt="" src="../assets/avatars/avatar5.png">
+																		<div class="tooltip fade bottom in PortraitHead_Admin">
+																			<div class="tooltip-arrow"></div>
+																			<div class="tooltip-arrow tatwoA"></div>
+																			<div class="tooltip-inner widget-box">
+																				<div class="widget-header widget-header-flat">
+																					<h4 class="widget-title smaller">
+																						管理员详细信息
+																					</h4>
+																				</div>
+																				<div class="widget-body">
+																					<div class="widget-main profile-user-info profile-user-info-striped" style="width:100%;border:none;font-size:14px;">
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 姓名 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">郑怀亮</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 部门 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">信息技术中心</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 电话 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">+815097236781</span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="PortraitHead">
+																		<img alt="" src="../assets/avatars/avatar5.png">
+																		<div class="tooltip fade bottom in PortraitHead_Admin">
+																			<div class="tooltip-arrow"></div>
+																			<div class="tooltip-arrow tatwoA"></div>
+																			<div class="tooltip-inner widget-box">
+																				<div class="widget-header widget-header-flat">
+																					<h4 class="widget-title smaller">
+																						管理员详细信息
+																					</h4>
+																				</div>
+																				<div class="widget-body">
+																					<div class="widget-main profile-user-info profile-user-info-striped" style="width:100%;border:none;font-size:14px;">
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 姓名 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">郑怀亮</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 部门 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">信息技术中心</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 电话 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">+815097236781</span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="PortraitHead">
+																		<img alt="" src="../assets/avatars/avatar5.png">
+																		<div class="tooltip fade bottom in PortraitHead_Admin">
+																			<div class="tooltip-arrow"></div>
+																			<div class="tooltip-arrow tatwoA"></div>
+																			<div class="tooltip-inner widget-box">
+																				<div class="widget-header widget-header-flat">
+																					<h4 class="widget-title smaller">
+																						管理员详细信息
+																					</h4>
+																				</div>
+																				<div class="widget-body">
+																					<div class="widget-main profile-user-info profile-user-info-striped" style="width:100%;border:none;font-size:14px;">
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 姓名 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">郑怀亮</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 部门 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">信息技术中心</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 电话 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">+815097236781</span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="PortraitHead">
+																		<img alt="" src="../assets/avatars/avatar5.png">
+																		<div class="tooltip fade bottom in PortraitHead_Admin">
+																			<div class="tooltip-arrow"></div>
+																			<div class="tooltip-arrow tatwoA"></div>
+																			<div class="tooltip-inner widget-box">
+																				<div class="widget-header widget-header-flat">
+																					<h4 class="widget-title smaller">
+																						管理员详细信息
+																					</h4>
+																				</div>
+																				<div class="widget-body">
+																					<div class="widget-main profile-user-info profile-user-info-striped" style="width:100%;border:none;font-size:14px;">
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 姓名 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">郑怀亮</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 部门 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">信息技术中心</span>
+																							</div>
+																						</div>
+																						<div class="profile-info-row">
+																							<div class="profile-info-name"> 电话 </div>
+
+																							<div class="profile-info-value" style="text-align: left;">
+																								<span class="editable" id="">+815097236781</span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
+
+
+		<!-- basic scripts -->
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+		<!-- <![endif]-->
+		<!--[if IE]>
+		<script type="text/javascript">
+		 window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>"+"<"+"/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<!-- page specific plugin scripts -->
+		<!-- ace scripts -->
+		<script src="../assets/js/ace-elements.min.js"></script>
+		<script src="../assets/js/ace.min.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '.'; </script>
+		<script src="../assets/js/ace/elements.onpage-help.js"></script>
+		<script src="../assets/js/jquery.gritter.min.js"></script>
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			//鼠标经过预览图片函数
+			function preview(img){
+				$("#bigImg img").attr("src",$(img).attr("src"));
+				$(".miniImgBox").removeClass("active");
+				$(img).parent().addClass("active");
+			}
+			//图片预览小图移动效果,页面加载时触发
+			$(function(){
+				var tempLength = 0; //临时变量,当前移动的长度
+				var moveNum = 1; //每次移动的数量
+				var moveTime = 300; //移动速度,毫秒
+				var scrollDiv = $("#miniImgLine"); //进行移动动画的容器
+				var scrollItems = $("#miniImgLine .miniImgBox"); //移动容器里的集合
+				var moveLength = scrollItems.eq(0).width() * moveNum + 4; //计算每次移动的长度
+				var countLength = scrollItems.length * scrollItems.eq(0).width(); //计算总长度,总个数*单个长度
+
+				$("#miniImgLine .miniImgBox").last().insertBefore($("#miniImgLine .miniImgBox").first());
+				scrollDiv.css({"left":-moveLength});
+				  
+				//下一张
+				$("#miniBoxButton_right").bind("click",function(){
+					if( !scrollDiv.is(":animated") ){
+						$("#miniImgLine .miniImgBox").first().insertAfter($("#miniImgLine .miniImgBox").last());
+						scrollDiv.css({"left":0});
+						scrollDiv.animate({left:-moveLength}, moveTime);
+					}
+				});
+				//上一张
+				$("#miniBoxButton_left").bind("click",function(){
+					if( !scrollDiv.is(":animated") ){
+						$("#miniImgLine .miniImgBox").last().insertBefore($("#miniImgLine .miniImgBox").first());
+						scrollDiv.css({"left":-2*moveLength});
+						scrollDiv.animate({left:-moveLength}, moveTime);
+					}
+				});
+			});
+			jQuery(function($) {
+				//页面初始化
+				$('[data-rel=tooltip]').tooltip();
+				$('[data-rel=popover]').popover({html:true});
+				$(".PortraitHead").each(function(i){
+					$(this).hover(function(){
+						$(this).children(".PortraitHead_Admin").addClass("PortraitHead_AdminHover");		
+					},function(){
+						$(this).children(".PortraitHead_Admin").removeClass("PortraitHead_AdminHover");
+					})
+				});
+			})
+		</script>
+
+		<link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+		
+		<!-- 焦点图 -->
+		<script src="../myjs/jquery.jqzoom.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="../assets/js/ace/ace.onpage-help.js"></script>
+		<script src="../docs/assets/js/rainbow.js"></script>
+		<script src="../docs/assets/js/language/generic.js"></script>
+		<script src="../docs/assets/js/language/html.js"></script>
+		<script src="../docs/assets/js/language/css.js"></script>
+		<script src="../docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

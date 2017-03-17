@@ -1,0 +1,475 @@
+<title>问题详情 - IT服务工作台</title>
+
+<!--内容-->
+<div class="main-container">
+    <div class="main-content">
+        <div class="page-content">
+            <!-- /section:settings.box -->
+            <div class="page-content-area">
+                <div class="row">
+                    <div class="col-xs-12" id="quesHead">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <div class="widget-title">
+                                    <button class="btn btn-link"><i class="fa fa-comment"></i>回复(<span id="countReply">0</span>)</button>|<button class="btn btn-link" id="setTop"><i class="glyphicon glyphicon-pushpin"></i><span id="setTopSpan">置顶</span></button>|<button class="btn btn-link" id="closeQues"><i class="glyphicon glyphicon-remove"></i><span id="closeQuesSpan">关闭</span></button>
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="widget-main" id="quesAnswer">
+
+                                </div><!-- /.widget-main -->
+                            </div>
+                        </div>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content-area -->
+        </div><!-- /.page-content -->
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<!--模板-->
+<!--问题头部-->
+<script type="text/html" id="quesHeadTmpl">
+    <div class="row">
+        <div class="col-xs-1">
+            <img src="<%=(anonymous != 2 ? '../contents/img/no_avatar.png' : userHeadImg) %>" width="50" height="50" />
+        </div>
+        <div class="col-xs-11">
+            <p class="blue"><%=(anonymous != 2 ? "匿名" : userName) %></p>
+            <p><%=showTime(new Date(raiseDatetime)) %> | <i class="glyphicon glyphicon-tag"></i>
+                <%
+                if(quesLableInfos && quesLableInfos.length > 0){
+                    for(var i=0; i < quesLableInfos.length; i++){
+                        var nm = quesLableInfos[i].quesLabelName;
+                        %>
+                        <label><%=(nm == null ? "其他" : nm)  %></label>
+                        <%
+                    }
+                }else{
+                %>
+                <label>无</label>
+                <%
+                }
+                %></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="blue"><span class="blue">问</span>：<%=showVal(quesContent) %></p>
+            <%
+            if(subQuesInfos && subQuesInfos.length > 0){
+                for(var i = 0; i < subQuesInfos.length; i++){
+                %>
+                <p style="margin-left: 2em;"><span class="orange">追问</span>：<%=showVal(subQuesInfos[i].subQuesContent)%></p>
+                <%
+                if(subQuesInfos[i].subQuesImagePath && subQuesInfos[i].subQuesImagePath.length > 0){
+                %>
+                <ul style="margin-left: 2em;" class="ace-thumbnails clearfix">
+                    <%
+                    for(var j=0; j < subQuesInfos[i].subQuesImagePath.length; j++){
+                    %>
+                    <li>
+                        <a href="<%=subQuesInfos[i].subQuesImagePath[j] %>" class="quesImg" data-rel="colorbox">
+                            <img src="<%=subQuesInfos[i].subQuesImagePath[j] %>@1e_1c_50w_50h" />
+                            <div class="text">
+                                <div class="inner">点击查看大图</div>
+                            </div>
+                        </a>
+                    </li>
+                    <%
+                    }
+                    %>
+                </ul>
+                <%
+                }
+                %>
+                <%
+                }
+            }
+            %>
+        </div>
+    </div>
+    <%
+    if(quesImagePath && quesImagePath.length > 0){
+    %>
+    <div class="row">
+        <div class="col-sm-12">
+            <ul class="ace-thumbnails clearfix">
+                <%
+                for(var i=0; i < quesImagePath.length; i++){
+                %>
+                <li>
+                    <a href="<%=quesImagePath[i] %>" class="quesImg" data-rel="colorbox">
+                        <img src="<%=quesImagePath[i] %>@1e_1c_100w_100h" />
+                        <div class="text">
+                            <div class="inner">点击查看大图</div>
+                        </div>
+                    </a>
+                </li>
+                <%
+                }
+                %>
+            </ul>
+        </div>
+    </div>
+    <%
+    }
+    %>
+</script>
+
+<!--问题回复-->
+<script type="text/html" id="quesAnswerTmpl">
+    <%
+    if(answerObj && answerObj.length > 0){
+        for(var i = 0; i < answerObj.length; i++){
+        %>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-1">
+                    <img src="<%=(answerObj[i].anonymous != 2 ? '../contents/img/no_avatar.png' : answerObj[i].replyerHeadImg) %>" width="50" height="50" />
+                </div>
+                <div class="col-xs-11">
+                    <p> <span class="blue"><%=(answerObj[i].anonymous != 2 ? "匿名" : answerObj[i].replyUserName) %></span>:<%=showVal(answerObj[i].replyContent)%></p>
+                    <p><%=showTime(new Date(answerObj[i].replyDatetime)) %></p>
+                    <%
+                    if(answerObj[i].replyImagePath && answerObj[i].replyImagePath.length > 0){
+                    %>
+                    <ul  class="ace-thumbnails clearfix">
+                        <%
+                        for(var j=0; j < answerObj[i].replyImagePath.length; j++){
+                        %>
+                        <li>
+                            <a href="<%=answerObj[i].replyImagePath[j] %>" class="quesImg" data-rel="colorbox">
+                                <img src="<%=answerObj[i].replyImagePath[j] %>@1e_1c_50w_50h" />
+                                <div class="text">
+                                    <div class="inner">点击查看大图</div>
+                                </div>
+                            </a>
+                        </li>
+                        <%
+                        }
+                        %>
+                    </ul>
+                    <%
+                    }
+                    %>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-1">
+                </div>
+                <div class="col-xs-11">
+                    <p class="blue"><button class="btn btn-link delAnswer" data-id="<%=answerObj[i].replyCid%>"><i class="fa fa-trash-o"></i>删除</button> | <button class="btn btn-link praiseAnswer" data-id="<%=answerObj[i].replyCid%>"><i class="glyphicon glyphicon-thumbs-up"></i><span class="textSpan">点赞</span>(<span class="countSpan"><%=answerObj[i].praisedNum%></span>)</button></p>
+                    <%
+                    if(answerObj[i].answerReplyInfos && answerObj[i].answerReplyInfos.length > 0){
+                        var replyList = answerObj[i].answerReplyInfos;
+                        for(var j = 0; j < replyList.length; j ++){
+                            %>
+                            <p><span class="blue"><%=(replyList[j].replyAnonymousState != 2 ? "匿名" : replyList[j].replyUserName)%></span> 回复 <span class="blue"><%=(answerObj[i].anonymous != 2 ? "匿名" : answerObj[i].replyUserName) %></span>：<%=showVal(replyList[j].replyContent)%></p>
+                            <%
+                            if(replyList[j].replyImagePath && replyList[j].replyImagePath.length > 0){
+                            %>
+                            <ul  class="ace-thumbnails clearfix">
+                                <%
+                                for(var k=0; j < replyList[j].replyImagePath.length; j++){
+                                %>
+                                <li>
+                                    <a href="<%=replyList[j].replyImagePath[k] %>" class="quesImg" data-rel="colorbox">
+                                        <img src="<%=replyList[j].replyImagePath[k] %>@1e_1c_50w_50h" />
+                                        <div class="text">
+                                            <div class="inner">点击查看大图</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <%
+                                }
+                                %>
+                            </ul>
+                            <%
+                            }
+                            %>
+                            <%
+                        }
+                    }
+                    %>
+                </div>
+            </div>
+        </div>
+    </div>
+        <%
+        }
+    }
+    %>
+</script>
+
+<!-- page specific plugin scripts -->
+<script src="../assets/js/bootbox.min.js"></script>
+<script src="../assets/js/jquery.colorbox-min.js"></script>
+
+<script type="text/javascript">
+    var scripts = ["../assets/js/bootbox.min.js", "../assets/js/jquery.colorbox-min.js"];
+    ace.load_ajax_scripts(scripts, function () {
+        var quesCid = getUrlParam("quesCid");
+
+        jQuery(function($) {
+            Load_Data();
+        });
+
+        function Load_Data(){
+            var data = {
+                "userWorkCode":currentUser.userWorkCode,
+                "quesCid":quesCid
+            };
+
+            $.ajax({
+                type: "POST",
+                url: it_service_url.QueryQuesDetailCommon,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                async: false,
+                success: function (result) {
+                    if(result.resultCode == "100"){
+                        $("#countReply").html(result.resultJson.answerNum);
+
+                        //加载问题头部信息
+                        var quesHead = baidu.template("quesHeadTmpl", result.resultJson);
+
+                        $("#quesHead").html(quesHead);
+
+                        //加载回复信息
+                        var quesAnswer = baidu.template("quesAnswerTmpl", result.resultJson);
+
+                        $("#quesAnswer").html(quesAnswer);
+
+                        //图片配置
+                        var $overflow = '';
+                        var colorbox_params = {
+                            rel: 'colorbox',
+                            reposition:true,
+                            scalePhotos:true,
+                            scrolling:false,
+                            previous:'<i class="ace-icon fa fa-arrow-left"></i>',
+                            next:'<i class="ace-icon fa fa-arrow-right"></i>',
+                            close:'&times;',
+                            current:'{current} of {total}',
+                            maxWidth:'100%',
+                            maxHeight:'100%',
+                            onOpen:function(){
+                                $overflow = document.body.style.overflow;
+                                document.body.style.overflow = 'hidden';
+                            },
+                            onClosed:function(){
+                                document.body.style.overflow = $overflow;
+                            },
+                            onComplete:function(){
+                                $.colorbox.resize();
+                            }
+                        };
+
+                        $('.quesImg').colorbox(colorbox_params);
+                        $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");//let's add a custom loading icon
+                    }else{
+                        AlertTips("查询问题详情失败");
+                    }
+                }
+            });
+        }
+
+        //取消关闭
+        $("body").on("click","#closeQues",function(){
+            if($("#closeQuesSpan").html() == "关闭"){
+                UpdateStatus(2,quesCid);
+            }else{
+                UpdateStatus(1,quesCid);
+            }
+        });
+
+        //置顶
+        $("body").on("click","#setTop",function(){
+            if($("#setTopSpan").html() == "置顶"){
+                SetTop(2,quesCid);
+            }else{
+                SetTop(1,quesCid);
+            }
+        });
+
+        //删除回答
+        $("body").on("click",".delAnswer",function(){
+            bootbox.confirm("确定要删除该条数据吗？", function(flag){
+                if(flag){
+                    var id = $(this).data("id");
+
+                    var data= {
+                        "answerCid":id,
+                        "loginUserWorkCode":currentUser.userWorkCode
+                    };
+
+                    $.ajax({
+                        type:"POST",
+                        url:it_service_url.DeleteReply,
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(data),
+                        success:function(result){
+                            if(result.resultJson.code==1) {
+                                AlertTips("删除成功", callbackreload);
+                            }
+                            else{
+                                AlertTips("删除失败");
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        //点赞
+        $("body").on("click",".praiseAnswer",function(){
+            var id = $(this).data("id");
+
+            var textSpan = $("span.textSpan", $(this));
+            var countSpan = $("span.countSpan", $(this));
+
+            if($(textSpan).html() == "点赞"){
+                var data = {
+                    "answerCid":id,
+                    "loginUserWorkCode":currentUser.userWorkCode
+                };
+
+                $.ajax({
+                    type:"POST",
+                    url:it_service_url.AnswerLike,
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data),
+                    success:function(result){
+                        if(result.resultJson.code==1) {
+                            $(countSpan).html(parseInt($(countSpan).html()) + 1);
+                            $(textSpan).html("取消赞");
+                        }
+                        else{
+                            AlertTips("点赞失败");
+                        }
+                    }
+                });
+            }
+            else{//取消赞
+                var data = {
+                    "answerCid":id,
+                    "loginUserWorkCode":currentUser.userWorkCode
+                };
+
+                $.ajax({
+                    type:"POST",
+                    url:it_service_url.CancelLike,
+                    async: false,
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(data),
+                    success:function(result){
+                        if(result.resultJson.code==1) {
+                            $(countSpan).html(parseInt($(countSpan).html()) - 1);
+                            $(textSpan).html("点赞");
+                        }
+                        else{
+                            AlertTips("点赞失败");
+                        }
+                    }
+                });
+            }
+        });
+
+        function UpdateStatus(param,id)
+        {
+            var data = {
+                "quesCid":id,
+                "operaterWorkCode":currentUser.userWorkCode,
+                "isViewed":param
+            };
+
+            $.ajax({
+                type:"POST",
+                url:it_service_url.CancelQues,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                success:function(result){
+                    if(result.resultJson.code==1) {
+                        if(param == 2){
+                            $("#closeQuesSpan").html("取消关闭");
+                        }else{
+                            $("#closeQuesSpan").html("关闭");
+                        }
+                    }
+                    else{
+                        AlertTips("修改失败");
+                    }
+                }
+            });
+        }
+
+        function SetTop(param, id){
+            var data = {
+                "quesCid":id,
+                "isTop":param,
+                "loginUserWorkCode":currentUser.userWorkCode
+            };
+
+            $.ajax({
+                type:"POST",
+                url:it_service_url.TopQues,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                success:function(result){
+                    if(result.resultJson.code==1) {
+                        if(param == 2){
+                            $("#setTopSpan").html("取消置顶");
+                        }else{
+                            $("#setTopSpan").html("置顶");
+                        }
+                    }
+                    else{
+                        AlertTips("修改失败");
+                    }
+                }
+            });
+        }
+
+        //breadcrumbs
+        $("#breadcrumbs").empty();
+        $("#breadcrumbs").append('<ul class="breadcrumb">' +
+                ' <li> <img style="margin-right: 10px;margin-top: -5px;" src="../contents/img/a-4.png"><strong>当前位置：</strong> <a href="index.html">首页 </a> </li> ' +
+                '<li><a href="index.html#page/questions-list">内容管理</a></li> <li class="active">问题详情</li> </ul>');
+    });
+
+    function showTime(t) {
+        var curTime = new Date();
+
+        var timespan = curTime.getTime() - t.getTime();
+
+        //相差天数
+        var days = Math.floor(timespan / (24 * 3600 * 1000));
+
+        if (days > 2) {//显示具体日期
+            return t.format("yyyy/MM/dd");
+        } else if (curTime.getDate() != t.getDate()) {//显示昨天
+            return "昨天";
+        } else {//显示具体时间
+            return t.format("hh:mm");
+        }
+    }
+
+    function showVal(val) {
+        if (val != {} && val != undefined && val != null) {
+            return val;
+        } else {
+            return "";
+        }
+    }
+</script>

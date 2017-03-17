@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>个人考勤</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/fullcalendar.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+<style>
+html{background-color:#E3E3E3; font-size:14px; color:#000; font-family:'微软雅黑'}
+a,a:hover{ text-decoration:none;}
+pre{font-family:'微软雅黑'}
+.box{padding:20px; background-color:#fff; margin:50px 100px; border-radius:5px;}
+.box a{padding-right:15px;}
+#about_hide{display:none}
+.layer_text{background-color:#fff; padding:20px;}
+.layer_text p{margin-bottom: 10px; text-indent: 2em; line-height: 23px;}
+.button{display:inline-block; *display:inline; *zoom:1; line-height:30px; padding:0 20px; background-color:#56B4DC; color:#fff; font-size:14px; border-radius:3px; cursor:pointer; font-weight:normal;}
+.imgs img{width:300px;}
+
+.label-wh{
+	background-color:white;
+	color:black;
+}
+#calendar table.fc-header{margin-bottom:12px;}
+</style>
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js?v=20150105"></script>
+        <script src="./myjs/lexus.js?v=20141224"></script>
+		<script>
+			function test11(){
+//				getOverView("pre");
+//				$('#calendar').fullCalendar('gotoDate',new Date(2014,6));
+	//window.location.href="/web/calendar.html";
+			}
+
+			function openDay(y,m,d){
+				$('body,html').animate({scrollTop:0},10);
+				$.layer({
+				    type: 2,
+				    shadeClose: true,
+				    title: false,
+				    closeBtn: [0, false],
+				    shade: [0.8, '#000'],
+				    border: [0],
+				    offset: ['20px',''],
+				    area: ['700px','auto'],/* ($(window).height() - 50) +'px'*/
+				    iframe: {src: '/web/perTest.html?y='+y+'&m='+m+'&d='+d}
+				});
+			}
+			
+			//搜索  年月
+			function changeY(thisy){
+				if($('#searchY').html() == thisy){
+					return;
+				}
+				window.location.href="/web/perAttendance.html?y="+thisy+"&m="+$('#showM').val();
+			}
+			function changeM(thism){
+				if(parseInt($('#searchM').html()) == parseInt(thism)){
+					return;
+				}
+				window.location.href="/web/perAttendance.html?y="+$('#showY').val()+"&m="+(parseInt(thism)-1);
+			}
+			function CloseGritter(obj){
+	$(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+		$(obj).parents(".gritter-item-wrapper").remove();
+	});
+}
+function WindowClose(){
+	window.close();
+}
+		</script>
+	</head>
+
+	<body class="no-skin" style="font-family:Microsoft YaHei ! important">
+		<!-- #section:basics/navbar.layout -->
+		<div id="navbar" class="navbar" style="min-height:0px !important"></div>
+
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="#" id="qiyemenghu" onclick="MHUrl()">企业信息门户</a>
+						</li>
+						<li class="active">员工自助</li>
+					</ul><!-- /.breadcrumb -->
+					<!-- #section:basics/content.searchbox -->
+					<div class="nav-search" id="nav-search">
+						<div class="btn-group">
+												<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+													<span id="searchY"></span>
+													<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+												</button>
+
+												<ul class="dropdown-menu dropdown-info dropdown-menu-right">
+													<li>
+														<a onclick="changeY('2013')">2013</a>
+													</li>
+													<li>
+														<a onclick="changeY('2014')">2014</a>
+													</li>
+													<li>
+														<a onclick="changeY('2015')">2015</a>
+													</li>
+												</ul>
+											</div>
+											
+											
+											<div class="btn-group">
+												<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+													<span id="searchM"></span>
+													<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+												</button>
+
+												<ul class="dropdown-menu dropdown-info dropdown-menu-right">
+													<li>
+														<a onclick="changeM('1')">01</a>
+													</li>
+													<li>
+														<a onclick="changeM('2')">02</a>
+													</li>
+													<li>
+														<a onclick="changeM('3')">03</a>
+													</li>
+													<li>
+														<a onclick="changeM('4')">04</a>
+													</li>
+													<li>
+														<a onclick="changeM('5')">05</a>
+													</li>
+													<li>
+														<a onclick="changeM('6')">06</a>
+													</li>
+													<li>
+														<a onclick="changeM('7')">07</a>
+													</li>
+													<li>
+														<a onclick="changeM('8')">08</a>
+													</li>
+													<li>
+														<a onclick="changeM('9')">09</a>
+													</li>
+													<li>
+														<a onclick="changeM('10')">10</a>
+													</li>
+													<li>
+														<a onclick="changeM('11')">11</a>
+													</li>
+													<li>
+														<a onclick="changeM('12')">12</a>
+													</li>
+												</ul>
+											</div>
+					</div><!-- /.nav-search -->
+
+					<!-- /section:basics/content.searchbox -->
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+					
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1 style="font-family:Microsoft YaHei ! important;">
+								个人考勤
+								<small>
+									<i class="ace-icon fa fa-angle-double-right"></i>
+									用于员工查看或处理自己的考勤信息，如：查看刷卡数据、处理考勤异常等
+								</small>
+							</h1>
+							
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-2"></div>
+							<div class="col-xs-8">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row" style="text-align:center;">
+									<div class="col-sm-2"> </div>
+									<div class="col-sm-12">
+										<input type="hidden" id="showY" value="">
+										<input type="hidden" id="showM" value="">
+										<div class="space"></div>
+
+										<!-- #section:plugins/data-time.calendar 日历开始-->
+										<div id="calendar"></div>
+										<div style="width: 1030px;margin:24px 0;">
+											<div style="overflow:hidden;width:128px;height:128px;float:left;">
+	                                    		<img style="width:128px;" id="touxiang" src="./assets/avatars/code.png">
+	                                    	</div>
+											<div style="width:900px;height:128px;float: left;">
+												<div style="font-size:25px;margin-top:20px;text-align: left;padding-left: 30px;margin-top: 50px;">使用天信APP查询个人考勤</div>
+												<div style="font-size:13px;margin-top: 10px;/* padding-left: 0px; */margin-left: -150px;">只需要扫描左端二维码，或在手机浏览器中输入 apps.cttq.com 安装天信客户端，就可通过手机随时查看自己的考勤啦！
+												</div>
+											</div>
+											
+										</div>
+
+										<!-- /section:plugins/data-time.calendar -->
+									</div>
+									<div class="col-sm-2"> </div>
+									
+								</div>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+							<div class="col-xs-2"></div>
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+	
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/date-time/moment.min.js"></script>
+		<script src="./assets/js/fullcalendar.min.js"></script>
+		<script src="./assets/js/bootbox.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+				var localCookie = document.cookie;
+			var cookie_user = '';
+			if(localCookie.length > 0 && localCookie.indexOf('userid')>-1){
+				localCookie = localCookie.split(';');
+				for(var lc in localCookie){
+					if(localCookie[lc].indexOf('userid=')>-1){
+						cookie_user = localCookie[lc];
+						break;
+					}
+				} 
+				
+				if(cookie_user == ''){
+					// layer.alert('无法获取信息，请重新登录',8,function(){
+					// 	window.close();
+					// });
+					var unique_id = $.gritter.add({
+						title: '系统警告信息提示',
+						text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+				}else{
+					cookie_user = trim(cookie_user).substring(7);
+					localStorage.removeItem('pernrBase');
+					localStorage.setItem('pernrBase',cookie_user);
+				}
+			}else{
+				// layer.alert('无法获取信息，请重新登录',8,function(){
+				// 		window.close();
+				// 	});
+				var unique_id = $.gritter.add({
+						title: '系统警告信息提示',
+						text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+			}
+			
+			
+			
+				aa = layer.load('正在加载数据，请稍后');
+	//数据加载提示开始
+ //var aa = layer.load('加载带文字');
+/* initialize the external events
+	-----------------------------------------------------------------*/
+
+	$('#external-events div.external-event').each(function() {
+
+		// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+		// it doesn't need to have a start or end
+		var eventObject = {
+			title: $.trim($(this).text()) // use the element's text as the event title
+		};
+
+		// store the Event Object in the DOM element so we can get to it later
+		$(this).data('eventObject', eventObject);
+
+		// make the event draggable using jQuery UI
+		$(this).draggable({
+			zIndex: 999,
+			revert: true,      // will cause the event to go back to its
+			revertDuration: 0  //  original position after the drag
+		});
+		
+	});
+//----------lexus start
+	//获取考勤概览，在日历初始化时注入考勤数据
+	
+	
+
+	/* initialize the calendar
+	-----------------------------------------------------------------*/
+	
+	var date = new Date();
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear();
+	
+	var localHref = location.href;
+	localHref = localHref.split('?');
+	if(localHref.length>1){
+		localHref = localHref[1].split('&');
+		
+		y = localHref[0].substring(2);
+		m = localHref[1].substring(2);
+	}else{
+		
+	}
+	
+	
+	
+	$('#showY').val(y);
+	$('#showM').val(m);
+	
+	$('#searchY').html(y);
+	$('#searchM').html((parseInt(m)+1<10?'0':'')+(parseInt(m)+1).toString());
+
+$.ajaxSetup({
+	contentType: 'application/json',
+	async:false,
+	error:function(){
+		var unique_id = $.gritter.add({
+							title: '系统警告信息提示',
+							text: ''+errMsg1+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+							sticky: true,
+							time: '',
+							class_name: 'gritter-info gritter-center'
+						});
+	},
+	timeout:timeout
+ }); 
+ 
+var myOverviewData = [];
+//for(var i=0;i<12;i++){
+//	myOverviewData = submit_2_2({"year":y,"month":i+1},myOverviewData);
+//}
+myOverviewData = submit_2_2({"year":y,"month":parseInt(m)+1},myOverviewData,localStorage.pernrBase?localStorage.pernrBase:'');
+
+	//var myOverviewData = submit_2_2({"year":y,"month":m+1},myOverviewData1);
+	var EventsArr = submit_2_1(myOverviewData,{"year":y,"month":parseInt(m)+1},localStorage.pernrBase?localStorage.pernrBase:'');
+
+	
+	var calendar = $('#calendar').fullCalendar({
+		//isRTL: true,
+		 buttonHtml: {
+			prev: '<i class="ace-icon fa fa-chevron-left"></i>',
+			next: '<i class="ace-icon fa fa-chevron-right"></i>'
+		},
+		
+		  monthNames: ["01月", "02月", "03月", "04月", "05月", "06月", "07月", "08月", "09月", "10月", "11月", "12月"],  
+          monthNamesShort: ["01月", "02月", "03月", "04月", "05月", "06月", "07月", "08月", "09月", "10月", "11月", "12月"],  
+          dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],  
+          dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],  
+          today: ["今天"],
+	
+		header: {
+			left: '',
+			center: 'prev,   title   ,next',
+			right: ''
+		},
+		events:EventsArr,
+		
+//		events: [
+//		  {
+//			title: 'All Day Event',
+//			start: new Date(y, m, 1),
+//			className: 'label-important'
+//		  },
+//		  {
+//			title: 'Long Event',
+//			start: new Date(y, m, d-5),
+//			end: new Date(y, m, d-2),
+//			className: 'label-success'
+//		  },
+//		  {
+//			title: 'Some Event',
+//			start: new Date(y, m, d-3, 16, 0),
+//			allDay: false
+//		  }
+//		]
+//		,
+		editable: false,
+		droppable: false, // this allows things to be dropped onto the calendar !!!
+		drop: function(date, allDay) { // this function is called when something is dropped
+		
+			// retrieve the dropped element's stored Event Object
+			//var originalEventObject = $(this).data('eventObject');
+			//var $extraEventClass = $(this).attr('data-class');
+			
+			
+			// we need to copy it, so that multiple events don't have a reference to the same object
+			//var copiedEventObject = $.extend({}, originalEventObject);
+			
+			// assign it the date that was reported
+			//copiedEventObject.start = date;
+			//copiedEventObject.allDay = allDay;
+			//if($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
+			
+			// render the event on the calendar
+			// the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+			//$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+			
+			// is the "remove after drop" checkbox checked?
+			//if ($('#drop-remove').is(':checked')) {
+				// if so, remove the element from the "Draggable Events" list
+			//	$(this).remove();
+			//}
+			
+		}
+		,
+		selectable: true,
+		selectHelper: true,
+		select: function(start, end, allDay) {
+			//alert(new Date(start).getFullYear());
+			var dateClick = new Date(start);
+			var y1 = dateClick.getFullYear();
+			var m1 = dateClick.getMonth()+1;
+			var d1 = dateClick.getDate();
+			openDay(y1,m1,d1);
+			//alert('打开浮动窗');
+//			bootbox.prompt("New Event Title:", function(title) {
+//				if (title !== null) {;
+//					calendar.fullCalendar('renderEvent',
+//						{
+//							title: title,
+//							start: start,
+//							end: end,
+//							allDay: allDay
+//						},
+//						true // make the event "stick"
+//					);
+//				}
+//			});
+			
+
+			//calendar.fullCalendar('unselect');
+		}
+		,
+		eventClick: function(calEvent, jsEvent, view) {
+			//alert(calEvent.start.getFullYear());
+			var dateClick = new Date(calEvent.start);
+			var y1 = dateClick.getFullYear();
+			var m1 = dateClick.getMonth()+1;
+			var d1 = dateClick.getDate();
+			openDay(y1,m1,d1);
+			//获取点击日的日期
+//
+//			//display a modal
+//			var modal = 
+//			'<div class="modal fade">\
+//			  <div class="modal-dialog">\
+//			   <div class="modal-content">\
+//				 <div class="modal-body">\
+//				   <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;">&times;</button>\
+//				   <form class="no-margin">\
+//					  <label>Change event name &nbsp;</label>\
+//					  <input class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
+//					 <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
+//				   </form>\
+//				 </div>\
+//				 <div class="modal-footer">\
+//					<button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
+//					<button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
+//				 </div>\
+//			  </div>\
+//			 </div>\
+//			</div>';
+//		
+//		
+//			var modal = $(modal).appendTo('body');
+//			modal.find('form').on('submit', function(ev){
+//				ev.preventDefault();
+//
+//				calEvent.title = $(this).find("input[type=text]").val();
+//				calendar.fullCalendar('updateEvent', calEvent);
+//				modal.modal("hide");
+//			});
+//			modal.find('button[data-action=delete]').on('click', function() {
+//				calendar.fullCalendar('removeEvents' , function(ev){
+//					return (ev._id == calEvent._id);
+//				})
+//				modal.modal("hide");
+//			});
+//			
+//			modal.modal('show').on('hidden', function(){
+//				modal.remove();
+//			});
+
+
+			//console.log(calEvent.id);
+			//console.log(jsEvent);
+			//console.log(view);
+
+			// change the border color just for fun
+			//$(this).css('border-color', 'red');
+
+		}
+		
+	});
+	
+	$('#calendar').fullCalendar('gotoDate',new Date(y,m));
+	if(aa){
+		layer.close(aa);
+	}
+
+
+})
+		</script>
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+		<!--JWW-2014-10-09-->
+		<script type="text/javascript" language="javascript">
+			setInterval(function() {
+				var mH = $(document.body).outerHeight();
+				var mifH = $(".xubox_layer").find("iframe").outerHeight();
+				if( mifH <= mH ){
+					$(".xubox_shade").height(mH);
+					
+				}else{
+					$(".xubox_shade").height(mifH+40);
+				};
+			},10);
+
+		</script> 
+	</body>
+	<style type="text/css">
+	/*.xubox_shade, .xubox_layer{position:fixed;}*/
+	</style>
+</html>

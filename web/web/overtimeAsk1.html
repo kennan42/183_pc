@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>加班申请</title>
+
+		<meta name="description" content="Common form elements and layouts" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/chosen.css" />
+		<link rel="stylesheet" href="./assets/css/datepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-timepicker.css" />
+		<link rel="stylesheet" href="./assets/css/daterangepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-datetimepicker.css" />
+		<link rel="stylesheet" href="./assets/css/colorpicker.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+<style>
+	.mar-t-5{
+		margin-top:5px;
+	}
+	.mar-tt{
+		margin-top:40px;
+	}
+</style>
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js"></script>
+		<script src="./myjs/lexus.js"></script>
+		<script>
+			//显示添加多人控件
+			function showAddMore(ifShow){
+				if(ifShow){
+					$('#addMoreDiv').toggle();
+					$('#addBtnDiv').toggle();
+					$('#addOneDiv').toggle();
+					
+				}
+			}
+			
+			//校验多人
+			function checkPers(){
+				var a = $('.tags > .tag');
+				var b = null;
+				var c = [];   //存放所有输入的工号
+				
+				var regex = /\s/;
+				for(i=0;i<a.length;i++){
+					b = $(a.get(i)).contents().filter(function(){
+						return this.nodeType === 3
+					}).text();
+					
+					c = $.merge(c, b.split(regex));
+				}
+				
+				if(c.length == 0){
+					return;
+				}
+				var perArr = [];
+				for(var k in c){
+					perArr.push({"PERNR":add0(c[k].replace(/\D/g,""),8)});
+				}
+				
+				//拼接提交参数
+				var paramJSon = {
+					"P_DATE":getToday8(),
+					"P_PERNR":{
+						"item":perArr
+					}
+				};
+				$.post("/zhr/ZHR_GET_PER_EASY_INFO",JSON.stringify(paramJSon),function(perInfoData){
+					if(perInfoData.status == '-1'){
+							alert(errMsg);
+							return;
+						}else{
+							var perInfos = [];
+							if (perInfoData.RETURN_SUBRC != '0') {
+								
+							}
+							else {
+								perInfos = perInfoData.EASY_TAB.item;
+							}
+								var arr1 = [];   //存放查询结果的工号
+								var arr2 = [];   //存放查询结果的工号+名字
+								arr3 = [];   //存放最终有效的数据（工号+名字）
+								var arr4 = [];   //存放最终无效的数据（错误工号）
+								for(var k in perInfos){
+									arr1.push(perInfos[k].PERNR);
+									arr2.push({"PERNR":perInfos[k].PERNR,"NACHN":perInfos[k].NACHN});
+									
+								}
+								for(var k in c){
+									if($.inArray(add0(c[k].replace(/\D/g,''),8), arr1) != -1){
+										arr3.push(arr2[$.inArray(add0(c[k].replace(/\D/g,''),8), arr1)]);
+									}else{
+										arr4.push(c[k]);
+									}
+								}
+								
+								$('.tags > .tag').remove();
+								//alert(JSON.stringify($('#form-field-tags').data('tag')));
+								var $tag_obj1 = $('#form-field-tags').data('tag');
+								$tag_obj1.values = [];
+								for(var k in arr3){
+									var $tag_obj = $('#form-field-tags').data('tag');
+									$tag_obj.add(arr3[k].NACHN+'|'+parseInt(arr3[k].PERNR));
+								}
+								
+								
+								for(var k in arr4){
+									var $tag_obj = $('#form-field-tags').data('tag');
+									$tag_obj.add(arr4[k]);
+									$tag_obj.add1(arr4[k]);
+								}
+							
+						}
+				});
+			}
+			
+			//清空多人控件内数据
+			function checkAllPers(){
+				$('.tags > .tag').remove();
+				var $tag_obj1 = $('#form-field-tags').data('tag');
+				$tag_obj1.values = [];
+			}
+			
+			
+			
+			
+			//计算加班时间
+			function calJBTime(){
+				var time1 = $('#timepicker1').val();
+				var time2 = $('#timepicker2').val();
+				if(time1.length<4 || time2.length<4){
+					return;
+				}
+				
+				var d = new Date();
+				var y = d.getFullYear();
+				var m = d.getMonth();
+				var dd = d.getDate();
+				var date1 = new Date(y,(m+1),dd,time1.split(':')[0],time1.split(':')[1]);
+				var date2 = new Date(y,(m+1),dd,time2.split(':')[0],time2.split(':')[1]);
+				var cal = date2-date1;
+				if(cal<0){
+					cal = cal + 24*60*60*1000;
+				}
+				var calH = (cal/1000/60/60).toFixed(1);
+				
+				$('#jbtime').val(calH);
+				$('#sjtime').val(formatJBTime(calReal()));
+			}
+			
+			//计算休息时间
+			function calXXTime(){
+				var time1 = $('#timepicker3').val();
+				var time2 = $('#timepicker4').val();
+				if(time1 == '' || time2 == ''){
+					return;
+				}
+				
+				var d = new Date();
+				var y = d.getFullYear();
+				var m = d.getMonth();
+				var dd = d.getDate();
+				var date1 = new Date(y,(m+1),dd,time1.split(':')[0],time1.split(':')[1]);
+				var date2 = new Date(y,(m+1),dd,time2.split(':')[0],time2.split(':')[1]);
+				var cal = date2-date1;
+				if(cal<0){
+					cal = cal + 24*60*60*1000;
+				}
+				var calH = (cal/1000/60/60).toFixed(1);
+				
+				$('#xxtime').val(calH);
+				$('#sjtime').val(formatJBTime(calReal()));
+			}
+			
+			//计算实际加班时间
+			function calReal(){
+					var d = new Date();
+					var y = d.getFullYear();
+					var m = d.getMonth();
+					var dd = d.getDate();
+					//计算休息时间毫秒数
+				var xxtime = parseFloat($('#showXT').html());
+				
+				
+					//计算加班时间毫秒数
+				var jbtime = 0;
+					var xxtime1 = $('#timepicker1').val();
+					var xxtime2 = $('#timepicker2').val();
+					if(xxtime1.length<4 || xxtime2.length<4){
+						return 0;
+					}
+					
+					var date1 = new Date(y,(m+1),dd,xxtime1.split(':')[0],xxtime1.split(':')[1]);
+					var date2 = new Date(y,(m+1),dd,xxtime2.split(':')[0],xxtime2.split(':')[1]);
+					jbtime = date2-date1;
+					if(jbtime<0){
+						jbtime = jbtime + 24*60*60*1000;
+					}
+					
+					var sjtimeCal =(jbtime/1000/60/60 - xxtime).toFixed(1);
+					
+					return sjtimeCal;
+			}
+			
+			//判断输入框字数
+			function calText(value1){
+				if(value1.length>79){
+					layer.alert('字数多于80',8);
+				}
+			}
+			
+			
+			//提交
+			function submitAsk(){
+				if(parseInt($('#sjtime').val()) <=0){
+					layer.alert('休息时间不能多于加班时间',5);
+				}
+				var c = [];   //存放所有输入的工号
+				//判断是多人还是单人
+				if ($('#addMoreDiv').is(':hidden')) {
+					//单人
+					var userNameShow = $('#sqr').val();
+					if (isEmpty($.trim(userNameShow))) {
+						alert('无法获取加班人员信息，请完善或重新打开页面。');
+						return;
+					}
+				}
+				else {
+					//提交前再校验一遍
+					checkPers();
+					//获取人员
+					var a = $('.tags > .tag');
+					var b = null;
+					
+					
+					var regex = /\s/;
+					for (i = 0; i < a.length; i++) {
+						b = $(a.get(i)).not('.tag-warning').contents().filter(function(){
+							return this.nodeType === 3
+						}).text();
+						if (b.length < 1) {
+						
+						}
+						else {
+							c = $.merge(c, b.split(regex));
+						}
+						
+					}
+					if (c.length == 0) {
+						alert('无法获取加班人员信息，请完善或重新打开页面。');
+						return;
+					}
+				}
+					
+					if($('#id-date-picker-1').val() == ''){
+						layer.alert('请选择加班日期',8);
+						return;
+					}
+					if($('#timepicker1').val() == '' || $('#timepicker2').val() == ''){
+						layer.alert('请选择加班时间',8);
+						return;
+					}
+					var PBEG1 = '';
+					var PEND1 = '';
+					
+					var ZGSJB = $('#gsn').is(':checked')?'X':'';
+					var VERSL = $('#yytx').is(':checked')?'2':'1';
+					var subParam = {
+					"PERNR":$('#sqPernr').val(),
+					"BEGDA":formatDate($('#id-date-picker-1').val()),
+					"ENDDA":formatDate($('#id-date-picker-1').val()),
+					"BEGUZ":hm2hms6($('#timepicker1').val()),
+					"ENDUZ":hm2hms6($('#timepicker2').val()),
+					"PBEG1":PBEG1,
+					"PEND1":PEND1,
+					"ZGSJB":ZGSJB,
+					"PUNB1":$('#showXT').html(),
+					"STDAZ":$('#sjtime').val(),
+					"VTKEN":'',
+					"VERSL":VERSL,
+					"REASON":$('#textarea').val()
+				};
+				var atSubJSON = submit_10_1(subParam,c,localStorage.pernrBase?localStorage.pernrBase:'');
+					if(atSubJSON.status == '-1'){
+					if(atSubJSON.errMsg){
+						layer.alert(atSubJSON.errMsg,8);
+					}else{
+						layer.alert('提交失败，请稍后重试',8);
+					}
+				}else if(atSubJSON.status == '-2'){
+					layer.alert('请勿擅自修改请求信息，您的本次操作已被记录',8,function(){
+						window.close();
+					});
+				}else{
+					layer.alert('提交成功',1,function(){
+						window.close();
+					});
+					
+				}
+				
+			}
+			
+			
+			//考勤员查询工号
+			function search(per){
+				if(per == ''){
+					$('#sqr').val(parseInt($('#sqPernr').val())+' '+$('#sqName').val());
+					return;
+				}
+				per = per.replace(/\D/g,'');
+				var perJSON = submit_5_3(per);
+				if(perJSON.status == '-1'){
+					layer.alert('请输入正确员工号',8);
+					$('#sqr').val('');
+				}else{
+					var thisPerItem = perJSON.EASY_TAB.item;
+					if(thisPerItem.length>0){
+						var thisPer = thisPerItem[0];
+						$('#sqr').val(parseInt(checkNoChar(thisPer.PERNR))+' '+checkNoChar(thisPer.NACHN));
+						$('#sqPernr').val(checkNoChar(thisPer.PERNR));
+						$('#sqName').val(checkNoChar(thisPer.NACHN));
+						$('#gs').html(checkNoChar(thisPer.BUTXT));
+						$('#bm').html(checkNoChar(thisPer.BUMEN));
+						$('#gw').html(checkNoChar(thisPer.PLSTX));
+					}else{
+						layer.alert("请输入正确员工号",8);
+						$('#sqr').val('');
+						//异常时置灰提交按钮
+						return;
+					}
+				}
+			}
+			
+			
+			//切换休息时间显示
+			function toggleXX(){
+				$('#timepicker3').timepicker({
+						minuteStep: 1,
+						showSeconds: false,
+						showMeridian: false
+					}).next().on(ace.click_event, function(){
+						$(this).prev().focus();
+					});
+					$('#timepicker4').timepicker({
+						minuteStep: 1,
+						showSeconds: false,
+						showMeridian: false
+					}).next().on(ace.click_event, function(){
+						$(this).prev().focus();
+					});
+				if($('#xxDiv').is(':hidden')){
+					$('#xxDiv').show();
+					$('#tgBtn').html('取消休息时间');
+				}else{
+					$('#timepicker3').val("");
+					$('#timepicker4').val("");
+					$('#xxtime').val('0.0');
+					//calXXTime();
+					if($('#jbtime').val() != ''){
+						$('#sjtime').val(formatJBTime(calReal()));
+					}
+					
+					$('#xxDiv').hide();
+					$('#tgBtn').html('添加休息时间');
+				}
+			}
+			
+			//修改休息时间
+			function changeXXTime(xxt){
+				$('#showXT').html(xxt);
+				$('#sjtime').val(formatJBTime(calReal()));
+			}
+		</script>
+	</head>
+
+	<body class="no-skin" style="font-family:Microsoft YaHei ! important">
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="http://cpd.cttq.com:50000/irj/portal/">企业信息门户</a>
+						</li>
+
+						<li>
+							<a>员工自助</a>
+						</li>
+					</ul><!-- /.breadcrumb -->
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+					
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1>
+								加班申请
+								
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<form class="form-horizontal" role="form">
+									<!-- #section:elements.form -->
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right"> 申请人 </label>
+
+										<div class="col-sm-3" id="addOneDiv" style="margin-left:12px;">
+											<input type="text" onfocus="this.value =''" onblur="search(this.value)" disabled="disabled" id="sqr" placeholder="填入员工号" class="col-xs-10 col-sm-10" style="width:280px"/>
+											<input type="hidden" id="sqPernr" value="">
+											<input type="hidden" id="sqName" value="">
+										</div>
+										<div class="col-sm-6" id="addMoreDiv" style="display:none;">
+											<div class="col-sm-10">
+                                                   <span style="float:right" class="help-button" data-rel="popover" data-trigger="hover" data-placement="rigth" data-content="可以从EXCEL表中复制一列工号填入，也可手动输入一个或多个工号（用空格分隔）">?</span>
+                                                   <div class="inline col-xs-10">
+                                                         <textarea  name="tags" id="form-field-tags" value="" placeholder="输入或复制员工号 ..." ></textarea>
+                                                  </div>
+															 
+                                           </div>
+										   <div class="col-sm-2">
+										   			<button class="btn btn-info" type="button" id="checkBtn" onclick="checkPers()" style="margin-bottom:5px">
+                                                       校验
+                                                    </button>
+													<button class="btn btn-info" type="button" id="checkBtn" onclick="checkAllPers()" style="">
+                                                       清空
+                                            		</button>
+											</div>
+										</div>
+										<div id="addBtnDiv" class="col-sm-2" style="display:none">
+											<button class="btn btn-info" type="button" onclick="showAddMore(true)">
+												多人加班
+											</button>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right"> 公司 </label>
+
+										<div class="col-sm-9">
+											<span class="col-xs-10 col-sm-4 mar-t-5" id="gs"></span>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right"> 部门 </label>
+
+										<div class="col-sm-9">
+											<span class="col-xs-10 col-sm-4 mar-t-5" id="bm"></span>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right"> 岗位 </label>
+
+										<div class="col-sm-9">
+											<span class="col-xs-10 col-sm-4 mar-t-5" id="gw"></span>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label no-padding-right">  </label>
+
+										<div class="col-sm-8">
+  <div class="hr hr32 hr-solid"></div>
+											
+										</div>
+									</div>
+									
+								
+									
+									
+									
+									<div class="form-group" id="allDayTime" style="">
+										<label class="col-sm-3 control-label no-padding-right" > 加班日期 </label>
+
+										<div class="col-sm-2" style="width:304px">
+											<div class="input-group">
+												<input class="form-control date-picker col-sm-10" id="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd">
+												<span class="input-group-addon">
+													<i class="fa fa-calendar bigger-110 blue"></i>
+												</span>
+											</div>
+										</div>
+										
+									</div>
+									
+									<div class="form-group"  id="noallDayTime" style="">
+										<label class="col-sm-3 control-label no-padding-right mar-tt"> 
+												加班时间 
+										</label>
+											
+										<div class="col-sm-1 mar-tt" style="width:134px">
+											<div class="input-group bootstrap-timepicker">
+												<input id="timepicker1" value="" type="text" onpropertychange="calJBTime()" class="form-control">
+												<span class="input-group-addon">
+													<i class="fa fa-clock-o bigger-110 orange"></i>
+												</span>
+											</div>
+										</div>
+										<label class="col-sm-1 mar-tt" style="width:4px;margin-right:13px">至</label>
+										<div class="col-sm-1 mar-tt" style="width:134px">
+											<div class="input-group bootstrap-timepicker">
+												<input id="timepicker2" onpropertychange="calJBTime()" type="text" class="form-control">
+												<span class="input-group-addon">
+													<i class="fa fa-clock-o bigger-110 orange"></i>
+												</span>
+											</div>
+										</div>
+										
+										<label class="col-sm-1 control-label no-padding-right mar-tt" > 加班时数 </label>
+
+										<div class="col-sm-1" style="width:100px;padding-right:0">
+											<input type="text" id="jbtime" readonly="readonly" value="0.0" class="col-xs-10 col-sm-12" style="border:none;border-bottom:1px solid red;font-size:40px;text-align:center;background-color:white !important;padding-bottom:0"/>
+										</div>
+										<label class="col-sm-1 mar-tt" style="width:60px">小时</label>
+										
+									</div>
+									
+									<div class="form-group" style="">
+										<label class="col-sm-3 control-label no-padding-right" > 休息时数 </label>
+
+										<div class="col-sm-2" style="width:43px">
+											<div class="input-group">
+												<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+													<span>　</span><span id="showXT">0</span><span>　</span>
+													<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+												</button>
+
+												<ul class="dropdown-menu">
+													<li>
+														<a href="###" onclick="changeXXTime('0')">0</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('0.5')">0.5</a>
+													</li>
+
+													<li>
+														<a href="###" onclick="changeXXTime('1')">1</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('1.5')">1.5</a>
+													</li>
+
+													<li>
+														<a href="###" onclick="changeXXTime('2')">2</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('2.5')">2.5</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('3')">3</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('3.5')">3.5</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('4')">4</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('4.5')">4.5</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('5')">5</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('5.5')">5.5</a>
+													</li>
+													
+													<li>
+														<a href="###" onclick="changeXXTime('6')">6</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+										
+										<label class="col-sm-1 control-label no-padding-right" > 小时 </label>
+										
+									</div>
+									
+									
+									<div class="form-group" style="">
+										<label class="col-sm-3 control-label no-padding-right mar-tt" > 实际加班 </label>
+
+										<div class="col-sm-2">
+											<div class="col-sm-3" style="width:100px;padding-right:0">
+												<input type="text" id="sjtime" readonly="readonly" value="0.0" class="col-xs-10 col-sm-12" style="border:none;border-bottom:1px solid red;font-size:40px;text-align:center;background-color:white !important;padding-bottom:0"/>
+												</div>
+												<label class="col-sm-5 mar-tt" >小时</label>
+										</div>
+										
+									</div>
+									
+									<!--div class="form-group"  id="xxDiv" style="display:none">
+										<label class="col-sm-3 control-label no-padding-right mar-tt" for="form-field-1"> 休息时间 </label>
+											
+										<div class="col-sm-1 mar-tt" style="width:134px">
+											<div class="input-group bootstrap-timepicker">
+												<input id="timepicker3" onpropertychange="calXXTime()" type="text" class="form-control">
+												<span class="input-group-addon">
+													<i class="fa fa-clock-o bigger-110 orange"></i>
+												</span>
+											</div>
+										</div>
+										<label class="col-sm-1 mar-tt" style="width:4px;margin-right:13px">至</label>
+										<div class="col-sm-1 mar-tt" style="width:134px">
+											<div class="input-group bootstrap-timepicker">
+												<input id="timepicker4" onpropertychange="calXXTime()" type="text" class="form-control">
+												<span class="input-group-addon">
+													<i class="fa fa-clock-o bigger-110 orange"></i>
+												</span>
+											</div>
+										</div>
+										
+										<label class="col-sm-1 control-label no-padding-right mar-tt"> 休息时数 </label>
+
+										<div class="col-sm-1" style="width:100px;padding-right:0">
+											<input type="text" id="xxtime" readonly="readonly" value="0.0" class="col-xs-10 col-sm-12" style="border:none;border-bottom:1px solid red;font-size:40px;text-align:center;background-color:white !important;padding-bottom:0"/>
+										</div>
+										<label class="col-sm-1 mar-tt" style="width:60px">小时</label>
+										
+									</div-->
+									
+									<!--div class="form-group"  id="noallDayTime mar-tt" style="">
+										<label class="col-sm-3 control-label no-padding-right mar-tt" for="form-field-1"> 
+										</label>
+											
+										<div class="col-sm-1 mar-tt" style="width:134px">
+												 <button type="button" class="btn btn-white btn-inverse btn-sm" onclick="toggleXX()" id="tgBtn">添加休息时间</button>
+											
+										</div>
+										<label class="col-sm-1 mar-tt" style="width:4px;margin-right:13px"></label>
+										<div class="col-sm-1" style="width:134px">
+											<div class="input-group bootstrap-timepicker">
+												
+											</div>
+										</div>
+										
+										<label class="col-sm-1 control-label no-padding-right mar-tt" > 实际加班 </label>
+
+										<div class="col-sm-1" style="width:100px;padding-right:0">
+											<input type="text" id="sjtime" readonly="readonly" value="0.0" class="col-xs-10 col-sm-12" style="border:none;border-bottom:1px solid red;font-size:40px;text-align:center;background-color:white !important;padding-bottom:0"/>
+										</div>
+										<label class="col-sm-1 mar-tt" >小时</label>
+										
+									</div-->
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label no-padding-right">  </label>
+
+										<div class="col-sm-8">
+  <div class="hr hr32 hr-solid"></div>
+											
+										</div>
+									</div>
+									
+									<!--div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" style="margin-top:6px"> 加班时数 </label>
+
+										<div class="col-sm-1" style="width:65px;padding-right:0">
+											<input type="text" id="jbtime" readonly="readonly" value="0" class="col-xs-10 col-sm-12" style="border:none;border-bottom:1px solid red;font-size:20px;text-align:right;"/>
+										</div>
+										<label class="col-sm-1" style="margin-top:6px;width:60px">小时</label>
+										
+										<label class="col-sm-1 control-label no-padding-right" style="margin-top:6px;width:70px"> 休息时数 </label>
+
+										<div class="col-sm-1" style="width:65px;padding-right:0">
+											<input type="text" id="xxtime" readonly="readonly" value="0" class="col-xs-10 col-sm-12" style="border:none;border-bottom:1px solid red;font-size:20px;text-align:right;"/>
+										</div>
+										<label class="col-sm-1" style="margin-top:6px;width:60px">小时</label>
+										
+										<label class="col-sm-1 control-label no-padding-right" style="margin-top:6px;width:70px"> 实际加班 </label>
+
+										<div class="col-sm-1" style="width:65px;padding-right:0">
+											<input type="text" id="sjtime" readonly="readonly" value="0" class="col-xs-10 col-sm-12" style="border:none;border-bottom:1px solid red;font-size:20px;text-align:right;"/>
+										</div>
+										<label class="col-sm-1" style="margin-top:6px">小时</label>
+									</div-->
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" style="margin-top:4px"> 加班地点 </label>
+
+										<div class="col-sm-2">
+											<div class="radio">
+												<label>
+													<input name="form-field-radio1" id="gsn" type="radio" checked="checked" class="ace">
+													<span class="lbl"> 公司内</span>
+												</label>
+											</div>
+											<div class="radio">
+												<label>
+													<input name="form-field-radio1" type="radio" class="ace">
+													<span class="lbl"> 公司外</span>
+												</label>
+											</div>
+										</div>
+										
+										<label class="col-sm-1 control-label no-padding-right" style="margin-top:4px;width:105px"> 报酬类型 </label>
+
+										<div class="col-sm-2" style="width:150px">
+											<div class="radio">
+												<label>
+													<input name="form-field-radio" id="yytx" type="radio" checked="checked" class="ace">
+													<span class="lbl"> 用于调休</span>
+												</label>
+											</div>
+											<div class="radio">
+												<label>
+													<input name="form-field-radio" type="radio" class="ace">
+													<span class="lbl"> 支付加班费</span>
+												</label>
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right"> 加班工作内容 </label>
+
+										<div class="col-sm-5">
+											<textarea rows="3" id="textarea" class="col-sm-12" onpropertychange="calText(this.value)" style="width:550px;"></textarea>
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right">  </label>
+
+										<div class="col-sm-5" style="width:575px;text-align:right">
+											<button class="btn btn-info" type="button" onclick="submitAsk()">
+												<i class="ace-icon fa fa-check bigger-110"></i>
+												提交
+											</button>
+										</div>
+										
+
+										<!--div class="col-sm-6" style="text-align:left">
+											<button class="btn" type="reset">
+												<i class="ace-icon fa fa-undo bigger-110"></i>
+												重置
+											</button>
+										</div-->
+									</div>
+
+									
+									<div class="space-4"></div>
+									
+								</form>
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="./assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/chosen.jquery.min.js"></script>
+		<script src="./assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-timepicker.min.js"></script>
+		<script src="./assets/js/date-time/moment.min.js"></script>
+		<script src="./assets/js/date-time/daterangepicker.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-datetimepicker.min.js"></script>
+		<script src="./assets/js/bootstrap-colorpicker.min.js"></script>
+		<script src="./assets/js/jquery.knob.min.js"></script>
+		<script src="./assets/js/jquery.autosize.min.js"></script>
+		<script src="./assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+		<script src="./assets/js/jquery.maskedinput.min.js"></script>
+		<script src="./assets/js/bootstrap-tag.min.js"></script>
+		<script src="./assets/js/typeahead.jquery.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+				$('#id-disable-check').on('click', function() {
+					var inp = $('#form-input-readonly').get(0);
+					if(inp.hasAttribute('disabled')) {
+						inp.setAttribute('readonly' , 'true');
+						inp.removeAttribute('disabled');
+						inp.value="This text field is readonly!";
+					}
+					else {
+						inp.setAttribute('disabled' , 'disabled');
+						inp.removeAttribute('readonly');
+						inp.value="This text field is disabled!";
+					}
+				});
+			
+			
+				$('.chosen-select').chosen({allow_single_deselect:true}); 
+				//resize the chosen on window resize
+			
+				$(window)
+				.off('resize.chosen')
+				.on('resize.chosen', function() {
+					$('.chosen-select').each(function() {
+						 var $this = $(this);
+						 $this.next().css({'width': $this.parent().width()});
+					})
+				}).trigger('resize.chosen');
+			
+			
+				$('#chosen-multiple-style').on('click', function(e){
+					var target = $(e.target).find('input[type=radio]');
+					var which = parseInt(target.val());
+					if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+					 else $('#form-field-select-4').removeClass('tag-input-style');
+				});
+			
+			
+				$('[data-rel=tooltip]').tooltip({container:'body'});
+				$('[data-rel=popover]').popover({container:'body'});
+				
+				$('textarea[class*=autosize]').autosize({append: "\n"});
+				$('textarea.limited').inputlimiter({
+					remText: '%n character%s remaining...',
+					limitText: 'max allowed : %n.'
+				});
+			
+				$.mask.definitions['~']='[+-]';
+				$('.input-mask-date').mask('99/99/9999');
+				$('.input-mask-phone').mask('(999) 999-9999');
+				$('.input-mask-eyescript').mask('~9.99 ~9.99 999');
+				$(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
+			
+			
+			
+				$( "#input-size-slider" ).css('width','200px').slider({
+					value:1,
+					range: "min",
+					min: 1,
+					max: 8,
+					step: 1,
+					slide: function( event, ui ) {
+						var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
+						var val = parseInt(ui.value);
+						$('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
+					}
+				});
+			
+				$( "#input-span-slider" ).slider({
+					value:1,
+					range: "min",
+					min: 1,
+					max: 12,
+					step: 1,
+					slide: function( event, ui ) {
+						var val = parseInt(ui.value);
+						$('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
+					}
+				});
+			
+			
+				
+				//"jQuery UI Slider"
+				//range slider tooltip example
+				$( "#slider-range" ).css('height','200px').slider({
+					orientation: "vertical",
+					range: true,
+					min: 0,
+					max: 100,
+					values: [ 17, 67 ],
+					slide: function( event, ui ) {
+						var val = ui.values[$(ui.handle).index()-1] + "";
+			
+						if( !ui.handle.firstChild ) {
+							$("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>")
+							.prependTo(ui.handle);
+						}
+						$(ui.handle.firstChild).show().children().eq(1).text(val);
+					}
+				}).find('a').on('blur', function(){
+					$(this.firstChild).hide();
+				});
+				
+				
+				$( "#slider-range-max" ).slider({
+					range: "max",
+					min: 1,
+					max: 10,
+					value: 2
+				});
+				
+				$( "#slider-eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
+					// read initial values from markup and remove that
+					var value = parseInt( $( this ).text(), 10 );
+					$( this ).empty().slider({
+						value: value,
+						range: "min",
+						animate: true
+						
+					});
+				});
+				
+				$("#slider-eq > span.ui-slider-purple").slider('disable');//disable third item
+			
+				
+				$('#id-input-file-1 , #id-input-file-2').ace_file_input({
+					no_file:'No File ...',
+					btn_choose:'Choose',
+					btn_change:'Change',
+					droppable:false,
+					onchange:null,
+					thumbnail:false //| true | large
+					//whitelist:'gif|png|jpg|jpeg'
+					//blacklist:'exe|php'
+					//onchange:''
+					//
+				});
+				//pre-show a file name, for example a previously selected file
+				//$('#id-input-file-1').ace_file_input('show_file_list', ['myfile.txt'])
+			
+			
+				$('#id-input-file-3').ace_file_input({
+					style:'well',
+					btn_choose:'Drop files here or click to choose',
+					btn_change:null,
+					no_icon:'ace-icon fa fa-cloud-upload',
+					droppable:true,
+					thumbnail:'small'//large | fit
+					//,icon_remove:null//set null, to hide remove/reset button
+					/**,before_change:function(files, dropped) {
+						//Check an example below
+						//or examples/file-upload.html
+						return true;
+					}*/
+					/**,before_remove : function() {
+						return true;
+					}*/
+					,
+					preview_error : function(filename, error_code) {
+						//name of the file that failed
+						//error_code values
+						//1 = 'FILE_LOAD_FAILED',
+						//2 = 'IMAGE_LOAD_FAILED',
+						//3 = 'THUMBNAIL_FAILED'
+						//alert(error_code);
+					}
+			
+				}).on('change', function(){
+					//console.log($(this).data('ace_input_files'));
+					//console.log($(this).data('ace_input_method'));
+				});
+				
+			
+				//dynamically change allowed formats by changing allowExt && allowMime function
+				$('#id-file-format').removeAttr('checked').on('change', function() {
+					var whitelist_ext, whitelist_mime;
+					var btn_choose
+					var no_icon
+					if(this.checked) {
+						btn_choose = "Drop images here or click to choose";
+						no_icon = "ace-icon fa fa-picture-o";
+			
+						whitelist_ext = ["jpeg", "jpg", "png", "gif" , "bmp"];
+						whitelist_mime = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"];
+					}
+					else {
+						btn_choose = "Drop files here or click to choose";
+						no_icon = "ace-icon fa fa-cloud-upload";
+						
+						whitelist_ext = null;//all extensions are acceptable
+						whitelist_mime = null;//all mimes are acceptable
+					}
+					var file_input = $('#id-input-file-3');
+					file_input
+					.ace_file_input('update_settings',
+					{
+						'btn_choose': btn_choose,
+						'no_icon': no_icon,
+						'allowExt': whitelist_ext,
+						'allowMime': whitelist_mime
+					})
+					file_input.ace_file_input('reset_input');
+					
+					file_input
+					.off('file.error.ace')
+					.on('file.error.ace', function(e, info) {
+						//console.log(info.file_count);//number of selected files
+						//console.log(info.invalid_count);//number of invalid files
+						//console.log(info.error_list);//a list of errors in the following format
+						
+						//info.error_count['ext']
+						//info.error_count['mime']
+						//info.error_count['size']
+						
+						//info.error_list['ext']  = [list of file names with invalid extension]
+						//info.error_list['mime'] = [list of file names with invalid mimetype]
+						//info.error_list['size'] = [list of file names with invalid size]
+						
+						
+						/**
+						if( !info.dropped ) {
+							//perhapse reset file field if files have been selected, and there are invalid files among them
+							//when files are dropped, only valid files will be added to our file array
+							e.preventDefault();//it will rest input
+						}
+						*/
+						
+						
+						//if files have been selected (not dropped), you can choose to reset input
+						//because browser keeps all selected files anyway and this cannot be changed
+						//we can only reset file field to become empty again
+						//on any case you still should check files with your server side script
+						//because any arbitrary file can be uploaded by user and it's not safe to rely on browser-side measures
+					});
+				
+				});
+			
+				$('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+				.on('change', function(){
+					//alert(this.value)
+				});
+				$('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'ace-icon fa fa-caret-up', icon_down:'ace-icon fa fa-caret-down'});
+				$('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'ace-icon fa fa-plus smaller-75', icon_down:'ace-icon fa fa-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+				//$('#spinner1').ace_spinner('disable').ace_spinner('value', 11);
+				//or
+				//$('#spinner1').closest('.ace-spinner').spinner('disable').spinner('enable').spinner('value', 11);//disable, enable or change value
+				//$('#spinner1').closest('.ace-spinner').spinner('value', 0);//reset to 0
+			
+			
+				//datepicker plugin
+				//link
+				$('.date-picker').datepicker({
+					autoclose: true,
+					todayHighlight: true
+				})
+				//show datepicker when clicking on the icon
+				.next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+			
+				//or change it into a date range picker
+				$('.input-daterange').datepicker({autoclose:true});
+			
+			
+				//to translate the daterange picker, please copy the "examples/daterange-fr.js" contents here before initialization
+				$('input[name=date-range-picker]').daterangepicker({
+					'applyClass' : 'btn-sm btn-success',
+					'cancelClass' : 'btn-sm btn-default',
+					locale: {
+						applyLabel: 'Apply',
+						cancelLabel: 'Cancel',
+					}
+				})
+				.prev().on(ace.click_event, function(){
+					$(this).next().focus();
+				});
+			
+			
+				$('#timepicker1').timepicker({
+					minuteStep: 1,
+					showSeconds: false,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+				$('#timepicker2').timepicker({
+					minuteStep: 1,
+					showSeconds: false,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+				$('#timepicker3').timepicker({
+					minuteStep: 1,
+					showSeconds: false,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+				$('#timepicker4').timepicker({
+					minuteStep: 1,
+					showSeconds: false,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+				$('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+			
+				$('#colorpicker1').colorpicker();
+			
+				$('#simple-colorpicker-1').ace_colorpicker();
+				//$('#simple-colorpicker-1').ace_colorpicker('pick', 2);//select 2nd color
+				//$('#simple-colorpicker-1').ace_colorpicker('pick', '#fbe983');//select #fbe983 color
+				//var picker = $('#simple-colorpicker-1').data('ace_colorpicker')
+				//picker.pick('red', true);//insert the color if it doesn't exist
+			
+			
+				$(".knob").knob();
+				
+				
+				var tag_input = $('#form-field-tags');
+				try{
+					tag_input.tag(
+					  {
+						placeholder:tag_input.attr('placeholder'),
+						//enable typeahead by specifying the source array
+						source: ace.vars['US_STATES'],//defined in ace.js >> ace.enable_search_ahead
+						/**
+						//or fetch data from database, fetch those that match "query"
+						source: function(query, process) {
+						  $.ajax({url: 'remote_source.php?q='+encodeURIComponent(query)})
+						  .done(function(result_items){
+							process(result_items);
+						  });
+						}
+						*/
+					  }
+					)
+			
+					//programmatically add a new
+					var $tag_obj = $('#form-field-tags').data('tag');
+					//$tag_obj.add('Programmatically Added');
+				}
+				catch(e) {
+					//display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+					tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
+					//$('#form-field-tags').autosize({append: "\n"});
+				}
+				
+				
+				//////////
+				
+				//typeahead.js
+				//example taken from plugin's page at: https://twitter.github.io/typeahead.js/examples/
+				var substringMatcher = function(strs) {
+					return function findMatches(q, cb) {
+						var matches, substringRegex;
+					 
+						// an array that will be populated with substring matches
+						matches = [];
+					 
+						// regex used to determine if a string contains the substring `q`
+						substrRegex = new RegExp(q, 'i');
+					 
+						// iterate through the pool of strings and for any string that
+						// contains the substring `q`, add it to the `matches` array
+						$.each(strs, function(i, str) {
+							if (substrRegex.test(str)) {
+								// the typeahead jQuery plugin expects suggestions to a
+								// JavaScript object, refer to typeahead docs for more info
+								matches.push({ value: str });
+							}
+						});
+			
+						cb(matches);
+					}
+				 }
+			
+				 $('input.typeahead').typeahead({
+					hint: true,
+					highlight: true,
+					minLength: 1
+				 }, {
+					name: 'states',
+					displayKey: 'value',
+					source: substringMatcher(ace.vars['US_STATES'])
+				 });
+					
+			
+			
+				/////////
+				$('#modal-form input[type=file]').ace_file_input({
+					style:'well',
+					btn_choose:'Drop files here or click to choose',
+					btn_change:null,
+					no_icon:'ace-icon fa fa-cloud-upload',
+					droppable:true,
+					thumbnail:'large'
+				})
+				
+				//chosen plugin inside a modal will have a zero width because the select element is originally hidden
+				//and its width cannot be determined.
+				//so we set the width after modal is show
+				$('#modal-form').on('shown.bs.modal', function () {
+					$(this).find('.chosen-container').each(function(){
+						$(this).find('a:first-child').css('width' , '210px');
+						$(this).find('.chosen-drop').css('width' , '210px');
+						$(this).find('.chosen-search input').css('width' , '200px');
+					});
+				})
+				/**
+				//or you can activate the chosen plugin after modal is shown
+				//this way select element becomes visible with dimensions and chosen works as expected
+				$('#modal-form').on('shown', function () {
+					$(this).find('.modal-chosen').chosen();
+				})
+				*/
+				
+				$('#timepicker1').val('');
+				$('#timepicker2').val('');
+				$('#timepicker3').val('');
+				$('#timepicker4').val('');
+			
+				
+				
+				//页面初始化
+$.ajaxSetup({
+	contentType: 'application/json',
+	async:false,
+	error:function(){
+		alert(errMsg1);
+	},
+	timeout:timeout
+ });
+ 			var d = new Date();
+				var y = d.getFullYear();
+				var m = d.getMonth()+1;
+				var dd = d.getDate();
+				$('#id-date-picker-1').val(y+'-'+(m<10?'0':'')+m+'-'+(dd<10?'0':'')+dd);
+				//2.初始化当前人人员信息
+				var perJSON = submit_5_3(localStorage.pernrBase?localStorage.pernrBase:'');
+				if(perJSON.status == '0'){
+					var thisPerItem = perJSON.EASY_TAB.item;
+					if(thisPerItem.length>0){
+						var thisPer = thisPerItem[0];
+						$('#sqr').val(parseInt(checkNoChar(thisPer.PERNR))+' '+checkNoChar(thisPer.NACHN));
+						$('#sqPernr').val(checkNoChar(thisPer.PERNR));
+						$('#sqName').val(checkNoChar(thisPer.NACHN));
+						$('#gs').html(checkNoChar(thisPer.BUTXT));
+						$('#bm').html(checkNoChar(thisPer.BUMEN));
+						$('#gw').html(checkNoChar(thisPer.PLSTX));
+					}else{
+						layer.alert("数据初始化异常",8);
+						//异常时置灰提交按钮
+						return;
+					}
+				}else{
+					layer.alert("数据初始化异常",8);
+					//异常时置灰提交按钮
+					return;
+				}
+				
+				//3.判断是否考勤员
+				var ifKQYJSON = submit_7_1(localStorage.pernrBase?localStorage.pernrBase:'');
+				if(ifKQYJSON.status == '0'){
+					//$('#sqr').removeAttr('readonly');
+					$('#sqr').removeAttr('disabled');
+					$('#addBtnDiv').show();
+				}
+				
+			
+			
+			});
+		</script>
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>

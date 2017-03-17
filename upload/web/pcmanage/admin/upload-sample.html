@@ -1,0 +1,11 @@
+<script>
+    function getIframeVal(val) {
+        alert(val);
+    }
+</script>
+<form method="post" target="if" enctype="multipart/form-data"
+      action="http://aidev.cttq.com:808/upload/upload?cb=http://localhost:63342/cttq_ask_admin/web/uploadcb-sample.html">
+    <input type="file" name="content"/>
+    <input type="SUBMIT" value="upload"/>
+</form>
+<IFRAME id="if" name="if" src="about:blank" frameborder='0'></IFRAME>

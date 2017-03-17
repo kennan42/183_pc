@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>会议室预定后台管理-会议室详情</title> 
+		<meta name="description" content="Common Buttons &amp; Icons" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="../assets/css/fullcalendar.css" />
+		<!-- text fonts -->
+		<link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+		<!-- ace styles -->
+		<link rel="stylesheet" href="../assets/css/ace.min.css" />
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="../assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+		<![endif]-->
+		<!-- inline styles related to this page -->
+		<!-- ace settings handler -->
+		<script src="../assets/js/ace-extra.min.js"></script>
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="../assets/js/html5shiv.js"></script>
+		<script src="../assets/js/respond.min.js"></script>
+		<![endif]-->
+		<script src='../assets/js/jquery.min.js'></script>
+		<script src="../layer/layer.min.js"></script>
+		
+		<script src="../myjs/backupNew.js"></script>
+		<script src="../myjs/lexus.js"></script>
+		
+		<!-- ace settings handler -->
+		<script src="../assets/js/ace-extra.min.js"></script>
+		<script src="../assets/js/bootstrap-tag.min.js"></script>
+
+		<!-- 加载自定义样式 -->
+    	<link rel="stylesheet" href="css/custom.css">
+		<link rel="stylesheet" href="../assets/css/cttq-fonts.css">
+    	<style type="text/css">
+			.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td{
+				vertical-align:middle;text-align:center;
+			}
+			.table>tbody>tr>td>p, .table>tbody>tr>th{
+				margin-bottom:0px;
+			}
+			.btn-success{
+				background-color: #629b58 !important;
+				border-color: #629b58
+			}
+			.btn-success:focus {
+				background-color: #629b58 !important;
+				border-color: #87b87f
+			}
+			.table>tbody>tr{
+				cursor:pointer;
+			}
+			.tooltip-info+.tooltip.bottom .tooltip-arrow, .tooltip.tooltip-info.bottom .tooltip-arrow{
+				border-bottom-color:#428bca;
+			}
+			.tooltip-info+.tooltip>.tooltip-inner, .tooltip.tooltip-info>.tooltip-inner{
+				background-color:#428bca;
+				border-radius: 4px;
+			}
+			.action-buttons a{float:left;display:block;}
+			.PortraitHead{
+				float: left;
+				margin-right: 10px;
+				width: 48px;
+				height: 48px;
+				/*overflow: hidden;*/
+				position: relative;
+				/*border: 1px solid #C9D6E5;*/
+				/*border-radius: 100%;*/
+			}
+			.PortraitHead div img{
+				width: 48px;
+				height: 48px;
+				overflow: hidden;
+				position: relative;
+				border: 1px solid #C9D6E5;
+				border-radius: 100%;
+			}
+			.tooltip.PortraitHead_Admin{
+				position: absolute;
+				/*top:22px;left:-166px;*/
+				top: 62px;
+				left: -126px;
+				visibility: hidden;
+				/*opacity:0.0;
+				-moz-transition:all 0.5s ease;
+				-webkit-transition:all 0.5s ease;
+				-o-transition:all 0.5s ease;*/
+			}
+			.tooltip.PortraitHead_AdminHover{
+				visibility:visible;
+				/*opacity:1;
+				top:62px;left:-126px;*/
+			}
+			.tooltip.bottom{
+				padding:0;margin:0;
+			}
+			.PortraitHead_Admin .tooltip-inner{
+				background-color:#fff;padding:0;max-width:300px;text-shadow:none;margin:0;color:#000;width:300px;
+			}
+			.PortraitHead_Admin .widget-header{
+				padding:0;
+			}
+			.tooltip.bottom .tooltip-arrow{
+				top:-27px;z-index:1000;margin-left:-13px;
+				border-width:14px;border-bottom-color:#ccc;
+			}
+			.tooltip.bottom .tatwoA{
+				border-bottom-color:#f7f7f7;top:-26px;
+			}
+			/*焦点图*/
+			.bigImg img{width:100%;}
+
+			.miniImgBox{margin-right:4px;width:80px;height:80px;}
+			.miniImgBox img{margin-left: 4px;border:2px solid #ccc;width:100%;}
+			#miniImgLine .active img{border:2px solid #e4393c;}
+			.miniBoxButton{height:80px;}
+			.miniBoxButton button{padding:0;margin:0;width:100%;height:100%;vertical-align:middle;line-height:70px;text-align:center;cursor:pointer;border:none;background-color:#f5f5f5 !important;color:#000 !important;}
+			.miniBoxButton button.btn-grey:focus{
+				background-color:#888 !important;
+				color:#fff !important;
+			}
+			.miniBoxButton button.btn-grey:hover, .miniBoxButton button.btn-grey:active{
+				color:#fff !important;
+			}
+			.miniBoxButton button i{font-size:100%!important;}
+			#miniImgLine{position:absolute;}
+
+
+			/*日历切换*/
+			.fc-grid th{padding:10px 0;}
+			.fc-state-highlight{background:#e2defb;}
+			.fc-border-separate tbody>tr>td{}
+			/*.fc-grid .fc-day-number-box{position:relative;width:100%;height:100%;}*/
+			.fc-grid .fc-day-number{font-size:400%;line-height:1;opacity:0.4;margin-right:10px;margin-top:10px;bottom:0;right:0;/*position:absolute;*/color:#5090c1;}
+			.fc-grid .fc-other-month .fc-day-number{opacity:0.8;color:#aaa;}
+			.label-info{margin-left:1px;margin-bottom:2px;opacity:0.9;}
+			.fc-event-title{display:inline-block;font-size:12px;}
+
+			/* 会议室信息*/
+			.profile-user-info-striped .profile-info-name {
+				color: #303030;
+				background-color: white;
+				border-top: 1px dotted #D5E4F1;
+			}
+			.widget-color-blue2>.widget-header {
+				background: #2577e3;
+				border-color: #2577e3;
+			}
+    	</style>
+	</head>
+
+	<body class="no-skin">
+		<input type="hidden" id="meetingRooemId" value="">
+		<div id="navbar" class="navbar navbar-default hide">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+		</div>
+		<div class="main-container" id="main-container">
+			<!-- /section:basics/sidebar -->
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs" style="background:#2577e3;">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch(e) {}
+					</script>
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon white">
+							</i>
+							<a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+						</li>
+						<li>
+							<a href="#" class="white">
+								会议室详情
+							</a>
+						</li>
+					</ul>
+					<!-- /.breadcrumb -->
+					<!-- /section:basics/content.searchbox -->
+				</div>
+				<div class="page-content">
+					<div class="page-content-area">
+						<div class="page-header">
+							<h1 style="font-family:Microsoft YaHei ! important;">
+								会议室详情
+								<!--small><i class="ace-icon fa fa-angle-double-right"></i>
+									自定义内容
+								</small-->
+							</h1>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="col-xs-12">
+									<div class="widget-box widget-color-blue2">
+										<div class="widget-header widget-header-blue widget-header-flat">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-table"></i>
+												会议室详情
+											</h5>
+										</div>
+										<div class="widget-body">
+											<div class="widget-main row" style="margin:0;padding:24px 12px;">
+												<div class="col-xs-12 col-sm-4 center">
+													<!-- 大图 -->
+													<div class="bigImg" id="bigImg">
+
+													</div>
+													<!-- 小图滚动切换 -->
+													<div class="row miniImg no-margin" style="padding:12px 0 0 0;">
+														<div class="col-sm-1 no-padding">
+															<div class="miniBoxButton" style="margin-right:6px;">
+																<button class="btn btn-grey" id="miniBoxButton_left">
+																	<i class="ace-icon fa fa-chevron-left" style="margin:0;"></i>
+																</button>
+															</div>
+														</div>
+														<div class="col-sm-10 no-padding" id="" style="overflow:hidden;height:80px;position:relative;">
+															<div style="width:9999px;" id="miniImgLine">
+
+															</div>
+														</div>
+														<div class="col-sm-1 no-padding">
+															<div class="miniBoxButton" style="margin-left:6px;">
+																<button class="btn btn-grey" id="miniBoxButton_right">
+																	<i class="ace-icon fa fa-chevron-right" style="margin:0;"></i>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-8" style="padding:0;">
+													<h3 class="header smaller lighter blue profile-user-info" style="margin-bottom:12px;">会议室信息</h3>
+													<div class="col-xs-12 col-sm-12" style="padding:0;">
+														<div class="profile-user-info profile-user-info-striped" style="font-size:14px;">
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 归属地 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="guishudi"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议室 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="meetRoom-name"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议室地址 </div>
+
+																<div class="profile-info-value">
+																	<i class="fa fa-map-marker light-orange bigger-110"></i>
+																	<span class="editable" id="meetRoom-address"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议室类型 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="meetRoom-type"></span>
+																</div>
+															</div>
+
+                                                            <div class="profile-info-row">
+																<div class="profile-info-name"> 会议室级别 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="huiyijibie"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 容纳人数 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="meetRoom-capacity"></span>
+																</div>
+															</div>
+															
+															<div class="profile-info-row">
+                                                                <div class="profile-info-name"> 会议室描述： </div>
+
+                                                                <div class="profile-info-value">
+                                                                    <span class="editable" id="desc"></span>
+                                                                </div>
+                                                            </div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 清场时间 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable" id="meetRoom-clean"></span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 会议设备 </div>
+
+																<div class="profile-info-value">
+																	<span class="editable action-buttons" id="meetRoom-device">
+
+																	</span>
+																</div>
+															</div>
+
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 管理员 </div>
+
+																<div class="profile-info-value" id="meetRoom-admin">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+
+									<div class="widget-box widget-color-blue2" style="margin-top:16px;">
+										<div class="widget-header widget-header-blue widget-header-flat">
+											<h5 class="widget-title bigger lighter">
+												<i class="ace-icon fa fa-table"></i>
+												预约信息
+											</h5>
+										</div>
+										<div class="widget-body">
+											<div class="widget-main row" style="padding:24px;">
+												<input type="hidden" id="showY" value="">
+												<input type="hidden" id="showM" value="">
+												<div class="space"></div>
+												<div id="calendar"></div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
+
+
+		<!-- basic scripts -->
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+		<!-- <![endif]-->
+		<!--[if IE]>
+		<script type="text/javascript">
+		 window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>"+"<"+"/script>");
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="../assets/js/bootstrap.min.js"></script>
+		<!-- page specific plugin scripts -->
+		<!-- ace scripts -->
+		<script src="../assets/js/ace-elements.min.js"></script>
+		<script src="../assets/js/ace.min.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '.'; </script>
+		<script src="../assets/js/ace/elements.onpage-help.js"></script>
+		<script src="../assets/js/fullcalendar.min.js"></script>
+		<script src="../assets/js/jquery.gritter.min.js"></script>
+		
+		<script src="../assets/js/jquery-ui.custom.min.js"></script>
+		<script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="../assets/js/date-time/moment.min.js"></script>
+		<script src="../assets/js/bootbox.min.js"></script>
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			//预定弹出框
+			function ToRoomDetails(){
+				$.layer({
+				    type: 2,
+				    border: [0],
+				    title: false,
+				    shadeClose: true,
+				    closeBtn: false,
+				    shade: [0.8, '#000'],
+				    offset: ['20px',''],
+				    area: ['800px','600px'],
+				    iframe: {src: 'MR_Admin_Approved.html'}
+				});
+			}
+
+			//日历灰色底框
+			$(function(){
+				//初始化灰色框位置
+				var DataWrapperW = $("#DataWrapper").width();
+				$("#slideBox").css({"width":DataWrapperW*0.14});
+				$("#slideBox").css({"left":DataWrapperW*0.04+12});
+
+				var DataLength = 1;//灰色框所在Data位置
+				var SDataLeft = DataWrapperW*0.04+12;//当前位置
+				var moveTime = 300; //移动速度,毫秒
+
+
+				//下一张
+				$("#DateButton_right").bind("click",function(){
+					if( DataLength != 4 ){
+						$("#slideBox").animate({left:SDataLeft + (DataWrapperW*0.13)*DataLength}, moveTime);
+						DataLength = DataLength + 1 ;
+					}else{
+
+					}
+				})
+			})
+			//鼠标经过预览图片函数
+			function preview(img){
+				$("#bigImg img").attr("src",$(img).attr("src"));
+				$(".miniImgBox").removeClass("active");
+				$(img).parent().addClass("active");
+			}
+			//图片预览小图移动效果,页面加载时触发
+			$(function(){
+				var tempLength = 0; //临时变量,当前移动的长度
+				var moveNum = 1; //每次移动的数量
+				var moveTime = 300; //移动速度,毫秒
+				var scrollDiv = $("#miniImgLine"); //进行移动动画的容器
+				var scrollItems = $("#miniImgLine .miniImgBox"); //移动容器里的集合
+				var moveLength = scrollItems.eq(0).width() * moveNum + 4; //计算每次移动的长度
+				var countLength = scrollItems.length * scrollItems.eq(0).width(); //计算总长度,总个数*单个长度
+
+				$("#miniImgLine .miniImgBox").last().insertBefore($("#miniImgLine .miniImgBox").first());
+				scrollDiv.css({"left":-moveLength});
+				  
+				//下一张
+				$("#miniBoxButton_right").bind("click",function(){
+					if( !scrollDiv.is(":animated") ){
+						$("#miniImgLine .miniImgBox").first().insertAfter($("#miniImgLine .miniImgBox").last());
+						scrollDiv.css({"left":0});
+						scrollDiv.animate({left:-moveLength}, moveTime);
+					}
+				});
+				//上一张
+				$("#miniBoxButton_left").bind("click",function(){
+					if( !scrollDiv.is(":animated") ){
+						$("#miniImgLine .miniImgBox").last().insertBefore($("#miniImgLine .miniImgBox").first());
+						scrollDiv.css({"left":-2*moveLength});
+						scrollDiv.animate({left:-moveLength}, moveTime);
+					}
+				});
+			});
+			function openDay(y1,m1,d1,events){
+				console.log(events);
+			}
+			var eventsList=new Array();
+			//日历视图上下月切换
+			function getOverView(type){
+				$(".fc-day").each(function(){
+					$(this).children("div").css({"height":$(this).outerHeight()});
+				});
+				$(".fc-event-title").each(function(){
+					var TitleText = $(this).text().length;
+					var TitleTime = $(this).text().substring(0,11);
+					var TitleContent = $(this).text().substring(11,TitleText);
+					$(this).html(''+TitleTime+'<br />'+TitleContent+'');
+				});
+				var dateTime = "";
+				dateTime = $(".fc-header-title").text();
+				dateTime = dateTime.substring(0, 9);
+				dateTime = dateTime.replace("年 ", '-');
+				dateTime = dateTime.replace("月", '');
+
+				var startTime = dateTime + '-01 00:00:01'
+				startTime = changeTime(startTime);
+				var maxDay = myDate(startTime);
+				var endTime = dateTime + '-' + maxDay + ' 23:23:59';
+				endTime = changeTime(endTime);
+				selectAll(startTime, endTime);
+				Rlijiekou(dateTime);
+			}
+			function Rlijiekou (date) {
+				/* initialize the external events
+				-----------------------------------------------------------------*/
+				$('#external-events div.external-event').each(function() {
+					// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+					// it doesn't need to have a start or end
+					var eventObject = {
+						title: $.trim($(this).text()) // use the element's text as the event title
+					};
+
+					// store the Event Object in the DOM element so we can get to it later
+					$(this).data('eventObject', eventObject);
+
+					// make the event draggable using jQuery UI
+					$(this).draggable({
+						zIndex: 999,
+						revert: true,      // will cause the event to go back to its
+						revertDuration: 0  //  original position after the drag
+					});
+				});
+				/* initialize the calendar
+				-----------------------------------------------------------------*/
+				var date = new Date(date);
+				var d = date.getDate();
+				var m = date.getMonth();
+				var y = date.getFullYear();
+
+				$('#showY').val(y);
+				$('#showM').val(m);
+				$('#calendar').html('');
+				var calendar = $('#calendar').fullCalendar({
+					buttonHtml: {
+						prev: '<i class="ace-icon fa fa-chevron-left"></i>',
+						next: '<i class="ace-icon fa fa-chevron-right"></i>'
+					},
+					monthNames: ["01月", "02月", "03月", "04月", "05月", "06月", "07月", "08月", "09月", "10月", "11月", "12月"],  
+			        monthNamesShort: ["01月", "02月", "03月", "04月", "05月", "06月", "07月", "08月", "09月", "10月", "11月", "12月"],  
+			        dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],  
+			       	dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],  
+			        today: ["今天"],
+					header: {
+						left: '',
+						center: 'prev,   title   ,next',
+						right: ''
+					},
+					events: eventsList,
+					editable: false,
+					droppable: true, // this allows things to be dropped onto the calendar !!!
+					drop: function(date, allDay) { // this function is called when something is dropped
+						
+					},
+					selectable: true,
+					selectHelper: true,
+					select: function(start, end, allDay) {
+						var dateClick = new Date(start);
+						var y1 = dateClick.getFullYear();
+						var m1 = dateClick.getMonth()+1;
+						var d1 = dateClick.getDate();
+					},
+					eventClick: function(calEvent, jsEvent, view) {
+						var dateClick = new Date(calEvent.start);
+						var y1 = dateClick.getFullYear();
+						var m1 = dateClick.getMonth()+1;
+						var d1 = dateClick.getDate();
+						// var events = calEvent.source.events;
+						// openDay(y1,m1,d1,events);
+					}
+				});
+				
+				$('#calendar').fullCalendar('gotoDate',new Date(y,m));
+			}
+
+			function Appendzero(obj) {
+				if (obj < 10) return "0" + obj; else return obj;
+			}
+
+			jQuery(function($) {
+				//页面初始化
+//				$('[data-rel=tooltip]').tooltip();
+				$('[data-rel=popover]').popover({html:true});
+
+
+				//$(".fc-future").children("div").css({"height":$(".fc-future").outerHeight()});
+				$(".fc-day").each(function(){
+					$(this).children("div").css({"height":$(this).outerHeight()});
+				});
+				// $(".fc-event-title").each(function(){
+				// 	var TitleText = $(this).text().length;
+				// 	var TitleTime = $(this).text().substring(0,11);
+				// 	var TitleContent = $(this).text().substring(11,TitleText);
+				// 	$(this).html(''+TitleTime+'<br />'+TitleContent+'');
+				// });
+
+				var meetingRooemId = getQueryString("meetingRooemId");
+				$("#meetingRooemId").val(meetingRooemId);
+				roomDetail(meetingRooemId);
+
+				var time = new Date();
+				var ym = "";
+				ym += time.getUTCFullYear() + "-";
+				ym += Appendzero((time.getUTCMonth()+1));
+				var startTime=ym+'-01 00:00:01'
+				startTime=changeTime(startTime);
+				var maxDay=myDate(startTime);
+				var endTime=ym+'-'+maxDay+' 23:23:59';
+				endTime=changeTime(endTime);
+				selectAll(startTime,endTime);
+				Rlijiekou((new Date()).valueOf());
+			});
+			// 获取请求链接中的指定参数的值
+			function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null)
+					return r[2];
+				return null;
+			}
+			// 会议室详情
+			function roomDetail (meetingRooemId) {
+				$.ajax({
+					type: "post",
+					url: "/meet/getRoomDetail",
+					contentType: "application/json",
+					dataType: "json",
+					data:JSON.stringify({
+						"roomId": meetingRooemId
+					}),
+					success: function(data) {
+						if(data.status != 0) {
+							return;
+						}
+
+						$("#guishudi").html(data.data.guishudiName);
+						$("#meetRoom-name").html(data.data.name);
+						$("#meetRoom-address").html(data.data.address);
+						$("#meetRoom-type").html(data.data.needApply==1?"需要审批":"不需要审批");
+						$("#meetRoom-capacity").html(data.data.capacity);
+						$("#desc").html(data.data.desc);
+						$("#meetRoom-clean").html(data.data.clearMinute + "分钟");
+                        var huiyijibie=data.data.level==1?'高规格会议':'普通会议';
+						$("#huiyijibie").html(huiyijibie);
+						var devices = data.data.device;
+						for(var i = 0;i < devices.length;i++) {
+							$("#meetRoom-device").append('\
+								<a href="javascript:void(0);" class="tooltip-info" data-rel="tooltip" data-placement="top" title="" data-original-title="' + devices[i].name + '">\
+									<i class="cttq-icon cttq-' + devices[i].code + ' text-primary bigger-200"></i>\
+								</a>'
+							);
+						}
+						$('[data-rel=tooltip]').tooltip();
+
+						var image = data.data.image;
+						if(image.length > 0) {
+							$("#bigImg").html('<img src="' + image[0].imageURL + '" alt="">');
+							$("#miniImgLine").append('\
+									<div class="col-sm-3 no-padding miniImgBox active">\
+										<img src="' + image[0].imageURL + '" alt="" onmousemove="preview(this);">\
+									</div>\
+								');
+							for(var i = 1;i < image.length;i++) {
+								$("#miniImgLine").append('\
+									<div class="col-sm-3 no-padding miniImgBox">\
+										<img src="' + image[i].imageURL + '" alt="" onmousemove="preview(this);">\
+									</div>\
+								');
+							}
+						}else {
+
+						}
+
+						var admin = data.data.admin;
+						for(var i = 0;i < admin.length;i++) {						
+							$("#meetRoom-admin").append('\
+								<div class="PortraitHead">\
+									<input type="hidden" value="' + admin[i].userId + '" id="adminId">\
+									<div>\
+										<img id="admin_' + admin[i].userId + '" src="../assets/avatars/dp.png">\
+									</div>\
+									<div class="tooltip fade bottom in PortraitHead_Admin">\
+										<div class="tooltip-arrow"></div>\
+										<div class="tooltip-arrow tatwoA"></div>\
+										<div class="tooltip-inner widget-box">\
+											<div class="widget-header widget-header-flat">\
+												<h4 class="widget-title smaller">\
+													管理员详细信息\
+												</h4>\
+											</div>\
+											<div class="widget-body">\
+												<div class="widget-main profile-user-info profile-user-info-striped" style="width:100%;border:none;font-size:14px;">\
+													<div class="profile-info-row">\
+														<div class="profile-info-name"> 姓名 </div>\
+														<div class="profile-info-value" style="text-align: left;">\
+															<span class="editable">' + admin[i].userName + '</span>\
+														</div>\
+													</div>\
+													<div class="profile-info-row">\
+														<div class="profile-info-name"> 部门 </div>\
+														<div class="profile-info-value" style="text-align: left;">\
+															<span class="editable" id="department"></span>\
+														</div>\
+													</div>\
+													<div class="profile-info-row">\
+														<div class="profile-info-name"> 电话 </div>\
+														<div class="profile-info-value" style="text-align: left;">\
+															<span class="editable" id="tell"></span>\
+														</div>\
+													</div>\
+												</div>\
+											</div>\
+										</div>\
+									</div>\
+								</div>\
+							');
+                            var url = "/zhrmss/ZHRMMS_GET_PHOTO_URL?P_PERNR="+admin[i].userId;
+                            var currentUserId = admin[i].userId;
+                            $.getJSON(url,function(data){
+                                if (data.status == '0') {
+                                    var dataUrl = data.url;
+                                    if(dataUrl != undefined && dataUrl != ""){
+                                        $("#admin_"+currentUserId).attr("src", dataUrl);
+                                    }
+                                }
+                                },'json',function(e){
+                                getJSONError(e,url);
+                            },'GET','',true);                            
+						}
+						$(".PortraitHead").each(function(i){
+							$(this).hover(function(){
+								if($(this).find("#department").html() == "") {
+									var paramJSon = {
+										"IS_PUBLIC": {
+											"FLOWNO": "",
+											"PERNR": "",
+											"ZDOMAIN": "400",
+											"I_PAGENO": "",
+											"I_PAGESIZE": ""
+										},
+										"P_DATE": "",
+										"P_PERNR": {
+											"item": [{
+												"PERNR": $(this).find("#adminId").val()
+											}]
+										}
+									};
+									var obj = this;
+									$.ajax({
+										type: "post",
+										url: "/zhr/ZHR_GET_PER_EASY_INFO",
+										contentType: "application/json",
+										dataType: "json",
+										data: JSON.stringify(paramJSon),
+										success: function(data) {
+											$(obj).find("#department").html(data.EASY_TAB.item[0].BUMEN);
+											$(obj).find("#tell").html(data.EASY_TAB.item[0].TELL);
+										}
+									});
+								}
+								$(this).children(".PortraitHead_Admin").addClass("PortraitHead_AdminHover");
+							},function(){
+								$(this).children(".PortraitHead_Admin").removeClass("PortraitHead_AdminHover");
+							})
+						});
+
+					}
+				});
+			}
+
+			//获取月份的最大天数
+			function myDate(myDate) {
+				myDate = new Date(myDate);
+				var ary = toArrays(myDate);
+				var date1 = (new Date(ary[0], ary[1] + 1, 1));
+				var date2 = DateAdd('m', 1, date1);
+				var result = dateDiff(Format('yyyy-MM-dd', date1), Format('yyyy-MM-dd', date2));
+				return result;
+			}
+
+			function Format(formatStr, timeStr) {
+				var str = formatStr;
+				var Week = ['日', '一', '二', '三', '四', '五', '六'];
+
+				str = str.replace(/yyyy|YYYY/, timeStr.getFullYear());
+				str = str.replace(/yy|YY/, (timeStr.getYear() % 100) > 9 ? (timeStr.getYear() % 100).toString() : '0' + (timeStr.getYear() % 100));
+
+				str = str.replace(/MM/, timeStr.getMonth() > 9 ? timeStr.getMonth().toString() : '0' + timeStr.getMonth());
+				str = str.replace(/M/g, timeStr.getMonth());
+
+				str = str.replace(/w|W/g, Week[timeStr.getDay()]);
+
+				str = str.replace(/dd|DD/, timeStr.getDate() > 9 ? timeStr.getDate().toString() : '0' + timeStr.getDate());
+				str = str.replace(/d|D/g, timeStr.getDate());
+
+				str = str.replace(/hh|HH/, timeStr.getHours() > 9 ? timeStr.getHours().toString() : '0' + timeStr.getHours());
+				str = str.replace(/h|H/g, timeStr.getHours());
+				str = str.replace(/mm/, timeStr.getMinutes() > 9 ? timeStr.getMinutes().toString() : '0' + timeStr.getMinutes());
+				str = str.replace(/m/g, timeStr.getMinutes());
+
+				str = str.replace(/ss|SS/, timeStr.getSeconds() > 9 ? timeStr.getSeconds().toString() : '0' + timeStr.getSeconds());
+				str = str.replace(/s|S/g, timeStr.getSeconds());
+				return str;
+
+
+			}
+
+			function StringToDate(DateStr) {
+
+				var converted = Date.parse(DateStr);
+				var myDate = new Date(converted);
+				if (isNaN(myDate)) {
+					//var delimCahar = DateStr.indexOf('/')!=-1?'/':'-';
+					var arys = DateStr.split('-');
+					myDate = new Date(arys[0], --arys[1], arys[2]);
+				}
+				return myDate;
+			}
+
+			function dateDiff(dtEnd, dtStart) {
+				if (typeof dtEnd == 'string') {
+					dtEnd = StringToDate(dtEnd);
+				}
+				if (typeof dtStart == 'string') {
+					dtStart = StringToDate(dtStart);
+				}
+				return parseInt((dtStart - dtEnd) / 86400000);
+			}
+
+			function DateAdd(strInterval, Number, timeStr) {
+				var dtTmp = timeStr;
+				switch (strInterval) {
+					case 's' :
+						return new Date(Date.parse(dtTmp) + (1000 * Number));
+					case 'n' :
+						return new Date(Date.parse(dtTmp) + (60000 * Number));
+					case 'h' :
+						return new Date(Date.parse(dtTmp) + (3600000 * Number));
+					case 'd' :
+						return new Date(Date.parse(dtTmp) + (86400000 * Number));
+					case 'w' :
+						return new Date(Date.parse(dtTmp) + ((86400000 * 7) * Number));
+					case 'q' :
+						return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number * 3, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+					case 'm' :
+						return new Date(dtTmp.getFullYear(), (dtTmp.getMonth()) + Number, dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+					case 'y' :
+						return new Date((dtTmp.getFullYear() + Number), dtTmp.getMonth(), dtTmp.getDate(), dtTmp.getHours(), dtTmp.getMinutes(), dtTmp.getSeconds());
+				}
+			}
+
+			function toArrays(myDate) {
+				//var myDate = this;
+				var myArray = Array();
+				myArray[0] = myDate.getFullYear();
+				myArray[1] = myDate.getMonth();
+				myArray[2] = myDate.getDate();
+				myArray[3] = myDate.getHours();
+				myArray[4] = myDate.getMinutes();
+				myArray[5] = myDate.getSeconds();
+				return myArray;
+			}
+
+			//查询预订情况
+			function selectAll(startTime, endTime) {
+				var paramJSon = {
+					"meetingRoomId": $("#meetingRooemId").val(),
+					"startTime": startTime,
+					"endTime": endTime
+				};
+				$.ajax({
+					type: "post",
+					url: "/meet/getBookedListByMeetingRoomId",
+					contentType: "application/json",
+					dataType: "json",
+					data: JSON.stringify(paramJSon),
+					async: false,
+					success: function (data) {
+						data = typeof(data) == 'string' ? $.parseJSON(data) : data;
+						if (data.status == 0) {
+							var j = 0;
+							$.each(data.data, function (n, value) {
+								var buMen = selectBumen(value['userId']);
+
+								var startTimes = formatDate1(value['startTime']);
+								var endTimes = formatDate1(value['endTime']);
+								var tmp1 = startTimes.split(' ');
+								var tmp2 = endTimes.split(' ');
+								var aa = dateDiff(tmp1[0], tmp2[0]);
+								//alert(aa);
+
+								if (tmp1[0] == tmp2[0]) {
+									eventsList[j] = {
+										title: tmp1[1] + '-' + tmp2[1] + '\n' + value['userName'] + ' ' + buMen,
+										start: tmp1[0],
+										className: 'label-info',
+										allDay: true
+									};
+									j++;
+								} else {
+									var nums = dateDiff(tmp1[0], tmp2[0]) + 1;
+									for (i = 0; i < nums; i++) {
+
+										var tmpN = value['startTime'] + (60 * 60 * 24 * 1000 * i );
+										tmpN = formatDate1(tmpN);
+										var tmpM = tmpN.split(' ');
+										eventsList[j] = {
+											title: startTimes + '-' + endTimes + '\n' + value['userName'] + ' ' + buMen,
+											start: tmpM[0],
+											className: 'label-info',
+											allDay: true
+										};
+										j++;
+									}
+
+								}
+							})
+						}
+					}
+				});
+
+			}
+
+			function selectBumen(PERNR){
+				var paramJSon = {
+					"IS_PUBLIC":{
+						"FLOWNO":"",
+						"PERNR":"",
+						"ZDOMAIN":"400",
+						"I_PAGENO":"",
+						"I_PAGESIZE":""
+					},
+					"P_DATE":"" ,
+					"P_PERNR":{
+						"item":[{
+							"PERNR":PERNR
+						}]
+					}
+
+				};
+				var bumen='';
+				$.ajax({
+					type: "post",
+					url: "/zhr/ZHR_GET_PER_EASY_INFO",
+					contentType: "application/json",
+					dataType: "json",
+					data: JSON.stringify(paramJSon),
+					async: false,
+					success: function(data) {
+						data= typeof(data) == 'string'?$.parseJSON(data):data;
+						if(data.RETURN_SUBRC == 0){
+							bumen=data.EASY_TAB.item[0]['BUMEN'];
+						}
+					}
+				});
+				return bumen;
+			}
+
+			//时间戳格式化成正式时间可是
+			function formatDate1(now){
+				var time = new Date(now);
+				var ymdhis = "";
+				ymdhis += time.getFullYear() + "-";
+				ymdhis += Appendzero((time.getMonth()+1)) + "-";
+				ymdhis += Appendzero(time.getDate());
+				ymdhis += " " + Appendzero(time.getHours()) + ":";
+				ymdhis += Appendzero(time.getMinutes());
+				return ymdhis;
+			}
+
+			function changeTime(string) {
+				var f = string.split(' ', 2);
+				var d = (f[0] ? f[0] : '').split('-', 3);
+				var t = (f[1] ? f[1] : '').split(':', 3);
+				return (new Date(
+						parseInt(d[0], 10) || null,
+						(parseInt(d[1], 10) || 1) - 1,
+						parseInt(d[2], 10) || null,
+						parseInt(t[0], 10) || null,
+						parseInt(t[1], 10) || null,
+						parseInt(t[2], 10) || null
+				)).getTime();
+			}
+		</script>
+
+		<link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+		
+		<!-- 焦点图 -->
+		<script src="../myjs/jquery.jqzoom.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="../assets/js/ace/ace.onpage-help.js"></script>
+		<script src="../docs/assets/js/rainbow.js"></script>
+		<script src="../docs/assets/js/language/generic.js"></script>
+		<script src="../docs/assets/js/language/html.js"></script>
+		<script src="../docs/assets/js/language/css.js"></script>
+		<script src="../docs/assets/js/language/javascript.js"></script>
+	</body>
+</html>
+
+
+

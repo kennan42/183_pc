@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="../assets/css/chosen.css" />
+        <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+        <link rel="stylesheet" href="../assets/css/jquery.gritter.css" /> 
+        <!-- text fonts -->
+        <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="../assets/css/ace.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <!-- inline styles related to this page -->
+        <!-- ace settings handler -->
+        <script src="../assets/js/ace-extra.min.js"></script>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lte IE 8]>
+            <script src="../assets/js/html5shiv.js">
+            </script>
+            <script src="../assets/js/respond.min.js">
+            </script>
+        <![endif]-->
+        <title>
+            GSP-首营待办事项
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+            .btn-info:active, .btn-info:hover, .open .btn-info.dropdown-toggle{
+                background-color:#1567c5!important;
+                border-color:#2e82ff;
+            }
+            .btn-info, .btn-info:focus {
+                background-color:#2e82ff!important;
+                border-color:#2e82ff;
+            }
+            .nav-tabs>li{margin-right:4px;margin-bottom:-2px;}
+            .nav-tabs>li.active{margin-bottom:-1px;}
+            .tab-content.profile-edit-tab-content{border:1px solid #7ea8fb;border-width:1px 0 0 0;-webkit-box-shadow:none;box-shadow:none;}
+            .nav-tabs>li>a{padding: 14px 34px 14px 26px;font-size:16px;overflow:hidden;}
+            .nav-tabs>li>a>.ace-icon{float:left;margin-right:6px;}
+            .nav-tabs>li>a>span{float:left;margin-top:1px;}
+            .nav-tabs{border-color:#7ea8fb;border-bottom: 1px solid #7ea8fb;}
+            .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+                color:#1777e5;
+                border-color:#7ea8fb #7ea8fb transparent;
+                border-top:2px solid #1777e5;  
+            }
+            .nav-tabs>li>a, .nav-tabs>li>a:focus{
+                color:#1777e5;
+                border-color:#7ea8fb;
+                background-color: #fff;
+            }
+            .nav-tabs>li>a:hover{border-color:#7ea8fb;color:#1777e5;}
+
+            .tab-content.profile-edit-tab-content{padding:8px 0;padding-bottom:0px;}
+            .table-bordered{border:none;}
+            .table-bordered>thead>tr{border-top: 1px solid #ddd;}
+            .table-bordered>thead>tr,.table-bordered>tbody>tr{border:1px solid #ddd;border-width:0 1px;}
+            .table-bordered>thead>tr.TrInterval,.table-bordered>tbody>tr.TrInterval{border:none;}
+            .table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color:#fff;}
+            .table-bordered>tbody>tr.TrInterval>td,.table-bordered>thead>tr.TrInterval>th{border:none;padding:0;height:4px;background:#fff;}
+            .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color:#e1e4fa;}
+            .table-hover>tbody>tr:hover>td.TrInterval, .table-hover>tbody>tr:hover>th.TrInterval{background-color:#fff;}
+            .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th{
+                cursor:pointer;
+            }
+            .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+                border-width:1px 0;
+            }
+            .table>thead>tr{background-image:none;background-color:#1777e5;color:#fff;}
+            .table>thead>tr>th{font-weight:normal;}
+            .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+                padding:10px 8px;vertical-align:middle;
+            }
+            .table{font-size:14px;}
+            .table>tbody>tr>td>span.Beyond{vertical-align:middle;padding-top:1px;margin-top:2px;display:inline-block;}
+            .table>thead>tr>th>span.Beyond{vertical-align:middle;padding-top:1px;margin-top:1px;display:inline-block;}
+            .message-bar{position:absolute;margin-left:-58px;left:50%;}
+            .pagination>li.active>a{
+                background-color:#1777e5;
+            }
+            .pagination>li.active>a:hover{
+                background-color:#1777e5;
+            }
+            .overflowspan{
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            .badge {
+                position: absolute !important;
+                top: 2px;
+                right: 2px;
+                padding: 1px 3px;
+                text-align: center;
+                font-size: 12px;
+                color: #FFF;
+            }
+            canvas{display:none;}
+            .main-container{background:#fff;} 
+        </style>
+        <script src="../assets/js/jquery.min.js"></script>
+        <script>
+            
+        </script>
+    </head>
+    
+    <body class="no-skin" onresize="Reizes();">
+        <div id="Loading" style=""></div>
+        <div class="main-container" id="main-container">
+            <div class="main-content">
+                <!-- #section:basics/content.breadcrumbs -->
+                <div class="breadcrumbs" id="breadcrumbs" style="background:#1777e5;">
+                    <script type="text/javascript">
+                        try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                        } catch(e) {}
+                    </script>
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon white">
+                            </i>
+                            <a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+                        </li>
+                        <li>
+                            <a href="#" class="white">
+                                GSP审批业务
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.breadcrumb -->
+                    <!-- /section:basics/content.searchbox -->
+                </div>
+                <div class="row-fluid  page-content">
+                    <div class="page-header" style="border-bottom:solid 1px #1777e5;">
+                        <input type="hidden" id="begD" value="">
+                        <input type="hidden" id="endD" value="">
+                        <h1 style="font-family:Microsoft YaHei ! important;color:#1a1a1a;">
+                            <span id="titleH1">首营企业待办</span>
+                            <!-- <small>
+                                <i class="ace-icon fa fa-angle-double-right">
+                                </i>
+                                自定义数据
+                            </small> -->
+                        </h1>
+                    </div>
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs padding-12">
+                            <li class="active">
+                                <a data-toggle="tab" href="#GSPTabNav_01">
+                                    <i class="green ace-icon fa fa-building-o bigger-120" style="color:#1777e5;"></i>
+                                    <span>未回复</span>
+                                    <span class="badge badge-important" id="WqiyeCount"></span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a data-toggle="tab" href="#GSPTabNav_02">
+                                    <i class="ace-icon fa fa-user bigger-120" style="color:#ffb752;"></i>
+                                    <span>已回复</span>
+                                    <span class="badge badge-important" id="WkehuCount"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content profile-edit-tab-content">
+                            <!-- 首营企业待办 -->
+                            <table>
+                                <thead>我是公共部分，我不会变</thead>
+                            </table>
+                            <div id="GSPTabNav_01" class="tab-pane in active">
+                                <table>
+                                    <tbody>未回复未回复未回复未回复未回复未回复未回复未回复</tbody>
+                                </table>
+                            </div>
+                            <div id="GSPTabNav_02" class="tab-pane">
+                                <table>
+                                    <tbody>已回复已回复已回复已回复已回复已回复已回复已回复</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------------------------------------------------------------------------------->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <!-- <![endif]-->
+        <!--[if IE]>
+            <script type="text/javascript">
+                window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+            </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <!-- page specific plugin scripts -->
+        <script src="../assets/js/bootstrap-tag.min.js"></script>
+        <script src="../assets/js/jquery.hotkeys.min.js"></script>
+        <script src="../assets/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="../assets/js/jquery-ui.custom.min.js"></script>
+        <script src="../assets/js/chosen.jquery.min.js"></script>
+        <script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="../assets/js/jquery.slimscroll.min.js"></script>
+        <!-- ace scripts -->
+        <script src="../assets/js/ace-elements.min.js"></script>
+        <script src="../assets/js/ace.min.js"></script>
+        <!-- inline scripts related to this page -->
+
+        <link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+        <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+        <script type="text/javascript">ace.vars['base'] = '..';</script>
+        <script src="../assets/js/ace/ace.onpage-help.js"></script>
+        <script src="../docs/assets/js/rainbow.js"></script>
+        <script src="../docs/assets/js/language/generic.js"></script>
+        <script src="../docs/assets/js/language/html.js"></script>
+        <script src="../docs/assets/js/language/css.js"></script>
+        <script src="../docs/assets/js/language/javascript.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../myjs/backupNew.js"></script>
+        <script src="../myjs/gys.js"></script>
+        <script src="../myjs/lexus.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+        <script src="../myjs/GSP.js"></script>
+        <script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+        <script src="../assets/js/spin.min.js"></script>
+    </body>
+</html>

@@ -1,0 +1,2693 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>供应商主数据申请</title>
+
+		<meta name="description" content="Common form elements and layouts" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="./assets/css/dropzone.css" />
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/chosen.css" />
+		<link rel="stylesheet" href="./assets/css/datepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-timepicker.css" />
+		<link rel="stylesheet" href="./assets/css/daterangepicker.css" />
+		<link rel="stylesheet" href="./assets/css/bootstrap-datetimepicker.css" />
+		<link rel="stylesheet" href="./assets/css/colorpicker.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+		<script src="assets/js/ace-extra.min.js"></script>
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+<style>
+	.mar-t-5{
+		margin-top:5px;
+	}
+	.mar-tt{
+		margin-top:40px;
+	}
+</style>
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/spin.min.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/gys.js"></script>
+		<script src="./myjs/lexus.js"></script>
+		<script src="./myjs/jquery.form.js"></script>
+
+		<style type="text/css">
+			.nav-tabs>li>a{padding:14px 26px 14px 18px;font-family:"Microsoft YaHei";font-size:16px;}
+			.form-horizontal .form-group{margin:0;margin-bottom:0px;}
+			.pibN{border:none;}
+			.c667E99{color:#667E99;font-size:13px;}
+			/*.profile-info-name,.profile-info-value{width:50%;}*/
+			.form-group input:disabled, .form-group input[disabled]{border-color:#fff!important;background-color:#fff!important;color:#393939!important;}
+			
+			.infobox-data-number{text-shadow:1px 1px 0 rgba(0,0,0,.15);font-family:'Open Sans';}
+			.form-group label[class*=col-]{padding-top:0px;margin:0;display:block;padding:7px 12px 6px 12px;}
+			label.inline{padding:6px 0;margin-bottom: 0px;}
+			.form-group-span{padding:8px 0 7px 0;display:block;}
+			.form-group .control-label{color:#667E99;}
+			.form-group span[class="col-sm-3 control-label no-padding-right text-left"]{color:#393939;}
+			.igbt_01{padding:5px 0px;padding-left:0px;padding-right:6px;}
+			.igbt_02{padding:5px 0px;padding-left:6px;padding-right:0px;}
+			.xjdays-day{text-align:left;padding-left:0;width:auto;}
+			.jqlxdh{width:41.666%;}
+			.ace-file-input{width:41.666%;}
+			.xjdays-input{min-width:84px;height:34px;float:left;}
+			.pad5-12{padding:5px 12px;}
+			.hr-solid{height:1px;
+		    border-top:1px solid #d5e3ef;
+		    border-bottom:none;}
+		    #gysBackAdd{position:absolute;top:-5px;right:0;}
+		    .form-group .text-left{text-align:left;}
+		    .text-left{text-align:left;}
+		    .text-right{text-align:right;}
+
+			@media (max-width:770px) {
+				.col-sm-2{width:100%;}
+				.col-sm-3{width:100%;}
+				.form-horizontal .control-label{text-align:left;}
+				.pad5-12{padding:0px 12px;}
+			}
+
+			@media (max-width:767px) {
+				.igbt_01,.igbt_02{padding:5px 0px;padding-left:0px;padding-right:0px;}
+				.xjdays-input{min-width: 84px;height:34px;width:84px;float:left;}
+				.xjdays-day{text-align:left;padding-left:0;width:18px;float:left;}
+				.form-group textarea{width:100%;}
+				.jqlxdh{width:100%;}
+				.ace-file-input{width:100%;}
+				.mb20{margin-bottom:20px;}
+				.form-horizontal #gysBackAddHtml{padding-top:40px;}
+				#gysBackAdd{width:362px;right:24px;color:#667E99;}
+			}
+			.chosen-container-multi{width:100%!important;margin-top:2px;max-width:284px!important;}
+			.chosen-container-single{width:100%!important;}
+			.xubox_shade, .xubox_layer{position:fixed;}
+			span{text-align:left;}
+			.form-group span.control-label{color:#000;}
+		</style>
+	</head>
+
+	<body class="no-skin">
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div id="Loading" style="display:none;">		
+		</div>
+<input type="hidden" id="FLAGID">
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs" style="background:#438eb9;">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon white"></i>
+							<a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+						</li>
+
+						<li>
+							<a href="#" class="white">供应商主数据</a>						</li>
+					</ul><!-- /.breadcrumb -->
+
+					<!-- /section:basics/content.searchbox -->
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						<div class="page-header" style="border-bottom:solid 1px #438eb9;">
+							<input type="hidden" id="begD" value="">
+							<input type="hidden" id="endD" value="">
+							<h1 style="font-family:Microsoft YaHei ! important;">
+								供应商主数据申请
+															</h1>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12" style="padding:0 24px;">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="form-horizontal">
+									<div class="form-group">
+									    <div class="widget-box transparent">
+									        <div class="widget-header widget-header-flat" style="background:#F7F7F7;padding-left: 12px;">
+									            <h4 class=" widget-title lighter blue" style="font-family: Microsoft YaHei ! important;font-weight:500;">
+									                申请人信息
+									            </h4>
+<!-- 									            <div class="widget-toolbar">
+									                <a href="#" data-action="collapse">
+									                    <i class="ace-icon fa fa-chevron-up">
+									                    </i>
+									                </a>
+									            </div> -->
+									        </div>
+									        <div class="widget-body">
+									            <div class="widget-main no-padding">
+									                <div class="col-xs-12 col-sm-12 pad5-12" style="padding:13px 44px 13px 44px;">
+									                    <div class="col-xs-12 col-sm-12 pad5-12">
+									                        <label class="col-sm-2 control-label no-padding-right" for="form-field-username"
+									                        style="min-width:140px;">
+									                            申请人
+									                        </label>
+									                        <div class="col-sm-3">
+									                            <span class="form-group-span" id="current_name">
+									                                
+									                            </span>
+									                        </div>
+									                        <label class="col-sm-3 control-label no-padding-right" for="form-field-username"
+									                        style="min-width:140px;">
+									                            联系方式
+									                        </label>
+									                        <div class="col-sm-3">
+									                            <span class="form-group-span" id="current_tel">
+									                                
+									                            </span>
+									                        </div>
+									                        <div class="col-sm-1">
+									                        </div>
+									                    </div>
+									                    <div class="col-xs-12 col-sm-12 pad5-12">
+									                        <label class="col-sm-2 control-label no-padding-right" for="form-field-username"
+									                        style="min-width:140px;">
+									                            公司
+									                        </label>
+									                        <div class="col-sm-3">
+									                            <span class="form-group-span" id="current_company">
+									                            </span>
+																<input type="hidden" id="current_gs_code_id"/>
+									                        </div>
+									                        <label class="col-sm-3 control-label no-padding-right" for="form-field-username"
+									                        style="min-width:140px;">
+									                            部门
+									                        </label>
+									                        <div class="col-sm-3">
+									                            <span class="form-group-span" id="current_dept">
+									                                
+									                            </span>
+									                        </div>
+									                        <div class="col-sm-1">
+									                        </div>
+									                    </div>
+									                </div>
+									            </div>
+									        </div>
+									    </div>
+									</div>	
+
+									<div class="form-group">
+										<div class="form-group">
+											<div class="widget-header widget-header-flat" style="background:#F7F7F7;"><!--margin-bottom:16px;-->
+									            <h4 class=" widget-title lighter blue" style="font-family: Microsoft YaHei ! important;font-weight:500;">
+									                供应商主数据信息
+									            </h4>
+									        </div>
+											<!-- <h4 class="header blue bolder smaller" style="font-family: Microsoft YaHei ! important;font-weight:500;background:#F7F7F7;">供应商主数据信息</h4> -->
+										</div>
+										<div class="col-xs-12 col-sm-12 pad5-12">
+											<div class="tabbable">
+												<ul class="nav nav-tabs padding-16">
+													<li class="active">
+														<a data-toggle="tab" href="#gysAdd">
+															<i class="green ace-icon glyphicon glyphicon-plus bigger-110"></i>
+															新增														</a>													</li>
+													<li class="">
+														<a data-toggle="tab" href="#gysExpand">
+															<i class="green ace-icon fa fa-cogs bigger-125" style="color:#428bca!important;"></i>
+															扩充														</a>													</li>
+													<li class="">
+														<a data-toggle="tab" href="#gysModify">
+															<i class="green ace-icon fa fa-pencil-square-o bigger-125" style="color:#e59729!important"></i>
+															修改														</a>													</li>
+													<li class="">
+														<a data-toggle="tab" href="#gysFreeze">
+															<i class="green ace-icon fa fa-exclamation-triangle bigger-125" style="color:#b74635!important"></i>
+															冻结														</a>													</li>
+												</ul>
+												<div class="tab-content profile-edit-tab-content" style="padding-top:18px;padding-bottom:0;">
+													<!-- 新增 -->
+													<div id="gysAdd" class="tab-pane in active">
+														<div class="form-group">
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">账户组</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																			<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+																				<span id="add_zhhz_text" style="float:left;color:#444;width:90%;overflow:hidden;"></span>
+																				<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																			</button>
+																			<ul class="dropdown-menu" id="add_zhhz_ul" style="height:300px;overflow-y:scroll;width:100%;">
+																				
+																			</ul>
+																			<input type="hidden" id="add_zhhz_code" value="">
+																			<!--input type="hidden" id="txTime" value="0.0"-->
+																	</div>
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">供应商名称</label>
+																<div class="col-sm-3">
+																	<span class="input-icon input-icon-right" style="width:100%;">
+																		<form onsubmit="return false;"><input type="text" id="add_gyshmch_text" style="width:100%;padding-right:26px;color:#444;" onKeyPress="tocheckAdd_gyshmch(this.value)" onblur="checkAdd_gyshmch(this.value)"></form>
+																		<i class="ace-icon fa fa-search" onclick="GysNameSearch();"></i>			
+																	</span>																
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">公司</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																			<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+																				<span id="add_gs_text" style="float:left;color:#444;width:90%;display:inline-block;height:auto;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;"></span>
+																				<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																			</button>
+																			<ul class="dropdown-menu" id="add_gs_ul" style="height:300px;overflow-y:scroll;width:100%;">
+																				
+																			</ul>
+																			<input type="hidden" id="add_gs_code" value="">
+																			<!--input type="hidden" id="txTime" value="0.0"-->
+																	</div>
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">采购组织</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																			<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" id="add_cgzzh_btn" style="width:100%;">
+																				<span id="add_cgzzh_text" style="float:left;color:#444;width:90%;overflow:hidden;"></span>
+																				<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																			</button>
+																				<ul class="dropdown-menu" id="add_cgzzh_ul" style="height:300px;overflow-y:scroll;width:100%;">
+																					
+																				</ul>
+																			<input type="hidden" id="add_cgzzh_code" value="">
+																			<!--input type="hidden" id="txTime" value="0.0"-->
+																	</div>
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">国家</label>
+																<div class="col-sm-3" id="add_gj_ul">
+																		<!--select class="chosen-select" data-placeholder="请选择国家..." style="display: none;">
+																			<option value="">  </option>
+																			<option value="AL">中国</option>
+																			<option value="AK">美国</option>
+																			<option value="AZ">俄罗斯</option>
+																			<option value="AR">韩国</option>
+																			<option value="CA">California</option>
+																			<option value="CO">Colorado</option>
+																		</select-->
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">货币</label>
+																<div class="col-sm-3" id="add_hb_ul">
+																		<!--select class="chosen-select" id="form-field-select-3" data-placeholder="请选择币种..." style="display: none;">
+																			<option value="">  </option>
+																			<option value="AL">Alabama</option>
+																			<option value="AK">Alaska</option>
+																			<option value="AZ">Arizona</option>
+																			<option value="AR">Arkansas</option>
+																			<option value="CA">California</option>
+																			<option value="CO">Colorado</option>
+																		</select-->
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">公司下付款条件</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																			<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;" id="add_fktj_gs_btn" disabled="disabled">
+																				<span id="add_fktj_gs_text" style="float:left;white-space:normal;color:#444;text-align:left;"></span>
+																				<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																			</button>
+																			<ul class="dropdown-menu" id="add_fktj_gs_ul" style="height:300px;overflow-y:scroll;width:100%;">
+																				
+																			</ul>
+																			<input type="hidden" id="add_fktj_gs_code" value="">
+																			<!--input type="hidden" id="txTime" value="0.0"-->
+																	</div>
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">采购组织下付款条件</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																			<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;" id="add_fktj_cg_btn" disabled="disabled">
+																				<span id="add_fktj_cg_text" style="float:left;white-space:normal;color:#444;text-align:left;"></span>
+																				<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																			</button>
+																			<ul class="dropdown-menu" id="add_fktj_cg_ul" style="height:300px;overflow-y:scroll;width:100%;">
+																				
+																			</ul>
+																			<input type="hidden" id="add_fktj_cg_code" value="">
+																			<!--input type="hidden" id="txTime" value="0.0"-->
+																	</div>
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+														</div>
+														<div class="hr hr-solid hr18"></div>
+														
+														
+														<!--银行卡-->
+														<div class="form-group" style="position:relative;"id="btnAddz">
+							                                <div class="form-group">
+							                                   <div class="col-xs-12 col-sm-12 pad5-12">
+							                                      <div class="col-sm-11" style="text-align:right;">
+							                                         <button class="btn btn-white btn-info btn-bold" onClick="gysBackAdd(this,'z');">
+							                                            <i class="ace-icon fa fa-pencil align-top bigger-125 blue"></i>
+							                                            添加银行账号信息
+							                                         </button>
+							                                      </div>
+							                                      <div class="col-sm-1"></div>
+							                                   </div>
+							                                 </div>
+							                            </div>
+														<div class="form-group" style="position:relative;" id="gysBackAddHtml_z">	
+															<div class="form-group" id="gysBackiftz-0">
+																<div class="col-xs-12 col-sm-12 pad5-12">
+																	<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">开户银行代码</label>
+																	<div class="col-sm-3">
+																		<span class="input-icon input-icon-right" style="width:100%;">
+																			<input type="text" id="add_z_bank0_code" class="gysBackift_Where"  style="width:100%;color:#444;" onKeyPress="searchBank(0,this,'z')" onfocus="BackCWhere(this,0,'z')">
+																			<i class="ace-icon fa fa-search" onclick="BackCWhere(this,0,'z')"></i>																		</span>																	</div>
+																	<label class="col-sm-3 control-label no-padding-right gysBackift_Address" id="add_z_bank0_text" for="form-field-username" style="min-width:140px;text-align:left;" id="add_bank0_text"></label>
+																	<div class="col-sm-3" style="text-align:right;">
+																		<button class="btn btn-white btn-warning btn-bold" name="gysBackiftz-0" style="visibility:hidden" onClick="deleBankInfo(this,'z')"><i class="ace-icon fa fa-trash-o bigger-125 orange" style="padding-right:5px;"></i>删除银行账号信息</button>
+																	</div>
+																	<div class="col-sm-1"></div>
+																</div>
+																<div class="col-xs-12 col-sm-12 pad5-12">
+																	<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行账号</label>
+																	<div class="col-sm-3">
+																		<input type="text" class="gysBackift_Account" value="" style="width:100%;color:#444;" onKeyUp="judgeNum(this.value)" id="gysCode_z">
+																	</div>
+																	<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行户主</label>
+																	<div class="col-sm-3">
+																		<input type="text" class="gysBackift_Name" value="" id="add_z_count0_text" style="width:100%;color:#444;">
+																	</div>
+																	<div class="col-sm-1">																	</div>
+																</div>
+															</div>	
+														</div>
+														
+														<div class="hr hr-solid hr18" id="gysBackiftz-0-line"></div>
+														<div class="form-group">
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">申请原因</label>
+																<div class="col-sm-8">
+																	<textarea id="add_shqshy_text" class="autosize-transition form-control" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 60px;color:#ccc;" onfocus="adstF(this)" onblur="adstB(this)" onpropertychange="calText(this.value)">请详细描述申请理由,不得少于5个字并且不得多于100个字...</textarea>
+																</div >
+																<div class="col-sm-2"></div>
+															</div>
+														</div>
+														<div class="clearfix form-actions" style="background-color:#fff;border-top:1px solid #d5e3ef;">
+															<div class="col-md-1 text-right mb20"></div>
+															<div class="col-md-4 text-right mb20">
+																<button class="btn btn-warning" type="button" style="width:40%;" onClick="cancel()">
+																	<i class="ace-icon glyphicon glyphicon-remove bigger-110"></i>
+																	取消																</button>
+															</div>
+															<div class="col-md-2 text-right mb20"></div>
+															<div class="col-md-4 text-left">
+																<button class="btn btn-info" type="button" style="width:40%;" onClick="addSubmit('xinzeng');">
+																	<i class="ace-icon fa fa-check bigger-110"></i>
+																	提交																</button>
+															</div>
+														</div>
+													</div>
+													<!-- 扩充 -->
+													<div id="gysExpand" class="tab-pane in">
+														<div class="form-group">
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">供应商编码</label>
+																<div class="col-sm-3">
+																	<span class="input-icon input-icon-right" style="width:100%;">
+																		<form onsubmit="return false;"><input type="text" id="m_gysmch_codeA" style="width:100%;" onKeyPress="toSearch('A')"></form>
+																		<i class="ace-icon fa fa-search" onclick="GysCodeSearch('A')"></i>
+																	</span>
+																</div>
+																<div class="col-sm-7"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">账户组</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" id="m_zhhz_text_KC" for="form-field-username"></span>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">供应商名称</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" id="m_gysmch_text_KC" for="form-field-username"></span>
+																<div class="col-sm-1"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">公司</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+																			<span id="m_gs_text_KC" style="float:left;color:#444;width:90%;display:inline-block;height:auto;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;x`"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_gs_ul_KC" style="height:300px;overflow-y:scroll;width:100%;">
+																			</ul>
+																		<input type="hidden" id="typeId" value="">
+																		<input type="hidden" id="txTime" value="">
+																		<input type="hidden" id="m_gs_code_KC" value="">
+																	</div>
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">采购组织</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+																			<span id="m_cgzzh_text_KC" style="float:left;color:#444;width:90%;display:inline-block;height:auto;text-overflow:ellipsis;overflow:hidden;white-space:nowrap"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_cgzzh_ul_KC" style="height:300px;overflow-y:scroll;width:100%;">
+																			</ul>
+																		<input type="hidden" id="typeId" value="">
+																		<input type="hidden" id="txTime" value="">
+																		<input type="hidden" id="m_cgzzh_code_KC" value="">
+																	</div>
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">国家</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" id="gj_id_KC" for="form-field-username"></span>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">货币</label>
+																<div class="col-sm-3" id="m_hb_ul_KC">
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">公司下付款条件</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" id="m_fktj_gs_btnKC" style="width:100%;" disabled="disabled">
+																			<span id="m_fktj_gs_text_KC" style="float:left;white-space:normal;color:#444;width:90%;overflow:hidden;"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_fktj_gs_ul_KC" style="height:300px;overflow-y:scroll;width:100%;">
+																			</ul>
+																		<input type="hidden" id="typeId" value="">
+																		<input type="hidden" id="txTime" value="">
+																		<input type="hidden" id="m_fktj_gs_code_KC" value="">
+																		
+																	</div>
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">采购组织下付款条件</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button id="KC_btn" data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;" disabled="disabled">
+																			<span id="m_fktj_cg_text_KC" style="float:left;white-space:normal;color:#444;"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_fktj_cg_ul_KC" style="height:300px;overflow-y:scroll;width:100%;">
+																			</ul>
+																		<input type="hidden" id="typeId" value="">
+																		<input type="hidden" id="txTime" value="">
+																		<input type="hidden" id="m_fktj_cg_code_KC" value="">
+																	</div>
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+														</div>
+														<!--银行卡-->
+														<div class="form-group" style="position:relative;display:none"id="btnAddk">
+							                                <div class="form-group">
+							                                   <div class="col-xs-12 col-sm-12 pad5-12">
+							                                      <div class="col-sm-11" style="text-align:right;">
+							                                         <button class="btn btn-white btn-info btn-bold" id="modifyButtonIDk" onClick="gysBackAdd(this,'k');">
+							                                         	<i class="ace-icon fa fa-pencil align-top bigger-125 blue"></i>
+							                                            添加银行账号信息
+							                                         </button>
+							                                      </div>
+							                                   </div>
+							                                 </div>
+							                            </div>
+														<div class="form-group" style="position:relative;" id="gysBackAddHtml_k">
+															<div class="hr hr-solid hr18"></div>
+															<div class="form-group">
+																<div class="col-xs-12 col-sm-12 pad5-12">
+																	<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">开户银行代码</label>
+																	<span class="col-sm-2 control-label no-padding-right text-left gysBackift_Where" id="gysBankNameID_KC" for="form-field-username"></span>
+																	<span class="col-sm-3 control-label no-padding-right text-left" id="gysBankNameIDN_KC" for="form-field-username"></span>
+																	<div class="col-sm-3"></div>
+																	<div class="col-sm-1"></div>
+																</div>
+																<div class="col-xs-12 col-sm-12 pad5-12">
+																	<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行账号</label>
+																	<span class="col-sm-3 control-label no-padding-right text-left gysBackift_Account" id="gysCode_x_KC" for="form-field-username"></span>
+																	<label class="col-sm-3 control-label no-padding-right" for="form-field-username">银行户主</label>
+																	<span class="col-sm-3 control-label no-padding-right text-left gysBackift_Name" id="gysBankLeadID_KC" for="form-field-username"></span>
+																	<div class="col-sm-1"></div>
+																</div>
+															</div>
+														</div>
+														<div class="hr hr-solid hr18"></div>
+														<div class="form-group">
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">申请原因</label>
+																<div class="col-sm-8">
+																	<textarea id="sqyy_KC" class="autosize-transition form-control" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 60px; color: rgb(204, 204, 204);" onfocus="adstF(this)" onblur="adstB(this)" onpropertychange="calText(this.value)">请详细描述申请理由,不得少于5个字并且不得多于100个字...</textarea>
+																</div>
+															</div>
+														</div>
+														<div class="clearfix form-actions" style="background-color:#fff;border-top:1px solid #d5e3ef;">
+															<div class="col-md-1 text-right mb20"></div>
+															<div class="col-md-4 text-right mb20">
+																<button class="btn btn-warning" type="button" style="width:40%;" onClick="cancel()">
+																	<i class="ace-icon glyphicon glyphicon-remove bigger-110"></i>
+																	取消																</button>
+															</div>
+															<div class="col-md-2 text-right mb20"></div>
+															<div class="col-md-4 text-left">
+																<button class="btn btn-info" type="button" style="width:40%;" onClick="addSubmit('kuochong');">
+																	<i class="ace-icon fa fa-check bigger-110"></i>
+																	提交																</button>
+															</div>
+														</div>
+													</div>
+													<!-- 修改 -->
+													<div id="gysModify" class="tab-pane in">
+														<div class="form-group">
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">供应商编码</label>
+																<div class="col-sm-3">
+																	<span class="input-icon input-icon-right" style="width:100%;">
+																		<form onsubmit="return false;"><input type="text" id="m_gysmch_codeB" style="width:100%;" onKeyPress="toSearch('B')" ></form>
+																		<i class="ace-icon fa fa-search" onclick="GysCodeSearch('B')"></i>
+																	</span>
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">供应商名称</label>
+																<div class="col-sm-3">
+																	<span class="input-icon input-icon-right" style="width:100%;">
+																		<input type="text" id="m_gysmch_text" style="width:100%;">
+																	</span>																
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">账户组</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" for="form-field-username" id="m_zhhz_text"></span>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">国家</label>
+																<!--span class="col-sm-3 control-label no-padding-right text-left" for="form-field-username" id="m_gj_text"></span-->
+																<input type="hidden" id="m_gj_text"/>
+																<div class="col-sm-3" id="m_gj_ul" >
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">公司</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+																			<span id="m_gs_text" style="float:left;color:#444;width:90%;display:inline-block;height:auto;text-overflow:ellipsis;overflow:hidden;white-space:nowrap"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_gs_ul" style="height:300px;overflow-y:scroll;width:100%;">
+																				
+																			</ul>
+																		<input type="hidden" id="m_gs_code" value="">
+																	</div>
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">采购组织</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+																			<span id="m_cgzzh_text" style="float:left;color:#444;width:90%;display:inline-block;height:auto;text-overflow:ellipsis;overflow:hidden;white-space:nowrap"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_cgzzh_ul" style="height:300px;overflow-y:scroll;width:100%;">
+																			</ul>
+																		<input type="hidden" id="m_cgzzh_id" value="">
+																	</div>
+																</div>
+																<div class="col-sm-1">
+																	<!--<button value="测试" onclick="testClick();" />-->
+																</div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">公司下付款条件</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;" id="m_fktj_gs_btn" disabled="disabled">
+																			<span id="m_fktj_gs_text" style="float:left;white-space:normal;color:#444;width:90%;overflow:hidden;"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_fktj_gs_ul" style="height:300px;overflow-y:scroll;width:100%;">
+																			</ul>
+																		<input type="hidden" id="m_fktj_gs_code" value="">
+																	</div>
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">采购组织下付款条件</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;" id="m_fktj_cg_btn" disabled="disabled">
+																			<span id="m_fktj_cg_text" style="float:left;white-space:normal;color:#444;width:90%;overflow:hidden;"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_fktj_cg_ul" style="height:300px;overflow-y:scroll;width:100%;">
+																			</ul>
+																		<input type="hidden" id="m_fktj_cg_code" value="">
+																	</div>
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">付款方式</label>
+																<div class="col-sm-3" id="payment_method_ul">
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">货币</label>
+																<input type="hidden" id="m_hb_text"/>
+																<div class="col-sm-3" id="m_hb_ul">]
+																</div>
+															</div>
+														</div>
+														
+														<div class="hr hr-solid hr18"></div>
+														<!--银行卡-->
+														<div class="form-group" style="position:relative;"id="btnAddx">
+							                                <div class="form-group">
+							                                   <div class="col-xs-12 col-sm-12 pad5-12">
+							                                      <div class="col-sm-11" style="text-align:right;">
+							                                         <button class="btn btn-white btn-info btn-bold" id="modifyButtonID" onClick="gysBackAdd(this,'x');">
+							                                            <i class="ace-icon fa fa-pencil align-top bigger-125 blue"></i>
+							                                            添加银行账号信息
+							                                         </button>
+							                                      </div>
+							                                      <div class="col-sm-1"></div>
+							                                   </div>
+							                                 </div>
+							                            </div>
+
+														<div class="form-group" style="position:relative;" id="gysBackAddHtml_x">	
+															<div class="form-group" id="gysBackiftx-0">
+																<div class="col-xs-12 col-sm-12 pad5-12">
+																	<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">开户银行代码</label>
+																	<div class="col-sm-3">
+																		<span class="input-icon input-icon-right" style="width:100%;">
+																			<input type="text" id="add_x_bank0_code" class="gysBackift_Where" style="width:100%;" onKeyPress="searchBank(0,this,'x')"  onfocus="BackCWhere(this,0,'x')">
+																			<i class="ace-icon fa fa-search" onclick="BackCWhere(this,0,'x')"></i>
+																		</span>
+																	</div>
+																	<label class="col-sm-3 control-label no-padding-right gysBackift_Address" id="add_x_bank0_text" for="form-field-username" style="min-width:140px;text-align:left;"></label>
+																	<div class="col-sm-3" style="text-align:right;">
+																		<button class="btn btn-white btn-warning btn-bold" name="gysBackiftx-0" style="visibility:hidden" onClick="deleBankInfo(this,'x')"><i class="ace-icon fa fa-trash-o bigger-125 orange" style="padding-right:5px;"></i>删除银行账号信息</button>
+																	</div>
+																	<div class="col-sm-1"></div>
+																</div>
+																<div class="col-xs-12 col-sm-12 pad5-12">
+																	<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行账号</label>
+																	<div class="col-sm-3">
+																		<input type="text" class="gysBackift_Account" value="" style="width:100%;" onKeyUp="judgeNum(this.value)" id="gysCode_x">
+																	</div>
+																	<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行户主</label>
+																	<div class="col-sm-3">
+																		<input type="text" class="gysBackift_Name" value="" id="add_x_count0_text" style="width:100%;">
+																	</div>
+																	<div class="col-sm-1">																	</div>
+																</div>
+															</div>	
+														</div>
+														<div class="hr hr-solid hr18"></div>
+														<div class="form-group">
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">申请原因</label>
+																<div class="col-sm-8">
+																	<textarea id="sqyy_XG" class="autosize-transition form-control" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 60px; color: rgb(204, 204, 204);" onfocus="adstF(this)" onblur="adstB(this)" onpropertychange="calText(this.value)">请详细描述申请理由,不得少于5个字并且不得多于100个字...</textarea>
+																</div>
+															</div>
+														</div>
+														<div class="clearfix form-actions" style="background-color:#fff;border-top:1px solid #d5e3ef;">
+															<div class="col-md-1 text-right mb20"></div>
+															<div class="col-md-4 text-right mb20">
+																<button class="btn btn-warning" type="button" style="width:40%;" onClick="cancel()">
+																	<i class="ace-icon glyphicon glyphicon-remove bigger-110"></i>
+																	取消																</button>
+															</div>
+															<div class="col-md-2 text-right mb20"></div>
+															<div class="col-md-4 text-left">
+																<button class="btn btn-info" type="button" style="width:40%;" onClick="addSubmit('xiugai');">
+																	<i class="ace-icon fa fa-check bigger-110"></i>
+																	提交																</button>
+															</div>
+														</div>
+													</div>
+													<!-- 冻结 -->
+													<div id="gysFreeze" class="tab-pane in">
+														<div class="form-group">
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">供应商编码</label>
+																<div class="col-sm-3">
+																	<span class="input-icon input-icon-right" style="width:100%;">
+																		<form onsubmit="return false;"><input type="text" id="m_gysmch_codeC" style="width:100%;" onKeyPress="toSearch('C')"></form>
+																		<i class="ace-icon fa fa-search" onclick="GysCodeSearch('C')"></i>
+																	</span>
+																</div>
+																<div class="col-sm-7"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">账户组</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" id="m_zhhz_text_DJ" for="form-field-username"></span>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">供应商名称</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" id="m_gysmch_text_DJ" for="form-field-username"></span>
+																<div class="col-sm-1"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">公司</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+																			<span id="m_gs_text_DJ" style="float:left;color:#444;width:90%;display:inline-block;height:auto;text-overflow:ellipsis;overflow:hidden;white-space:nowrap"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_gs_ul_DJ" style="height:300px;overflow-y:scroll;width:100%;">
+																			</ul>
+																		<input type="hidden" id="typeId" value="">
+																		<input type="hidden" id="txTime" value="">
+																		<input type="hidden" id="m_gs_code_DJ" value="">
+																		<input type="hidden" id="m_cgzzh_code_DJ" value="">
+																	</div>
+																</div>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">采购组织</label>
+																<div class="col-sm-3">
+																	<div class="btn-group" style="width:100%;">
+																		<button data-toggle="dropdown" class="btn btn-primary btn-white dropdown-toggle" style="width:100%;">
+																			<span id="m_cgzzh_text_DJ" style="float:left;color:#444;width:90%;display:inline-block;height:auto;text-overflow:ellipsis;overflow:hidden;white-space:nowrap"></span>
+																			<i class="ace-icon fa fa-angle-down icon-on-right" style="float:right;margin-top:2px;"></i>																		</button>
+																		<ul class="dropdown-menu" id="m_cgzzh_ul_DJ" style="height:300px;overflow-y:scroll;width:100%;">
+																			</ul>
+																		
+																	</div>
+																</div>
+																<div class="col-sm-1"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">国家</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" id="gj_id_DJ" for="form-field-username"></span>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">货币</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" for="form-field-username"><span id="hb_id_DJ"></span><span id="hb_id_DJ_ZW"></span></span>
+																<div class="col-sm-1"></div>
+															</div>
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">公司下付款条件</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" id="m_fktj_gs_text_DJ" for="form-field-username"></span>
+																<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">采购组织下付款条件</label>
+																<span class="col-sm-3 control-label no-padding-right text-left" id="m_fktj_cg_text_DJ" for="form-field-username"></span>
+																<div class="col-sm-1"></div>
+																		<input type="hidden" id="m_fktj_gs_code_DJ" value="">
+																		<input type="hidden" id="m_fktj_cg_code_DJ" value="">
+															</div>
+														</div>
+														<div class="hr hr-solid hr18"></div>
+														<!--银行卡-->
+														<div class="form-group" style="position:relative;display:none"id="btnAddd">
+							                                <div class="form-group">
+							                                   <div class="col-xs-12 col-sm-12 pad5-12">
+							                                      <div class="col-sm-11" style="text-align:right;">
+							                                         <button class="btn btn-white btn-info btn-bold" id="modifyButtonIDd" onClick="gysBackAdd(this,'d');">
+							                                            <i class="ace-icon fa fa-pencil align-top bigger-125 blue"></i>
+							                                            添加银行账号信息
+							                                         </button>
+							                                      </div>
+							                                      <div class="col-sm-1"></div>
+							                                   </div>
+							                                 </div>
+							                            </div>
+														<div class="form-group" style="position:relative;" id="gysBackAddHtml_d">
+															<div class="form-group">
+																<div class="col-xs-12 col-sm-12 pad5-12">
+																	<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">开户银行代码</label>
+																	<span class="col-sm-2 control-label no-padding-right text-left gysBackift_Where" id="gysBankNameID_DJ" style="color:#444;" for="form-field-username"></span>
+																	<span class="col-sm-3 control-label no-padding-right text-left" id="gysBankNameIDN_DJ" style="color:#444;" for="form-field-username"></span>
+																	<div class="col-sm-3"></div>
+																	<div class="col-sm-1"></div>
+																</div>
+																<div class="col-xs-12 col-sm-12 pad5-12">
+																	<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行账号</label>
+																	<span class="col-sm-3 control-label no-padding-right text-left gysBackift_Account" id="gysCode_x_DJ" style="color:#444;" for="form-field-username"></span>
+																	<label class="col-sm-3 control-label no-padding-right" for="form-field-username">银行户主</label>
+																	<span class="col-sm-3 control-label no-padding-right text-left gysBackift_Name" id="gysBankLeadID_DJ" style="color:#444;" for="form-field-username"></span>
+																	<div class="col-sm-1"></div>
+																</div>
+															</div>
+														</div>
+														<div class="hr hr-solid hr18"></div>
+														<div class="form-group">
+															<div class="col-xs-12 col-sm-12 pad5-12">
+																<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">申请原因</label>
+																<div class="col-sm-8">
+																	<textarea id="sqyy_DJ" class="autosize-transition form-control" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 60px; color: rgb(204, 204, 204);" onfocus="adstF(this)" onblur="adstB(this)" onpropertychange="calText(this.value)">请详细描述申请理由,不得少于5个字并且不得多于100个字...</textarea>
+																</div>
+															</div>
+														</div>
+														<div class="clearfix form-actions" style="background-color:#fff;border-top:1px solid #d5e3ef;">
+															<div class="col-md-1 text-right mb20"></div>
+															<div class="col-md-4 text-right mb20">
+																<button class="btn btn-warning" type="button" style="width:40%;" onClick="cancel()">
+																	<i class="ace-icon glyphicon glyphicon-remove bigger-110"></i>
+																	取消																</button>
+															</div>
+															<div class="col-md-2 text-right mb20"></div>
+															<div class="col-md-4 text-left">
+																<button class="btn btn-info" type="button" style="width:40%;" onClick="addSubmit('dongjie');">
+																	<i class="ace-icon fa fa-check bigger-110"></i>
+																	提交																</button>
+															</div>
+														</div>
+													</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>			</a>
+		</div><!-- /.main-container -->
+<input type="hidden" id="m_gysbm_choose" value="">
+<input type="hidden" id="m_gysGS_choose" value="">
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="./assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/chosen.jquery.min.js"></script>
+		<script src="./assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-timepicker.min.js"></script>
+		<script src="./assets/js/date-time/moment.min.js"></script>
+		<script src="./assets/js/date-time/daterangepicker.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-datetimepicker.min.js"></script>
+		<script src="./assets/js/bootstrap-colorpicker.min.js"></script>
+		<script src="./assets/js/jquery.knob.min.js"></script>
+		<script src="./assets/js/jquery.autosize.min.js"></script>
+		<script src="./assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+		<script src="./assets/js/jquery.maskedinput.min.js"></script>
+		<script src="./assets/js/bootstrap-tag.min.js"></script>
+		<script src="./assets/js/typeahead.jquery.min.js"></script>
+	<script src="./assets/js/dropzone.min.js"></script>
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			function adstF(obj){
+				if( $(obj).val() == "请详细描述申请理由,不得少于5个字并且不得多于100个字..." ){
+                    $(obj).val("");
+                    $(obj).css({"color":"#444"});
+                }
+			}
+			function adstB(obj){
+				if( $(obj).val() == "" ){
+					$(obj).val("请详细描述申请理由,不得少于5个字并且不得多于100个字...");
+					$(obj).css({"color":"#ccc"});
+				}
+			}
+			jQuery(function($) {
+			var localCookie = document.cookie;
+			var cookie_user = '';
+			if(localCookie.length > 0 && localCookie.indexOf('userid')>-1){
+				localCookie = localCookie.split(';');
+				for(var lc in localCookie){
+					if(localCookie[lc].indexOf('userid=')>-1){
+						cookie_user = localCookie[lc];
+						break;
+					}
+				} 
+				if(cookie_user == ''){
+					var unique_id = $.gritter.add({
+						title: '警告信息提示',
+						text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+					return false;
+				}else{
+					cookie_user = trim(cookie_user).substring(7);
+					localStorage.removeItem('pernrBase');
+					localStorage.setItem('pernrBase',cookie_user);
+				}
+			}else{
+				var unique_id = $.gritter.add({
+					title: '警告信息提示',
+					text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+					sticky: true,
+					time: '',
+					class_name: 'gritter-info gritter-center'
+				});
+				return false;
+			}
+			//数据初始化
+			//1.当前人信息
+				$.ajaxSetup({
+					contentType: 'application/json',
+					async:false,
+					error:function(){
+						alert(errMsg1);
+					},
+					timeout:timeout
+				 });
+ 				var perJSON = submit_1_1(localStorage.pernrBase?localStorage.pernrBase:'');
+				if(perJSON.status == '0'){
+					var thisPerItem = perJSON.EASY_TAB.item;
+					if(thisPerItem.length>0){
+						var thisPer = thisPerItem[0];
+						$('#current_name').html(checkNoChar(thisPer.NACHN)+'&nbsp;&nbsp;&nbsp;&nbsp;'+parseInt(checkNoChar(thisPer.PERNR)));
+						$('#current_tel').html(checkNoChar(thisPer.TELL));
+						$('#current_company').html(checkNoChar(thisPer.BUTXT));
+						$('#current_gs_code_id').val(checkNoChar(thisPer.BUKRS));
+						$('#current_dept').html(checkNoChar(thisPer.BUMEN));
+						chooseAdd_gs($("#current_gs_code_id").val(),$("#current_company").html());
+					}else{
+						$.gritter.add({
+							title: '系统错误提示',
+							text: '数据初始化异常',
+							class_name: 'gritter-error'
+						});
+						return false;
+						//异常时置灰提交按钮
+					}
+				}else{
+					$.gritter.add({
+						title: '系统错误提示',
+						text: '数据初始化异常',
+						class_name: 'gritter-error'
+					});
+					//异常时置灰提交按钮
+					return false;
+				}
+				//新增页面初始化				
+				//1.1账户组
+				var paramJSON_zhhz = paramJSON_base;
+				paramJSON_zhhz.I_EXCLUDE = "A";//全显示
+				paramJSON_zhhz.I_TYPE = "C";//账户组
+				var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+				if(bdJSON_zhhz.status == '-1'){
+					var unique_id = $.gritter.add({
+						title: '警告信息提示',
+						text: bdJSON_zhhz.ES_PUBLIC.MESSAGE?bdJSON_zhhz.ES_PUBLIC.MESSAGE:'数据初始化失败，请稍后再试'+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+					return false;
+				}else{
+					var ET_BASE_DATA = bdJSON_zhhz.ET_BASE_DATA.item;
+					ET_BASE_DATA = obj2arr(ET_BASE_DATA);
+					var ebdLi = '';
+					for(var ebd in ET_BASE_DATA){
+						ebdLi += '<li>'
+							+'<a onClick="chooseAdd_zhhz(\''+ET_BASE_DATA[ebd].CODE+'\',\''+ET_BASE_DATA[ebd].TEXT+'\')">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</a>'
+							+'</li>'	;																		
+					}
+					$('#add_zhhz_ul').html(ebdLi);
+				}
+				//公司
+				var paramJSON_zhhz = paramJSON_base;
+				paramJSON_zhhz.I_EXCLUDE = "A";//全显示
+				paramJSON_zhhz.I_TYPE = "A";//公司
+				var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+				producCompany(bdJSON_zhhz,'add_gs_ul','chooseAdd_gs');//新增情况下的公司初始化
+				//采购组织
+				var paramJSON_zhhz = paramJSON_base;
+				paramJSON_zhhz.I_EXCLUDE = "A";//全显示
+				paramJSON_zhhz.I_TYPE = "B";//采购组织
+				var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+				producOrganization(bdJSON_zhhz,'add_cgzzh_ul','chooseAdd_cgzzh');
+				//国家
+				var paramJSON_zhhz = paramJSON_base;
+				paramJSON_zhhz.I_EXCLUDE = "A";//全显示
+				paramJSON_zhhz.I_TYPE = "D";//国家
+				var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+				producCountry(bdJSON_zhhz);
+				//货币
+				var paramJSON_zhhz = paramJSON_base;
+				paramJSON_zhhz.I_EXCLUDE = "A";//全显示
+				paramJSON_zhhz.I_TYPE = "E";//货币
+				var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+				productCurrency(bdJSON_zhhz,'add_hb_ul');
+				productCurrency(bdJSON_zhhz,'m_hb_ul');
+				productCurrency(bdJSON_zhhz,'m_hb_ul_KC');
+				//付款方式
+				var paramJSON_zhhz = paramJSON_base;
+				paramJSON_zhhz.I_EXCLUDE = "A";//全显示
+				paramJSON_zhhz.I_TYPE = "H";//付款方式
+				var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+				productpaymentM(bdJSON_zhhz,'payment_method_ul');
+				
+				//付款条件
+				var paramJSON_zhhz = paramJSON_base;
+				paramJSON_zhhz.I_EXCLUDE = "A";//全显示
+				paramJSON_zhhz.I_TYPE = "F";//付款条件
+				var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+				if(bdJSON_zhhz.status == '-1'){
+					var unique_id = $.gritter.add({
+						title: '警告信息提示',
+						text: bdJSON_zhhz.ES_PUBLIC.MESSAGE?bdJSON_zhhz.ES_PUBLIC.MESSAGE:'数据初始化失败，请稍后再试'+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+					return false;
+				}else{
+					var ET_BASE_DATA = bdJSON_zhhz.ET_BASE_DATA.item;
+					ET_BASE_DATA = obj2arr(ET_BASE_DATA);
+					var ebdLi = '<li>'
+							+'<a onClick="chooseAdd_fktj_gs(\'\',\'\')">--空--</a>'
+							+'</li>'	;
+					var ebdLi1 = '<li>'
+							+'<a onClick="chooseAdd_fktj_cg(\'\',\'\')">--空--</a>'
+							+'</li>'	;
+					var ebdLi2 = '<li>'
+							+'<a onClick="chooseM_fktj_gs(\'\',\'\')">--空--</a>'
+							+'</li>'	;
+					var ebdLi21 = '<li>'
+							+'<a onClick="chooseM_fktj_cg(\'\',\'\')">--空--</a>'
+							+'</li>'	;
+					var ebdLi5 = '<li>'
+							+'<a onClick="chooseM_fktj_gs_KC(\'\',\'\')">--空--</a>'
+							+'</li>'	;
+					var ebdLi55 = '<li>'
+							+'<a onClick="chooseM_fktj_cg_KC(\'\',\'\')">--空--</a>'
+							+'</li>'	;
+					for(var ebd in ET_BASE_DATA){
+						ebdLi += '<li>'
+							+'<a onClick="chooseAdd_fktj_gs(\''+ET_BASE_DATA[ebd].CODE+'\',\''+ET_BASE_DATA[ebd].TEXT+'\')">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</a>'
+							+'</li>'	;		
+						ebdLi1 += '<li>'
+							+'<a onClick="chooseAdd_fktj_cg(\''+ET_BASE_DATA[ebd].CODE+'\',\''+ET_BASE_DATA[ebd].TEXT+'\')">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</a>'
+							+'</li>'	;			
+						ebdLi2 += '<li>'
+							+'<a onClick="chooseM_fktj_gs(\''+ET_BASE_DATA[ebd].CODE+'\',\''+ET_BASE_DATA[ebd].TEXT+'\')">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</a>'
+							+'</li>'	;		
+						ebdLi21 += '<li>'
+							+'<a onClick="chooseM_fktj_cg(\''+ET_BASE_DATA[ebd].CODE+'\',\''+ET_BASE_DATA[ebd].TEXT+'\')">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</a>'
+							+'</li>'	;		
+						ebdLi5 += '<li>'
+							+'<a onClick="chooseM_fktj_gs_KC(\''+ET_BASE_DATA[ebd].CODE+'\',\''+ET_BASE_DATA[ebd].TEXT+'\')">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</a>'
+							+'</li>'	;		
+						ebdLi55 += '<li>'
+							+'<a onClick="chooseM_fktj_cg_KC(\''+ET_BASE_DATA[ebd].CODE+'\',\''+ET_BASE_DATA[ebd].TEXT+'\')">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</a>'
+							+'</li>'	;																		
+					}
+					$('#add_fktj_gs_ul').html(ebdLi);
+					$('#add_fktj_cg_ul').html(ebdLi1);
+					$('#m_fktj_gs_ul').html(ebdLi2);
+					$('#m_fktj_cg_ul').html(ebdLi21);
+					$('#m_fktj_gs_ul_KC').html(ebdLi5);
+					$('#m_fktj_cg_ul_KC').html(ebdLi55);
+				}
+				
+				$('.chosen-select').chosen({allow_single_deselect:true}); 
+				//resize the chosen on window resize
+				$(window).on('resize.chosen', function() {
+					var w = $('.chosen-select').parent().width();
+					$('.chosen-select').next().css({'width':w});
+				}).trigger('resize.chosen');
+		});
+			$('.chosen-select').chosen({allow_single_deselect:true}); 
+				//resize the chosen on window resize
+				$(window).on('resize.chosen', function() {
+					var w = $('.chosen-select').parent().width();
+					$('.chosen-select').next().css({'width':w});
+				}).trigger('resize.chosen');
+		</script>
+				<script>
+			function BackContent(obj){
+				$(obj).value == "123";
+				console.log($(obj).val());
+			}
+			//选中国家
+			function choseCou(country){
+				//$("#chosen-select").chosen("destroy");
+				$("#m_gj_select option[value="+country.split(' ')[0]+"]").attr("selected", "selected"); 
+				jQuery("#m_gj_select").trigger("chosen:updated");
+				//jQuery("#m_gj_select").trigger("liszt:updated");
+				//$('.chosen-select').chosen({allow_single_deselect:true}); 
+			}
+			//选中货币
+			function choseWaers(id,waers){
+				if (waers!='' || !waers instanceof Object) {
+					$("#" + id + " option[value=" + waers + "]").attr("selected", "selected");
+					jQuery("#" + id + "").trigger("chosen:updated");
+				}
+			}
+			function testClick(){
+				alert($("#m_gj_select").val());
+				alert($("#m_hb_ul_select").val());
+				alert($("#paymentMethodID").val());
+			}
+			function choseZwels(zwels){
+				var o = $("#paymentMethodID").find("option:selected");
+				// $("#paymentMethodID").html('<option value="1">1 test  付款单</option><option value="A">A TEST</option><option value="B">B Bill of exchange (bank)</option><option value="C">C Check</option><option value="E">E 现金支付</option><option value="L">L 对公普通付款</option><option value="M">M 员工报销集中付款</option><option value="N">N 对公个人普通付款</option><option value="S">S 支付方式</option><option value="T">T 银行转帐</option><option value="U">U Transfer</option><option value="X">X 对公集中付款</option><option value="Y">Y 对公个人集中付款</option><option value="Z">Z 员工报销普通付款</option>')
+				
+				//setTimeout(function(){
+					for(var i in zwels){
+						$("#paymentMethodID option[value="+zwels[i]+"]").attr("selected", "selected"); 
+					}
+					jQuery("#paymentMethodID").trigger("chosen:updated");
+				//},1000)
+				var selected = 1;
+				//setTimeout(function(){
+							$("#paymentMethodID_chosen").find(".search-field").children("input").focus(function(){
+								if( selected == 1 ){
+									$("#paymentMethodID_chosen").find(".search-choice").remove();
+									$("#paymentMethodID option").removeAttr("selected");
+									jQuery("#paymentMethodID").trigger("chosen:updated");
+									selected = 0;
+								}
+								//alert(1);
+							});
+			                //alert($("#paymentMethodID_chosen").html());
+			           //},1000)
+			}
+			function GysNameSearch(){
+				$.layer({
+				    type: 2,
+				    border: [0],
+				    title: false,
+				    shadeClose: true,
+				    closeBtn: false,
+				    shade: [0.8, '#000'],
+				    offset: ['20px',''],
+				    area: ['800px','600px'],
+				    iframe: {src: './gys_nameSearch.html'}
+				});
+			}
+			
+			function GysCodeSearch(flag){
+				$('#FLAGID').val(flag);
+				$.layer({
+				    type: 2,
+				    border: [0],
+				    title: false,
+				    shadeClose: true,
+				    closeBtn: false,
+				    shade: [0.8, '#000'],
+				    offset: ['20px',''],
+				    area: ['800px','600px'],
+				    iframe: {src: './gys_codeSearch.html'}
+				});
+			}
+			function searchBank(bankId,obj,flag){
+				if (event.keyCode == 13) {
+					var bankNO = $(obj).val();
+					switch (flag) {
+						case 'z'://新增
+							localStorage.wtype = 'z';
+							break;
+						case 'x'://修改
+							localStorage.wtype = 'x';
+							break;
+					}
+					var paranJson = {
+                        "IS_PUBLIC": {
+                            "FLOWNO": '',
+                            "PERNR": '',
+                            "ZDOMAIN": '100',
+                            "I_PAGENO": '',
+                            "I_PAGESIZE": ''
+                        },
+						"I_BANKL":bankNO
+                    }
+                    var OpneAJSON = submit_1_3(paranJson);
+                    if (OpneAJSON.status != '-1' && undefined != OpneAJSON.T_BANK_CITY.item) {
+						var ET_BANK_CITY = OpneAJSON.T_BANK_CITY.item;
+						if (ET_BANK_CITY.length > 0) {
+								//alert(checkNoChar(ET_BANK_CITY[0].BANKL) + "" + checkNoChar(ET_BANK_CITY[0].BANKA));
+								$('#add_' + localStorage.wtype + '_bank' + bankId + '_text').html(checkNoChar(ET_BANK_CITY[0].BANKA));
+								$('#add_' + localStorage.wtype + '_bank' + bankId + '_code').val(checkNoChar(ET_BANK_CITY[0].BANKL));
+							}
+					}else {
+						if (OpneAJSON.status == '-1') {
+							$.gritter.add({
+								title: '错误信息提示',
+								text: '开户银行代码不正确',
+								class_name: 'gritter-error'
+							});
+							return;
+						}
+					}
+				}
+			}
+			function BackCWhere(obj,bankId,wtype){
+				$(obj).blur();
+				//alert(wtype);
+				thislayer = $.layer({
+				    type: 2,
+				    border: [0],
+				    title: false,
+				    shadeClose: true,
+				    closeBtn: false,
+				    shade: [0.8, '#000'],
+				    offset: ['20px',''],
+				    area: ['800px','600px'],
+				    iframe: {src: './gys_bankSearch.html'}
+				});
+				localStorage.bankId = bankId;
+				switch (wtype) {
+					case 'z'://新增
+						localStorage.wtype = 'z';
+						break;
+					case 'x'://修改
+						localStorage.wtype = 'x';
+						break;
+				}
+			};
+			
+			//动态添加银行
+			function gysBackAdd(obj,wtype,defaultVal){//defaultVal格式：bankl|banka|bankn|koinh(银行代码|银行名称|银行账户|银行户主)
+				var jobtype="#gysBackAddHtml_"+wtype;
+				var btype="button[name^='gysBackift"+wtype+"-']";
+				var k = $(obj).parents("#btnAdd"+wtype+"").next(jobtype).children(".form-group").length;
+				if(undefined==defaultVal){
+					defaultVal = ["","","",""];
+				}
+				if (wtype == 'x' || wtype == 'z') {
+					var gysBackift_Where = $(obj).parents("#btnAdd" + wtype + "").next(jobtype).children(".form-group").eq(0).find(".gysBackift_Where").val();
+					var gysBackift_Account = $(obj).parents("#btnAdd" + wtype + "").next(jobtype).children(".form-group").eq(0).find(".gysBackift_Account").val();
+					var gysBackift_Name = $(obj).parents("#btnAdd" + wtype + "").next(jobtype).children(".form-group").eq(0).find(".gysBackift_Name").val();
+					if (gysBackift_Where == "" || gysBackift_Account === "" || gysBackift_Name === "") {
+						$.gritter.add({
+							title: '银行卡添加错误',
+							text: '您的当前银行卡信息填写不完整，暂不能添加新的银行卡',
+							class_name: 'gritter-error'
+						});
+						//layer.alert("您的当前银行卡信息填写不完整，暂不能添加新的银行卡",5);
+						return;
+					}else{
+							$(btype).css("visibility", "visible");
+							var AddHtml = '<div class="form-group" id="gysBackift' + wtype + '-' + k + '">' +
+							'<div class="col-xs-12 col-sm-12 pad5-12">' +
+							'<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">开户银行代码</label>' +
+							'<div class="col-sm-3">' +
+							'<span class="input-icon input-icon-right" style="width:100%;">' +
+							'<input type="text" id="add_' +
+							wtype +
+							'_bank' +
+							k +
+							'_code" value="' +
+							defaultVal[0] +
+							'" class="gysBackift_Where"  onKeyPress="searchBank(' +
+							k +
+							',this,\'' +
+							wtype +
+							'\')" onfocus="BackCWhere(this,'+k+',\''+wtype+'\')" style="width:100%;">' +
+							'<i class="ace-icon fa fa-search" onClick="BackCWhere(this,' +
+							k +
+							',\'' +
+							wtype +
+							'\')"></i>' +
+							'</span>' +
+							'</div>' +
+							'<label class="col-sm-3 control-label no-padding-right gysBackift_Address" for="form-field-username" style="min-width:140px;text-align:left;" id="add_' +
+							wtype +
+							'_bank' +
+							k +
+							'_text">' +
+							defaultVal[1] +
+							'</label>' +
+							'<div class="col-sm-3" style="text-align:right;">' +
+							'<button class="btn btn-white btn-warning btn-bold" name="gysBackift' +
+							wtype +
+							'-' +
+							k +
+							'" onclick="deleBankInfo(this,\'' +
+							wtype +
+							'\')"><i class="ace-icon fa fa-trash-o align-top bigger-125 orange" style="padding-right:5px;"></i>删除银行账号信息</button>' +
+							'</div>' +
+							'<div class="col-sm-1">' +
+							'</div>' +
+							'</div>' +
+							'<div class="col-xs-12 col-sm-12 pad5-12">' +
+							'<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行账号</label>' +
+							'<div class="col-sm-3">' +
+							'<input type="text" class="gysBackift_Account" value="' +
+							defaultVal[2] +
+							'" id="add_count' +
+							k +
+							'_code" style="width:100%;">' +
+							'</div>' +
+							'<label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行户主</label>' +
+							'<div class="col-sm-3">' +
+							'<input type="text" class="gysBackift_Name" value="' +
+							defaultVal[3] +
+							'" id="add_' +
+							wtype +
+							'_count' +
+							k +
+							'_text" style="width:100%;">' +
+							'</div>' +
+							'<div class="col-sm-1">' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							'<div class="hr hr-dotted hr18" id="gysBackift' +
+							wtype +
+							'-' +
+							k +
+							'-line">1111</div>'
+							$("#btnAdd" + wtype + "").next(jobtype).children(".form-group").eq(0).before(AddHtml);
+						}
+					}
+					  if (wtype == 'k' || wtype == 'd') {
+						var addhtmlK_D = '' +
+						'<div class="form-group">' +
+						'<div class="col-xs-12 col-sm-12 pad5-12">' +
+						'		<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">开户银行代码</label>' +
+						// '		<div class="col-sm-3">' +
+						// '			<input type="text" class="gysBackift_Where" value='+defaultVal[0]+' id="gysBackiftWhere_Modify_KC' +k +'" style="width:100%;" readonly="readonly">' +
+						// '		</div>' +
+						'		<span class="col-sm-2 control-label no-padding-right text-left gysBackift_Where" id="gysBankNameID_KC' +
+						k +
+						'" for="form-field-username" style="color:#444;">'+defaultVal[0]+'</span>' +'		<span class="col-sm-3 control-label no-padding-right text-left" id="gysBankNameIDN_KC' +
+						k +
+						'" for="form-field-username" style="color:#444;">'+defaultVal[1]+'</span>' +
+						'		<div class="col-sm-3"></div>' +
+						'		<div class="col-sm-1"></div>' +
+						'	</div>' +
+						'	<div class="col-xs-12 col-sm-12 pad5-12">' +
+						'		<label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行账号</label>' +
+						'		<span class="col-sm-3 control-label no-padding-right text-left gysBackift_Account" id="gysCode_x_KC' +
+						k +
+						'" for="form-field-username" style="color:#444;">'+defaultVal[2]+'</span>' +
+						'		<label class="col-sm-3 control-label no-padding-right" for="form-field-username">银行户主</label>' +
+						'		<span class="col-sm-3 control-label no-padding-right text-left gysBackift_Name" id="gysBankLeadID_KC' +
+						k +
+						'" for="form-field-username" style="color:#444;">'+defaultVal[3]+'</span>' +
+						'		<div class="col-sm-1"></div>' +
+						'	</div>' +
+						'</div>' +
+						'</div>'+
+						'<div class="hr hr-solid hr18"></div>';
+						$("#btnAdd" + wtype + "").next(jobtype).children(".form-group").eq(0).before(addhtmlK_D);
+					}
+			}
+			
+							
+				function deleBankInfo(obj,wtype){
+					var name="#"+$(obj).attr('name');
+					var lineName = "#"+$(obj).attr('name')+'-line';
+					$(name).remove();
+					$(lineName).remove();
+					if ($("button[name^='gysBackift"+wtype+"-']").length<2) {
+						$("button[name^='gysBackift"+wtype+"-']").css("visibility","hidden");
+						var tt=$(name).next().class;
+						//alert(tt);
+					}
+				}
+				
+				function judgeNum(obj){     
+				  if((/[^\d]+/g).test(obj)){ 
+				  	 //$('body,html').animate({scrollTop:0},10);  
+					 $.gritter.add({
+						title: '银行卡账号输入错误',
+						text: '银行账号只能输入数字',
+						class_name: 'gritter-error'
+					});
+				  	// layer.alert("银行账号只能输入数字！",5); 
+				     $("[id=gysCode_z]").val("");  
+				      
+				      $("[id=gysCode_z]").focus();         
+				  }       
+				}
+				
+			    function submitAsk(){
+					//$('body,html').animate({scrollTop:0},10);
+					$.layer({
+						shadeClose: true,
+    					shade: [0.8, '#000'],
+						area: ['auto','auto'],
+						dialog: {
+							msg: '供应商申请已提交成功，是否继续申请？',
+							btns: 2,                    
+							type: 4,
+							btn: ['是','否'],
+							yes: function(){
+								
+							}, no: function(){
+								
+							}
+						}
+					});
+				} 
+				
+				function CloseGritter(obj){
+					$(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+						$(obj).parents(".gritter-item-wrapper").remove();
+					});
+				}
+				function WindowClose(){
+					window.close();
+				}
+				function WindowReload(){
+					window.location.reload();
+				}
+				
+				//检查供应商名称重复性
+				function tocheckAdd_gyshmch(textVal){
+						if (event.keyCode == 13) {
+							//$('#add_gyshmch_text').removeAttr('onblur');
+							//$('#add_gyshmch_text').blur(empty);
+		                    checkAdd_gyshmch(textVal);
+		                } else {
+		                    return;
+		                }
+				}
+				
+				function empty(){
+					alert(11)
+				}
+				function checkAdd_gyshmch(textVal){
+					var textVal = $('#add_gyshmch_text').val();
+					if(textVal == ''){
+						$.gritter.add({
+							title: '供应商名称输入错误',
+							text: '请输入供应商名称',
+							class_name: 'gritter-error'
+						});
+						//layer.alert('请输入供应商名称');
+						return;
+					}
+					var checkDataJSON = submit_2_3(textVal);
+					if(checkDataJSON.status == '-1'){
+						$('#add_gyshmch_text').val('');
+						if(undefined != checkDataJSON.ES_PUBLIC && '' != checkNoChar(checkDataJSON.ES_PUBLIC.MESSAGE)){
+							
+//							var index = layer.alert(checkNoChar(checkDataJSON.ES_PUBLIC.MESSAGE),8,function(){
+//								$('#add_gyshmch_text').val('');
+//								layer.close(index);
+//							});
+							var unique_id = $.gritter.add({
+								title: '警告信息提示',
+								text: checkNoChar(checkDataJSON.ES_PUBLIC.MESSAGE)+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+								sticky: true,
+								time: '',
+								class_name: 'gritter-info gritter-center'
+							});
+
+						}else{
+//							var index = layer.alert('供应商名称检查接口调用失败',8,function(){
+//								$('#add_gyshmch_text').val('');
+//								layer.close(index);
+//							});
+							var unique_id = $.gritter.add({
+								title: '警告信息提示',
+								text: '供应商名称检查接口调用失败<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+								sticky: true,
+								time: '',
+								class_name: 'gritter-info gritter-center'
+							});
+						}
+					}else{
+						//校验通过
+					}
+				}
+				
+				//检查字数
+				function calText(textVal){
+					if(textVal.length>99){
+						//$('body,html').animate({scrollTop:0},10);
+						$.gritter.add({
+							title: '申请原因输入错误',
+							text: '申请原因不能多于100字',
+							class_name: 'gritter-error'
+						});
+						//layer.alert('申请原因不能多于80字');
+						$('#add_shqshy_text').val(textVal.substring(0,99));
+					}
+				}
+				//取消
+				function cancel(){
+					//$('body,html').animate({scrollTop:0},10);
+					var unique_id = $.gritter.add({
+						title: '警告信息提示',
+						text: '确定取消此次操作?<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info gritter-center'
+					});
+//					layer.alert('确定取消此次操作？',4,function(){
+//						window.close();
+//					});
+				}
+				
+				//提交
+				var pernr = localStorage.pernrBase?localStorage.pernrBase:'';
+				function addSubmit(submitType){
+					var pernr = localStorage.pernrBase?localStorage.pernrBase:'';
+					if(pernr == ''){
+						var unique_id = $.gritter.add({
+							title: '警告信息提示',
+							text: '用户信息获取失败，请重新登录系统<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+							sticky: true,
+							time: '',
+							class_name: 'gritter-info gritter-center'
+						});
+						//layer.alert('用户信息获取失败，请重新登录系统');
+						return;
+					}
+					var dongjieBank = 0;
+					var IS_HEADER = {}
+					var add_bank_infos = [];
+					switch (submitType){
+						case 'xinzeng':
+										var textVal = $('#add_shqshy_text').val();
+										if(textVal=="请详细描述申请理由,不得少于5个字并且不得多于100个字..."){
+											textVal="";
+										}
+										if(textVal.length<5 || textVal.length>99){
+											//$('body,html').animate({scrollTop:0},10);
+											$.gritter.add({
+												title: '申请原因输入错误',
+												text: '申请原因不能少于5个字或多于100字',
+												class_name: 'gritter-error'
+											});
+											//$('#add_shqshy_text').val(textVal.substring(0,99));
+											return;
+										}
+										if($('#add_zhhz_code').val() == ''){
+											$.gritter.add({
+												title: '账户组选择错误',
+												text: '请选择账户组',
+												class_name: 'gritter-error'
+											});
+											//layer.alert('请选择账户组');
+											return;
+										}
+										if($('#add_gyshmch_text').val() == ''){
+											$.gritter.add({
+												title: '供应商名称输入错误',
+												text: '请输入供应商名称',
+												class_name: 'gritter-error'
+											});
+											//layer.alert('请输入供应商名称');
+											return;
+										}
+										if($('#add_gj_select').val() == ''){
+											$.gritter.add({
+												title: '国家选择错误',
+												text: '请选择国家',
+												class_name: 'gritter-error'
+											});
+											//layer.alert('请选择国家');
+											return;
+										}
+										//取银行信息
+										$("#btnAddz").next("#gysBackAddHtml_z").children(".form-group").each(function(){
+											var a1 = $(this).find(".gysBackift_Where").val();
+											var a2 = $(this).find(".gysBackift_Account").val();
+											var a3 = $(this).find(".gysBackift_Name").val();
+											if(a1 == '' || a2 == '' || a3 == ''){
+											}else{
+												var add_bank_json = {"BANKL":a1,"BANKN":a2,"KOINH":a3};
+												add_bank_infos.push(add_bank_json);
+											}
+										});
+										var add_zhhz = $('#add_zhhz_code').val();//账户组
+										var add_gyshmch = $('#add_gyshmch_text').val();//供应商名称
+										var add_gs = $('#add_gs_code').val();//公司
+										var add_cgzzh = $('#add_cgzzh_code').val();//采购组织
+										var add_gj = $('#add_gj_select').val();//国家
+										var add_hb = $('#add_hb_ul_select').val();//货币
+										var add_fktj_gs = $('#add_fktj_gs_code').val();//公司下付款条件
+										var add_fktj_cg = $('#add_fktj_cg_code').val();//采购组织下付款条件
+										var add_shqshy = $('#add_shqshy_text').val();//申请原因
+										IS_HEADER = {
+											"SQLX":"N",//新增
+											"APPLYER":pernr,
+											"LIFNR":"",//供应商编码
+											"NAME":add_gyshmch,//供应商名称
+											"LAND1":add_gj,//国家
+											"KTOKK":add_zhhz,//账户组
+											"BUKRS":add_gs,//公司
+											"AKONT":"",//统驭科目
+											"ZWELS":"",//付款方式
+											"ZTERM":add_fktj_gs,//公司代码下付款条件
+											"EKORG":add_cgzzh,//采购组织
+											"WAERS":add_hb,//订单货币
+											"ZTERM2":add_fktj_cg,//采购组织下付款条件
+											"SQYY":add_shqshy,//申请原因
+											"CHANGENR":""//文档更改编号
+										};
+						break;
+						case 'kuochong':
+//										if($('#m_gs_text_KC').html() == ''){
+//											$.gritter.add({
+//												title: '警告信息提示',
+//												text: '公司不能为空',
+//												class_name: 'gritter-info'
+//											});
+//											return;
+//										}
+										if($('#m_cgzzh_text_KC').html() != ''){
+											if($('#m_hb_ul_KC_select').val()==''){
+												$.gritter.add({
+												title: '货币选择错误',
+												text: '货币不能为空',
+												class_name: 'gritter-error'
+												});
+												return;
+											}
+											if($('#m_fktj_cg_code_KC').val()==''){
+												$.gritter.add({
+													title: '采购组织下付款条件选择错误',
+													text: '采购组织下付款条件不能为空',
+													class_name: 'gritter-error'
+												});
+												return;
+											}
+										}
+										var textVal = $('#sqyy_KC').val();
+										if(textVal=="请详细描述申请理由,不得少于5个字并且不得多于100个字..."){
+											textVal="";
+										}
+										if(textVal.length<5 || textVal.length>99){
+											//$('body,html').animate({scrollTop:0},10);
+											$.gritter.add({
+												title: '申请原因输入错误',
+												text: '申请原因不能少于5个字或多于100字',
+												class_name: 'gritter-error'
+											});
+											//layer.alert('申请原因不能多于80字');
+											//$('#sqyy_KC').val(textVal.substring(0,99));
+											return;
+										}
+										//取银行信息
+										$("#btnAddk").next("#gysBackAddHtml_k").children(".form-group").each(function(){
+											var a1 = $(this).find(".gysBackift_Where").html();
+											var a2 = $(this).find(".gysBackift_Account").html();
+											var a3 = $(this).find(".gysBackift_Name").html();
+											if(a1 == '' || a2 == '' || a3 == ''){
+											}else{
+												var add_bank_json = {"BANKL":a1,"BANKN":a2,"KOINH":a3};
+												add_bank_infos.push(add_bank_json);
+											}
+										});
+//										var a1 = $("#gysBackiftWhere_Modify_KC").val();
+//										var a2 = $("#gysCode_x_KC").html();
+//										var a3 = $("#gysBankLeadID_KC").html();
+//										var add_bank_json = {"BANKL":a1,"BANKN":a2,"KOINH":a3};
+//										add_bank_infos.push(add_bank_json);//取银行信息...
+										var zhhz = $('#m_zhhz_text_KC').html();//账户组
+										if(zhhz!=''){
+											zhhz = zhhz.split(' ')[0];
+										}
+										var gyshmch = $('#m_gysmch_text_KC').html();//供应商名称
+										var gysbm_codeA = $('#m_gysmch_codeA').val();//供应商编码
+										var gs = $('#m_gs_text_KC').html();//公司
+										if(gs!=''){
+											gs = gs.split(' ')[0];
+										}
+										var cgzzh = $('#m_cgzzh_text_KC').html();//采购组织
+										if(cgzzh!=''){cgzzh = cgzzh.split(' ')[0];}
+										var gj = $('#gj_id_KC').html();//国家
+										if(gj!=''){gj = gj.split(' ')[0];}
+										var hb = $('#m_hb_ul_KC_select').val();//货币
+										var fktj_gs = $('#m_fktj_gs_code_KC').val();//公司下付款条件
+										var fktj_cg = $('#m_fktj_cg_code_KC').val();//采购组织下付款条件
+										var shqshy = $('#sqyy_KC').val();//申请原因
+										IS_HEADER = {
+											"SQLX":"E",//E代表扩充
+											"APPLYER":pernr,
+											"LIFNR":gysbm_codeA,//供应商编码
+											"NAME":gyshmch,//供应商名称
+											"LAND1":gj,//国家
+											"KTOKK":zhhz,//账户组
+											"BUKRS":gs,//公司
+											"AKONT":"",//统驭科目
+											"ZWELS":"",//付款方式
+											"ZTERM":fktj_gs,//公司代码下付款条件
+											"EKORG":cgzzh,//采购组织
+											"WAERS":hb,//订单货币
+											"ZTERM2":fktj_cg,//采购组织下付款条件
+											"SQYY":shqshy,//申请原因
+											"CHANGENR":""//文档更改编号
+										};
+						break;
+						case 'xiugai':
+										var textVal = $('#sqyy_XG').val();
+										if(textVal=="请详细描述申请理由,不得少于5个字并且不得多于100个字..."){
+											textVal="";
+										}
+										if(textVal.length<5 || textVal.length>99){
+											//$('body,html').animate({scrollTop:0},10);
+											$.gritter.add({
+												title: '申请原因输入错误',
+												text: '申请原因不能少于5个字或多于100字',
+												class_name: 'gritter-error'
+											});
+											//layer.alert('申请原因不能多于80字');
+											//$('#sqyy_XG').val(textVal.substring(0,99));
+											return;
+										}
+										if($('#m_gs_text').html() == ''){
+											$.gritter.add({
+												title: '公司选择错误',
+												text: '请选择公司',
+												class_name: 'gritter-error'
+											});
+											return;
+										}
+										//取银行信息
+										$("#btnAddx").next("#gysBackAddHtml_x").children(".form-group").each(function(){
+											var a1 = $(this).find(".gysBackift_Where").val();
+											var a2 = $(this).find(".gysBackift_Account").val();
+											var a3 = $(this).find(".gysBackift_Name").val();
+											if(a1 == '' || a2 == '' || a3 == ''){
+											}else{
+												var add_bank_json = {"BANKL":a1,"BANKN":a2,"KOINH":a3};
+												add_bank_infos.push(add_bank_json);
+											}
+										});
+										var M_zhhz = $('#m_zhhz_text').html();//账户组
+										if(M_zhhz!=''){
+											M_zhhz = M_zhhz.split(' ')[0];
+										}
+										var M_gyshmch = $('#m_gysmch_text').val();//供应商名称
+										var M_gysBm_xg = $('#m_gysmch_codeB').val();
+										var M_gs = $('#m_gs_text').html();//公司
+										if(M_gs!=''){
+											M_gs = M_gs.split(' ')[0];
+										}
+										var M_cgzzh = $('#m_cgzzh_text').html();//采购组织
+										if(M_cgzzh!=''){
+											M_cgzzh = M_cgzzh.split(' ')[0];
+										}
+										var M_gj = $('#m_gj_select').val();//国家
+										if(M_gj!=''){
+											M_gj = M_gj.split(' ')[0];
+										}
+										var M_hb = $('#m_hb_ul_select').val();//货币
+										var M_fktj_gs = $('#m_fktj_gs_code').val();//公司下付款条件
+										var M_fktj_cg = $('#m_fktj_cg_code').val();//采购组织下付款条件
+										var M_fkfs = $('#paymentMethodID').val();//付款方式
+										var arr = '';
+										for(var i in M_fkfs){
+											arr += M_fkfs[i];
+										}
+										M_fkfs = arr;
+										var M_shqshy = $('#sqyy_XG').val();//申请原因
+										IS_HEADER = {
+											"SQLX":"M",//M代表修改
+											"APPLYER":pernr,
+											"LIFNR":M_gysBm_xg,//供应商编码
+											"NAME":M_gyshmch,//供应商名称
+											"LAND1":M_gj,//国家
+											"KTOKK":M_zhhz,//账户组
+											"BUKRS":M_gs,//公司
+											"AKONT":"",//统驭科目
+											"ZWELS":M_fkfs,//付款方式
+											"ZTERM":M_fktj_gs,//公司代码下付款条件
+											"EKORG":M_cgzzh,//采购组织
+											"WAERS":M_hb,//订单货币
+											"ZTERM2":M_fktj_cg,//采购组织下付款条件
+											"SQYY":M_shqshy,//申请原因
+											"CHANGENR":""//文档更改编号
+										};
+						break;
+						case 'dongjie':
+										if($('#m_gysmch_codeC').val()==""){
+											$.gritter.add({
+												title: '供应商编码输入错误',
+												text: '供应商编码不正确',
+												class_name: 'gritter-error'
+											});
+											return;
+										}
+										if($('#m_gs_text_DJ').html() == ''){
+											$.gritter.add({
+												title: '公司选择错误',
+												text: '公司不能为空',
+												class_name: 'gritter-error'
+											});
+											return;
+										}
+										if($('#m_cgzzh_text_DJ').html() == ''){
+											$.gritter.add({
+												title: '采购组织输入错误',
+												text: '采购组织不能为空',
+												class_name: 'gritter-error'
+											});
+											return;
+										}
+										var textVal = $('#sqyy_DJ').val();
+										if(textVal=="请详细描述申请理由,不得少于5个字并且不得多于100个字..."){
+											textVal="";
+										}
+										if(textVal.length<5 || textVal.length>99){
+											//$('body,html').animate({scrollTop:0},10);
+											$.gritter.add({
+												title: '申请原因输入错误',
+												text: '申请原因不能少于5个字或多于100字',
+												class_name: 'gritter-error'
+											});
+											//layer.alert('申请原因不能多于80字');
+											//$('#sqyy_DJ').val(textVal.substring(0,99));
+											return;
+										}
+										//取银行信息
+										$("#btnAddd").next("#gysBackAddHtml_d").children(".form-group").each(function(){
+											var a1 = $(this).find(".gysBackift_Where").html();
+											var a2 = $(this).find(".gysBackift_Account").html();
+											var a3 = $(this).find(".gysBackift_Name").html();
+											if(a1 == '' || a2 == '' || a3 == ''){
+											}else{
+												var add_bank_json = {"BANKL":a1,"BANKN":a2,"KOINH":a3};
+												add_bank_infos.push(add_bank_json);
+											}
+										});
+										if( add_bank_infos == "" ){
+											var dongjieBank = 1;
+										}
+//										var a1 = $("#gysBackiftWhere_Modify_DJ").val();
+//										var a2 = $("#gysCode_x_DJ").html();
+//										var a3 = $("#gysBankLeadID_DJ").html();
+//										var add_bank_json = {"BANKL":a1,"BANKN":a2,"KOINH":a3};
+//										add_bank_infos.push(add_bank_json);//取银行信息...
+										var zhhz = $('#m_zhhz_text_DJ').html();//账户组
+										if(zhhz!=''){
+											zhhz = zhhz.split(' ')[0];
+										}
+										var gyshmch = $('#m_gysmch_text_DJ').html();//供应商名称
+										var gs = $('#m_gs_text_DJ').html();//公司
+										if(gs!=""){
+											gs = gs.split(' ')[0];
+										}
+										var cgzzh = $('#m_cgzzh_text_DJ').html();//采购组织
+										if (cgzzh != "") {
+											cgzzh = cgzzh.split(' ')[0];
+										}
+										var gj = $('#gj_id_DJ').html();//国家
+										if (gj != "") {
+											gj = gj.split(' ')[0];
+										}
+										var hb = $('#hb_id_DJ').html();//货币
+										var fktj_gs = $('#m_fktj_gs_code_DJ').val();//公司下付款条件
+										var fktj_cg = $('#m_fktj_cg_code_DJ').val();//采购组织下付款条件
+										var gysbm_dj = $('#m_gysmch_codeC').val();
+										var shqshy = $('#sqyy_DJ').val();//申请原因
+										IS_HEADER = {
+											"SQLX":"B",//冻结
+											"APPLYER":pernr,
+											"LIFNR":gysbm_dj,//供应商编码
+											"NAME":gyshmch,//供应商名称
+											"LAND1":gj,//国家
+											"KTOKK":zhhz,//账户组
+											"BUKRS":gs,//公司
+											"AKONT":"",//统驭科目
+											"ZWELS":"",//付款方式
+											"ZTERM":fktj_gs,//公司代码下付款条件
+											"EKORG":cgzzh,//采购组织
+											"WAERS":hb,//订单货币
+											"ZTERM2":fktj_cg,//采购组织下付款条件
+											"SQYY":shqshy,//申请原因
+											"CHANGENR":""//文档更改编号
+										};
+						break;
+					}
+					//alert(add_bank_infos);
+					//return;
+					if( add_bank_infos == "" ){
+						if( dongjieBank == 1 ){
+							var addJSON = submit_2_4(localStorage.pernrBase?localStorage.pernrBase:'',IS_HEADER);
+							if(addJSON.status == '0'){
+								var unique_id = $.gritter.add({
+									title: '信息提示',
+									text: '提交成功，是否继续添加?<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-3" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowReload();"><i class="ace-icon fa fa-check"></i>确定</button></span><span class="col-sm-3" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon glyphicon glyphicon-remove"></i>取消</button></span></p>',
+									sticky: true,
+									time: '',
+									class_name: 'gritter-info gritter-center'
+								});
+								//layer.alert('提交成功',9);
+							}else{
+								if(undefined != addJSON.ES_PUBLIC && checkNoChar(addJSON.ES_PUBLIC.MESSAGE)){
+									$.gritter.add({
+										title: '错误信息提示',
+										text: checkNoChar(addJSON.ES_PUBLIC.MESSAGE),
+										class_name: 'gritter-error'
+									});
+									return;
+									//layer.alert(checkNoChar(addJSON.ES_PUBLIC.MESSAGE),8);
+								}else{
+									$.gritter.add({
+										title: '错误信息提示',
+										text: '提交接口调用失败，请联系管理员',
+										class_name: 'gritter-error'
+									});
+									return;
+									//layer.alert('提交接口调用失败，请联系管理员',8);
+								}
+							}
+						}else{
+							localStorage.IS_HEADER = JSON.stringify(IS_HEADER);
+							var unique_id = $.gritter.add({
+								title: '供应商申请异常',
+								text: '银行信息为空，会计将无法正常打款，请确认是否提交?<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-3" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);BankongT();"><i class="ace-icon fa fa-check"></i>确定</button></span><span class="col-sm-3" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon glyphicon glyphicon-remove"></i>取消</button></span></p>',
+								sticky: true,
+								time: '',
+								class_name: 'gritter-info gritter-center'
+							});
+						}
+					}else{
+						var addJSON = submit_2_4(localStorage.pernrBase?localStorage.pernrBase:'',IS_HEADER,add_bank_infos);
+						if(addJSON.status == '0'){
+							var unique_id = $.gritter.add({
+								title: '信息提示',
+								text: '提交成功，是否继续添加?<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-3" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowReload();"><i class="ace-icon fa fa-check"></i>确定</button></span><span class="col-sm-3" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon glyphicon glyphicon-remove"></i>取消</button></span></p>',
+								sticky: true,
+								time: '',
+								class_name: 'gritter-info gritter-center'
+							});
+							//layer.alert('提交成功',9);
+						}else{
+							if(undefined != addJSON.ES_PUBLIC && checkNoChar(addJSON.ES_PUBLIC.MESSAGE)){
+								$.gritter.add({
+									title: '错误信息提示',
+									text: checkNoChar(addJSON.ES_PUBLIC.MESSAGE),
+									class_name: 'gritter-error'
+								});
+								return;
+								//layer.alert(checkNoChar(addJSON.ES_PUBLIC.MESSAGE),8);
+							}else{
+								$.gritter.add({
+									title: '错误信息提示',
+									text: '提交接口调用失败，请联系管理员',
+									class_name: 'gritter-error'
+								});
+								return;
+								//layer.alert('提交接口调用失败，请联系管理员',8);
+							}
+						}
+					}
+					
+				}
+				function BankongT(IS_HEADER){
+					var IS_HEADER = JSON.parse(localStorage["IS_HEADER"]);
+					var addJSON = submit_2_4(localStorage.pernrBase?localStorage.pernrBase:'',IS_HEADER);
+					if(addJSON.status == '0'){
+						var unique_id = $.gritter.add({
+							title: '信息提示',
+							text: '提交成功，是否继续添加?<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-3" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowReload();"><i class="ace-icon fa fa-check"></i>确定</button></span><span class="col-sm-3" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon glyphicon glyphicon-remove"></i>取消</button></span></p>',
+							sticky: true,
+							time: '',
+							class_name: 'gritter-info gritter-center'
+						});
+						//layer.alert('提交成功',9);
+					}else{
+						if(undefined != addJSON.ES_PUBLIC && checkNoChar(addJSON.ES_PUBLIC.MESSAGE)){
+							$.gritter.add({
+								title: '错误信息提示',
+								text: checkNoChar(addJSON.ES_PUBLIC.MESSAGE),
+								class_name: 'gritter-error'
+							});
+							return;
+							//layer.alert(checkNoChar(addJSON.ES_PUBLIC.MESSAGE),8);
+						}else{
+							$.gritter.add({
+								title: '错误信息提示',
+								text: '提交接口调用失败，请联系管理员',
+								class_name: 'gritter-error'
+							});
+							return;
+							//layer.alert('提交接口调用失败，请联系管理员',8);
+						}
+					}
+				}
+				//新增
+				//选择账户组  必选
+				function chooseAdd_zhhz(zhhzCode,zhhzText){
+					$('#add_zhhz_text').html(zhhzCode+" "+zhhzText);
+					$('#add_zhhz_code').val(zhhzCode);
+					if( $('#add_zhhz_code').val() == "Z005" ){
+						$('#add_fktj_cg_btn').attr('disabled','disabled');
+						$('#add_fktj_cg_text').html('');
+						$('#add_fktj_cg_code').val('');
+						$('#add_cgzzh_btn').attr('disabled','disabled');
+						$('#add_cgzzh_text').html('');
+						$('#add_cgzzh_code').val('');
+					}else{
+						$('#add_fktj_cg_btn').removeAttr('disabled');
+						$('#add_cgzzh_btn').removeAttr('disabled');
+					}
+				}
+				//选择公司  非必选
+				function chooseAdd_gs(gsCode,gsText){
+					$('#add_gs_text').html(gsCode+" "+gsText);
+					$('#add_gs_code').val(gsCode);
+					if(gsCode == ''){
+						$('#add_fktj_gs_btn').attr('disabled','disabled');
+						$('#add_fktj_gs_text').html('');
+						$('#add_fktj_gs_code').val('');
+					}else{
+						$('#add_fktj_gs_btn').removeAttr('disabled');
+					}
+				}
+				//选择采购组织  非必选
+				function chooseAdd_cgzzh(cgzzhCode,cgzzhText){
+					$('#add_cgzzh_text').html(cgzzhCode+' '+cgzzhText);
+					$('#add_cgzzh_code').val(cgzzhCode);
+					if(cgzzhCode == ''){
+						//$("#add_hb_ul_select_chosen").find("span").html("");
+						$('#add_fktj_cg_btn').attr('disabled','disabled');
+						$('#add_fktj_cg_text').html('');
+						$('#add_fktj_cg_code').val('');
+						$('#add_hb_ul_select').attr('disabled','disabled');
+						jQuery("#add_hb_ul_select").trigger("chosen:updated");
+					}else{
+						//alert(1);
+						for( i=0;i<$("#add_hb_ul_select").children("option").length;i++ ){
+							if( $("#add_hb_ul_select").children("option").eq(i).val() == "CNY" ){
+								$("#add_hb_ul_select").children("option").eq(i).attr("selected", "selected"); 
+							}
+						}
+						$('#add_fktj_cg_btn').removeAttr('disabled');
+						$('#add_hb_ul_select').removeAttr('disabled');
+						jQuery("#add_hb_ul_select").trigger("chosen:updated");
+					}
+				}
+				//选择付款条件  非必选
+				function chooseAdd_fktj_gs(fktj_gsCode,fktj_gsText){
+					if (fktj_gsCode != '' && fktj_gsCode != '') {
+						$('#add_fktj_gs_text').html(fktj_gsCode + ' ' + fktj_gsText);
+						$('#add_fktj_gs_code').val(fktj_gsCode);
+						if( $('#add_zhhz_code').val() != "Z005" ){
+							if( $('#add_cgzzh_code').val() != "" ){
+								$('#add_fktj_cg_btn').removeAttr('disabled');
+								$('#add_fktj_cg_text').html(fktj_gsCode + ' ' + fktj_gsText);
+								$('#add_fktj_cg_code').val(fktj_gsCode);
+							}
+						}
+					}
+				}
+				function chooseAdd_fktj_cg(fktj_cgCode,fktj_cgText){
+					if (fktj_cgCode != '' && fktj_cgText != '') {
+						$('#add_fktj_cg_text').html(fktj_cgCode + ' ' + fktj_cgText);
+						$('#add_fktj_cg_code').val(fktj_cgCode);
+					}
+				}
+				//扩充
+				//扩充界面的下拉框默认值
+				function chooseM_gs_KC(gsCode,gsText){
+					$('#m_gs_text_KC').html(gsCode+" "+gsText);
+					$('#m_gs_code_KC').val(gsCode);
+					if(gsCode == ''){
+						$('#m_fktj_gs_btnKC').attr('disabled','disabled');
+						$('#m_gs_text_KC').html('');
+						$('#m_gs_code_KC').val('');
+					}else{
+						$('#m_fktj_gs_btnKC').removeAttr('disabled');
+					}
+				}
+				//选择采购组织  非必选
+				function chooseM_cgzzh_KC(cgzzhCode,cgzzhText){
+					$('#m_cgzzh_text_KC').html(cgzzhCode+' '+cgzzhText);
+					$('#m_cgzzh_code_KC').val(cgzzhCode);
+					if(cgzzhCode == ''){
+						$('#m_hb_ul_KC_select').attr('disabled','disabled');
+						jQuery("#m_hb_ul_KC_select").trigger("chosen:updated");
+						$('#KC_btn').attr('disabled','disabled');
+						$('#m_fktj_cg_text_KC').html('');
+                        $('#m_fktj_cg_code_KC').val('');
+						  
+					}else{
+						for( i=0;i<$("#m_hb_ul_KC_select").children("option").length;i++ ){
+							if( $("#m_hb_ul_KC_select").children("option").eq(i).val() == "CNY" ){
+								$("#m_hb_ul_KC_select").children("option").eq(i).attr("selected", "selected"); 
+							}
+						}
+						$('#m_hb_ul_KC_select').removeAttr('disabled');
+						jQuery("#m_hb_ul_KC_select").trigger("chosen:updated");
+						$('#KC_btn').removeAttr('disabled');
+					}
+				}
+				//选择付款条件  非必选
+				function chooseM_fktj_gs_KC(fktj_gsCode,fktj_gsText){
+					//if (fktj_gsCode != '' && fktj_gsText!=''){ //&& !fktj_gsCode instanceof Object) {
+						$('#m_fktj_gs_text_KC').html(fktj_gsCode + ' ' + fktj_gsText);
+						$('#m_fktj_gs_code_KC').val(fktj_gsCode);
+					//}
+				}
+				function chooseM_fktj_cg_KC(fktj_cgCode,fktj_cgText){
+					//if (fktj_cgCode != '' && fktj_cgText!=''){//&& !fktj_cgCode instanceof Object) {
+						$('#m_fktj_cg_text_KC').html(fktj_cgCode + ' ' + fktj_cgText);
+						$('#m_fktj_cg_code_KC').val(fktj_cgCode);
+					//}
+				}
+				
+				//修改
+				//选择修改界面的下拉框默认值
+				function chooseM_gs(gsCode,gsText){
+					$('#m_gs_text').html(gsCode+" "+gsText);
+					$('#m_gs_code').val(gsCode);
+					$('#m_gj_select').removeAttr('disabled');
+					if(gsCode == ''){
+						$('#m_fktj_gs_btn').attr('disabled','disabled');
+						$('#m_gj_select').attr('disabled','disabled');
+						$('#m_fktj_gs_text').html('');
+						$('#m_fktj_gs_code').val('');
+					}else{
+						$('#m_fktj_gs_btn').removeAttr('disabled');
+						$('#m_gj_select').removeAttr('disabled');
+					}
+				}
+				//选择采购组织  非必选
+				function chooseM_cgzzh(cgzzhCode,cgzzhText){
+					$('#m_cgzzh_text').html(cgzzhCode+' '+cgzzhText);
+					$('#m_cgzzh_code').val(cgzzhCode);
+					if(cgzzhCode == ''){
+						$('#m_hb_ul_select').attr('disabled','disabled');
+						jQuery("#m_hb_ul_select").trigger("chosen:updated");
+						$('#m_fktj_cg_btn').attr('disabled','disabled');
+					}else{
+						$('#m_hb_ul_select').removeAttr('disabled');
+						jQuery("#m_hb_ul_select").trigger("chosen:updated");
+						$('#m_fktj_cg_btn').removeAttr('disabled');
+					}
+				}
+				//选择付款条件  非必选
+				function chooseM_fktj_gs(fktj_gsCode,fktj_gsText){
+					$('#m_fktj_gs_text').html(fktj_gsCode+' '+fktj_gsText);
+					$('#m_fktj_gs_code').val(fktj_gsCode);
+				}
+				function chooseM_fktj_cg(fktj_cgCode,fktj_cgText){
+					$('#m_fktj_cg_text').html(fktj_cgCode+' '+fktj_cgText);
+					$('#m_fktj_cg_code').val(fktj_cgCode);
+				}
+				
+				//冻结
+				//冻结界面的下拉框默认值
+				function chooseM_gs_DJ(gsCode,gsText){
+					$('#m_gs_text_DJ').html(gsCode+" "+gsText);
+					$('#m_gs_code_DJ').val(gsCode);
+				}
+				//选择采购组织  非必选
+				function chooseM_cgzzh_DJ(cgzzhCode,cgzzhText){
+					$('#m_cgzzh_text_DJ').html(cgzzhCode+' '+cgzzhText);
+					$('#m_cgzzh_code_DJ').val(cgzzhCode);
+				}
+				//选择付款条件  非必选
+				function chooseM_fktj_gs_DJ(fktj_gsCode,fktj_gsText){
+					$('#m_fktj_gs_text_DJ').html(''+fktj_gsCode+'&nbsp;&nbsp;'+fktj_gsText+'');
+					$('#m_fktj_gs_code_DJ').val(fktj_gsCode);
+				}
+				function chooseM_fktj_cg_DJ(fktj_cgCode,fktj_cgText){
+					$('#m_fktj_cg_text_DJ').html(''+fktj_cgCode+'&nbsp;&nbsp;'+fktj_cgText+'');
+					$('#m_fktj_cg_code_DJ').val(fktj_cgCode);
+				}
+				
+				
+				
+//生产“公司下拉框”
+function producCompany(bdJSON_zhhz,typeID,methodName){
+	if(bdJSON_zhhz.status == '-1'){
+		var unique_id = $.gritter.add({
+			title: '警告信息提示',
+			text: bdJSON_zhhz.ES_PUBLIC.MESSAGE?bdJSON_zhhz.ES_PUBLIC.MESSAGE:'数据初始化失败，请稍后再试'+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+			sticky: true,
+			time: '',
+			class_name: 'gritter-info gritter-center'
+		});
+		return false;
+	}else{
+		var ET_BASE_DATA = bdJSON_zhhz.ET_BASE_DATA.item;
+		ET_BASE_DATA = obj2arr(ET_BASE_DATA);
+		var ebdLi = '<li>'
+				+'<a onClick="'+methodName+'(\'\',\'\')">--空--</a>'
+				+'</li>'	;
+		for(var ebd in ET_BASE_DATA){
+			ebdLi += '<li>'
+				+'<a onClick="'+methodName+'(\''+ET_BASE_DATA[ebd].CODE+'\',\''+ET_BASE_DATA[ebd].TEXT+'\')">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</a>'
+				+'</li>'	;																		
+		}
+		$('#'+typeID+'').html(ebdLi);
+	}
+}
+//生产“采购组织下拉框”
+function producOrganization(bdJSON_zhhz,typeID,methodName){
+	if(bdJSON_zhhz.status == '-1'){
+		var unique_id = $.gritter.add({
+			title: '警告信息提示',
+			text: bdJSON_zhhz.ES_PUBLIC.MESSAGE?bdJSON_zhhz.ES_PUBLIC.MESSAGE:'数据初始化失败，请稍后再试'+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+			sticky: true,
+			time: '',
+			class_name: 'gritter-info gritter-center'
+		});
+		return false;
+	}else{
+		var ET_BASE_DATA = bdJSON_zhhz.ET_BASE_DATA.item;
+		ET_BASE_DATA = obj2arr(ET_BASE_DATA);
+		var ebdLi = '<li>'
+				+'<a onClick="'+methodName+'(\'\',\'\')">--空--</a>'
+				+'</li>'	;
+		for(var ebd in ET_BASE_DATA){
+			ebdLi += '<li>'
+				+'<a onClick="'+methodName+'(\''+ET_BASE_DATA[ebd].CODE+'\',\''+ET_BASE_DATA[ebd].TEXT+'\')">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</a>'
+				+'</li>'	;																		
+		}
+		$('#'+typeID+'').html(ebdLi);
+	}
+}
+//生产“国家下拉框”
+function producCountry(bdJSON_zhhz,typeID){
+	if(bdJSON_zhhz.status == '-1'){
+		var unique_id = $.gritter.add({
+			title: '警告信息提示',
+			text: bdJSON_zhhz.ES_PUBLIC.MESSAGE?bdJSON_zhhz.ES_PUBLIC.MESSAGE:'数据初始化失败，请稍后再试'+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+			sticky: true,
+			time: '',
+			class_name: 'gritter-info gritter-center'
+		});
+		return false;
+	}else{
+		var ET_BASE_DATA = bdJSON_zhhz.ET_BASE_DATA.item;
+		ET_BASE_DATA = obj2arr(ET_BASE_DATA);
+		var ebdLi = '<select class="chosen-select" data-placeholder="请选择国家..." style="display: ;" id="add_gj_select">'
+			+'<option value="">  </option>';
+		var ebdLi1 = '<select  class="chosen-select" data-placeholder="请选择国家..." style="display: ;" id="m_gj_select">'
+			+'<option value="">  </option>';//data-rel="chosen"
+		for(var ebd in ET_BASE_DATA){
+			if (ET_BASE_DATA[ebd].CODE == 'CN') {
+				ebdLi += '<option selected value="' + ET_BASE_DATA[ebd].CODE + '">' + ET_BASE_DATA[ebd].CODE + ' ' + ET_BASE_DATA[ebd].TEXT + '</option>';
+				ebdLi1+= '<option selected value="'+ET_BASE_DATA[ebd].CODE+'">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</option>';	
+			}
+			else {
+				ebdLi += '<option value="' + ET_BASE_DATA[ebd].CODE + '">' + ET_BASE_DATA[ebd].CODE + ' ' + ET_BASE_DATA[ebd].TEXT + '</option>';
+				ebdLi1+= '<option value="'+ET_BASE_DATA[ebd].CODE+'">'+ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT+'</option>';	
+			}
+			
+		}
+		ebdLi += '</select>';
+		//$('#'+typeID+'').html(ebdLi);
+		$('#add_gj_ul').html(ebdLi);
+		$('#m_gj_ul').html(ebdLi1);
+	}
+}
+//生产“货币下拉框”
+function productCurrency(bdJSON_zhhz,typeID,defaultCurrentcy){
+	if(bdJSON_zhhz.status == '-1'){
+		var unique_id = $.gritter.add({
+			title: '警告信息提示',
+			text: bdJSON_zhhz.ES_PUBLIC.MESSAGE?bdJSON_zhhz.ES_PUBLIC.MESSAGE:'数据初始化失败，请稍后再试'+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+			sticky: true,
+			time: '',
+			class_name: 'gritter-info gritter-center'
+		});
+		return false;
+	}else{
+		var ET_BASE_DATA = bdJSON_zhhz.ET_BASE_DATA.item;
+		ET_BASE_DATA = obj2arr(ET_BASE_DATA);
+		var temp = '<select class="chosen-select" disabled="disabled" data-placeholder="请选择货币..." style="display: ;" id="'+typeID+'_select">'
+			+'<option value="">  </option>';
+		for(var ebd in ET_BASE_DATA){
+			if (ET_BASE_DATA[ebd].CODE == defaultCurrentcy) {
+				temp += '<option selected value="' + ET_BASE_DATA[ebd].CODE + '">' + ET_BASE_DATA[ebd].CODE+' '+ET_BASE_DATA[ebd].TEXT + '</option>';
+			}
+			else {
+				temp += '<option value="' + ET_BASE_DATA[ebd].CODE + '">' +ET_BASE_DATA[ebd].CODE+' '+ ET_BASE_DATA[ebd].TEXT + '</option>';
+			}
+		}
+		temp += '</select>';
+		$('#'+typeID+'').html(temp);
+	}
+}
+//生产“付款方式下拉框”
+function productpaymentM(bdJSON_zhhz,typeID){
+	if(bdJSON_zhhz.status == '-1'){
+		var unique_id = $.gritter.add({
+			title: '警告信息提示',
+			text: bdJSON_zhhz.ES_PUBLIC.MESSAGE?bdJSON_zhhz.ES_PUBLIC.MESSAGE:'数据初始化失败，请稍后再试'+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+			sticky: true,
+			time: '',
+			class_name: 'gritter-info gritter-center'
+		});
+		return false;
+	}else{
+		var ET_BASE_DATA = bdJSON_zhhz.ET_BASE_DATA.item;
+		ET_BASE_DATA = obj2arr(ET_BASE_DATA);
+		var temp = '<select multiple="" class="chosen-select tag-input-style" id="paymentMethodID" data-placeholder="请选择方式..." style="font-family:"Microsoft YaHei";font-size:16px; display:none;">'
+		for(var i in ET_BASE_DATA){
+			temp += '<option value="' + ET_BASE_DATA[i].CODE + '">' +ET_BASE_DATA[i].CODE+' '+ ET_BASE_DATA[i].TEXT + '</option>';
+		}
+		temp += '</select>';
+		$('#'+typeID+'').html(temp);
+	}
+}
+		//初始化供应商基本信息
+		function initFirstTime(waers,country,gysbm,gysInfoJSON,bankl,banka,bankn,koinh){
+				var ES_HEAD = gysInfoJSON.ES_HEAD;
+				var wtype ="";
+							var modifyButton;
+							if($('#FLAGID').val()=="B"){
+								//获取添加按钮对象，以便调用添加方法
+								modifyButton = parent.$("#modifyButtonID");
+								wtype = 'x';
+							}else
+							if($('#FLAGID').val()=="A"){
+								modifyButton = parent.$("#modifyButtonIDk");
+								wtype = 'k';
+							}else
+							if($('#FLAGID').val()=="C"){
+								modifyButton = parent.$("#modifyButtonIDd");
+								wtype = 'd';
+							}
+							var jobtype="#gysBackAddHtml_"+wtype;
+							if( wtype == 'x' ){
+								$("#btnAdd" + wtype + "").next(jobtype).html('<div class="form-group" id="gysBackiftx-0"><div class="col-xs-12 col-sm-12 pad5-12"><label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">开户银行代码</label><div class="col-sm-3"><span class="input-icon input-icon-right" style="width:100%;"><input type="text" id="add_x_bank0_code" class="gysBackift_Where" style="width:100%;" onKeyPress="searchBank(0,this,\''+wtype+'\')"><i class="ace-icon fa fa-search" onclick="BackCWhere(this,0,\''+wtype+'\')"></i></span></div><label class="col-sm-3 control-label no-padding-right gysBackift_Address" id="add_x_bank0_text" for="form-field-username" style="min-width:140px;text-align:left;"></label><div class="col-sm-3" style="text-align:right;"><button class="btn btn-white btn-warning btn-bold" name="gysBackiftx-0" style="visibility:hidden" onClick="deleBankInfo(this,\''+wtype+'\')"><i class="ace-icon fa fa-trash-o bigger-125 orange" style="padding-right:5px;"></i>删除银行账号信息</button></div><div class="col-sm-1"></div></div><div class="col-xs-12 col-sm-12 pad5-12"><label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行账号</label><div class="col-sm-3"><input type="text" class="gysBackift_Account" value="" style="width:100%;" onKeyUp="judgeNum(this.value)" id="gysCode_x"></div><label class="col-sm-3 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行户主</label><div class="col-sm-3"><input type="text" class="gysBackift_Name" value="" id="add_x_count0_text" style="width:100%;"></div><div class="col-sm-1"></div></div></div>');
+							}else if( wtype == 'd' ){
+								$("#btnAdd" + wtype + "").next(jobtype).html('<div class="form-group"><div class="col-xs-12 col-sm-12 pad5-12"><label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">开户银行代码</label><span class="col-sm-2 control-label no-padding-right text-left gysBackift_Where" id="gysBankNameID_DJ" for="form-field-username" style="color:#444;" ></span><span class="col-sm-3 control-label no-padding-right text-left" id="gysBankNameIDN_DJ" for="form-field-username" style="color:#444;" ></span><div class="col-sm-3"></div><div class="col-sm-1"></div></div><div class="col-xs-12 col-sm-12 pad5-12"><label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行账号</label><span class="col-sm-3 control-label no-padding-right text-left gysBackift_Account" id="gysCode_x_DJ" for="form-field-username" style="color:#444;" ></span><label class="col-sm-3 control-label no-padding-right" for="form-field-username">银行户主</label><span class="col-sm-3 control-label no-padding-right text-left gysBackift_Name" id="gysBankLeadID_DJ" for="form-field-username" style="color:#444;" ></span><div class="col-sm-1"></div></div></div>');
+							}else if( wtype == 'k'){
+										$("#btnAdd" + wtype + "").next(jobtype).html('<div class="hr hr-solid hr18"></div><div class="form-group"><div class="col-xs-12 col-sm-12 pad5-12"><label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">开户银行代码</label><span class="col-sm-2 control-label no-padding-right text-left gysBackift_Where" id="gysBankNameID_KC" for="form-field-username" style="color:#444;" ></span><span class="col-sm-3 control-label no-padding-right text-left" id="gysBankNameIDN_KC" for="form-field-username" style="color:#444;" ></span><div class="col-sm-3"></div><div class="col-sm-1"></div></div><div class="col-xs-12 col-sm-12 pad5-12"><label class="col-sm-2 control-label no-padding-right" for="form-field-username" style="min-width:140px;">银行账号</label><span class="col-sm-3 control-label no-padding-right text-left gysBackift_Account" id="gysCode_x_KC" for="form-field-username" style="color:#444;" ></span><label class="col-sm-3 control-label no-padding-right" for="form-field-username">银行户主</label><span class="col-sm-3 control-label no-padding-right text-left gysBackift_Name" id="gysBankLeadID_KC" for="form-field-username" style="color:#444;" ></span><div class="col-sm-1"></div></div></div>');
+									}
+				switch ($('#FLAGID').val()){
+					case "A"://扩充
+						//银行信息
+						$("#gysBackiftWhere_Modify_KC").val(bankl);
+						$("#gysBankNameID_KC").html(bankl);
+						$("#gysBankNameIDN_KC").html(banka);
+						$("#gysCode_x_KC").html(bankn);
+						$("#gysBankLeadID_KC").html(koinh);
+						$('#m_gysmch_codeA').val(gysbm);//赋值供应商编码到父界面
+						$('#GJ_KC_ID').html(country);
+						$('#m_zhhz_text_KC').html(checkNoChar(ES_HEAD.KTOKK)+' '+checkNoChar(ES_HEAD.TXT30));//账户组
+						$('#m_gysmch_text_KC').html(checkNoChar(ES_HEAD.NAME));//供应商名称
+						//begin公司
+						var paramJSON_zhhz = paramJSON_base;
+						paramJSON_zhhz.I_EXCLUDE = "B";//排除已存在的
+						paramJSON_zhhz.I_TYPE = "A";//公司
+						paramJSON_zhhz.I_LIFNR = gysbm;
+						var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+						producCompany(bdJSON_zhhz,'m_gs_ul_KC','chooseM_gs_KC');
+						//chooseM_gs_KC($("#m_gysGS_choose").val().split(" ")[0],$("#m_gysGS_choose").val().split(" ")[1]);//end公司//公司...
+						//begin采购组织
+						var paramJSON_zhhz = paramJSON_base;
+						paramJSON_zhhz.I_EXCLUDE = "B";//排除已存在的
+						paramJSON_zhhz.I_TYPE = "B";//采购组织
+						paramJSON_zhhz.I_LIFNR = gysbm;
+						var bdJSON_cgzzh = submit_2_1(paramJSON_zhhz);
+						producOrganization(bdJSON_cgzzh,'m_cgzzh_ul_KC','chooseM_cgzzh_KC');
+						//chooseM_cgzzh_KC(ES_HEAD.EKORG,ES_HEAD.EKOTX);//end采购组织//采购组织...
+						$('#gj_id_KC').html(country);//国家
+						//货币。。。
+						//paramJSON_zhhz.I_EXCLUDE = "A";//全部
+						//paramJSON_zhhz.I_TYPE = "E";//货币
+						//paramJSON_zhhz.I_LIFNR = gysbm;
+						//var bdJSON_C = submit_2_1(paramJSON_zhhz);
+						//productCurrency(bdJSON_C,'m_hb_ul_KC',ES_HEAD.WAERS);//货币。。。
+						choseWaers('m_hb_ul_KC_select',waers);
+						//alert(ES_HEAD.WAERS);
+						
+						//chooseM_fktj_gs_KC(ES_HEAD.ZTERM,ES_HEAD.ZTERMTX);//公司付款条件//公司下付款条件...
+						//chooseM_fktj_cg_KC(ES_HEAD.ZTERM2,ES_HEAD.ZTERMTX2);//采购组织付款条件//采购组织下付款条件...
+					break;
+					case "B"://修改
+						//银行信息
+						$("#add_x_bank0_code").val(bankl);
+						$("#add_x_bank0_text").html(banka);
+						$("#gysCode_x").val(bankn);
+						$("#add_x_count0_text").val(koinh);
+						$('#m_gysmch_codeB').val(gysbm);//赋值供应商编码到父界面
+						$('#m_zhhz_text').html(checkNoChar(ES_HEAD.KTOKK)+' '+checkNoChar(ES_HEAD.TXT30));//账户组
+						$('#m_gysmch_text').val(checkNoChar(ES_HEAD.NAME));//供应商名称
+						//begin公司
+						var paramJSON_zhhz = paramJSON_base;
+						paramJSON_zhhz.I_EXCLUDE = "C";//已存在
+						paramJSON_zhhz.I_TYPE = "A";//公司
+						paramJSON_zhhz.I_LIFNR = gysbm;
+						var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+						producCompany(bdJSON_zhhz,'m_gs_ul','chooseM_gs');
+						if ($("#m_gysGS_choose").val() != '') {
+							chooseM_gs($("#m_gysGS_choose").val().split(" ")[0], $("#m_gysGS_choose").val().split(" ")[1]);//end公司
+						}
+						//begin采购组织
+						var paramJSON_zhhz = paramJSON_base;
+						paramJSON_zhhz.I_EXCLUDE = "C";//已存在
+						paramJSON_zhhz.I_TYPE = "B";//采购组织
+						paramJSON_zhhz.I_LIFNR = gysbm;
+						var bdJSON_cgzzh = submit_2_1(paramJSON_zhhz);
+						producOrganization(bdJSON_cgzzh,'m_cgzzh_ul','chooseM_cgzzh');
+						chooseM_cgzzh(checkNoChar(ES_HEAD.EKORG),checkNoChar(ES_HEAD.EKOTX));//end采购组织
+						//$("#m_gj_select option[value='CN']").attr("selected", "selected"); 
+						choseCou(country);//国家。。。
+						//alert(country);
+						
+						//货币。。。
+						//alert(ES_HEAD.WAERS);
+						//paramJSON_zhhz.I_EXCLUDE = "A";//全部
+						//paramJSON_zhhz.I_TYPE = "E";//货币
+						//paramJSON_zhhz.I_LIFNR = gysbm;
+						//var bdJSON_C = submit_2_1(paramJSON_zhhz);
+						//productCurrency(bdJSON_C,'m_hb_ul','AFA');//货币。。。
+						choseWaers('m_hb_ul_select',waers);
+						
+						chooseM_fktj_gs(checkNoChar(ES_HEAD.ZTERM),checkNoChar(ES_HEAD.ZTERMTX));//公司付款条件
+						chooseM_fktj_cg(checkNoChar(ES_HEAD.ZTERM2),checkNoChar(ES_HEAD.ZTERMTX2));//采购组织付款条件
+						//alert(ES_HEAD.ZWELS);//（付款方式）。。。
+						choseZwels(checkNoChar(ES_HEAD.ZWELS));
+					break;
+					case "C"://冻结
+						//银行信息
+						//$("#gysBackiftWhere_Modify_DJ").val(bankl);
+						$("#gysBankNameID_DJ").html(bankl);
+						$("#gysBankNameIDN_DJ").html(banka);
+						$("#gysCode_x_DJ").html(bankn);
+						$("#gysBankLeadID_DJ").html(koinh);
+						$('#m_gysmch_codeC').val(gysbm);//赋值供应商编码到父界面
+						$('#m_zhhz_text_DJ').html(checkNoChar(ES_HEAD.KTOKK)+' '+checkNoChar(ES_HEAD.TXT30));//账户组
+						$('#m_gysmch_text_DJ').html(checkNoChar(ES_HEAD.NAME));//供应商名称
+						//begin公司
+						var paramJSON_zhhz = paramJSON_base;
+						paramJSON_zhhz.I_EXCLUDE = "C";//已存在
+						paramJSON_zhhz.I_TYPE = "A";//公司
+						paramJSON_zhhz.I_LIFNR = gysbm;
+						var bdJSON_zhhz = submit_2_1(paramJSON_zhhz);
+						producCompany(bdJSON_zhhz,'m_gs_ul_DJ','chooseM_gs_DJ');
+						if ($("#m_gysGS_choose").val() != '') {
+							chooseM_gs_DJ($("#m_gysGS_choose").val().split(" ")[0], $("#m_gysGS_choose").val().split(" ")[1]);//end公司
+						}
+						//begin采购组织
+						var paramJSON_zhhz = paramJSON_base;
+						paramJSON_zhhz.I_EXCLUDE = "C";//已存在
+						paramJSON_zhhz.I_TYPE = "B";//采购组织
+						paramJSON_zhhz.I_LIFNR = gysbm;
+						var bdJSON_cgzzh = submit_2_1(paramJSON_zhhz);
+						producOrganization(bdJSON_cgzzh,'m_cgzzh_ul_DJ','chooseM_cgzzh_DJ');
+						chooseM_cgzzh_DJ(checkNoChar(ES_HEAD.EKORG),checkNoChar(ES_HEAD.EKOTX));//end采购组织
+						$('#gj_id_DJ').html(country);//国家
+						var ltext_dj = checkNoChar(ES_HEAD.LTEXT);
+						var huobi_dj = waers;
+						var huobi_dj_ZW = ltext_dj;
+						$('#hb_id_DJ').html(huobi_dj);//货币&nbsp;&nbsp;'+ltext_dj+'waers
+						$('#hb_id_DJ_ZW').html(huobi_dj_ZW);//货币&nbsp;&nbsp;'+ltext_dj+'waers
+						chooseM_fktj_gs_DJ(checkNoChar(ES_HEAD.ZTERM),checkNoChar(ES_HEAD.ZTERMTX));//公司付款条件
+						chooseM_fktj_cg_DJ(checkNoChar(ES_HEAD.ZTERM2),checkNoChar(ES_HEAD.ZTERMTX2));//采购组织付款条件
+					break;
+				}
+			}
+			//回车搜索功能
+            function toSearch(flag) {
+                if (event.keyCode == 13) {
+						var gysbm = '';
+						switch (flag){
+							case 'A'://扩充
+								$('#FLAGID').val("A");
+								gysbm = $("#m_gysmch_codeA").val();
+							break;
+							case 'B'://修改
+								$('#FLAGID').val("B");
+								gysbm = $("#m_gysmch_codeB").val();
+							break;
+							case 'C'://冻结
+								$('#FLAGID').val("C");
+								gysbm = $("#m_gysmch_codeC").val();
+							break;
+						}
+						var opts = {
+			            lines: 10, // 花瓣数目
+			            length: 0, // 花瓣长度
+			            width: 10, // 花瓣宽度
+			            radius: 20, // 花瓣距中心半径
+			            corners: 1, // 花瓣圆滑度 (0-1)
+			            rotate: 0, // 花瓣旋转角度
+			            direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+			            color: '#2679b5', // 花瓣颜色
+			            speed: 1, // 花瓣旋转速度
+			            trail: 60, // 花瓣旋转时的拖影(百分比)
+			            shadow: false, // 花瓣是否显示阴影
+			            hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+			            className: 'spinner', // spinner css 样式名称
+			            zIndex: 2e9 // spinner的z轴 (默认是2000000000)
+			            //top: '100', // spinner 相对父容器Top定位 单位 px
+			            //left: '100'// spinner 相对父容器Left定位 单位 px
+		       		};
+			        var target = document.getElementById("Loading");  
+			        var spinner = new Spinner(opts).spin(target);
+					pagei = $.layer({
+						type: 1,   //0-4的选择,
+						title: false,
+						border: [0],
+						closeBtn: [0],
+						shadeClose: false,
+						area: ['auto', 'auto'],
+						page: {dom : '#Loading'}
+					});
+					var current_gs_code = $('#current_gs_code_id').val();
+					var gysInfoJSON = submit_2_5(gysbm,current_gs_code,$('#FLAGID').val());
+					var wtype ="";
+							var modifyButton;
+							if($('#FLAGID').val()=="B"){
+								//获取添加按钮对象，以便调用添加方法
+								modifyButton = parent.$("#modifyButtonID");
+								wtype = 'x';
+							}else
+							if($('#FLAGID').val()=="A"){
+								modifyButton = parent.$("#modifyButtonIDk");
+								wtype = 'k';
+							}else
+							if($('#FLAGID').val()=="C"){
+								modifyButton = parent.$("#modifyButtonIDd");
+								wtype = 'd';
+							}
+					if (gysInfoJSON.status == '-1') {
+						if (undefined != gysInfoJSON.ES_PUBLIC) {
+							$.gritter.add({
+								title: '错误信息提示',
+								text: "错误的供应商编码",
+								class_name: 'gritter-error'
+							});
+							//layer.alert();
+							spinner.spin();
+							layer.close(pagei);
+							return;
+						}else {
+							$.gritter.add({
+								title: '错误信息提示',
+								text: '查询接口调用失败',
+								class_name: 'gritter-error'
+							});
+							spinner.spin();
+							layer.close(pagei);
+							return;
+						}
+						spinner.spin();
+						layer.close(pagei);
+					}else{
+						//自动获取数据
+						var ES_HEAD = gysInfoJSON.ES_HEAD;
+						/**根据供应商编码读取银行相关信息*/
+						var country = checkNoChar(ES_HEAD.LAND1)+" "+checkNoChar(ES_HEAD.LANDX);;
+						//alert(country);//国家
+						var waers = checkNoChar(ES_HEAD.WAERS);
+						// var ltext_dj = checkNoChar(ES_HEAD.LTEXT);
+						// alert(ltext_dj);
+						var ET_BANK = gysInfoJSON.ET_BANK;
+						//获取添加按钮对象，以便调用添加方法
+						var modifyButton = parent.$("#modifyButtonID");
+						var ITEM = ET_BANK.item;
+						ITEM = obj2arr(ITEM);
+						var t = checkNoChar(ES_HEAD.BUKRS)+' '+checkNoChar(ES_HEAD.BUTXT);
+						$('#m_gysGS_choose').val(t);
+						if (ITEM.length == 0) {
+
+							
+							initFirstTime(waers,country,gysbm,gysInfoJSON, '', '', '', '');
+						}
+						else {
+							for (var i in ITEM) {
+								var bankl = ITEM[i].BANKL;//银行代码
+								var banka = ITEM[i].BANKA;//银行名称
+								var bankn = ITEM[i].BANKN;//银行账户
+								var koinh = ITEM[i].KOINH;//银行户主
+								if (i == 0) {
+									initFirstTime(waers,country,gysbm,gysInfoJSON, bankl, banka, bankn, koinh);
+								}
+								else {
+									gysBackAdd(modifyButton, wtype, [bankl, banka, bankn, koinh]);
+								}
+							}
+						}
+						spinner.spin();
+						layer.close(pagei);
+						return;
+					}
+                } else {
+                    return;
+                }
+            }
+			//F5刷新问题
+			$("body").keydown(function(e){
+				var ev = window.event || e;
+				var code = ev.keyCode || ev.which;
+				if (code==116) {
+				 // 阻止默认的F5事件
+				if(ev.preventDefault) {
+					ev.preventDefault();
+				}else {
+					ev.keyCode=0;
+					ev.returnValue=false; 
+				}
+				// 调用刷新函数
+				window.location.reload();//支持IE
+				}
+			});
+		</script>
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+		
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>	</body>
+</html>

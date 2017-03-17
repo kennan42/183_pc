@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>加班详情待审批</title>
+        <meta name="description" content="Common form elements and layouts" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <!----------------------------------><!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+        <!-- page specific plugin styles -->
+        <link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="./assets/css/chosen.css" />
+        <link rel="stylesheet" href="./assets/css/datepicker.css" />
+        <link rel="stylesheet" href="./assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="./assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="./assets/css/bootstrap-datetimepicker.css" />
+        <link rel="stylesheet" href="./assets/css/colorpicker.css" />
+        <!-- text fonts -->
+        <link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+        <![endif]--><!-- inline styles related to this page --><!-- ace settings handler -->
+        <script src="./assets/js/ace-extra.min.js">
+        </script>
+        <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+        <!--[if lte IE 8]>
+            <script src="./assets/js/html5shiv.min.js"></script>
+            <script src="./assets/js/respond.min.js"></script>
+        <![endif]-->
+        <script src="./myjs/backup.js">
+        </script>
+        <script src="./myjs/lexus.js">
+        </script>
+        <script>
+        </script>
+    </head>
+    <body class="no-skin" style="background-color: white;font-family:Microsoft YaHei ! important">
+        <div id="navbar" class="navbar navbar-default">
+        </div>
+        <script type="text/javascript">
+            try {
+                ace.settings.check('navbar', 'fixed')
+            } 
+            catch (e) {
+            }
+        </script>
+        <div style="width:1000px ">
+            <div class="" style="width:300px;height:500px; border: 1px solid #CCCCCC;float:left;margin-top:3px">
+                <div class="alert " style="border-color: #EEEEEE;font-size:20px;text-align:center">
+                    <span>休假审批 </span>
+                    <span style="color:#339900" id="vacation_count">0</span>
+                </div>
+                <div class="alert " style="background-color: rgb(218, 250, 246);border-color: #EEEEEE;margin-top: -20px; border-top:0px;font-size:20px;text-align:center">
+                    <span>加班审批 </span>
+                    <span style="color:#339900" id="overtime_count">0</span>
+                </div>
+                <div class="alert " style="border-color: #EEEEEE;margin-top: -20px; border-top:0px;font-size:20px;text-align:center">
+                    <span>考勤异常审批 </span>
+                    <span style="color:#339900" id="error_count">0</span>
+                </div>
+                <!--div class="alert " style="background-color:white ;border-color: #EEEEEE;margin-top: -20px; border-top:0px;font-size:20px;text-align:center">
+                <span style="margin-left:43px;">差旅申请审批</span>
+                <span style="color:#339900" id="" name="">15</span>
+                </div-->
+            </div>
+            <!-------右边div------------------------------------------------------>
+            <div class="row" style="">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class=" widget-box" style="width: 1020px;margin-left: 320px;">
+                    <div class=" widget-header">
+                        <div class=" widget-title" style="font-size:20px">
+                            <div class="nav-search" id="nav-search" style="margin-top:5px;float:left;position:relative;margin-left:20px">
+                                <form class="form-search">
+                                    <span class="input-icon"><input type="text" placeholder="" class="nav-search-input" id="nav-search-input" autocomplete="off"><i class="ace-icon fa fa-search nav-search-icon"></i></span>
+                                </form>
+                            </div>
+                            <span style="float:right">
+                                <button class="btn btn-info" type="button">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    全部同意
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <ul style="list-style-type:none">
+                                <li style="font-size:20px；color:#DADDE1;font-family:" 微软雅黑""="">
+                                    <label class="inline">
+                                        <input type="checkbox" class="ace"><span class="lbl" style="margin-left:-20px"></span>
+                                        全选
+                                    </label>
+                                    <span style="margin-left:30px;font-size:20px"> 申请人 </span>
+                                    <span style="margin-left:40px;font-size:20px">加班日期</span>
+                                    <span style="margin-left:50px;font-size:20px">加班时间 </span>
+                                    <span style="margin-left:50px;font-size:20px">工作内容 </span>
+                                    <span style="margin-left:290px;font-size:20px"> 提交日期</span>
+                                </li>
+                            </ul>
+                            <!-- PAGE CONTENT ENDS -->
+                        </div>
+                    </div>
+                    <!-- /.page-content-area -->
+                    <div id="accordion" class="accordion-style1 panel-group ui-accordion ui-widget ui-helper-reset ui-sortable" role="tablist">
+                        <div class="accordion-style1 panel-group" id="listsStr">
+                            <!--div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title" style="">
+                                        <label class="inline" style="width: 20px;margin-top: 10px;margin-left: 6px;">
+                                            <input onclick="quanxuan()" id="a" name="a1" type="checkbox" class="ace" style=""><span class="lbl" style=""></span>
+                                        </label>
+                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="height: 30px;margin-left: 22px;margin-top: -32.6px;">
+										<span style="font-size: 18px;color: #393939; margin-left: 65px;">陈方林</span>
+										<span style="font-size: 18px;color: #393939;margin-left: 50px;">2014-08-25</span>
+										<span style="font-size: 18px;color: #393939;margin-left: 40px;">12:00-14:99</span>
+										<span style="font-size: 18px; color: #393939;margin-left: 30px;">生病上大声大声点</span>
+										</a>
+										</h4>
+                                </div>
+                                <div class="panel-collapse collapse" id="collapseOne" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" id="ui-id-24" aria-labelledby="ui-id-23" role="tabpanel" aria-hidden="false" style="
+ border: 0px;">
+                                            <ul style="list-style-type:none;font-size:18px!important;">
+                                                <li style="margin-left:60px">
+                                                    <div class="profile-user-info " style=" margin:2px; padding:2px; margin-top: -15px; width:70%;">
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                员工工号
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="username">0867563400</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important;font-size:18px;">
+                                                                加班人姓名
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">MMM</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                公司 
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="country">正大天晴药业集团</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                部门
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">上班未打卡</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important;font-size:18px;">
+                                                                岗位
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="name">REP技术支持工程师</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                报酬类型
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">用于调休</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                公司内加班 
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="signup">MMM</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important;font-size:18px;">
+                                                                加班时间
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">MMM</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                休息时间
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="entrytime">22:00~23:00</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                总加班时数
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">用于调休</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <hr>
+                                            <li style=" margin-top:20px;margin-left:90px;">
+                                                <span style=" margin-left:">审批意见：</span>
+                                                <div class="wysiwyg-editor" id="" contenteditable="true" style="margin-top:-25px;margin-left:90px;width:55%;border:1px solid #CCCCCC;height:75px">
+                                                    <br>
+                                                </div>
+                                            </li>
+                                            <li style="text-align:center;margin-top:25px">
+                                                <span>
+                                                    <button class="btn btn-info" type="button" style="padding: 5px 20px 5px 20px;">
+                                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                                        同意
+                                                    </button>
+                                                </span>
+                                                <span style="margin-left:15px">
+                                                    <button class="btn" type="reset" style="padding: 5px 20px 5px 20px;">
+                                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                        拒绝
+                                                    </button>
+                                                </span>
+                                                <span style="margin-left:15px">
+                                                    <button class="btn" type="reset" style="padding: 5px 20px 5px 20px;">
+                                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                        驳回
+                                                    </button>
+                                                </span>
+                                            </li>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div-->
+                            <!--div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <label class="inline" style="width: 20px;margin-top: 10px;margin-left: 6px;">
+                                            <input onclick="quanxuan()" id="a" name="a1" type="checkbox" class="ace" style="">
+                                            <span class="lbl" style=""></span>
+                                        </label>
+                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" style="height: 30px;margin-left: 22px;margin-top: -32.6px;">
+										<span style="font-size: 18px;color: #393939; margin-left: 65px;">陈方林</span>
+										<span style="font-size: 18px;color: #393939;margin-left: 50px;">2014-08-25</span>
+										<span style="font-size: 18px;color: #393939;margin-left: 40px;">12:00-14:99</span>
+										<span style="font-size: 18px; color: #393939;margin-left: 30px;">生病上大声大声点</span>
+										</a>
+									</h4>
+                                </div>
+                                <div class="panel-collapse collapse" id="collapseTwo" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <div class="ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active" id="ui-id-24" aria-labelledby="ui-id-23" role="tabpanel" aria-hidden="false" style="border: 0px;">
+                                            <ul style="list-style-type:none;font-size:18px!important;">
+                                                <li style="margin-left:60px">
+                                                    <div class="profile-user-info " style=" margin:2px; padding:2px; margin-top: -15px; width:70%;">
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                员工工号
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="username">0867563400</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important;font-size:18px;">
+                                                                加班人姓名
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">MMM</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                公司 
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="country">正大天晴药业集团</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                部门
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">上班未打卡</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important;font-size:18px;">
+                                                                岗位
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="name">REP技术支持工程师</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                报酬类型
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">用于调休</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important;font-size:18px;">
+                                                                公司内加班 
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="signup">MMM</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important;font-size:18px;">
+                                                                加班时间
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">MMM</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="profile-info-row">
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                休息时间
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="entrytime">22:00~23:00</span>
+                                                            </div>
+                                                            <div class="profile-info-name" style="color:#000000 !important; font-size:18px;">
+                                                                总加班时数
+                                                            </div>
+                                                            <div class="profile-info-value">
+                                                                <span class="editable" style="font-size:18px;" id="">用于调休</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <hr>
+                                            <li style=" margin-top:20px;margin-left:90px;">
+                                                <span style=" margin-left:">审批意见：</span>
+                                                <div class="wysiwyg-editor" id="" contenteditable="true" style="margin-top:-25px;margin-left:90px;width:55%;border:1px solid #CCCCCC;height:75px">
+                                                    <br>
+                                                </div>
+                                            </li>
+                                            <li style="text-align:center;margin-top:25px">
+                                                <span>
+                                                    <button class="btn btn-info" type="button" style="padding: 5px 20px 5px 20px;">
+                                                        <i class="ace-icon fa fa-check bigger-110"></i>
+                                                        同意
+                                                    </button>
+                                                </span>
+                                                <span style="margin-left:15px">
+                                                    <button class="btn" type="reset" style="padding: 5px 20px 5px 20px;">
+                                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                        拒绝
+                                                    </button>
+                                                </span>
+                                                <span style="margin-left:15px">
+                                                    <button class="btn" type="reset" style="padding: 5px 20px 5px 20px;">
+                                                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                                                        驳回
+                                                    </button>
+                                                </span>
+                                            </li>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div-->
+                        </div>
+                    </div>
+                    <div class="message-footer clearfix" style="background-color: white;border: 0px;">
+                        <div class="pull-left " style="font-size:12px;">
+                            共<span id="totalCount">0</span>条记录 
+                        </div>
+                        <div class="pull-right">
+                            <div class="inline middle" style="font-size:12px;">
+                                当前第<span>1</span>/<span>4</span>页
+                            </div>
+                            &nbsp; &nbsp;
+                            <ul class="pagination middle">
+                                <li class="disabled">
+                                    <span><i class="icon-caret-left bigger-140 middle"><img class="nav-user-photo" src="./assets/avatars/left.png" alt="Jason's Photo"></i></span>
+                                </li>
+                                <li class="disabled">
+                                    <span><i class="icon-caret-left bigger-140 middle"><img class="nav-user-photo" src="./assets/avatars/left1.png" alt="Jason's Photo"></i></span>
+                                </li>
+                                <li>
+                                    <span><input value="1" maxlength="2" type="text"></span>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-caret-left bigger-140 middle"><img class="nav-user-photo" src="./assets/avatars/right2.png" alt="Jason's Photo"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="icon-caret-right bigger-140 middle"><img class="nav-user-photo" src="./assets/avatars/right.png" alt="Jason's Photo"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- box-->
+            </div><!--最外层DIV----->
+        </div>
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="./assets/js/jquery.min.js">
+        </script>
+        <script src="./assets/js/jquery.min.js">
+        </script>
+        <script src="./assets/js/jquery.min.js">
+        </script>
+        <script src="./assets/js/jquery.min.js">
+        </script>
+        <!-- <![endif]-->
+        <!--[if IE]>
+            <script type="text/javascript">
+            window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+            </script>
+            <![endif]-->
+            <script type="text/javascript">
+                if ('ontouchstart' in document.documentElement) 
+                    document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+            </script>
+            <script src="./assets/js/bootstrap.min.js">
+            </script>
+            <!-- page specific plugin scripts -->
+            <script src="./assets/js/jquery-ui.min.js">
+            </script>
+            <script src="./assets/js/jquery.ui.touch-punch.min.js">
+            </script>
+            <!-- ace scripts -->
+            <script src="./assets/js/ace-elements.min.js">
+            </script>
+            <script src="./assets/js/ace.min.js">
+            </script>
+            <!-- inline scripts related to this page -->
+            <script type="text/javascript">
+                jQuery(function($){
+                
+                    $("#datepicker").datepicker({
+                        showOtherMonths: true,
+                        selectOtherMonths: false,
+                        //isRTL:true,
+                    
+                    
+                        /*
+                         changeMonth: true,
+                         changeYear: true,
+                         
+                         showButtonPanel: true,
+                         beforeShow: function() {
+                         //change button colors
+                         var datepicker = $(this).datepicker( "widget" );
+                         setTimeout(function(){
+                         var buttons = datepicker.find('.ui-datepicker-buttonpane')
+                         .find('button');
+                         buttons.eq(0).addClass('btn btn-xs');
+                         buttons.eq(1).addClass('btn btn-xs btn-success');
+                         buttons.wrapInner('<span class="bigger-110" />');
+                         }, 0);
+                         }
+                         */
+                    });
+                    
+                    
+                    //override dialog's title function to allow for HTML titles
+                    $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+                        _title: function(title){
+                            var $title = this.options.title || '&nbsp;'
+                            if (("title_html" in this.options) && this.options.title_html == true) 
+                                title.html($title);
+                            else 
+                                title.text($title);
+                        }
+                    }));
+                    
+                    $("#id-btn-dialog1").on('click', function(e){
+                        e.preventDefault();
+                        
+                        var dialog = $("#dialog-message").removeClass('hide').dialog({
+                            modal: true,
+                            title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-check'></i> jQuery UI Dialog</h4></div>",
+                            title_html: true,
+                            buttons: [{
+                                text: "Cancel",
+                                "class": "btn btn-xs",
+                                click: function(){
+                                    $(this).dialog("close");
+                                }
+                            }, {
+                                text: "OK",
+                                "class": "btn btn-primary btn-xs",
+                                click: function(){
+                                    $(this).dialog("close");
+                                }
+                            }]
+                        });
+                        
+                        /**
+                         dialog.data( "uiDialog" )._title = function(title) {
+                         title.html( this.options.title );
+                         };
+                         **/
+                    });
+                    
+                    
+                    $("#id-btn-dialog2").on('click', function(e){
+                        e.preventDefault();
+                        
+                        $("#dialog-confirm").removeClass('hide').dialog({
+                            resizable: false,
+                            modal: true,
+                            title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> Empty the recycle bin?</h4></div>",
+                            title_html: true,
+                            buttons: [{
+                                html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; Delete all items",
+                                "class": "btn btn-danger btn-xs",
+                                click: function(){
+                                    $(this).dialog("close");
+                                }
+                            }, {
+                                html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
+                                "class": "btn btn-xs",
+                                click: function(){
+                                    $(this).dialog("close");
+                                }
+                            }]
+                        });
+                    });
+                    
+                    
+                    
+                    //autocomplete
+                    var availableTags = ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"];
+                    $("#tags").autocomplete({
+                        source: availableTags
+                    });
+                    
+                    //custom autocomplete (category selection)
+                    $.widget("custom.catcomplete", $.ui.autocomplete, {
+                        _renderMenu: function(ul, items){
+                            var that = this, currentCategory = "";
+                            $.each(items, function(index, item){
+                                if (item.category != currentCategory) {
+                                    ul.append("<li class='ui-autocomplete-category'>" + item.category + "</li>");
+                                    currentCategory = item.category;
+                                }
+                                that._renderItemData(ul, item);
+                            });
+                        }
+                    });
+                    
+                    var data = [{
+                        label: "anders",
+                        category: ""
+                    }, {
+                        label: "andreas",
+                        category: ""
+                    }, {
+                        label: "antal",
+                        category: ""
+                    }, {
+                        label: "annhhx10",
+                        category: "Products"
+                    }, {
+                        label: "annk K12",
+                        category: "Products"
+                    }, {
+                        label: "annttop C13",
+                        category: "Products"
+                    }, {
+                        label: "anders andersson",
+                        category: "People"
+                    }, {
+                        label: "andreas andersson",
+                        category: "People"
+                    }, {
+                        label: "andreas johnson",
+                        category: "People"
+                    }];
+                    $("#search").catcomplete({
+                        delay: 0,
+                        source: data
+                    });
+                    
+                    
+                    //tooltips
+                    $("#show-option").tooltip({
+                        show: {
+                            effect: "slideDown",
+                            delay: 250
+                        }
+                    });
+                    
+                    $("#hide-option").tooltip({
+                        hide: {
+                            effect: "explode",
+                            delay: 250
+                        }
+                    });
+                    
+                    $("#open-event").tooltip({
+                        show: null,
+                        position: {
+                            my: "left top",
+                            at: "left bottom"
+                        },
+                        open: function(event, ui){
+                            ui.tooltip.animate({
+                                top: ui.tooltip.position().top + 10
+                            }, "fast");
+                        }
+                    });
+                    
+                    
+                    //Menu
+                    $("#menu").menu();
+                    
+                    
+                    //spinner
+                    var spinner = $("#spinner").spinner({
+                        create: function(event, ui){
+                            //add custom classes and icons
+                            $(this).next().addClass('btn btn-success').html('<i class="ace-icon fa fa-plus"></i>').next().addClass('btn btn-danger').html('<i class="ace-icon fa fa-minus"></i>')
+                            
+                            //larger buttons on touch devices
+                            if ('touchstart' in document.documentElement) 
+                                $(this).closest('.ui-spinner').addClass('ui-spinner-touch');
+                        }
+                    });
+                    
+                    //slider example
+                    $("#slider").slider({
+                        range: true,
+                        min: 0,
+                        max: 500,
+                        values: [75, 300]
+                    });
+                    
+                    
+                    
+                    //jquery accordion
+                    $("#accordion").accordion({
+                        collapsible: true,
+                        heightStyle: "content",
+                        animate: 250,
+                        header: ".accordion-header"
+                    }).sortable({
+                        axis: "y",
+                        handle: ".accordion-header",
+                        stop: function(event, ui){
+                            // IE doesn't register the blur when sorting
+                            // so trigger focusout handlers to remove .ui-state-focus
+                            ui.item.children(".accordion-header").triggerHandler("focusout");
+                        }
+                    });
+                    //jquery tabs
+                    $("#tabs").tabs();
+                    
+                    
+                    //progressbar
+                    $("#progressbar").progressbar({
+                        value: 37,
+                        create: function(event, ui){
+                            $(this).addClass('progress progress-striped active').children(0).addClass('progress-bar progress-bar-success');
+                        }
+                    });
+                    
+                    
+                    //页面初始化
+                    $.ajaxSetup({
+                        contentType: 'application/json'
+                    });
+                    //submit_9_1_1加班和考勤异常待审条数
+                    submit_9_1_1();
+                    
+                    //submit_9_1_2加班待审列表
+                    submit_9_1_2();
+                });
+            </script>
+            <!-- the following scripts are used in demo only for onpage help and you don't need them -->
+            <link rel="stylesheet" href="./assets/css/ace.onpage-help.css">
+            <link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css">
+            <script type="text/javascript">
+                ace.vars['base'] = '..';
+            </script>
+            <script src="./assets/js/ace/elements.onpage-help.js">
+            </script>
+            <script src="./assets/js/ace/ace.onpage-help.js">
+            </script>
+            <script src="./docs/assets/js/rainbow.js">
+            </script>
+            <script src="./docs/assets/js/language/generic.js">
+            </script>
+            <script src="./docs/assets/js/language/html.js">
+            </script>
+            <script src="./docs/assets/js/language/css.js">
+            </script>
+            <script src="./docs/assets/js/language/javascript.js">
+            </script>
+        </body>
+    </html>

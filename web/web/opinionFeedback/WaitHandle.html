@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="../assets/css/chosen.css" />
+        <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+        <link rel="stylesheet" href="../assets/css/jquery.gritter.css" /> 
+        <!-- text fonts -->
+        <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="../assets/css/ace.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="../assets/css/uncompressed/daterangepicker-bs3.css"/>
+        <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <!-- inline styles related to this page -->
+        <!-- ace settings handler -->
+        <script src="../assets/js/ace-extra.min.js"></script>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lte IE 8]>
+            <script src="../assets/js/html5shiv.js">
+            </script>
+            <script src="../assets/js/respond.min.js">
+            </script>
+        <![endif]-->
+        <title>
+            意见反馈
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+            .btn-info:active, .btn-info:hover, .open .btn-info.dropdown-toggle{
+                background-color:#1567c5!important;
+                border-color:#2e82ff;
+            }
+            .btn-info, .btn-info:focus {
+                background-color:#2e82ff!important;
+                border-color:#2e82ff;
+            }
+            .nav-tabs>li{margin-right:4px;margin-bottom:-2px;}
+            .nav-tabs>li.active{margin-bottom:-1px;}
+            .tab-content.profile-edit-tab-content{border:1px solid #7ea8fb;border-width:1px 0 0 0;-webkit-box-shadow:none;box-shadow:none;}
+            .nav-tabs>li>a{padding: 14px 34px 14px 26px;font-size:16px;overflow:hidden;}
+            .nav-tabs>li>a>.ace-icon{float:left;margin-right:6px;}
+            .nav-tabs>li>a>span{float:left;margin-top:1px;}
+            .nav-tabs{border-color:#7ea8fb;border-bottom: 1px solid #7ea8fb;}
+            .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+                color:#1777e5;
+                border-color:#7ea8fb #7ea8fb transparent;
+                border-top:2px solid #1777e5;  
+            }
+            .nav-tabs>li>a, .nav-tabs>li>a:focus{
+                color:#1777e5;
+                border-color:#7ea8fb;
+                background-color: #fff;
+            }
+            .nav-tabs>li>a:hover{border-color:#7ea8fb;color:#1777e5;}
+
+            .tab-content.profile-edit-tab-content{padding:8px 0;padding-bottom:0px;}
+            .table-bordered{border:none;}
+            .table-bordered>thead>tr{border-top: 1px solid #ddd;}
+            .table-bordered>thead>tr,.table-bordered>tbody>tr{border:1px solid #ddd;border-width:0 1px;}
+            .table-bordered>thead>tr.TrInterval,.table-bordered>tbody>tr.TrInterval{border:none;}
+            .table-striped>tbody>tr:nth-child(odd)>td, .table-striped>tbody>tr:nth-child(odd)>th{background-color:#fff;}
+            .table-bordered>tbody>tr.TrInterval>td,.table-bordered>thead>tr.TrInterval>th{border:none;padding:0;height:4px;background:#fff;}
+            .table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{background-color:#e1e4fa;}
+            .table-hover>tbody>tr:hover>td.TrInterval, .table-hover>tbody>tr:hover>th.TrInterval{background-color:#fff;}
+            .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th{
+                cursor:pointer;
+            }
+            .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
+                border-width:1px 0;
+            }
+            .table>thead>tr{background-image:none;background-color:#1777e5;color:#fff;}
+            .table>thead>tr>th{font-weight:normal;}
+            .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+                padding:10px 8px;vertical-align:middle;
+            }
+            .table{font-size:14px;}
+            .table>tbody>tr>td>span.Beyond{vertical-align:middle;padding-top:1px;margin-top:2px;display:inline-block;}
+            .table>thead>tr>th>span.Beyond{vertical-align:middle;padding-top:1px;margin-top:1px;display:inline-block;}
+            .message-bar{position:absolute;margin-left:-58px;left:50%;}
+            .pagination>li.active>a{
+                background-color:#1777e5;
+            }
+            .pagination>li.active>a:hover{
+                background-color:#1777e5;
+            }
+            .overflowspan{
+                display: block;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            .badge {
+                position: absolute !important;
+                top: 2px;
+                right: 2px;
+                padding: 1px 3px;
+                text-align: center;
+                font-size: 12px;
+                color: #FFF;
+            }
+            canvas{display:none;}
+            .main-container{background:#fff;}
+            .daiSvg,.yiSvg{width:20px;height:20px;float:left;margin-right:4px;}
+            #imgBox img{width:225px;height:400px;}
+            .removeIMG{
+                display:none;
+            }
+
+            .daterangepicker.opensright .ranges{float:none;}
+            .daterangepicker .ranges{float:none;margin:0;width:auto;}
+            .daterangepicker .daterangepicker_start_input label, .daterangepicker .daterangepicker_end_input label{width:auto;}
+            .daterangepicker.opensright:before{right:9px;left:auto;}
+            .daterangepicker.opensright:after{right:10px;left:auto;}
+            .daterangepicker .calendar-time{display:none;}
+            .daterangepicker .ranges .range_inputs .cancelBtn{padding:2px 12px;}
+            .daterangepicker .ranges .range_inputs .applyBtn{padding:2px 12px;}
+            .daterangepicker .ranges .input-mini{margin-bottom:4px;}
+        </style>
+        <script src="../assets/js/jquery.min.js"></script>
+        <script>
+            
+        </script>
+    </head>
+    
+    <body class="no-skin" onresize="Reizes();">
+        <div id="Loading" style=""></div>
+        <div id="imgBox"></div>
+        <div class="main-container" id="main-container">
+            <div class="main-content">
+                <!-- #section:basics/content.breadcrumbs -->
+                <div class="breadcrumbs" id="breadcrumbs" style="background:#1777e5;">
+                    <script type="text/javascript">
+                        try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                        } catch(e) {}
+                    </script>
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon white">
+                            </i>
+                            <a href="#" id="qiyemenghu" onclick="MHUrl()" class="white">企业信息门户</a>
+                        </li>
+                        <li>
+                            <a href="#" class="white">
+                                意见反馈
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.breadcrumb -->
+                    <!-- /section:basics/content.searchbox -->
+                </div>
+                <div class="row-fluid  page-content">
+                    <div class="page-header" style="border-bottom:solid 1px #1777e5;">
+                        <h1 style="font-family:Microsoft YaHei ! important;color:#1a1a1a;">
+                            <span id="titleH1">意见反馈待回复</span>
+                            <!-- <small>
+                                <i class="ace-icon fa fa-angle-double-right">
+                                </i>
+                                自定义数据
+                            </small> -->
+                            <!-- <div class="btn-group" style="float:right;">
+                                <div class="col-sm-10" id="selfDate" style="display:none;width:auto;">
+                                    <div class="col-sm-2" style="width:300px;">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-calendar bigger-110"></i>
+                                            </span>
+                                            <input class="form-control" type="text" name="date-range-picker" id="id-date-range-picker-1" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2" style="width:auto;">
+                                        <button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle" style="width:118px;">
+                                            <span id="showD">30天内</span>
+                                            <span class="ace-icon fa fa-caret-down icon-on-right"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" style="width:118px;left:auto;">
+                                            <li>
+                                                <a href="###" onclick="changeShowD('30')">30天内</a>
+                                            </li>
+                                            <li>
+                                                <a href="###" onclick="changeShowD('90')">90天内</a>
+                                            </li>
+                                            <li>
+                                                <a href="###" onclick="changeShowD('00')">自定义</a>
+                                            </li>
+                                        </ul>
+                                </div>
+                                <input type="hidden" id="begD" value="">
+                                <input type="hidden" id="endD" value="">
+                            </div> -->
+                        </h1>
+                    </div>
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs padding-12">
+                            <li class="active" onclick="navTabs(this)">
+                                <a data-toggle="tab" href="#GSPTabNav_01">
+                                    <!-- <i class="green ace-icon fa fa-building-o bigger-120" style="color:#1777e5;"></i> -->
+                                    <svg version="1.1" class="daiSvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve"><path fill-rule="evenodd" clip-rule="evenodd" fill="#2C86C8" d="M5.019,3.673C3.908,3.673,3,4.678,3,5.759v10.505c0,1.081,0.99,2.101,2.101,2.101h7.879c1.111,0,2.101-1.02,2.101-2.101h0.525c1.111,0,2.101-1.02,2.101-2.101V6.81V5.772L14.03,1.557c-0.065,0-6.303,0-6.303,0c-1.111,0-2.101,1.02-2.101,2.101L5.019,3.673z M7.727,16.264c-1.111,0-2.101-1.02-2.101-2.101V4.709L5.051,4.726C4.5,4.726,4.05,5.224,4.05,5.759v10.505c0,0.535,0.499,1.05,1.05,1.05h7.879c0.551,0,1.05-0.515,1.05-1.05H7.727z M14.03,2.623L14.03,2.623c0,1.022,0,1.574,0,1.574c0,0.546,0.491,1.562,1.05,1.562h1.576L14.03,2.623z M16.656,6.81c-1.018,0-1.576,0-1.576,0c-1.119,0-2.101-0.997-2.101-2.088c0,0-0.008-0.904,0-2.114H7.727c-0.551,0-1.05,0.515-1.05,1.05v10.505c0,0.535,0.499,1.051,1.05,1.051h7.879c0.551,0,1.05-0.515,1.05-1.051V6.81z M14.03,12.593H9.303c-0.29,0-0.525-0.235-0.525-0.525c0-0.29,0.235-0.525,0.525-0.525h4.727c0.29,0,0.525,0.235,0.525,0.525C14.555,12.358,14.32,12.593,14.03,12.593z M14.03,9.969H9.303c-0.29,0-0.525-0.235-0.525-0.525c0-0.29,0.235-0.525,0.525-0.525h4.727c0.29,0,0.525,0.235,0.525,0.525C14.555,9.734,14.32,9.969,14.03,9.969z"/></svg>
+                                    <span>待回复</span>
+                                    <span class="badge badge-important" id="WLNum"></span>
+                                </a>
+                            </li>
+                            <li class="" onclick="navTabs(this)">
+                                <a data-toggle="tab" href="#GSPTabNav_02">
+                                    <svg version="1.1" class="yiSvg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve"><path fill="#3183C6" d="M15.247,18.438H5.753c-1.165,0-2.11-0.945-2.11-2.11V3.67c0-1.165,0.945-2.11,2.11-2.11h6.329c0.706-0.011,0.987,0.015,1.055,0.015V1.56l4.219,4.219c0,0.775,0,0.89,0,1.055v9.494C17.356,17.493,16.412,18.438,15.247,18.438zM13.137,2.615c0,1.256,0,2.11,0,2.11c0,0.582,0.473,1.055,1.055,1.055h2.11L13.137,2.615z M16.302,6.834c-1.228,0-2.11,0-2.11,0c-1.165,0-2.11-0.945-2.11-2.11c0,0-0.025-0.847-0.015-2.11H5.753c-0.583,0-1.055,0.472-1.055,1.055v12.658c0,0.583,0.472,1.055,1.055,1.055h9.494c0.583,0,1.055-0.473,1.055-1.055V6.834z"/><path fill="#3389CA" d="M14.219,9.408c0.146-0.252,0.059-0.575-0.193-0.72s-0.575-0.059-0.72,0.193l-3.373,5.842l-1.887-1.74c-0.199-0.213-0.533-0.224-0.745-0.024s-0.224,0.533-0.024,0.746l2.411,2.224c0.199,0.213,0.533,0.224,0.745,0.024C10.497,15.891,14.219,9.408,14.219,9.408z"/></svg>
+                                    <span>已回复</span>
+                                    <span class="badge badge-important" id="ALNum"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content profile-edit-tab-content">
+                            <!-- 首营企业待办 -->
+                            <div id="GSPTabNav_01" class="tab-pane in active">
+                                <div id="WaitHandleList" style="border-bottom: 1px solid #7ea8fb;">
+
+                                </div>
+                            </div>
+                            <div id="GSPTabNav_02" class="tab-pane in">
+                                <div id="AlreadyHandleList" style="border-bottom: 1px solid #7ea8fb;">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div style="border-bottom: 1px solid #7ea8fb;background-color:#EFF3F8;padding:12px 24px;border-top:none;overflow:hidden;">
+                            <div style="float:left;margin:0px;height:32px;">
+                                <label style="margin:0px;">
+                                    <span style="float:left;height:32px;line-height:32px;">每页显示</span>
+                                    <span style="float:left;margin:0 10px">
+                                        <select name="sample-table-2_length" id="InfoArticle" aria-controls="sample-table-2" class="form-control input-sm" style="height:32px;line-height:32px;">
+                                            <option onclick="changePageSize('10')" value="10">10</option>
+                                            <option onclick="changePageSize('20')" value="20">20</option>
+                                            <option onclick="changePageSize('50')" value="50">50</option>
+                                            <option onclick="changePageSize('100')" value="100">100</option>
+                                        </select> 
+                                    </span>
+                                    <span style="float:left;height:32px;line-height:32px;">条</span>
+                                </label>
+                            </div>
+                            <!-- <div style="float:right;margin-left:20px;height:32px;">
+                                <label style="margin:0px;">
+                                    <span style="float:left;height:32px;line-height:32px;">共</span>
+                                    <span style="float:left;height:32px;margin:0 6px;line-height:32px;font-size:16px;font-weight:bold;color:#1777e5;">10</span>
+                                    <span style="float:left;height:32px;line-height:32px;">页</span>
+                                </label>
+                            </div> -->
+                            <ul class="pagination" id="page" style="float:right;margin:0px;">
+                                <li class="disabled" id="FirstPage">
+                                    <a href="javascript:void(0);" onclick="PagJump()">
+                                        <i class="ace-icon fa fa-angle-double-left"></i>
+                                    </a>
+                                </li>
+                                <li class="disabled" id="PrevPage">
+                                    <a href="javascript:void(0);" onclick="PagJump()">
+                                        <i class="ace-icon fa fa-angle-left"></i>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a href="javascript:void(0);">
+                                        <span id="CNum">1</span>
+                                        <span>/</span>
+                                        <span id="AllPage">1</span>
+                                    </a>
+                                </li>
+                                <li id="NextPage">
+                                    <a href="javascript:void(0);" onclick="PagJump()">
+                                        <i class="ace-icon fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                                <li id="LastPage">
+                                    <a href="javascript:void(0);" onclick="PagJump()">
+                                        <i class="ace-icon fa fa-angle-double-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------------------------------------------------------------------------------->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <!-- <![endif]-->
+        <!--[if IE]>
+            <script type="text/javascript">
+                window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+            </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../assets/js/uncompressed/date-time/moment_ch.js"></script>
+        <script type="text/javascript" src="../assets/js/uncompressed/date-time/daterangepicker_ch.js"></script>
+        <!-- page specific plugin scripts -->
+        <script src="../assets/js/bootstrap-tag.min.js"></script>
+        <script src="../assets/js/jquery.hotkeys.min.js"></script>
+        <script src="../assets/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="../assets/js/jquery-ui.custom.min.js"></script>
+        <script src="../assets/js/chosen.jquery.min.js"></script>
+        <script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="../assets/js/jquery.slimscroll.min.js"></script>
+        <!-- ace scripts -->
+        <script src="../assets/js/ace-elements.min.js"></script>
+        <script src="../assets/js/ace.min.js"></script>
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            //回复成功
+            function HuiFUWin(msg){
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    //获取意见反馈待回复列表-WaitHandleList()
+                    var InfoArticle = $("#InfoArticle").val();
+                    WaitHandleList(1,0,1,InfoArticle,startTime,endTime);
+                    $('body,html').animate({scrollTop:0},10);
+                    var unique_id = $.gritter.add({
+                        title: '意见反馈回复',
+                        text: ''+msg+'<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-success gritter-center'
+                    });
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            }
+            //图片预览
+            function OpenImg(imgOpen){
+                $("#imgBox").html(imgOpen);
+                var tag = $.layer({
+                    type : 1,
+                    title : false,
+                    shade: [0],
+                    shadeClose: true,
+                    area : ['225px','400px'],
+                    page : {dom : '#imgBox'}
+                });
+                $("#imgBox").parent().parent().parent().css("position","fixed");
+            }
+            function CloseGritter(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+                //window.location.reload();
+            }
+            function CloseGritter_two(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+            }
+            function WindowClose(){
+                window.close();
+            }
+            function adstF(obj){
+                if( $(obj).val() == "查询待办事项..." ){
+                    $(obj).val("");
+                    $(obj).css({"color":"#444"});
+                }
+            }
+            function adstB(obj){
+                if( $(obj).val() == "" ){
+                    $(obj).val("查询待办事项...");
+                    $(obj).css({"color":"#ccc"});
+                }
+            }
+            // --列头全选框被单击---
+            function ChkAllClick(o){
+                var a = document.getElementsByName("bhgpID");
+                for (var i = 0; i < a.length; i++) {
+                    a[i].checked = o.checked;
+                }
+            }
+            var length1 = 0;
+            // --子项复选框被单击---
+            function ChkSonClick(o) {
+                if (o.checked == true) {
+                    length1 += 1;
+                }
+                if (o.checked == false) {
+                    length1 -= 1;
+                }
+                var length2 = document.getElementsByName("bhgpID").length - 1;
+                var allc = document.getElementsByName("bhgpAll");
+                if (length1 === length2) {
+                    allc.checked = true;
+                }
+                if (length1 !== length2) {
+                    allc.checked = false;
+                }
+            }
+            //tab标签页切换文字
+            function navTabs(obj){
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    var titleText = $(obj).find("span").eq(0).text();
+                    $("#titleH1").text('意见反馈'+titleText+'');
+                    //默认显示30天内的数据
+                    var startTime = ''+getbeg30().substring(0,4)+'-'+getbeg30().substring(4,6)+'-'+getbeg30().substring(6,8)+' 00:00:00';
+                    startTime = changeTimeToUnix(startTime);
+                    var endTime = ''+getToday8().substring(0,4)+'-'+getToday8().substring(4,6)+'-'+getToday8().substring(6,8)+' 00:00:00';
+                    endTime = changeTimeToUnix(endTime);
+                    var InfoArticle = $("#InfoArticle").val();
+
+                    if( titleText == "待回复" ){
+                        var status = 0;
+                        WaitHandleList(1,status,1,InfoArticle,startTime,endTime);
+                    }else{
+                        var status = 1;
+                        AlreadyHandleList(1,status,1,InfoArticle,startTime,endTime);
+                    }
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            }
+            //tab标签页切换文字
+            function IframeNavTabs(bussType){
+                $(".nav-tabs").children("li").removeClass("active");
+                $(".tab-content").children("div.tab-pane").removeClass("active");
+                if( bussType == "G001" ){
+                    var title = '首营企业待办';
+                    $(".nav-tabs").children("li").eq(0).addClass("active");
+                    $(".tab-content").children("div.tab-pane").eq(0).addClass("active");
+                }else if( bussType == "G002" ){
+                    var title = '首营品种待办';
+                    $(".nav-tabs").children("li").eq(2).addClass("active");
+                    $(".tab-content").children("div.tab-pane").eq(2).addClass("active");
+                }else if( bussType == "G003" ){
+                    var title = '首营客户待办';
+                    $(".nav-tabs").children("li").eq(1).addClass("active");
+                    $(".tab-content").children("div.tab-pane").eq(1).addClass("active");
+                }else if( bussType == "G007" ){
+                    var title = '不合格品待办';
+                    $(".nav-tabs").children("li").eq(3).addClass("active");
+                    $(".tab-content").children("div.tab-pane").eq(3).addClass("active");
+                }
+                $("#titleH1").text(title);
+                localStorage.removeItem("bussType");
+                localStorage.bussType = JSON.stringify(bussType);
+                $(".main-container").css({"height":"auto"});
+                $(".xubox_iframe").remove();
+                $(".xubox_layer").remove();
+                $(".xubox_shade").remove();
+                GSP_W_ID_List(1,10,bussType);
+            }
+            //tab标签页切换文字
+            function AllNavTabs(bussType){
+                localStorage.removeItem("bussType");
+                localStorage.bussType = JSON.stringify(bussType);
+                GSP_W_ID_List(1,10,bussType);
+            }
+            //获取意见反馈------待回复列表
+            function WaitHandleList(CNum,status,pageNumber,pagesize,startTime,endTime){
+                //获取意见反馈待回复列表
+                var WLData = WaitHandleListData(status,pageNumber,pagesize);
+                //获取待回复条数
+                var WLNum = WaitHandleListNum(0,'','');
+                //获取已回复条数
+                var ALNum = WaitHandleListNum(1,startTime,endTime);
+                //计算列表总页码
+                if( WLNum.status == '0' ){
+                    //总条数
+                    var AllPage = WLNum.count;
+                    //总页码
+                    var PageNum = parseInt(AllPage)%parseInt(pagesize) == 0? parseInt(AllPage)/parseInt(pagesize):(parseInt(AllPage/pagesize)+1);
+                    $("#WLNum").html(WLNum.count);
+                }else{
+                    var unique_id = $.gritter.add({
+                        title: '获取意见反馈条数',
+                        text: '获取意见反馈待回复条数失败，请重试。<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                }
+                if( ALNum.status == '0' ){
+                    $("#ALNum").html(ALNum.count);
+                }else{
+                    var unique_id = $.gritter.add({
+                        title: '获取意见反馈条数',
+                        text: '获取意见反馈已回复条数失败，请重试。<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                }
+                $("#CNum").html(CNum);
+                $("#AllPage").html(PageNum);
+                if( CNum == '1' ){
+                    if( CNum == PageNum ){
+                        $("#FirstPage").addClass("disabled");
+                        $("#PrevPage").addClass("disabled");
+                        $("#NextPage").addClass("disabled");
+                        $("#LastPage").addClass("disabled");
+                    }else{
+                        $("#FirstPage").addClass("disabled");
+                        $("#PrevPage").addClass("disabled");
+                        $("#NextPage").removeClass("disabled");
+                        $("#LastPage").removeClass("disabled");
+                    }
+                }else{
+                    if( CNum == PageNum ){
+                        $("#FirstPage").removeClass("disabled");
+                        $("#PrevPage").removeClass("disabled");
+                        $("#NextPage").addClass("disabled");
+                        $("#LastPage").addClass("disabled");
+                    }else{
+                        $("#FirstPage").removeClass("disabled");
+                        $("#PrevPage").removeClass("disabled");
+                        $("#NextPage").removeClass("disabled");
+                        $("#LastPage").removeClass("disabled");
+                    }
+                }
+                var FirstPageNum = 1;
+                var PrevPage = parseInt(CNum) - 1;
+                var NextPageNum = parseInt(CNum) + 1;
+                var LastPage = parseInt(PageNum);
+                $("#FirstPage a").attr('onclick','PagJump(\''+FirstPageNum+'\',\''+pagesize+'\')');
+                $("#PrevPage a").attr('onclick','PagJump(\''+PrevPage+'\',\''+pagesize+'\')');
+                $("#NextPage a").attr('onclick','PagJump(\''+NextPageNum+'\',\''+pagesize+'\')');
+                $("#LastPage a").attr('onclick','PagJump(\''+LastPage+'\',\''+pagesize+'\')');
+                
+                $("#page").children("li").each(function(){
+                    if( $(this).hasClass("disabled") ){
+                        $(this).children("a").attr('onclick','');
+                    }
+                });
+                //拼接页面数据
+                //console.log(WLData);
+                if( AllPage > 0 ){
+                    if( WLData.status == '0' ){
+                        var WLDataWList = WLData.data;
+                        var WLDataStr = "";
+                        WLDataStr   +='<table id="sample-table-2" class="table table-striped table-bordered table-hover tableShow" style="margin-bottom:0px;">'
+                                    +'<thead>'
+                                    +'<tr>'
+                                    +'<th width="30%"><span class="Beyond">意见编号</span></th>'
+                                    +'<th width="30%"><span class="Beyond">意见内容</span></th>'
+                                    +'<th width="20%"><span class="Beyond">提出人</span></th>'
+                                    +'<th>提交时间</th>'
+                                    +'</tr>'
+                                    +'<tr class="TrInterval"><th></th></tr>'
+                                    +'</thead>'
+                                    +'<tbody>'
+                                    for( var i = 0; i < WLDataWList.length; i++){
+                                        var createTime = formatUnix(WLDataWList[i].createTime);
+                                        WLDataStr   +='<tr onclick="Open_Detailed(\''+WLDataWList[i]._id+'\',\''+WLDataWList[i].userId+'\',\'0\')">'
+                                                    +'<td title='+WLDataWList[i]._id+'>'
+                                                    +'<span class="Beyond">'+WLDataWList[i]._id+'</span>'
+                                                    +'</td>'
+                                                    +'<td title='+WLDataWList[i].opinion+'>'
+                                                    +'<span class="Beyond">'+WLDataWList[i].opinion+' </span>'
+                                                    +'</td>'
+                                                    +'<td title='+WLDataWList[i].userId+'>'
+                                                    +'<span class="Beyond">'+WLDataWList[i].userId+' </span>'
+                                                    +'</td>'
+                                                    +'<td title='+createTime+'>'
+                                                    +'<span class="Beyond">'+createTime+' </span>'
+                                                    +'</td>'
+                                                    +'</tr>'
+                                                    +'<tr class="TrInterval"><td></td></tr>'
+                                    }
+                                    +'</tbody>'
+                                    +'</table>';
+                        $('#WaitHandleList').html(WLDataStr);
+                    }else{
+                        var unique_id = $.gritter.add({
+                            title: '获取意见反馈列表',
+                            text: '获取意见反馈待回复列表数据失败，请重试。<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-info gritter-center'
+                        });
+                    }
+                }else if( AllPage == 0 ){
+                    var unique_id = $.gritter.add({
+                        title: '获取意见反馈列表',
+                        text: '意见反馈待回复列表查询为空，请稍后重试<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                }
+            }
+            //获取意见反馈------已回复列表
+            function AlreadyHandleList(CNum,status,pageNumber,pagesize,startTime,endTime){
+                //获取意见反馈待回复列表
+                var ALData = AlreadyHandleListData(status,pageNumber,pagesize,startTime,endTime);
+                //获取待回复条数
+                var WLNum = WaitHandleListNum(0,'','');
+                //获取已回复条数
+                var ALNum = WaitHandleListNum(1,startTime,endTime);
+                //计算列表总页码
+                if( WLNum.status == '0' ){
+                    $("#WLNum").html(WLNum.count);
+                }else{
+                    var unique_id = $.gritter.add({
+                        title: '获取意见反馈条数',
+                        text: '获取意见反馈待回复条数失败，请重试。<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                }
+                if( ALNum.status == '0' ){
+                    //总条数
+                    var AllPage = ALNum.count;
+                    //总页码
+                    var PageNum = parseInt(AllPage)%parseInt(pagesize) == 0? parseInt(AllPage)/parseInt(pagesize):(parseInt(AllPage/pagesize)+1);
+                    $("#ALNum").html(ALNum.count);
+                }else{
+                    var unique_id = $.gritter.add({
+                        title: '获取意见反馈条数',
+                        text: '获取意见反馈已回复条数失败，请重试。<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                }
+                $("#CNum").html(CNum);
+                $("#AllPage").html(PageNum);
+                if( CNum == '1' ){
+                    if( CNum == PageNum ){
+                        $("#FirstPage").addClass("disabled");
+                        $("#PrevPage").addClass("disabled");
+                        $("#NextPage").addClass("disabled");
+                        $("#LastPage").addClass("disabled");
+                    }else{
+                        $("#FirstPage").addClass("disabled");
+                        $("#PrevPage").addClass("disabled");
+                        $("#NextPage").removeClass("disabled");
+                        $("#LastPage").removeClass("disabled");
+                    }
+                }else{
+                    if( CNum == PageNum ){
+                        $("#FirstPage").removeClass("disabled");
+                        $("#PrevPage").removeClass("disabled");
+                        $("#NextPage").addClass("disabled");
+                        $("#LastPage").addClass("disabled");
+                    }else{
+                        $("#FirstPage").removeClass("disabled");
+                        $("#PrevPage").removeClass("disabled");
+                        $("#NextPage").removeClass("disabled");
+                        $("#LastPage").removeClass("disabled");
+                    }
+                }
+                var FirstPageNum = 1;
+                var PrevPage = parseInt(CNum) - 1;
+                var NextPageNum = parseInt(CNum) + 1;
+                var LastPage = parseInt(PageNum);
+                $("#FirstPage a").attr('onclick','PagJump(\''+FirstPageNum+'\',\''+pagesize+'\')');
+                $("#PrevPage a").attr('onclick','PagJump(\''+PrevPage+'\',\''+pagesize+'\')');
+                $("#NextPage a").attr('onclick','PagJump(\''+NextPageNum+'\',\''+pagesize+'\')');
+                $("#LastPage a").attr('onclick','PagJump(\''+LastPage+'\',\''+pagesize+'\')');
+                
+                $("#page").children("li").each(function(){
+                    if( $(this).hasClass("disabled") ){
+                        $(this).children("a").attr('onclick','');
+                    }
+                });
+                //拼接页面数据
+                //console.log(ALData);
+                if( AllPage > 0 ){
+                    if( ALData.status == '0' ){
+                        var ALDataWList = ALData.data;
+                        var ALDataStr = "";
+                        ALDataStr   +='<table id="sample-table-2" class="table table-striped table-bordered table-hover tableShow" style="margin-bottom:0px;">'
+                                    +'<thead>'
+                                    +'<tr>'
+                                    +'<th width="25%"><span class="Beyond">意见编号</span></th>'
+                                    +'<th width="25%"><span class="Beyond">意见内容</span></th>'
+                                    +'<th width="15%"><span class="Beyond">提出人</span></th>'
+                                    +'<th width="15%"><span class="Beyond">提交时间</span></th>'
+                                    +'<th>回复时间</th>'
+                                    +'</tr>'
+                                    +'<tr class="TrInterval"><th></th></tr>'
+                                    +'</thead>'
+                                    +'<tbody>'
+                                    for( var i = 0; i < ALDataWList.length; i++){
+                                        var createTime = formatUnix(ALDataWList[i].createTime);
+                                        var replyTime = formatUnix(ALDataWList[i].replyTime);
+                                        ALDataStr   +='<tr onclick="Open_Detailed(\''+ALDataWList[i]._id+'\',\''+ALDataWList[i].userId+'\',\'1\')">'
+                                                    +'<td title='+ALDataWList[i]._id+'>'
+                                                    +'<span class="Beyond">'+ALDataWList[i]._id+'</span>'
+                                                    +'</td>'
+                                                    +'<td title='+ALDataWList[i].opinion+'>'
+                                                    +'<span class="Beyond">'+ALDataWList[i].opinion+' </span>'
+                                                    +'</td>'
+                                                    +'<td title='+ALDataWList[i].userId+'>'
+                                                    +'<span class="Beyond">'+ALDataWList[i].userId+' </span>'
+                                                    +'</td>'
+                                                    +'<td title='+createTime+'>'
+                                                    +'<span class="Beyond">'+createTime+' </span>'
+                                                    +'</td>'
+                                                    +'<td title='+replyTime+'>'
+                                                    +'<span class="Beyond">'+replyTime+' </span>'
+                                                    +'</td>'
+                                                    +'</tr>'
+                                                    +'<tr class="TrInterval"><td></td></tr>'
+                                    }
+                                    +'</tbody>'
+                                    +'</table>';
+                        $('#AlreadyHandleList').html(ALDataStr);
+                    }else{
+                        var unique_id = $.gritter.add({
+                            title: '获取意见反馈列表',
+                            text: '获取意见反馈已回复列表数据失败，请重试。<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-info gritter-center'
+                        });
+                    }
+                }else if( AllPage == 0 ){
+                    var unique_id = $.gritter.add({
+                        title: '获取意见反馈列表',
+                        text: '意见反馈待回复列表查询为空，请稍后重试<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                }
+            }
+            //分页页码点击事件
+            function PagJump(pageNumber,pagesize){
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    var titleText = $("#titleH1").text().substring(4,7);
+                    //默认显示30天内的数据
+                    var startTime = ''+getbeg30().substring(0,4)+'-'+getbeg30().substring(4,6)+'-'+getbeg30().substring(6,8)+' 00:00:00';
+                    startTime = changeTimeToUnix(startTime);
+                    var endTime = ''+getToday8().substring(0,4)+'-'+getToday8().substring(4,6)+'-'+getToday8().substring(6,8)+' 00:00:00';
+                    endTime = changeTimeToUnix(endTime);
+                    if( titleText == "待回复" ){
+                        WaitHandleList(pageNumber,0,pageNumber,pagesize,startTime,endTime);
+                    }else{
+                        AlreadyHandleList(pageNumber,1,pageNumber,pagesize,startTime,endTime);
+                    }
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            }
+            //每页显示条数
+            function changePageSize(pagesize){
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    var titleText = $("#titleH1").text().substring(4,7);
+                    //默认显示30天内的数据
+                    var startTime = ''+getbeg30().substring(0,4)+'-'+getbeg30().substring(4,6)+'-'+getbeg30().substring(6,8)+' 00:00:00';
+                    startTime = changeTimeToUnix(startTime);
+                    var endTime = ''+getToday8().substring(0,4)+'-'+getToday8().substring(4,6)+'-'+getToday8().substring(6,8)+' 00:00:00';
+                    endTime = changeTimeToUnix(endTime);
+                    if( titleText == "待回复" ){
+                        WaitHandleList(1,0,1,pagesize,startTime,endTime);
+                    }else{
+                        AlreadyHandleList(1,1,1,pagesize,startTime,endTime);
+                    }
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            }
+            //展开详情页
+            function Open_Detailed(taskId,userId,type){
+                $('body,html').animate({scrollTop:0},10);
+                localStorage.removeItem("taskId");
+                localStorage.taskId = JSON.stringify(taskId);
+                localStorage.removeItem("userId");
+                localStorage.userId = JSON.stringify(userId);
+                if( type == 0 ){
+                    $.layer({
+                        type: 2,
+                        border: [0],
+                        title: false,
+                        shadeClose: true,
+                        closeBtn: false,
+                        shade: [0.6, '#000'],
+                        offset: ['26px',''],
+                        area: ['1000px',($(window).height() - 52) +'px'],
+                        iframe: { src: './WaitHandleDEtails.html' }
+                    });
+                }else{
+                    $.layer({
+                        type: 2,
+                        border: [0],
+                        title: false,
+                        shadeClose: true,
+                        closeBtn: false,
+                        shade: [0.6, '#000'],
+                        offset: ['26px',''],
+                        area: ['1000px',($(window).height() - 52) +'px'],
+                        iframe: { src: './AlreadyHandDEtails.html' }
+                    });
+                }
+            }
+            //以下是提交选中的
+            function submitAll(type){
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    var chk_value =[];
+                    $('#WaitHandleList_'+type+'').find('input[name="bhgpID"]:checked').each(function(){
+                        chk_value.push({
+                            'value':$(this).val()
+                        }); 
+                    });
+                　　$.each(chk_value, function(i, item){
+                        var item = item.value.split(",");
+                        var pener = localStorage.pernrBase?localStorage.pernrBase:'';//登录人工号
+                        var bussType = item[0];
+                        var appType = 'AG';
+                        var APPID = item[1];
+                        var taskId = item[2];
+                        var currStep = item[3];
+                        var opinion = '同意'
+                        var WSubmitListsData = GSPsubmit_WSubmit(pener,bussType,appType,APPID,taskId,currStep,opinion);
+                        if(WSubmitListsData.status == '0'){
+                            if( chk_value.length == i+1 ){
+                                $.gritter.add({
+                                    title: '成功操作提示信息',
+                                    text: '操作成功',
+                                    class_name: 'gritter-success'
+                                });
+                                setTimeout(function(){
+                                    //window.location.reload();
+                                    AllNavTabs(bussType);
+                                },1500);
+                                spinner.spin();
+                                layer.close(pagei);
+                            }
+                        }else{
+                            $.gritter.add({
+                                title: '错误信息提示',
+                                text: WSubmitListsData.errMsg,
+                                class_name: 'gritter-error'
+                            });
+                            spinner.spin();
+                            layer.close(pagei);
+                            return false;
+                        }
+                　　});
+                }, 300 + parseInt(Math.random() * 300));
+            }
+            // 主数据名称溢出部分成...
+            function Reizes () {
+                if (document.getElementById("TbTd") != undefined || document.getElementById("TbTd") != null) {
+                    var w = $(window).width();
+                    var CountSpan = $(".TdSpan");
+                    for (var i = 0; i < CountSpan.length; i++) {
+                        CountSpan.eq(i).css({"width":w*0.28});
+                        CountSpan.eq(i).addClass("overflowspan");
+                    };
+                };
+            }
+            //选择显示时间段
+            function changeShowD(flag) {
+                var bussType = JSON.parse(localStorage["bussType"]);
+                var thisYear = new Date().getFullYear();
+                var thisMonth = new Date().getMonth() + 1;
+                var thisDay = new Date().getDate();
+                if (flag == '90') {
+                    $('#showD').html('90天内');
+                    $('#selfDate').hide();
+                    $('#begD').val(getbeg90());
+                    $('#endD').val(getToday8());
+                    var opts = {            
+                        lines: 10, // 花瓣数目
+                        length: 0, // 花瓣长度
+                        width: 10, // 花瓣宽度
+                        radius: 20, // 花瓣距中心半径
+                        corners: 1, // 花瓣圆滑度 (0-1)
+                        rotate: 0, // 花瓣旋转角度
+                        direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                        color: '#2679b5', // 花瓣颜色
+                        speed: 1, // 花瓣旋转速度
+                        trail: 60, // 花瓣旋转时的拖影(百分比)
+                        shadow: false, // 花瓣是否显示阴影
+                        hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                        className: 'spinner', // spinner css 样式名称
+                        zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                        top: '-100', // spinner 相对父容器Top定位 单位 px
+                        left: '0'// spinner 相对父容器Left定位 单位 px
+                    };
+                    var target = document.getElementById("Loading");  
+                    var spinner = new Spinner(opts).spin(target);
+                    pagei = $.layer({
+                        type: 1,   //0-4的选择,
+                        title: false,
+                        border: [0],
+                        closeBtn: [0],
+                        shadeClose: false,
+                        area: ['auto', 'auto'],
+                        page: {dom : '#Loading'}
+                    });
+                    setTimeout(function() {
+                        var startTime = ''+getbeg90().substring(0,4)+'-'+getbeg90().substring(4,6)+'-'+getbeg90().substring(6,8)+' 00:00:00';
+                        startTime = changeTimeToUnix(startTime);
+                        var endTime = ''+getToday8().substring(0,4)+'-'+getToday8().substring(4,6)+'-'+getToday8().substring(6,8)+' 00:00:00';
+                        endTime = changeTimeToUnix(endTime);
+
+                        var InfoArticle = $("#InfoArticle").val();
+                        AlreadyHandleList(1,1,1,InfoArticle,startTime,endTime);
+                        spinner.spin();
+                        layer.close(pagei);
+                    }, 300 + parseInt(Math.random() * 300));
+                } else if (flag == '30') {
+                    $('#showD').html('30天内');
+                    $('#selfDate').hide();
+                    $('#begD').val(getbeg30());
+                    $('#endD').val(getToday8());
+                    var opts = {            
+                        lines: 10, // 花瓣数目
+                        length: 0, // 花瓣长度
+                        width: 10, // 花瓣宽度
+                        radius: 20, // 花瓣距中心半径
+                        corners: 1, // 花瓣圆滑度 (0-1)
+                        rotate: 0, // 花瓣旋转角度
+                        direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                        color: '#2679b5', // 花瓣颜色
+                        speed: 1, // 花瓣旋转速度
+                        trail: 60, // 花瓣旋转时的拖影(百分比)
+                        shadow: false, // 花瓣是否显示阴影
+                        hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                        className: 'spinner', // spinner css 样式名称
+                        zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                        top: '-100', // spinner 相对父容器Top定位 单位 px
+                        left: '0'// spinner 相对父容器Left定位 单位 px
+                    };
+                    var target = document.getElementById("Loading");  
+                    var spinner = new Spinner(opts).spin(target);
+                    pagei = $.layer({
+                        type: 1,   //0-4的选择,
+                        title: false,
+                        border: [0],
+                        closeBtn: [0],
+                        shadeClose: false,
+                        area: ['auto', 'auto'],
+                        page: {dom : '#Loading'}
+                    });
+                    setTimeout(function() {
+                        var startTime = ''+getbeg30().substring(0,4)+'-'+getbeg30().substring(4,6)+'-'+getbeg30().substring(6,8)+' 00:00:00';
+                        startTime = changeTimeToUnix(startTime);
+                        var endTime = ''+getToday8().substring(0,4)+'-'+getToday8().substring(4,6)+'-'+getToday8().substring(6,8)+' 00:00:00';
+                        endTime = changeTimeToUnix(endTime);
+
+                        var InfoArticle = $("#InfoArticle").val();
+                        AlreadyHandleList(1,1,1,InfoArticle,startTime,endTime);
+                        spinner.spin();
+                        layer.close(pagei);
+                    }, 300 + parseInt(Math.random() * 300));
+                } else {
+                    //自定义
+                    $('#selfDate').show();
+                    $('#showD').html('自定义时间段');
+                }
+            }
+            //自定义时间段
+            function TimePeriod() {
+                var bussType = JSON.parse(localStorage["bussType"]);
+                var begD = $('input[name=daterangepicker_start]').val();
+                alert(begD);
+                var endD = $('input[name=daterangepicker_end]').val();
+                alert(endD);
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    var startTime = ''+begD.substring(0,4)+'-'+begD.substring(5,7)+'-'+begD.substring(8,10)+' 00:00:00';
+                    alert(startTime);
+                    startTime = changeTimeToUnix(startTime);
+                    var endTime = ''+endD.substring(0,4)+'-'+endD.substring(5,7)+'-'+endD.substring(8,10)+' 00:00:00';
+                    alert(endTime);
+                    endTime = changeTimeToUnix(endTime);
+
+                    var InfoArticle = $("#InfoArticle").val();
+                    AlreadyHandleList(1,1,1,InfoArticle,startTime,endTime);
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            }
+            //初始化
+            jQuery(function($) {
+                $('#id-date-range-picker-1').daterangepicker({
+                    timePicker: true,
+                    timePickerIncrement: 30,
+                    format: 'YYYY-MM-DD'
+                }, function(start, end, label) {
+                    //console.log(start.toISOString(), end.toISOString(), label);
+                });
+                //登录工号获取
+                var localCookie = document.cookie;
+                var cookie_user = '';
+                if(localCookie.length > 0 && localCookie.indexOf('userid')>-1){
+                    localCookie = localCookie.split(';');
+                    for(var lc in localCookie){
+                        if(localCookie[lc].indexOf('userid=')>-1){
+                            cookie_user = localCookie[lc];
+                            break;
+                        }
+                    } 
+                    if(cookie_user == ''){
+                        var unique_id = $.gritter.add({
+                            title: '系统登录错误提示',
+                            text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-info gritter-center'
+                        });
+                    }else{
+                        cookie_user = trim(cookie_user).substring(7);
+                        localStorage.removeItem('pernrBase');
+                        localStorage.setItem('pernrBase',cookie_user);
+                    }
+                }else{
+                    var unique_id = $.gritter.add({
+                        title: '系统登录错误提示',
+                        text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                }
+                //页面初始化
+                $.ajaxSetup({
+                    contentType: 'application/json',
+                    async:false,
+                    error:function(){
+                        alert(errMsg1);
+                    },
+                    timeout:timeout
+                });
+
+                var opts = {            
+                    lines: 10, // 花瓣数目
+                    length: 0, // 花瓣长度
+                    width: 10, // 花瓣宽度
+                    radius: 20, // 花瓣距中心半径
+                    corners: 1, // 花瓣圆滑度 (0-1)
+                    rotate: 0, // 花瓣旋转角度
+                    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+                    color: '#2679b5', // 花瓣颜色
+                    speed: 1, // 花瓣旋转速度
+                    trail: 60, // 花瓣旋转时的拖影(百分比)
+                    shadow: false, // 花瓣是否显示阴影
+                    hwaccel: false, //spinner 是否启用硬件加速及高速旋转            
+                    className: 'spinner', // spinner css 样式名称
+                    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+                    top: '-100', // spinner 相对父容器Top定位 单位 px
+                    left: '0'// spinner 相对父容器Left定位 单位 px
+                };
+                var target = document.getElementById("Loading");  
+                var spinner = new Spinner(opts).spin(target);
+                pagei = $.layer({
+                    type: 1,   //0-4的选择,
+                    title: false,
+                    border: [0],
+                    closeBtn: [0],
+                    shadeClose: false,
+                    area: ['auto', 'auto'],
+                    page: {dom : '#Loading'}
+                });
+                setTimeout(function() {
+                    //默认显示30天内的数据
+                    var startTime = ''+getbeg30().substring(0,4)+'-'+getbeg30().substring(4,6)+'-'+getbeg30().substring(6,8)+' 00:00:00';
+                    startTime = changeTimeToUnix(startTime);
+                    var endTime = ''+getToday8().substring(0,4)+'-'+getToday8().substring(4,6)+'-'+getToday8().substring(6,8)+' 00:00:00';
+                    endTime = changeTimeToUnix(endTime);
+                    //获取意见反馈待回复列表-WaitHandleList()
+                    var InfoArticle = $("#InfoArticle").val();
+                    WaitHandleList(1,0,1,InfoArticle,startTime,endTime);
+                    spinner.spin();
+                    layer.close(pagei);
+                }, 300 + parseInt(Math.random() * 300));
+            });
+        </script>
+        <link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+        <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+        <script type="text/javascript">ace.vars['base'] = '..';</script>
+        <script src="../assets/js/ace/ace.onpage-help.js"></script>
+        <script src="../docs/assets/js/rainbow.js"></script>
+        <script src="../docs/assets/js/language/generic.js"></script>
+        <script src="../docs/assets/js/language/html.js"></script>
+        <script src="../docs/assets/js/language/css.js"></script>
+        <script src="../docs/assets/js/language/javascript.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../myjs/backupNew.js"></script>
+        <script src="../myjs/lexus.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+        <script src="../assets/js/fuelux/fuelux.spinner.min.js"></script>
+        <script src="../assets/js/spin.min.js"></script>
+        <script src="../myjs/opinionFeedback.js"></script>
+    </body>
+</html>

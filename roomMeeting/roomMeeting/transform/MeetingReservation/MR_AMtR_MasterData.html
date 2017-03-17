@@ -1,0 +1,327 @@
+<style type="text/css">
+    .MasterData {
+        background:#fff;
+        border:1px solid #e9e9e9;
+        border-radius:4px;
+    }
+    .nav-tabs {
+        border-bottom:1px solid #18a18d;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+        border:1px solid #18a18d;
+        border-bottom-color:transparent;
+    }
+    .nav>li>a:hover, .nav>li>a:focus {
+        background-color:#1bb7a0;
+        color:#fff;
+    }
+    .nav-tabs>li>a:hover {
+        border:1px solid #18a18d;
+    }
+    .table>thead>tr>th, .table>thead>tr>td, .table>tbody>tr>th, .table>tbody>tr>td, .table>tfoot>tr>th, .table>tfoot>tr>td {
+        vertical-align:middle;
+    }
+    .ui-select {
+        margin:0;
+        width:100%
+    }
+    .ui-select>select {
+        width:100%;
+        min-width:100%;
+        padding:7px 15px 6px 10px;
+    }
+</style>
+<section class="panel panel-default">
+    <div class="col-md-12 panel-body" data-ng-controller="TabsDemoCtrl">
+        <tabset class="ui-tab MasterData panel-body">
+            <tab class="" heading="归属地数据维护" style="margin-left:15px;">
+                <div class="panel panel-default" id="MasterData_Attribution">
+                    <div class="panel-heading" style="overflow:hidden;">
+                        <strong style="line-height:33px;height:33px;float:left;">基础数据维护</strong>
+                        <div class="" data-ng-controller="Attribution_Box"> 
+                            <script type="text/ng-template" id="Attribution_Box.html">
+                                                  <div class="modal-header">
+                                                      <h3>修改归属地数据</h3>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                        <form class="form-horizontal">
+                                                              <div class="form-group">
+                                                                    <label for="" class="col-sm-3" style="text-align:right;height:34px;line-height:34px;">归属地</label>
+                                                                    <div class="col-sm-6">
+                                                                          <input type="text" id="Attribution_" class="form-control">
+                                                                    </div>
+                                                              </div>
+                                                              <div class="form-group">
+                                                                    <label for="" class="col-sm-3" style="text-align:right;height:34px;line-height:34px;">管理员</label>
+                                                                    <div class="col-sm-6">
+                                                                          <div class="" data-ng-controller="FindNnumber">
+                                                                                <tags-input ng-model="tags" class="ui-tags-input AdminNumSearch" placeholder="输入姓名或工号..."></tags-input>
+                                                                          </div>
+                                                                    </div>
+                                                              </div>
+                                                        </form>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                      <button class="btn btn-primary col-md-2" style="float:right;" onclick="AttributionOk()" ng-click="ok()">保存</button>
+                                                      <button class="btn btn-warning col-md-2" style="float:right;margin-right:15px;" ng-click="cancel()">取消</button>
+                                                  </div>
+                            </script>
+                            <button class="btn btn-success" ng-click="open()" style="float:right;"><span class="glyphicon glyphicon-plus"></span> 新增厂区</button>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>归属地</th>
+                                <th>管理员</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>连云港新浦</td>
+                                <td>
+                                    <p>郑怀亮 8102406 信息中心</p>
+                                    <p>郑怀亮 8102406 信息中心</p>
+                                    <p>郑怀亮 8102406 信息中心</p>
+                                </td>
+                                <td>2015-1-19  12：00</td>
+                                <td>
+                                    <a href="javascript:;" class="btn-icon btn-icon-sm btn-youtube">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                    <a href="javascript:;" class="btn-icon btn-icon-sm btn-rss">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
+            <tab heading="会议类型数据维护">
+                <div class="panel panel-default" id="MasterData_MeetingType">
+                    <div class="panel-heading" style="overflow:hidden;">
+                        <strong style="line-height:33px;height:33px;float:left;">会议类型数据维护</strong>
+                        <div class="" data-ng-controller="MeetingType_Box"> 
+                            <script type="text/ng-template" id="MeetingType_Box.html">
+                                                  <div class="modal-header">
+                                                      <h3>会议类型数据维护</h3>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                        <form class="form-horizontal">
+                                                              <div class="form-group" style="margin-bottom:0px;">
+                                                                    <label for="" class="col-sm-3" style="text-align:right;height:34px;line-height:34px;">会议类型</label>
+                                                                    <section class="col-sm-4">
+                                                                          <span class="ui-select">
+                                                                                <select>
+                                                                                      <option>内部</option>
+                                                                                      <option>外部</option>
+                                                                                </select>
+                                                                          </span>
+                                                                    </section>
+                                                                    <div class="col-sm-4">
+                                                                          <input type="text" id="Attribution_" class="form-control">
+                                                                    </div>
+                                                              </div>
+                                                        </form>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                      <button class="btn btn-primary col-md-2" style="float:right;" onclick="MeetingTypeOk()" ng-click="ok()">保存</button>
+                                                      <button class="btn btn-warning col-md-2" style="float:right;margin-right:15px;" ng-click="cancel()">取消</button>
+                                                  </div>
+                            </script>
+                            <button class="btn btn-success" onclick="openBox(760)" ng-click="open()" style="float:right;"><span class="glyphicon glyphicon-plus"></span> 新增会议类型</button>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>会议类型</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>内部高层会议</td>
+                                <td>2015-1-19  12：00</td>
+                                <td>
+                                    <a href="javascript:;" class="btn-icon btn-icon-sm btn-youtube">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                    <a href="javascript:;" class="btn-icon btn-icon-sm btn-rss">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
+            <tab heading="设备数据维护">
+                <div class="panel panel-default" id="MasterData_Equipment">
+                    <div class="panel-heading" style="overflow:hidden;">
+                        <strong style="line-height:33px;height:33px;float:left;">设备数据维护</strong>
+                        <div class="" data-ng-controller="Equipment_Box"> 
+                            <script type="text/ng-template" id="Equipment_Box.html">
+                                                  <div class="modal-header">
+                                                      <h3>设备数据维护</h3>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                        <form class="form-horizontal">
+                                                              <div class="form-group" style="margin-bottom:0px;">
+                                                                    <label for="" class="col-sm-4" style="text-align:right;height:34px;line-height:34px;">设备名称</label>
+                                                                    <div class="col-sm-6">
+                                                                          <input type="text" id="Attribution_" class="form-control">
+                                                                    </div>
+                                                              </div>
+                                                        </form>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                      <button class="btn btn-primary col-md-2" style="float:right;"  onclick="EquipmentOk()" ng-click="ok()">保存</button>
+                                                      <button class="btn btn-warning col-md-2" style="float:right;margin-right:15px;" ng-click="cancel()">取消</button>
+                                                  </div>
+                            </script>
+                            <button class="btn btn-success" ng-click="open()" style="float:right;"><span class="glyphicon glyphicon-plus"></span> 新增设备</button>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>设备名称</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>投影仪</td>
+                                <td>2015-1-19  12：00</td>
+                                <td>
+                                    <a href="javascript:;" class="btn-icon btn-icon-sm btn-youtube">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                    <a href="javascript:;" class="btn-icon btn-icon-sm btn-rss">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
+            <tab heading="会议用品数据维护">
+                <div class="panel panel-default" id="MasterData_MeetingSupplies">
+                    <div class="panel-heading" style="overflow:hidden;">
+                        <strong style="line-height:33px;height:33px;float:left;">会议用品数据维护</strong>
+                        <div class="" data-ng-controller="MeetingSupplies_Box"> 
+                            <script type="text/ng-template" id="MeetingSupplies_Box.html">
+                                                    <div class="modal-header">
+                                                        <h3>会议用品数据维护</h3>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form class="form-horizontal">
+                                                                <div class="form-group" style="margin-bottom:0px;">
+                                                                    <label for="" class="col-sm-3" style="text-align:right;height:34px;line-height:34px;">会议用品名称</label>
+                                                                    <div class="col-sm-8">
+                                                                            <div class="" data-ng-controller="FindNnumber">
+                                                                                <tags-input ng-model="tags" class="ui-tags-input" placeholder="请输入新增会议用品..."></tags-input>
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary col-md-2" style="float:right;" onclick="MeetingSuppliesOk()" ng-click="ok()">保存</button>
+                                                        <button class="btn btn-warning col-md-2" style="float:right;margin-right:15px;" ng-click="cancel()">取消</button>
+                                                    </div>
+                            </script>
+                            <button class="btn btn-success" ng-click="open()" style="float:right;"><span class="glyphicon glyphicon-plus"></span> 新增会议用品</button>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>会议用品</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>鲜花</td>
+                                <td>2015-1-19  12：00</td>
+                                <td>
+                                    <a href="javascript:;" class="btn-icon btn-icon-sm btn-youtube">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                    <a href="javascript:;" class="btn-icon btn-icon-sm btn-rss">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+</section>
+<script type="text/javascript">
+    var PernrNumArr = [];         //工号数组
+    function SearchNum(cont,list,M) {
+        //console.log(cont,list,M);
+        if( M.parents().hasClass("AdminNumSearch") ){         //查询工号或姓名    
+            //alert(1);  
+            var AdminInfo = cont;         //"郑怀亮 8102406 信息中心";
+            localStorage.removeItem("AdminInfo");
+            localStorage.AdminInfo = JSON.stringify(AdminInfo);
+
+
+            var AdminNum = true;
+        }else{                                                //正常输入
+            alert(0);
+            var AdminInfo = cont;
+            localStorage.removeItem("AdminInfo");
+            localStorage.AdminInfo = JSON.stringify(AdminInfo);
+
+
+
+            var AdminNum = true;
+        }
+        return AdminNum;
+    }
+
+    //归属地数据维护----保存
+    function AttributionOk(){
+        alert(1);
+    }
+    //会议类型数据维护----保存
+    function MeetingTypeOk(){
+        alert(2);
+    }
+    //设备数据维护----保存
+    function EquipmentOk(){
+        alert(3);
+    }
+    //会议用品数据维护----保存
+    function MeetingSuppliesOk(){
+        alert(4);
+    }
+    //弹出层宽度设置
+    function openBox(W){
+        setTimeout(function(){
+            $(".modal-dialog").css({"width":W});
+        },10);
+    }
+</script>

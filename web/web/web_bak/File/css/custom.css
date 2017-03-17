@@ -1,0 +1,21 @@
+/*2014-01-29-JWW*/
+body{font-family:"Arial","Microsoft YaHei";color:#000;}
+h1,h2,h3,h4,h5,h6{font-family:"Microsoft YaHei";}
+li,ol,ul{list-style:none;}
+a:focus{outline:none;}
+.widget-header {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  position: relative;
+  min-height: 32px;
+  background: #f7f7f7 repeat-x;
+  background-image: -webkit-linear-gradient(top,#fff 0,#eee 100%);
+  background-image: -o-linear-gradient(top,#fff 0,#eee 100%);
+  background-image: linear-gradient(to bottom,#fff 0,#eee 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffeeeeee', GradientType=0);
+  color: #669fc7;
+  border-bottom: 1px solid #DDD;
+  padding-left: 12px;
+}
+.widget-box.transparent>.widget-header .widget-toolbar{padding-top:2px;}

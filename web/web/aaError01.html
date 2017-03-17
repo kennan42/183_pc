@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>已审批</title>
+
+		<meta name="description" content="Common UI Features &amp; Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+     
+        <!---css---->
+        <link rel="stylesheet" type="text/css" href="./assets/css/new/newcss.css">
+        
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+<link rel="stylesheet" href="./assets/css/datepicker.css" />
+		<!-- text fonts -->
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+        
+
+		
+       <script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js"></script>
+		<script src="./myjs/lexus.js"></script>
+
+
+		<script>
+			
+		
+			
+			//显示详情
+			function showCon(conId){
+				$('#content'+conId).toggle();
+			}
+			
+			//翻页
+			function changePage(flag){
+				var pageNow = $('#pageNow').html();
+				var pageAll = $('#pageAll').html();
+				if(flag == '1'){
+					if(pageNow == '1'){
+						return;
+					}
+					//第一页
+					changeDo('1');
+				}
+				
+				if(flag == '2'){
+					if(pageNow == '1'){
+						return;
+					}
+					pageNow = parseInt(pageNow)-1;
+					changeDo(pageNow);
+				}
+				
+				if(flag == '3'){
+					if(parseInt(pageNow) >= parseInt(pageAll)){
+						return;
+					}
+					pageNow = parseInt(pageNow)+1;
+					changeDo(pageNow);
+				}
+				
+				if(flag == '4'){
+					if(parseInt(pageNow) >= parseInt(pageAll)){
+						return;
+					}
+					
+					changeDo(pageAll);
+				}
+			}
+			
+			//翻页操作
+			function changeDo(pageNo){
+				
+					var listJSON = submit_11_1(localStorage.pernrBase?localStorage.pernrBase:'','1',$('#begD').val(),$('#endD').val());
+					if(listJSON.status == '-1'){
+						layer.alert('加班列表获取异常',8);
+					}else{
+						$('#pageNow').html(pageNo);
+						var listArr = listJSON.WF_P2011.item;
+						var listArr1 = [];
+						var temp_detail;
+						var temp_per_detail;
+						
+						for(var i=(parseInt(pageNo)-1)*10;i<10*parseInt(pageNo);i++){
+							if(listArr[i] == undefined){
+								//return;
+								break;
+							}
+							temp_detail = submit_11_2(localStorage.pernrBase?localStorage.pernrBase:'','1',listArr[i].FORM_ID,listArr[i].XH);
+							
+							temp_per_detail = submit_5_3(listArr[i].PERNR);
+							if (temp_per_detail.status == '-1') {
+								listArr1.push(temp_detail.WF_P2011.item[0]);
+							}
+							else {
+								listArr1.push($.extend(temp_detail.WF_P2011.item[0],temp_per_detail.EASY_TAB.item[0]));
+							}
+							
+						}
+						//显示列表和详情
+						localStorage.removeItem("waErrorListsArr");
+						localStorage.setItem("waErrorListsArr",JSON.stringify(listArr1));
+						
+						var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7">'
+						+'<table width="100%"><tbody><tr><td class="text-left" width="10%"> '
+						+'</td>'
+						+'<td class="text-left" width="10%"> 申请人</td><td class="text-left" width="10%">补签类型</td>'
+						+'<td class="text-left" width="15%">补签时间</td><td class="text-left" width="40%">补签事由</td>'
+						+'<td class="text-right">提交日期</td></tr>'
+						+'</tbody></table></div>';
+						
+						var vaTimeShow = '';
+						for(var k in listArr1){
+							
+							vaListStr += '<div class="message-item message-unread">'
+							+'<table width="100%">'
+							+'<tbody>'
+							+'<tr onclick="showCon(\''+k+'\')" class="blue" style="cursor:pointer;">'
+							+'<td class="text-left" width="10%">'
+							+'<label class="inline middle">'
+							+'</label>'
+							+'</td>'
+							+'<td class="text-left"  width="10%"> '+checkNoChar(listArr1[k].NACHN)+'</td>'
+							+'<td class="text-left"  width="10%">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</td>'
+							+'<td class="text-left"  width="15%">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</td>'
+							+'<td class="text-left"  width="40%">'+checkNoChar(listArr1[k].GTEXT)+'</td>'
+							+'<td class="text-right">'+checkNoChar(listArr1[k].TJ_DATE)+'</td>'
+							+'</tr>'
+							+'</tbody>'
+							+'</table>'
+							//下面是详情部分
+							
+							
+							
+							+'<div class="message-content" id="content'+k+'" style="display:none">'
+							+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+							+'<div style="background-color: rgb(241, 241, 241);" class="widget-header widget-header-small collapsed">'
+							+'<span class="blue bigger-125 widget-title"> 基本信息 </span>'
+							+'</div>'
+							+'<div><div class="widget-main"><div class="message-header">'
+							+'<table class="table  text-center"><tbody>'
+							+'<tr><td class="text-right grey">申请人</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].NACHN)+' '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td></tr>'
+							+'<tr><td class="text-right grey">部门</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].BUMEN)+'</td></tr>'
+							+'<tr><td class="text-right grey">岗位</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].PLSTX)+'</td></tr>'
+							+'<tr><td class="text-right grey">补签类型</td>'
+							+'<td class="text-left">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</td></tr>'
+							+'<tr><td class="text-right grey">补签时间</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</td></tr>'
+							+'<tr><td class="text-right grey">补签事由</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].GTEXT)+'</td></tr>'
+							+'</tbody></table>'
+							+'</div></div></div></div>'
+							+'</div></div>';
+						}
+						$('#message-list').html(vaListStr);
+						
+					}
+			}
+			
+		//选择显示时间段
+			function changeShowD(flag){
+				if(flag == '90'){
+					$('#showD').html('90天内');
+					$('#begD').val(getbeg90());
+					$('#endD').val(getToday8());
+					$('#id-date-picker-1').val('');
+					$('#id-date-picker-2').val('');
+					changeView(getbeg90(),getToday8());
+				}else if(flag == '30'){
+					$('#showD').html('30天内');
+					$('#begD').val(getbeg30());
+					$('#endD').val(getToday8());
+					$('#id-date-picker-1').val('');
+					$('#id-date-picker-2').val('');
+					changeView(getbeg30(),getToday8());
+				}else{
+					//自定义
+					$('#selfDate').show();
+					$('#showD').html('自定义时间段');
+				}
+			}
+			
+			function changeView(begD, endD){
+				$('#begD').val(begD);
+				$('#endD').val(endD);
+				var waVacationListsJSON = submit_8_7(localStorage.pernrBase?localStorage.pernrBase:'',1,10,begD,endD);
+				if(waVacationListsJSON.status == '0'){
+					var vacationCount = waVacationListsJSON.output.totalCount;
+					$('#xiujiaCount').html(vacationCount);
+					
+					//var pageAll = parseInt(vacationCount)%10 == 0?parseInt(vacationCount)/10:(parseInt(vacationCount/10)+1);
+					//$('#pageAll').html(pageAll);
+					
+					//$('#pageNow').html('1');
+				}
+				
+				//2获取加班和考勤异常待办条数
+				var jiabanCountJSON = submit_4_9(localStorage.pernrBase?localStorage.pernrBase:'','1',begD,endD);
+				if(jiabanCountJSON.status == '0'){
+					var jiabanCount = checkNoChar(jiabanCountJSON.E_2005);
+					var kaoqinCount = checkNoChar(jiabanCountJSON.E_2011);
+					$('#jiabanCount').html(jiabanCount?jiabanCount:'0');
+					$('#kaoqinCount').html(kaoqinCount?kaoqinCount:'0');
+					var pageAll = parseInt(kaoqinCount)%10 == 0?parseInt(kaoqinCount)/10:(parseInt(kaoqinCount/10)+1);
+					$('#pageAll').html(pageAll);
+					
+					$('#pageNow').html('1');
+				}
+				
+				//3获取待办考勤的列表和详情
+				if($('#kaoqinCount').html() != '0'){
+					var listJSON = submit_11_1(localStorage.pernrBase?localStorage.pernrBase:'','1');
+					if(listJSON.status == '-1'){
+						layer.alert('考勤异常列表获取异常',8);
+					}else{
+						var listArr = listJSON.WF_P2011.item;
+						var listArr1 = [];
+						var temp_detail;
+						var temp_per_detail;
+						
+						for(var i=0;i<10;i++){
+							if(listArr[i] == undefined){
+								//return;
+								break;
+							}
+							temp_detail = submit_11_2(localStorage.pernrBase?localStorage.pernrBase:'','1',listArr[i].FORM_ID,listArr[i].XH);
+							
+							temp_per_detail = submit_5_3(listArr[i].PERNR);
+							listArr1.push($.extend(temp_detail.WF_P2011.item[0],temp_per_detail.EASY_TAB.item[0]));
+						}
+						//显示列表和详情
+						localStorage.removeItem("waErrorListsArr");
+						localStorage.setItem("waErrorListsArr",JSON.stringify(listArr1));
+						
+						//构建列表
+						
+						var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7">'
+						+'<table width="100%"><tbody><tr><td class="text-left" width="10%">'
+						+'</td>'
+						+'<td class="text-left" width="10%"> 申请人</td><td class="text-left" width="10%">补签类型</td>'
+						+'<td class="text-left" width="15%">补签时间</td><td class="text-left" width="40%">补签事由</td>'
+						+'<td class="text-right">提交日期</td></tr>'
+						+'</tbody></table></div>';
+						
+						var vaTimeShow = '';
+						for(var k in listArr1){
+							
+							vaListStr += '<div class="message-item message-unread">'
+							+'<table width="100%">'
+							+'<tbody>'
+							+'<tr onclick="showCon(\''+k+'\')" class="blue" style="cursor:pointer;">'
+							+'<td class="text-left" width="10%">'
+							+'<label class="inline middle">'
+							+'</label>'
+							+'</td>'
+							+'<td class="text-left"  width="10%"> '+checkNoChar(listArr1[k].NACHN)+'</td>'
+							+'<td class="text-left"  width="10%">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</td>'
+							+'<td class="text-left"  width="15%">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</td>'
+							+'<td class="text-left"  width="40%">'+checkNoChar(listArr1[k].GTEXT)+'</td>'
+							+'<td class="text-right">'+checkNoChar(listArr1[k].TJ_DATE)+'</td>'
+							+'</tr>'
+							+'</tbody>'
+							+'</table>'
+							//下面是详情部分
+							
+							
+							
+							+'<div class="message-content" id="content'+k+'" style="display:none">'
+							+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+							+'<div style="background-color: rgb(241, 241, 241);" class="widget-header widget-header-small collapsed">'
+							+'<span class="blue bigger-125 widget-title"> 基本信息 </span>'
+							+'</div>'
+							+'<div><div class="widget-main"><div class="message-header">'
+							+'<table class="table  text-center"><tbody>'
+							+'<tr><td class="text-right grey">申请人</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].NACHN)+' '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td></tr>'
+							+'<tr><td class="text-right grey">部门</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].BUMEN)+'</td></tr>'
+							+'<tr><td class="text-right grey">岗位</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].PLSTX)+'</td></tr>'
+							+'<tr><td class="text-right grey">补签类型</td>'
+							+'<td class="text-left">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</td></tr>'
+							+'<tr><td class="text-right grey">补签时间</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</td></tr>'
+							+'<tr><td class="text-right grey">补签事由</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].GTEXT)+'</td></tr>'
+							+'</tbody></table>'
+							+'</div></div></div></div>'
+							+'</div></div>';
+						}
+						$('#message-list').html(vaListStr);
+						
+					}
+				}
+			}
+			
+			//自定义时间段
+			function calRange(){
+				var begD = $('#id-date-picker-1').val();
+				var endD = $('#id-date-picker-2').val();
+				if(begD.length<10 || endD.length<10){
+					return;
+				}
+				if(parseInt(begD.replace(/-/g,'')) > parseInt(endD.replace(/-/g,''))){
+					return;
+				}
+				
+				$('#begD').val(begD.replace(/-/g,''));
+				$('#endD').val(endD.replace(/-/g,''));
+				changeView(begD.replace(/-/g,''),endD.replace(/-/g,''));
+			}
+		</script>
+		<!---这是列表的js--->
+        <!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script src="./assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($){
+			var mydate = $('#id-date-picker-1')[0];
+ if(mydate.type !== 'date') {//if browser doesn't support "date" input
+    $(mydate).datepicker({
+      autoclose: true,
+					todayHighlight: true
+    })
+ }
+ var mydate1 = $('#id-date-picker-2')[0];
+ if(mydate1.type !== 'date') {//if browser doesn't support "date" input
+    $(mydate1).datepicker({
+      autoclose: true,
+					todayHighlight: true
+    })
+ }
+				//handling tabs and loading/displaying relevant messages and forms
+				//not needed if using the alternative view, as described in docs
+				
+				
+				
+				//页面初始化
+$.ajaxSetup({
+	contentType: 'application/json',
+	async:false,
+	error:function(){
+		alert(errMsg1);
+	},
+	timeout:timeout
+ });
+				//1获取休假待办列表和条数
+				$('#begD').val(getbeg30());
+				$('#endD').val(getToday8());
+				var waVacationListsJSON = submit_8_7(localStorage.pernrBase?localStorage.pernrBase:'',1,10,getbeg30(),getToday8());
+				if(waVacationListsJSON.status == '0'){
+					var vacationCount = waVacationListsJSON.output.totalCount;
+					$('#xiujiaCount').html(vacationCount);
+					
+					//var pageAll = parseInt(vacationCount)%10 == 0?parseInt(vacationCount)/10:(parseInt(vacationCount/10)+1);
+					//$('#pageAll').html(pageAll);
+					
+					//$('#pageNow').html('1');
+				}
+				
+				//2获取加班和考勤异常待办条数
+				var jiabanCountJSON = submit_4_9(localStorage.pernrBase?localStorage.pernrBase:'','1',getbeg30(),getToday8());
+				if(jiabanCountJSON.status == '0'){
+					var jiabanCount = checkNoChar(jiabanCountJSON.E_2005);
+					var kaoqinCount = checkNoChar(jiabanCountJSON.E_2011);
+					$('#jiabanCount').html(jiabanCount?jiabanCount:'0');
+					$('#kaoqinCount').html(kaoqinCount?kaoqinCount:'0');
+					var pageAll = parseInt(kaoqinCount)%10 == 0?parseInt(kaoqinCount)/10:(parseInt(kaoqinCount/10)+1);
+					$('#pageAll').html(pageAll);
+					
+					$('#pageNow').html('1');
+				}
+				
+				//3获取待办考勤的列表和详情
+				if($('#kaoqinCount').html() != '0'){
+					var listJSON = submit_11_1(localStorage.pernrBase?localStorage.pernrBase:'','1',getbeg30(),getToday8());
+					if(listJSON.status == '-1'){
+						layer.alert('考勤异常列表获取异常',8);
+					}else{
+						var listArr = listJSON.WF_P2011.item;
+						var listArr1 = [];
+						var temp_detail;
+						var temp_per_detail;
+						
+						for(var i=0;i<10;i++){
+							if(listArr[i] == undefined){
+								//return;
+								break;
+							}
+							temp_detail = submit_11_2(localStorage.pernrBase?localStorage.pernrBase:'','1',listArr[i].FORM_ID,listArr[i].XH);
+							
+							temp_per_detail = submit_5_3(listArr[i].PERNR);
+							listArr1.push($.extend(temp_detail.WF_P2011.item[0],temp_per_detail.EASY_TAB.item[0]));
+						}
+						//显示列表和详情
+						localStorage.removeItem("waErrorListsArr");
+						localStorage.setItem("waErrorListsArr",JSON.stringify(listArr1));
+						
+						//构建列表
+						
+						var vaListStr = '<div class="message-item message-unread" style="background-color:#EFF7F7">'
+						+'<table width="100%"><tbody><tr><td class="text-left" width="10%">'
+						+'</td>'
+						+'<td class="text-left" width="10%"> 申请人</td><td class="text-left" width="10%">补签类型</td>'
+						+'<td class="text-left" width="15%">补签时间</td><td class="text-left" width="40%">补签事由</td>'
+						+'<td class="text-right">提交日期</td></tr>'
+						+'</tbody></table></div>';
+						
+						var vaTimeShow = '';
+						for(var k in listArr1){
+							
+							vaListStr += '<div class="message-item message-unread">'
+							+'<table width="100%">'
+							+'<tbody>'
+							+'<tr onclick="showCon(\''+k+'\')" class="blue" style="cursor:pointer;">'
+							+'<td class="text-left" width="10%">'
+							+'<label class="inline middle">'
+							+'</label>'
+							+'</td>'
+							+'<td class="text-left"  width="10%"> '+checkNoChar(listArr1[k].NACHN)+'</td>'
+							+'<td class="text-left"  width="10%">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</td>'
+							+'<td class="text-left"  width="15%">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</td>'
+							+'<td class="text-left"  width="40%">'+checkNoChar(listArr1[k].GTEXT)+'</td>'
+							+'<td class="text-right">'+checkNoChar(listArr1[k].TJ_DATE)+'</td>'
+							+'</tr>'
+							+'</tbody>'
+							+'</table>'
+							//下面是详情部分
+							
+							
+							
+							+'<div class="message-content" id="content'+k+'" style="display:none">'
+							+'<div style="border-color: rgb(241, 241, 241);" class="widget-box widget-color-orange collapsed">'
+							+'<div style="background-color: rgb(241, 241, 241);" class="widget-header widget-header-small collapsed">'
+							+'<span class="blue bigger-125 widget-title"> 基本信息 </span>'
+							+'</div>'
+							+'<div><div class="widget-main"><div class="message-header">'
+							+'<table class="table  text-center"><tbody>'
+							+'<tr><td class="text-right grey">申请人</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].NACHN)+' '+parseInt(checkNoChar(listArr1[k].PERNR))+'</td></tr>'
+							+'<tr><td class="text-right grey">部门</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].BUMEN)+'</td></tr>'
+							+'<tr><td class="text-right grey">岗位</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].PLSTX)+'</td></tr>'
+							+'<tr><td class="text-right grey">补签类型</td>'
+							+'<td class="text-left">'+(checkNoChar(listArr1[k].SATZA)=='P10'?'上班':'下班')+'</td></tr>'
+							+'<tr><td class="text-right grey">补签时间</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].LDATE)+' '+cutSecond(checkNoChar(listArr1[k].LTIME))+'</td></tr>'
+							+'<tr><td class="text-right grey">补签事由</td>'
+							+'<td class="text-left">'+checkNoChar(listArr1[k].GTEXT)+'</td></tr>'
+							+'</tbody></table>'
+							+'</div></div></div></div>'
+							+'</div></div>';
+						}
+						$('#message-list').html(vaListStr);
+						
+					}
+				}
+				
+				
+				
+				
+				
+				
+			
+			});
+		</script>
+        <!---这是列表的js结束--->
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+		<script src="./assets/js/bootstrap-tag.min.js"></script>
+        <script >
+        	//===========================点击展开关闭效果====================================
+		function openShutManager(oSourceObj,oTargetObj,shutAble,oOpenTip,oShutTip){
+		var sourceObj = typeof oSourceObj == "string" ? document.getElementById(oSourceObj) : oSourceObj;
+		var targetObj = typeof oTargetObj == "string" ? document.getElementById(oTargetObj) : oTargetObj;
+		var openTip = oOpenTip || "";
+		var shutTip = oShutTip || "";
+		if(targetObj.style.display!="none"){
+		   if(shutAble) return;
+		   targetObj.style.display="none";
+		   if(openTip  &&  shutTip){
+			sourceObj.innerHTML = shutTip; 
+		   }
+		} else {
+		   targetObj.style.display="block";
+		   if(openTip  &&  shutTip){
+			sourceObj.innerHTML = openTip; 
+		   }
+		}
+		}
+        </script>
+        <!---单选-->
+        <script>
+        	function a_click(o){
+			   var as=o.parentNode.getElementsByTagName('li');
+			   for(var i=0;i<as.length;i++){
+				  as[i].style.backgroundColor='';
+			   }
+			   o.style.backgroundColor='#F5F7FA';
+			}
+        </script>
+	</head>
+
+	<body class="no-skin" style="font-family:Microsoft YaHei ! important">
+        <div class="main-container " style=" overflow:hidden;">
+				
+				
+            <!-- #section:basics/navbar.layout -->
+            <div class="main-content " style="">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="http://cpd.cttq.com:50000/irj/portal/">企业信息门户</a>
+						</li>
+
+						<li>
+							<a href="#">统一待办</a>
+						</li>
+					</ul><!-- /.breadcrumb -->
+					<!-- /section:basics/content.searchbox -->
+				</div>
+				<div class="page-content">
+				<div class="page-content-area">
+						<div class="page-header">
+							<input type="hidden" id="begD" value="">
+							<input type="hidden" id="endD" value="">
+							<h1>
+								考勤异常已审批
+								<div class="btn-group" style="float:right;">
+									<div class="col-sm-10" id="selfDate" style="display:none">
+										<div class="col-sm-2" style="width:204px">
+											<div class="input-group">
+												<input class="form-control date-picker" onpropertychange="calRange()" id="id-date-picker-1" type="text" data-date-format="yyyy-mm-dd">
+												<span class="input-group-addon">
+													<i class="fa fa-calendar bigger-110 blue"></i>
+												</span>
+											</div>
+										</div>
+										<label class="col-sm-1" style="width:10px;margin-right:10px;margin-top:10px">至</label>
+										<div class="col-sm-2" style="width:204px">
+											<div class="input-group">
+												<input class="form-control date-picker" id="id-date-picker-2" type="text" data-date-format="yyyy-mm-dd" onpropertychange="calRange()">
+												<span class="input-group-addon">
+													<i class="fa fa-calendar bigger-110 blue"></i>
+												</span>
+											</div>
+										</div>
+										</div>
+										<div class="col-sm-2">
+												<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+													<span id="showD">30天内</span>
+													<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+												</button>
+
+												<ul class="dropdown-menu">
+													<li>
+														<a href="###" onclick="changeShowD('90')">90天内</a>
+													</li>
+
+													<li>
+														<a href="###" onclick="changeShowD('30')">30天内</a>
+													</li>
+
+													<li>
+														<a href="###" onclick="changeShowD('00')">自定义</a>
+													</li>
+												</ul>
+												</div>
+											</div>
+							</h1>
+						</div>
+				</div>
+            <div class="row">
+            	<div class="col-sm-12">
+                	<div class="row">
+                               
+                        <div class="col-sm-3">
+                            <!-- #section:elements.tab.option -->
+                            <div class="widget-body">
+                            <div class="tabbable">
+                                
+            
+                                <div class="tab-content donder">
+                                    <div id="home4" class="tab-pane in active">
+                                    
+            
+                                        <ul class="list-unstyled" id="container_ul_1">
+                                            <li class="message-item"  onclick="javascript:a_click(this);">
+                                                <a href="#" onclick="window.location.href='/web/aaVacation.html'"><table width="100%" border="0" cellpadding="0">
+                                                    <tr>
+                                                        
+                                                        <td class="text-left bigger-125 ">休假审批</td>
+                                                        <td width="30%" class="text-right bigger-150" id="xiujiaCount">0</td>
+                                                    </tr>
+                                                </table>  
+                                                </a>
+                                            </li>
+                                            <li class="message-item"  onclick="javascript:a_click(this);">
+                                                <a href="#" onclick="window.location.href='/web/aaOvertime.html'"><table width="100%" border="0" cellpadding="0">
+                                                    <tr>
+                                                        
+                                                        <td class="text-left bigger-125 ">加班审批</td>
+                                                        <td width="30%" class="text-right bigger-150" id="jiabanCount">0</td>
+                                                    </tr>
+                                                </table>  
+                                                </a>
+                                            </li>
+											 <li class="message-item"  onclick="javascript:a_click(this);" style="background-color: rgb(245, 247, 250);">
+                                                <a href="#"><table width="100%" border="0" cellpadding="0">
+                                                    <tr>
+                                                        
+                                                        <td class="text-left bigger-125 ">考勤异常审批</td>
+                                                        <td width="30%" class="text-right bigger-150" id="kaoqinCount">0</td>
+                                                    </tr>
+                                                </table>  
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+									<style>
+                                    .donder a{TEXT-DECORATION:none;}
+                                    .donder a:hover{TEXT-DECORATION:none}
+                                    .donder a:active{text-decoration:none;}
+                                    
+                                    .donder a:link{text-decoration:none;}
+                                    .donder a:visited{text-decoration:none;}
+                                    
+                                    </style>
+                                </div>
+                            </div>
+                            </div>
+                        </div><!-- /.col -->
+            
+                        <div class="col-sm-9">
+                        
+                        <!----列表--->
+                        <div class="tabbable donder">
+                                <div class="tab-content no-border no-padding">
+                                    <div  class="tab-pane in active">
+                                        <div class="message-container">
+                                            <!-- #section:pages/inbox.navbar -->
+                                            <div id="id-message-list-navbar" class="message-navbar clearfix">
+														<div class="message-bar">
+															<div class="message-infobar" id="id-message-infobar">
+																<span class="blue bigger-150">考勤异常列表</span>
+																<span class="grey bigger-110"></span>
+															</div>
+
+															<div class="message-toolbar hide">
+																<div class="inline position-relative align-left">
+																	
+
+																	
+																</div>
+
+																
+
+																
+															</div>
+														</div>
+
+														<div>
+															
+
+															
+
+															<!-- #section:pages/inbox.navbar-search -->
+															<!--div class="nav-search minimized">
+																<form class="form-search">
+																	<span class="input-icon">
+																		<input type="text" autocomplete="off" class="input-small nav-search-input" placeholder="Search inbox ..." />
+																		<i class="ace-icon fa fa-search nav-search-icon"></i>
+																	</span>
+																</form>
+															</div-->
+
+															<!-- /section:pages/inbox.navbar-search -->
+														</div>
+													</div>
+                                            
+            
+                                            
+            
+                                            
+            
+            
+                                            <!-- /section:pages/inbox.navbar -->
+                                            <div class="message-list-container">
+                                                <!-- #section:pages/inbox.message-list -->
+                                                <div class="message-list" id="message-list">
+                                            </div>
+                                            <div class="hide message-content" id="id-message-content">
+                                                <!-- #section:pages/inbox.message-header -->
+                                                <div class="widget-box widget-color-orange collapsed"  style="border-color:#F1F1F1;">
+                                                        <!-- #section:custom/widget-box.options.collapsed -->
+                                                        <div class="widget-header widget-header-small collapsed" style=" background-color:#F1F1F1">
+                                                            <span class="blue bigger-125 widget-title"> 基本信息 </span>
+                                                            
+                                                        </div>
+                
+                                                        <!-- /section:custom/widget-box.options.collapsed -->
+                                                        <div >
+                                                            <div class="widget-main">
+                                                                <div class="message-header">
+                                                                <style>
+                                                                .table tr.last td{ border-top:0px solid blue;}
+                                                                </style>
+                                                    <table class="table  text-center">
+                                                         <tr>
+                                                             <td class="text-right grey">申请人</td>
+                                                            <td class="text-left" id="sqr"></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="text-right grey">公司</td>
+                                                            <td class="text-left" id="gs"></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="text-right grey">部门</td>
+                                                            <td class="text-left" id="bm"></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="text-right grey">岗位</td>
+                                                            <td class="text-left" id="gw"></td>
+                                                         </tr>
+														 <tr>
+                                                            <td class="text-right grey">休假类型</td>
+                                                            <td class="text-left" id="xjlx"></td>
+                                                         </tr>
+														 <tr>
+                                                            <td class="text-right grey">休假时间</td>
+                                                            <td class="text-left" id="xjsj"></td>
+                                                         </tr>
+														 <tr>
+                                                            <td class="text-right grey">休假天数</td>
+                                                            <td class="text-left" id="xjts"></td>
+                                                         </tr>
+														 <tr>
+                                                            <td class="text-right grey">休假事由</td>
+                                                            <td class="text-left" id="xjsy"></td>
+                                                         </tr>
+														 <tr>
+                                                            <td class="text-right grey">假期联系电话</td>
+                                                            <td class="text-left" id="jqlxdh"></td>
+                                                         </tr>
+														 <tr>
+                                                            <td class="text-right grey">附件下载</td>
+                                                            <td class="text-left" id="fjxz"></td>
+                                                         </tr>
+														
+                                                    </table>
+                                                        
+                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                
+                                                <!-- #section:pages/inbox.message-body -->
+                                           
+                                                
+                
+                                                <!-- #section:pages/inbox.message-attachment -->
+                                                <!--div class="message-header">
+                                                        
+                                                        <div class="widget-box widget-color-orange collapsed  "  style="border-color:#F1F1F1;">
+                                                        <div class=" widget-header-small " style=" background-color:#F1F1F1">
+                                                            <span class="blue  bigger-125 widget-title"> 发票信息 </span>
+                                                            
+                                                            <div class="widget-toolbar no-border" style=" background-color:#F1F1F1">
+                                                                <a href="###" onclick="openShutManager(this,'box1',false,'点击关闭','点击展开')">点击展开</a>
+                                                            </div>
+                                                        </div>
+                                                        <div >
+                                                            <div class="widget-main" style="display:none; font-weight:" id="box1">
+                                                                <p class="alert alert-info">
+                                                                 暂无信息
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div-->
+                
+                                                <!-- /section:pages/inbox.message-attachment -->
+                                                <!--div class="message-header">
+                                                        
+                                                        <div class="widget-box widget-color-orange collapsed"  style="border-color:#F1F1F1;">
+                                                        <div class="widget-header widget-header-small collapsed" style=" background-color:#F1F1F1">
+                                                            <span class="blue  bigger-125 widget-title"> 审批记录 </span>
+                                                                
+                                                            <div class="widget-toolbar no-border ">
+                                                                <a href="###" onclick="openShutManager(this,'box3',false,'点击关闭','点击展开')">点击展开</a>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div style="display:none;" id="box3">
+                                                                
+                                                                <div class="widget-main">
+                                                                <style>
+                                                                    .widget-main span{ margin-left:65px; line-height:30px;}
+                                                                    .xian{ width:95%; margin:0 auto; background-color:#CCC; height:1px;}
+                                                                </style>
+                                                                             <p style=" margin-top:10x;">
+                                                                                <span class="grey">3</span>
+                                                                                <span class="text-right grey">胡维洁维洁</span>
+                                                                                <span class="grey">2014-07-02 19:04:43</span>
+                                                                                <span class="grey">null</span>
+                                                                                <span class="grey">核准金额：10000</span>
+                                                                                <br>
+                                                                                <span>&nbsp;&nbsp;&nbsp;</span><span class="text-right grey">审批意见：12345678</span>
+                                                                                <div class="xian"></div>
+                                                                             </p>
+                                                                             
+                                                                              
+                                                                                
+                                                                </div>
+                                                                
+                                                                
+                                                                
+                                                        </div>
+                                                    </div>
+                                                        
+                                                        
+                                                    
+                                                </div-->
+                                                
+                                                <!-- /section:pages/inbox.message-attachment -->
+                                                <div class="message-header">
+                                                    <div class="row">
+                                                              <div class="col-md-7 col-md-push-0"><input type="text" id="form-field-1" placeholder="同意" class="col-md-12"></div>
+                                                              <div class="col-md-5 col-md-pull-0 text-right">
+                                                                <span class="btn btn-info btn-sm tooltip-info" data-rel="tooltip" data-placement="bottom" title="" id="bhBtn">驳回</span>
+                                                                <span class="btn btn-info btn-sm tooltip-info" data-rel="tooltip" data-placement="bottom" title="" id="jjBtn">拒绝</span>
+                                                                <span class="btn btn-info btn-sm tooltip-info" data-rel="tooltip" data-placement="bottom" title="" id="tyBtn">同意</span>
+                                                              </div>
+                                                            </div>
+                
+                                                        
+                                                        
+                                                    
+                                                    
+                                                    
+                                                </div>
+                                                
+                                                 <!----->
+                                            </div>
+            
+                                            <!-- #section:pages/inbox.message-footer -->
+                                            <div class="message-footer clearfix">
+                                                <div class="pull-left"> 共<span id="pageAll">0</span>页 </div>
+            
+                                                <div class="pull-right">
+                                                    <div class="inline middle">  </div>
+            
+                                                    &nbsp; &nbsp;
+                                                    <ul class="pagination middle">
+                                                        <li >
+                                                            <a href="###" onclick="changePage('1')">
+                                                                <i class="ace-icon fa fa-step-backward middle"></i>
+                                                            </a>
+                                                        </li>
+            
+                                                        <li>
+                                                            <a href="###" onclick="changePage('2')">
+                                                                <i class="ace-icon fa fa-caret-left bigger-140 middle"></i>
+                                                            </a>
+                                                        </li>
+            
+                                                        <li>
+                                                           <span id="pageNow">1</span>
+                                                        </li>
+            
+                                                        <li>
+                                                            <a href="###" onclick="changePage('3')">
+                                                                <i class="ace-icon fa fa-caret-right bigger-140 middle"></i>
+                                                            </a>
+                                                        </li>
+            
+                                                        <li>
+                                                            <a href="###" onclick="changePage('4')">
+                                                                <i class="ace-icon fa fa-step-forward middle"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+            
+                                            
+            
+                                            <!-- /section:pages/inbox.message-footer -->
+                                        </div>
+                                    </div>
+                                </div><!-- /.tab-content -->
+                            </div>
+                        <!---修改--->
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+			 </div>
+    		</div>
+            <!-- /section:basics/navbar.layout -->
+        </div>
+		
+		
+		<script src="./assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript"> ace.vars['base'] = '.'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+		<script type="text/javascript">
+			jQuery(function($){
+				$('#inbox-tabs a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+					var currentTab = $(e.target).data('target');
+					if(currentTab == 'write') {
+						Inbox.show_form();
+					}
+					else if(currentTab == 'inbox') {
+						Inbox.show_list();
+					}
+				})
+			
+			
+				
+				//basic initializations
+				$('.message-list .message-item input[type=checkbox]').removeAttr('checked');
+				$('.message-list').on('click', '.message-item input[type=checkbox]' , function() {
+					$(this).closest('.message-item').toggleClass('selected');
+					if(this.checked) Inbox.display_bar(1);//display action toolbar when a message is selected
+					else {
+						Inbox.display_bar($('.message-list input[type=checkbox]:checked').length);
+						//determine number of selected messages and display/hide action toolbar accordingly
+					}		
+				});
+			
+			
+				//check/uncheck all messages
+				$('#id-toggle-all').removeAttr('checked').on('click', function(){
+					if(this.checked) {
+						Inbox.select_all();
+					} else Inbox.select_none();
+				});
+				
+				//select all
+				$('#id-select-message-all').on('click', function(e) {
+					e.preventDefault();
+					Inbox.select_all();
+				});
+				
+				//select none
+				$('#id-select-message-none').on('click', function(e) {
+					e.preventDefault();
+					Inbox.select_none();
+				});
+				
+				//select read
+				$('#id-select-message-read').on('click', function(e) {
+					e.preventDefault();
+					Inbox.select_read();
+				});
+			
+				//select unread
+				$('#id-select-message-unread').on('click', function(e) {
+					e.preventDefault();
+					Inbox.select_unread();
+				});
+			
+				/////////
+			
+				//display first message in a new area
+				$('.message-list .message-item:eq(0) .text').on('click', function() {
+					//show the loading icon
+					$('.message-container').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+					
+					$('.message-inline-open').removeClass('message-inline-open').find('.message-content').remove();
+			
+					var message_list = $(this).closest('.message-list');
+			
+					$('#inbox-tabs a[href="#inbox"]').parent().removeClass('active');
+					//some waiting
+					setTimeout(function() {
+			
+						//hide everything that is after .message-list (which is either .message-content or .message-form)
+						message_list.next().addClass('hide');
+						$('.message-container').find('.message-loading-overlay').remove();
+			
+						//close and remove the inline opened message if any!
+			
+						//hide all navbars
+						$('.message-navbar').addClass('hide');
+						//now show the navbar for single message item
+						$('#id-message-item-navbar').removeClass('hide');
+			
+						//hide all footers
+						$('.message-footer').addClass('hide');
+						//now show the alternative footer
+						$('.message-footer-style2').removeClass('hide');
+						
+						
+						//move .message-content next to .message-list and hide .message-list
+						$('.message-content').removeClass('hide').insertAfter(message_list.addClass('hide'));
+			
+						//add scrollbars to .message-body
+						$('.message-content .message-body').ace_scroll({
+							size: 150,
+							mouseWheelLock: true,
+							styleClass: 'scroll-visible'
+						});
+			
+					}, 500 + parseInt(Math.random() * 500));
+				});
+			
+			
+				//display second message right inside the message list
+				var waVacationListsArr = JSON.parse(localStorage.getItem("waVacationListsArr"));
+				var vaTimeShow = '';
+			
+				//back to message list
+				$('.btn-back-message-list').on('click', function(e) {
+					
+					e.preventDefault();
+					$('#inbox-tabs a[href="#inbox"]').tab('show');
+				});
+			
+			
+			
+				//hide message list and display new message form
+				/**
+				$('.btn-new-mail').on('click', function(e){
+					e.preventDefault();
+					Inbox.show_form();
+				});
+				*/
+			
+			
+			
+			
+				var Inbox = {
+					//displays a toolbar according to the number of selected messages
+					display_bar : function (count) {
+						if(count == 0) {
+							$('#id-toggle-all').removeAttr('checked');
+							$('#id-message-list-navbar .message-toolbar').addClass('hide');
+							$('#id-message-list-navbar .message-infobar').removeClass('hide');
+						}
+						else {
+							$('#id-message-list-navbar .message-infobar').addClass('hide');
+							$('#id-message-list-navbar .message-toolbar').removeClass('hide');
+						}
+					}
+					,
+					select_all : function() {
+						var count = 0;
+						$('.message-item input[type=checkbox]').each(function(){
+							this.checked = true;
+							$(this).closest('.message-item').addClass('selected');
+							count++;
+						});
+						
+						$('#id-toggle-all').get(0).checked = true;
+						
+						Inbox.display_bar(count);
+					}
+					,
+					select_none : function() {
+						$('.message-item input[type=checkbox]').removeAttr('checked').closest('.message-item').removeClass('selected');
+						$('#id-toggle-all').get(0).checked = false;
+						
+						Inbox.display_bar(0);
+					}
+					,
+					select_read : function() {
+						$('.message-unread input[type=checkbox]').removeAttr('checked').closest('.message-item').removeClass('selected');
+						
+						var count = 0;
+						$('.message-item:not(.message-unread) input[type=checkbox]').each(function(){
+							this.checked = true;
+							$(this).closest('.message-item').addClass('selected');
+							count++;
+						});
+						Inbox.display_bar(count);
+					}
+					,
+					select_unread : function() {
+						$('.message-item:not(.message-unread) input[type=checkbox]').removeAttr('checked').closest('.message-item').removeClass('selected');
+						
+						var count = 0;
+						$('.message-unread input[type=checkbox]').each(function(){
+							this.checked = true;
+							$(this).closest('.message-item').addClass('selected');
+							count++;
+						});
+						
+						Inbox.display_bar(count);
+					}
+				}
+			
+				//show message list (back from writing mail or reading a message)
+				Inbox.show_list = function() {
+					$('.message-navbar').addClass('hide');
+					$('#id-message-list-navbar').removeClass('hide');
+			
+					$('.message-footer').addClass('hide');
+					$('.message-footer:not(.message-footer-style2)').removeClass('hide');
+			
+					$('.message-list').removeClass('hide').next().addClass('hide');
+					//hide the message item / new message window and go back to list
+				}
+			
+				//show write mail form
+				Inbox.show_form = function() {
+					if($('.message-form').is(':visible')) return;
+					if(!form_initialized) {
+						initialize_form();
+					}
+					
+					
+					var message = $('.message-list');
+					$('.message-container').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+					
+					setTimeout(function() {
+						message.next().addClass('hide');
+						
+						$('.message-container').find('.message-loading-overlay').remove();
+						
+						$('.message-list').addClass('hide');
+						$('.message-footer').addClass('hide');
+						$('.message-form').removeClass('hide').insertAfter('.message-list');
+						
+						$('.message-navbar').addClass('hide');
+						$('#id-message-new-navbar').removeClass('hide');
+						
+						
+						//reset form??
+						$('.message-form .wysiwyg-editor').empty();
+					
+						$('.message-form .ace-file-input').closest('.file-input-container:not(:first-child)').remove();
+						$('.message-form input[type=file]').ace_file_input('reset_input');
+						
+						$('.message-form').get(0).reset();
+						
+					}, 300 + parseInt(Math.random() * 300));
+				}
+			
+			
+			
+			
+				var form_initialized = false;
+				function initialize_form() {
+					if(form_initialized) return;
+					form_initialized = true;
+					
+					//intialize wysiwyg editor
+					$('.message-form .wysiwyg-editor').ace_wysiwyg({
+						toolbar:
+						[
+							'bold',
+							'italic',
+							'strikethrough',
+							'underline',
+							null,
+							'justifyleft',
+							'justifycenter',
+							'justifyright',
+							null,
+							'createLink',
+							'unlink',
+							null,
+							'undo',
+							'redo'
+						]
+					}).prev().addClass('wysiwyg-style1');
+			
+			
+			
+					//file input
+					$('.message-form input[type=file]').ace_file_input()
+					.closest('.ace-file-input')
+					.addClass('width-90 inline')
+					.wrap('<div class="form-group file-input-container"><div class="col-sm-7"></div></div>');
+			
+					//Add Attachment
+					//the button to add a new file input
+					$('#id-add-attachment')
+					.on('click', function(){
+						var file = $('<input type="file" name="attachment[]" />').appendTo('#form-attachments');
+						file.ace_file_input();
+						
+						file.closest('.ace-file-input')
+						.addClass('width-90 inline')
+						.wrap('<div class="form-group file-input-container"><div class="col-sm-7"></div></div>')
+						.parent().append('<div class="action-buttons pull-right col-xs-1">\
+							<a href="#" data-action="delete" class="middle">\
+								<i class="ace-icon fa fa-trash-o red bigger-130 middle"></i>\
+							</a>\
+						</div>')
+						.find('a[data-action=delete]').on('click', function(e){
+							//the button that removes the newly inserted file input
+							e.preventDefault();
+							$(this).closest('.file-input-container').hide(300, function(){ $(this).remove() });
+						});
+					});
+				}//initialize_form
+			
+				//turn the recipient field into a tag input field!
+				/**	
+				var tag_input = $('#form-field-recipient');
+				try { 
+					tag_input.tag({placeholder:tag_input.attr('placeholder')});
+				} catch(e) {}
+			
+			
+				//and add form reset functionality
+				$('#id-message-form').on('reset', function(){
+					$('.message-form .message-body').empty();
+					
+					$('.message-form .ace-file-input:not(:first-child)').remove();
+					$('.message-form input[type=file]').ace_file_input('reset_input_ui');
+			
+					var val = tag_input.data('value');
+					tag_input.parent().find('.tag').remove();
+					$(val.split(',')).each(function(k,v){
+						tag_input.before('<span class="tag">'+v+'<button class="close" type="button">&times;</button></span>');
+					});
+				});
+				*/
+			});
+		</script>
+    </body>
+</html>

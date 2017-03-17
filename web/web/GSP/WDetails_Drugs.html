@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="../assets/css/chosen.css" />
+        <link rel="stylesheet" href="../assets/css/datepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="../assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.css"/>
+        <link rel="stylesheet" href="../assets/css/colorpicker.css" />
+        <link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
+        <!-- text fonts -->
+        <link rel="stylesheet" href="../assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="../assets/css/ace.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <!-- inline styles related to this page -->
+        <!-- ace settings handler -->
+        <script src="../assets/js/ace-extra.min.js"></script>
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lte IE 8]>
+            <script src="../assets/js/html5shiv.js">
+            </script>
+            <script src="../assets/js/respond.min.js">
+            </script>
+        <![endif]-->
+        <title>
+            GSP-首营待办事项
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+            body{background:#fff;}
+            .page-content{padding:24px;}
+            .page-header{padding-bottom:12px;padding-top:0px;margin-bottom:0;}
+            .page-header h1{font-size:22px;}
+            .page-content-area{padding:12px 24px;}
+            .hr-dotted{border-style:dashed;border-color:#7ea8fb;display:inline-block;width:100%;}
+            .form-group{margin:0;}
+            .form-group label[class*=col-]{
+                padding-top:0px;
+                margin:0;
+                display:block;
+                padding:7px 12px 6px 12px;
+                text-align:right;
+                color:#4c4c4c;
+                font-size:14px;
+                font-weight:500;
+            }
+            .form-group-span {
+                padding:8px 0 7px 0;
+                display:block;
+                color:#030303;
+                font-size:14px;
+                font-weight:500;
+            }
+            .btn-info:active, .btn-info:hover, .open .btn-info.dropdown-toggle{
+                background-color:#1567c5!important;
+                border-color:#2e82ff;
+            }
+            .btn-info, .btn-info:focus {
+                background-color:#2e82ff!important;
+                border-color:#2e82ff;
+            }
+            .btn-warning:active, .btn-warning:hover, .open .btn-warning.dropdown-toggle{
+                background-color:#e0ab01!important;
+                border-color:#ffc300;
+            }
+            .btn-warning, .btn-warning:focus {
+                background-color:#ffc300!important;
+                border-color:#ffc300;
+            }
+            .widget-box.transparent>.widget-header{background:#f7f7f7;border-bottom:1px solid #1777e5;padding-left:12px;min-height:32px;}
+            .widget-box.transparent>.widget-header a{color:#333;}
+            .widget-box.transparent>.widget-header a:hover{color:#333;}
+            .widget-box.transparent>.widget-header h4{margin:6px 0;height:20px;line-height:20px;}
+            .widget-box.transparent>.widget-header .widget-toolbar{line-height:32px;}
+            .widget-body .table{border-top:none;}
+            .widget-body .table>thead>tr>td,.widget-body  .table>thead>tr>th{border-top:none;border-bottom:1px solid #1777e5;color:#333;}
+            .widget-body .table>tbody>tr>td,.widget-body  .table>tbody>tr>th{border-top:1px dashed #7ea8fb;color:#030303;}
+
+            /* */
+            .label-lg {
+                padding: .4em .6em .4em;
+                font-size: 13px;
+                line-height: 1.1;
+                height: 24px;
+                float: left;
+            }
+            .label-success {
+                background-color: #1777e5!important;
+            }
+            .label-success.arrowed-in:before {
+                border-color: #1777e5;
+            }
+            .label-success.arrowed-right:after {
+                border-left-color: #1777e5;
+            }
+        </style>
+        <script src="../assets/js/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/custom.css" />
+    </head>
+    <body class="no-skin" style="overflow:hidden;">
+        <div class="main-container" id="main-container" style="overflow:hidden;">
+            <div class="main-content">
+                <div class="row-fluid  page-content">
+                    <div class="page-header" style="border-bottom:solid 1px #1777e5;">
+                        <input type="hidden" id="begD" value="">
+                        <input type="hidden" id="endD" value="">
+                        <h1 style="color:#1a1a1a;" id="titleH1">
+                            不合格药品报损
+                            <button type="button" class="close" onclick="Close_Enterprise()">
+                                <i class="ace-icon fa fa-times"></i>
+                            </button>
+                        </h1>
+                    </div>
+                    <div class="widget-box transparent" style="padding-top: 16px;">
+                        <div class="widget-header">
+                            <a href="javascript:void(0);" style="display:inline-block;width:100%;">
+                                <h4 class="widget-title lighter" style="float:left; padding-top: 2px;">
+                                    物料信息
+                                </h4>
+                                <div class="widget-toolbar no-border">
+                                    <h4 style="padding-top: 2px;">
+                                        共&nbsp;<label style="color:#1777e5" id="SUMID">0</label>&nbsp;条
+                                    </h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="page-content-area">
+                        <div id="profile-feed-1">
+                            
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div>
+                        <div class="col-xs-12 col-sm-12 form-group no-padding">
+                            <label class="col-sm-2 control-label">备注</label>
+                            <div class="col-sm-10">
+                                <span class="form-group-span" id="ZMARK"></span>
+                            </div>
+                        </div>
+                        <div class="hr hr6 hr-dotted"></div>
+                        <div class="col-xs-12 col-sm-12 form-group no-padding">
+                            <label class="col-sm-2 control-label">审批意见</label>
+                            <div class="col-sm-8">
+                                <span class="form-group-span">
+                                    <textarea id="textarea" class="autosize-transition form-control" style="height:60px;color:#ccc;" onfocus="adstF(this)" onblur="adstB(this)">请详细描述审批意见,不得少于5个字并且不得多于100个字...</textarea>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 form-group" style="padding:12px 0;">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4" style="text-align:center;">
+                                <button class="btn btn-warning" type="button" id="WSubmit_RF" onclick="WSubmit()">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    拒绝
+                                </button>
+                            </div>
+                            <div class="col-sm-4" style="text-align:center;">
+                                <button class="btn btn-info" type="button" id="WSubmit_AG" onclick="WSubmit()">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    同意
+                                </button>
+                            </div>
+                            <div class="col-sm-2"></div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 form-group no-padding">
+                            <div class="widget-box transparent collapsed">
+                                <div class="widget-header">
+                                    <a href="javascript:void(0);" class="hidecollapsed" onclick="Open_splj(this);" data-action="collapse" style="display:inline-block;width:100%;">
+                                        <h4 class="widget-title lighter" style="float:left; padding-top: 2px;">
+                                            审批路径
+                                        </h4>
+                                        <div class="widget-toolbar no-border">
+                                            <i class="ace-icon fa fa-chevron-down" style="color:#1777e5;"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="widget-body" id="splj" style="display:none;">
+                                    <div class="widget-main" style="padding:0 24px;" id="ProcPathQryList">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr hr6 hr-dotted" style="border:#fff;margin:0;padding:0;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------------------------------------------------------------------------------->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+        <script type="text/javascript">
+            window.jQuery || document.write("<script src='../assets/js/jquery.min.js'>" + "<" + "/script>");
+        </script>
+        <!-- <![endif]-->
+        <!--[if IE]>
+            <script type="text/javascript">
+                window.jQuery || document.write("<script src='../assets/js/jquery1x.min.js'>" + "<" + "/script>");
+            </script>
+        <![endif]-->
+        <script type="text/javascript">
+            if ('ontouchstart' in document.documentElement) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+        </script>
+        <script src="../assets/js/bootstrap.min.js"></script>
+        <!-- page specific plugin scripts -->
+        <script src="../assets/js/bootstrap-tag.min.js"></script>
+        <script src="../assets/js/jquery.hotkeys.min.js"></script>
+        <script src="../assets/js/bootstrap-wysiwyg.min.js"></script>
+        <script src="../assets/js/jquery-ui.custom.min.js"></script>
+        <script src="../assets/js/chosen.jquery.min.js"></script>
+        <script src="../assets/js/jquery.ui.touch-punch.min.js"></script>
+        <script src="../assets/js/date-time/bootstrap-datepicker.min.js"></script>
+        <script src="../assets/js/jquery.slimscroll.min.js"></script>
+        <!-- ace scripts -->
+        <script src="../assets/js/ace-elements.min.js"></script>
+        <script src="../assets/js/ace.min.js"></script>
+        <!-- inline scripts related to this page -->
+        <script type="text/javascript">
+            function CloseGritter(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+                window.location.reload();
+            }
+            function CloseGritter_two(obj){
+                $(obj).parents(".gritter-item-wrapper").fadeOut(function(){
+                    $(obj).parents(".gritter-item-wrapper").remove();
+                });
+            }
+            function WindowClose(){
+                window.close();
+            }
+            function Close_Enterprise() {
+                var main = $(window.parent.document).find("iframe");
+                main.parent().parent().prevAll(".main-container").css({"height":"auto"});
+                var index = parent.layer.getFrameIndex(window.name);
+                $(document.body).parent().remove();//弹出iframe后input无法输入问题解决方案2014-11-11
+                parent.layer.close(index);
+            }
+            function adstF(obj){
+                if( $(obj).val() == "请详细描述审批意见,不得少于5个字并且不得多于100个字..." ){
+                    $(obj).val("");
+                    $(obj).css({"color":"#444"});
+                }
+            }
+            function adstB(obj){
+                if( $(obj).val() == "" ){
+                    $(obj).val("请详细描述审批意见,不得少于5个字并且不得多于100个字...");
+                    $(obj).css({"color":"#ccc"});
+                }
+            }
+            function Open_splj(obj){
+                var main = $(window.parent.document).find("iframe");
+                var mainheight = $(document).height();
+                if( $(obj).hasClass("hidecollapsed") ){
+                    var spljHeight = $("#splj").height();
+                    localStorage.removeItem("spljHeight");
+                    localStorage.spljHeight = JSON.stringify(spljHeight);
+                    main.height(mainheight+spljHeight);
+                    main.parent().height(mainheight+spljHeight);
+                    main.parent().parent().height(mainheight+spljHeight);
+                    main.parent().parent().prev(".xubox_shade").height(mainheight+spljHeight+100);
+                    main.parent().parent().prevAll(".main-container").height(mainheight+spljHeight+100);
+                    $(obj).removeClass("hidecollapsed");
+                }else{
+                    var spljHeight = JSON.parse(localStorage["spljHeight"]);
+                    main.height(mainheight-spljHeight);
+                    main.parent().height(mainheight-spljHeight);
+                    main.parent().parent().height(mainheight-spljHeight);
+                    main.parent().parent().prev(".xubox_shade").height(mainheight-spljHeight+100);
+                    main.parent().parent().prevAll(".main-container").height(mainheight-spljHeight+100);
+                    $(obj).addClass("hidecollapsed");
+                }
+                
+            }
+            //提交审批
+            function WSubmit(appType,bussType,APPID,taskId,currStep){
+                var pener = localStorage.pernrBase?localStorage.pernrBase:'';//登录人工号
+                var opinion = $('#textarea').val();
+                var PsTop = $(window.parent.document).find("iframe").parent().parent().parent().parent().scrollTop();
+                if( PsTop == '0' ){
+                    PsTop = $(window.parent.document).find("iframe").parent().parent().parent().scrollTop();
+                }
+                if( appType == 'RF' ){
+                    if( opinion == "请详细描述审批意见,不得少于5个字并且不得多于100个字..." ){
+                        $.gritter.add({
+                            title: '审批提交错误',
+                            text: '请填写正确的审批理由',
+                            class_name: 'gritter-error gritter-center'
+                        });
+                        $(".gritter-center").css({"top":PsTop+200});
+                    }else{
+                        var WSubmitListsData = GSPsubmit_WSubmit(pener,bussType,appType,APPID,taskId,currStep,opinion);
+                    }
+                }else{
+                    if( opinion == "请详细描述审批意见,不得少于5个字并且不得多于100个字..." ){
+                        opinion = "同意";
+                    }
+                    var WSubmitListsData = GSPsubmit_WSubmit(pener,bussType,appType,APPID,taskId,currStep,opinion);
+                }
+                if(WSubmitListsData.status == '0'){
+                    $.gritter.add({
+                        title: '成功操作提示信息',
+                        text: '操作成功',
+                        class_name: 'gritter-success gritter-center'
+                    });
+                    $(".gritter-center").css({"top":PsTop+200});
+                    setTimeout(function(){
+                        window.parent.IframeNavTabs(bussType);
+                    },1500);
+                }else{
+                    $.gritter.add({
+                        title: '错误信息提示',
+                        text: WSubmitListsData.errMsg,
+                        class_name: 'gritter-error gritter-center'
+                    });
+                    $(".gritter-center").css({"top":PsTop+200});
+                    return false;
+                }
+            }
+            //初始化
+            jQuery(function($) {
+                var sum = 1;
+                //页面初始化
+                $.ajaxSetup({
+                    contentType: 'application/json',
+                    async:false,
+                    error:function(){
+                        alert(errMsg1);
+                    },
+                    timeout:timeout
+                });
+
+                var bussType = JSON.parse(localStorage["bussType"]);
+                var APPID = JSON.parse(localStorage["APPID"]);
+                var taskId = JSON.parse(localStorage["taskId"]);
+                var currStep = JSON.parse(localStorage["currStep"]);
+                $("#WSubmit_RF").attr('onclick','WSubmit(\'RF\',\''+bussType+'\',\''+APPID+'\',\''+taskId+'\',\''+currStep+'\')');
+                $("#WSubmit_AG").attr('onclick','WSubmit(\'AG\',\''+bussType+'\',\''+APPID+'\',\''+taskId+'\',\''+currStep+'\')');
+
+                //滚动条
+                $('#profile-feed-1').ace_scroll({
+                    size: 320,
+                    mouseWheelLock: true,
+                    alwaysVisible : true,
+                    styleClass: 'scroll-visible'
+                });
+                
+                //弹出层默认高度设置
+                $(window.parent.document).find("iframe").load(function(){
+                    var main = $(window.parent.document).find("iframe");
+                    var WBoxHeigth = $(window.parent.document).height();
+                    var mainheight = $(document).height();
+                    //console.log(WBoxHeigth,mainheight);
+                    main.height(mainheight);
+                    main.parent().height(mainheight);
+                    main.parent().parent().height(mainheight);
+                    if( WBoxHeigth > mainheight ){
+                        main.parent().parent().prev(".xubox_shade").height(WBoxHeigth+52);
+                        main.parent().parent().prevAll(".main-container").height(mainheight);
+                    }else{
+                        main.parent().parent().prev(".xubox_shade").height(mainheight+52);
+                        main.parent().parent().prevAll(".main-container").height(mainheight+52);
+                    }
+                });
+                //获取所以缓存列表
+                var GSPWList = JSON.parse(localStorage["GSPWList"]);
+                //console.log(GSPWList.ET_HEAD.item);
+                //获取选中列表ID
+                var GSPWListID = JSON.parse(localStorage["GSPWListID"]);
+
+                //下拉条区域
+                var GSPDrugsList = "";
+                for (i = 0; i < GSPWList.ET_HEAD.item.length; i++) {
+                    if (GSPWList.ET_HEAD.item[i].APPLY_ID == GSPWListID) {
+                        for (var j = 0; j < GSPWList.ET_ITEM.item.length; j++) {
+                            if(GSPWList.ET_ITEM.item[j].APPLY_ID == GSPWListID){
+                                if (GSPDrugsList == "") {
+                                    GSPDrugsList+='<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                                    +'<label class="col-sm-2 control-label" style="color:#1777e5">'
+                                                        +'<div class="label label-lg label-success arrowed-in arrowed-right">'
+                                                            +'<b>'+(sum++)+'</b>'
+                                                        +'</div>'
+                                                        +'物料名称</label>'
+                                                    +'<div class="col-sm-9">'
+                                                        +'<span class="form-group-span" style="color:#1777e5">'+checkNoChar(GSPWList.ET_ITEM.item[j].MATNA)+'</span>'
+                                                    +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">物料号</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].MATNR).replace(/^0+/,"")+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">规格</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].GGXH)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label" style="color:#1777e5">批号</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span" style="color:#1777e5">'+checkNoChar(GSPWList.ET_ITEM.item[j].CHARG_C)+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">剂型</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].WGBEZ)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label" style="color:#1777e5">数量</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span" style="color:#1777e5">'+checkNoChar(GSPWList.ET_ITEM.item[j].CSPEM)+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">单价</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].VERPR)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">金额</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].VKSAL)+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">有效期至</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].ZYXQZ)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">生产企业</label>'
+                                            +'<div class="col-sm-10">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].ZSCQY)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        // +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                        //     +'<label class="col-sm-2 control-label">供货企业</label>'
+                                        //     +'<div class="col-sm-10">'
+                                        //         +'<span class="form-group-span">'+/*GSPWList.ET_ITEM.item[j].MAKTX*/+'</span>'
+                                        //     +'</div>'
+                                        // +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">工厂</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].WERKS)+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">库位</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].LGOBE)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">不合格原因</label>'
+                                            +'<div class="col-sm-10">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].ZBHGYYMS)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                }else{
+                                     GSPDrugsList+='<div class="hr hr6 hr-dotted"></div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label" style="color:#1777e5">'
+                                                        +'<div class="label label-lg label-success arrowed-in arrowed-right">'
+                                                            +'<b>'+(sum++)+'</b>'
+                                                        +'</div>'
+                                                        +'物料名称</label>'
+                                                    +'<div class="col-sm-9">'
+                                                        +'<span class="form-group-span" style="color:#1777e5">'+checkNoChar(GSPWList.ET_ITEM.item[j].MATNA)+'</span>'
+                                                    +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">物料号</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].MATNR).replace(/^0+/,"")+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">规格</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].GGXH)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label" style="color:#1777e5">批号</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span" style="color:#1777e5">'+checkNoChar(GSPWList.ET_ITEM.item[j].CHARG_C)+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">剂型</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].WGBEZ)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label" style="color:#1777e5">数量</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span" style="color:#1777e5">'+checkNoChar(GSPWList.ET_ITEM.item[j].CSPEM)+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">单价</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].VERPR)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">金额</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].VKSAL)+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">有效期至</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].ZYXQZ)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">生产企业</label>'
+                                            +'<div class="col-sm-10">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].ZSCQY)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        // +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                        //     +'<label class="col-sm-2 control-label">供货企业</label>'
+                                        //     +'<div class="col-sm-10">'
+                                        //         +'<span class="form-group-span">'+/*GSPWList.ET_ITEM.item[j].MAKTX*/+'</span>'
+                                        //     +'</div>'
+                                        // +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">工厂</label>'
+                                            +'<div class="col-sm-3">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].WERKS)+'</span>'
+                                            +'</div>'
+                                            +'<label class="col-sm-3 control-label">库位</label>'
+                                            +'<div class="col-sm-4">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].LGOBE)+'</span>'
+                                            +'</div>'
+                                        +'</div>'
+                                        +'<div class="col-xs-12 col-sm-12 form-group no-padding">'
+                                            +'<label class="col-sm-2 control-label">不合格原因</label>'
+                                            +'<div class="col-sm-10">'
+                                                +'<span class="form-group-span">'+checkNoChar(GSPWList.ET_ITEM.item[j].ZBHGYYMS)+'</span>'
+                                            +'</div>'
+                                        +'</div>'   
+                                }            
+                            }
+                        }
+                        $("#ZMARK").html(checkNoChar(GSPWList.ET_HEAD.item[i].ZMARK));// 备注
+                    }
+                }
+                $('.scroll-content').append(GSPDrugsList);
+                $("#SUMID").html((sum-1));
+
+                //获取类型
+                var bussType = JSON.parse(localStorage["bussType"]);
+                //获取审批路径
+                var GSP_A_ListsJSON = GSPsubmit_A_3(localStorage.pernrBase?localStorage.pernrBase:'',bussType,GSPWListID);
+                if (GSP_A_ListsJSON.status == '0') {
+                    var GSPProcPathQryList = "";
+                    GSPProcPathQryList += '<table class="table">'
+                                            +'<thead>'
+                                                +'<tr>'
+                                                    +'<th class="center col-xs-3">处理时间</th>'
+                                                    +'<th class="center col-xs-2">操作人</th>'
+                                                    +'<th class="center col-xs-2">状态</th>'
+                                                    +'<th class="center col-xs-2">处理信息</th>'
+                                                    +'<th class="center col-xs-3">审批意见</th>'
+                                                +'</tr>'
+                                            +'</thead>'
+                                            +'<tbody>'
+                                            for (var i = 0; i < GSP_A_ListsJSON.output.procApprInfoList.length; i++) {
+                                                GSPProcPathQryList+='<tr>'
+                                                                    +'<td class="center">'+(checkNoChar(GSP_A_ListsJSON.output.procApprInfoList[i].apprTm) == undefined ? ' ':checkNoChar(GSP_A_ListsJSON.output.procApprInfoList[i].apprTm))+'</td>'
+                                                                    +'<td class="center">'+(checkNoChar(GSP_A_ListsJSON.output.procApprInfoList[i].apprUsrNm) == undefined ? ' ':checkNoChar(GSP_A_ListsJSON.output.procApprInfoList[i].apprUsrNm))+'</td>'
+                                                                    +'<td class="center">'+(checkNoChar(GSP_A_ListsJSON.output.procApprInfoList[i].status) == '1'?'已审批':'未审批')+'</td>'
+                                                                    //五个：SM提交、RF拒绝、RT退回、CL取消、AG同意
+                                                                    if(GSP_A_ListsJSON.output.procApprInfoList[i].apprResult == undefined){
+                                                                        GSPProcPathQryList+='<td class="center">'+' '+'</td>'
+                                                                    }else if(GSP_A_ListsJSON.output.procApprInfoList[i].apprResult == 'SM'){
+                                                                        GSPProcPathQryList+='<td class="center">'+'提交'+'</td>'
+                                                                    }else if(GSP_A_ListsJSON.output.procApprInfoList[i].apprResult == 'RF'){
+                                                                        GSPProcPathQryList+='<td class="center">'+'拒绝'+'</td>'
+                                                                    }else if(GSP_A_ListsJSON.output.procApprInfoList[i].apprResult == 'RT'){
+                                                                        GSPProcPathQryList+='<td class="center">'+'退回'+'</td>'
+                                                                    }else if(GSP_A_ListsJSON.output.procApprInfoList[i].apprResult == 'CL'){
+                                                                        GSPProcPathQryList+='<td class="center">'+'取消'+'</td>'
+                                                                    }else if(GSP_A_ListsJSON.output.procApprInfoList[i].apprResult == 'AG'){
+                                                                        GSPProcPathQryList+='<td class="center">'+'同意'+'</td>'
+                                                                    }
+                                                                    GSPProcPathQryList+='<td class="center">'+(checkNoChar(GSP_A_ListsJSON.output.procApprInfoList[i].comments) == undefined ? ' ':checkNoChar(GSP_A_ListsJSON.output.procApprInfoList[i].comments))+'</td>'
+                                                                +'</tr>'
+                                            };
+                                            +'</tbody>'
+                                        +'</table>'
+                                        $('#ProcPathQryList').html(GSPProcPathQryList);
+                }
+            });
+        </script>
+        <link rel="stylesheet" href="../assets/css/ace.onpage-help.css" />
+        <link rel="stylesheet" href="../docs/assets/js/themes/sunburst.css" />
+        <script type="text/javascript">ace.vars['base'] = '..';</script>
+        <script src="../assets/js/ace/ace.onpage-help.js"></script>
+        <script src="../docs/assets/js/rainbow.js"></script>
+        <script src="../docs/assets/js/language/generic.js"></script>
+        <script src="../docs/assets/js/language/html.js"></script>
+        <script src="../docs/assets/js/language/css.js"></script>
+        <script src="../docs/assets/js/language/javascript.js"></script>
+        <script src="../layer/layer.min.js"></script>
+        <script src="../myjs/backupNew.js"></script>
+        <script src="../myjs/gys.js"></script>
+        <script src="../myjs/lexus.js"></script>
+        <script src="../assets/js/jquery.gritter.min.js"></script>
+        <script src="../myjs/GSP.js"></script>
+        <script src="../myjs/GSP1.js"></script>
+    </body>
+</html>

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta charset="utf-8" />
+        <title>
+            个人银行开户行信息添加
+        </title>
+        <meta name="description" content="Common UI Features &amp; Elements" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+        />
+        <!-- bootstrap & fontawesome -->
+        <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+        <!-- page specific plugin styles -->
+        <link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+        <link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+        <!-- text fonts -->
+        <link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+        <!-- ace styles -->
+        <link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style"
+        />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+        <![endif]-->
+        <link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+        <link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+        <!--[if lte IE 9]>
+            <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+        <![endif]-->
+        <!-- inline styles related to this page -->
+        <style>
+            /* some elements used in demo only */ .spinner-preview { width: 100px;
+            height: 100px; text-align: center; margin-top: 60px; } .dropdown-preview
+            { margin: 0 5px; display: inline-block; } .dropdown-preview > .dropdown-menu
+            { display: block; position: static; margin-bottom: 5px; } .w-left{ width:180px;
+            } .border-top-none{ border-top:none; }
+        </style>
+        <!-- ace settings handler -->
+        <script src="./assets/js/ace-extra.min.js">
+        </script>
+        <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media
+        queries -->
+        <!--[if lte IE 8]>
+            <script src="./assets/js/html5shiv.min.js">
+            </script>
+            <script src="./assets/js/respond.min.js">
+            </script>
+        <![endif]-->
+        <script src='./assets/js/jquery.min.js'>
+        </script>
+        <script src="./layer/layer.min.js">
+        </script>
+        <script src="./myjs/gys.js">
+        </script>
+        <script src="./myjs/lexus.js">
+        </script>
+        <script>
+            //选择省后显示名字并加载市区
+            function chooseProvince(zname,zid) {
+                $('#bank_province_text').html(zname);
+                $('#bank_city_text').html('请选择');
+                $('#bank_city_code').val('');
+                if (zname) {
+                    var cityJSON = submit_1_2('2', zid);
+                    if (cityJSON.status == '0') {
+                        var cities = cityJSON.T_BASE.item;
+                        var citiesLi = '';
+                        for (var k in cities) {
+                            citiesLi += '<li>' + '<a href="#" onclick="chooseCity(\''+cities[k].ZNANM+'\',\''+cities[k].ZID+'\')">' + cities[k].ZNANM + '</a>' + '</li>';
+                        }
+
+                        $('#bank_city_ul').html(citiesLi);
+
+                    } else {
+                        layer.alert('省市区数据初始化异常，请联系管理员', 8);
+                    }
+                }
+                $('#bank_province_code').val(zid);
+            }
+          
+
+            //选择县后显示名字
+            function chooseCity(zname,zid) {
+                $('#bank_city_text').html(zname);
+                $('#bank_city_code').val(zid);
+            }
+
+            //关闭弹出层
+            function closeLay() {
+                var index = parent.layer.getFrameIndex(window.name);
+                $(document.body).parent().remove();//弹出iframe后input无法输入问题解决方案2014-11-11
+                parent.layer.close(index);
+            }
+
+            //检索银行
+            function bankSearch() {
+                
+                var province = $('#bank_province_code').val();
+                var city = $('#bank_city_code').val();
+                var keyWord = $('#bankName').val();
+				$('#BANKL').val('');
+				$('#BANKA').val('');
+                if (province == '') {
+                    //layer.alert("省市区选择请至少精确到省！", 5);
+                    //return;
+                };
+                if (keyWord.length < 2) {
+                    layer.alert("请至少输入2个字符！", 5);
+                    return;
+                };
+                $(document.body).append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
+                setTimeout(function() {
+                    var paranJson = {
+                        "IS_PUBLIC": {
+                            "FLOWNO": '',
+                            "PERNR": '',
+                            "ZDOMAIN": '100',
+                            "I_PAGENO": '',
+                            "I_PAGESIZE": ''
+                        },
+                        "I_BANKA": keyWord,
+                        "I_ZPVID": province,
+                        "I_ZCTID": city,
+                        "I_ZRGID": ''
+                    }
+                    var OpneAJSON = submit_1_3(paranJson);
+                    if (OpneAJSON.status != '-1' && undefined != OpneAJSON.T_BANK_CITY.item) {
+                        var ET_BANK_CITY = OpneAJSON.T_BANK_CITY.item;
+                        var perLists = '';
+                        //if( ET_BANK_CITY.length <= 6 ){
+                            //var Hrow2 = ((ET_BANK_CITY.length)*38)+74
+                            //$("#row_02").css({"height":''+Hrow2+'px'});
+                            //$("#row_02").css({"overflow":"hidden"});
+                            //$("#row_02").css({"padding":"37px 0px"});
+                            //var Wrow2 = $("#row_02").outerWidth();
+                            //$("#row_01").css({"width":Wrow2});
+                            //$("#row_03").css({"width":Wrow2}); 
+
+                            for (var k in ET_BANK_CITY) {
+                                perLists += '<tr  onclick=chooseBank("' + checkNoChar(ET_BANK_CITY[k].BANKL) + '","' + checkNoChar(ET_BANK_CITY[k].BANKA) + '","bankID'+k+'")>' + '<td class="center col-xs-1">' + '<label class="position-relative">' + '<input type="radio" class="ace" name="bkRadio" id=bankID'+k+' onclick="chooseBank(\'' + checkNoChar(ET_BANK_CITY[k].BANKL) + '\',\'' + checkNoChar(ET_BANK_CITY[k].BANKA) + '\')"/>' + '<span class="lbl"></span>' + '</label>' + '</td>' + '<td class="col-xs-3 center">' + checkNoChar(ET_BANK_CITY[k].BANKL) + '</td>' + '<td class="col-xs-8 center">' + checkNoChar(ET_BANK_CITY[k].BANKA) + '</td>' + '</tr>';
+                                //console.log(ET_BANK_CITY[k].BANKA,ET_BANK_CITY[k].BANKL);
+                            }
+                        // }else{
+                        //     $("#row_02").css({"height":"300px"});
+                        //     $("#row_02").css({"padding":"37px 0px"});
+                        //     for (var k in ET_BANK_CITY) {
+                        //         perLists += '<tr  onclick=chooseBank("' + checkNoChar(ET_BANK_CITY[k].BANKL) + '","' + checkNoChar(ET_BANK_CITY[k].BANKA) + '","bankID'+k+'")>' + '<td class="center col-xs-1">' + '<label class="position-relative">' + '<input type="radio" class="ace" name="bkRadio" id=bankID'+k+' onclick="chooseBank(\'' + checkNoChar(ET_BANK_CITY[k].BANKL) + '\',\'' + checkNoChar(ET_BANK_CITY[k].BANKA) + '\')"/>' + '<span class="lbl"></span>' + '</label>' + '</td>' + '<td class="col-xs-3 center">' + checkNoChar(ET_BANK_CITY[k].BANKL) + '</td>' + '<td class="col-xs-8 center">' + checkNoChar(ET_BANK_CITY[k].BANKA) + '</td>' + '</tr>';
+                        //         //console.log(ET_BANK_CITY[k].BANKA,ET_BANK_CITY[k].BANKL);
+                        //     }
+                        // }
+                        $("#row_03").css({"margin-top":"0px"});	  
+                        $('#perLists').html(perLists);
+                    } else {
+						//if (undefined != OpneAJSON.ES_PUBLIC && '' != checkNoChar(OpneAJSON.ES_PUBLIC.MESSAGE)) {
+							 layer.alert('' + checkNoChar(OpneAJSON.ES_PUBLIC.MESSAGE) + '', 5);
+	                           $(document.body).find('.message-loading-overlay').remove();
+	                        return;
+						// }else{
+						// 	layer.alert('搜索接口调用失败', 5);
+	     //                    $(document.body).find('.message-loading-overlay').remove();
+	     //                    return;
+						// }
+                       
+                       
+                    }
+                    $(document.body).find('.message-loading-overlay').remove();
+                },
+                300 + parseInt(Math.random() * 300));
+
+            };
+
+            //回车搜索功能
+            function toSearch() {
+                if (event.keyCode == 13) {
+                    bankSearch();
+                } else {
+                    return;
+                }
+            }
+            
+			//选择银行
+			function chooseBank(BANKL,BANKA,id){
+				if(id!=undefined){
+					var trArr = document.getElementsByName("bkRadio");
+					for(var i=0;i<trArr.length;i++){
+						if (trArr[i].id == id) {
+							trArr[i].checked = true;
+						}else{
+							trArr[i].checked = false;
+						}
+					}
+				}
+				$('#BANKL').val(BANKL);
+				$('#BANKA').val(BANKA);
+			}
+			
+			//确定
+			function sureBank(){
+				var BANKL = $('#BANKL').val();
+				var BANKA = $('#BANKA').val();
+				if(BANKL == '' || BANKA == ''){
+					layer.alert('请选择银行', 5);
+					return;
+				}
+				var bankId = localStorage.bankId;
+				if(bankId==undefined){
+					bankId = 0;
+				}
+				parent.$('#add_'+localStorage.wtype+'_bank'+bankId+'_text').html(BANKA);
+				parent.$('#add_'+localStorage.wtype+'_bank'+bankId+'_code').val(BANKL);
+				if (localStorage.wtype == 'z') {
+					parent.$('#add_' + localStorage.wtype + '_count' + bankId + '_text').val(parent.$('#add_gyshmch_text').val());
+				}else{
+					parent.$('#add_' + localStorage.wtype + '_count' + bankId + '_text').val(parent.$('#m_gysmch_text').val());
+				}
+				layer.close();
+				closeLay();
+			}
+        </script>
+    </head>
+    
+    <body class="no-skin" style="font-family:Microsoft YaHei ! important">
+        <!-- /section:basics/navbar.layout -->
+        <div class="main-container" id="main-container">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('main-container', 'fixed')
+                } catch(e) {}
+            </script>
+            <!-- /section:basics/sidebar -->
+            <div class="main-content">
+                <!-- #section:basics/content.breadcrumbs -->
+                <div class="breadcrumbs" id="breadcrumbs">
+                    <script type="text/javascript">
+                        try {
+                            ace.settings.check('breadcrumbs', 'fixed')
+                        } catch(e) {}
+                    </script>
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon">
+                            </i>
+                            <a href="#">
+                                银行代码查询
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.breadcrumb -->
+                    <button class="btn border-none" style="float:right;" onClick="closeLay()">
+                        <i class="glyphicon glyphicon-remove align-top">
+                        </i>
+                    </button>
+                </div>
+                <!-- /section:basics/content.breadcrumbs -->
+                <div class="page-content">
+                    <!-- #section:settings.box -->
+                    <!-- /section:settings.box -->
+                    <div class="page-content-area">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name border-top-none">
+                                        省份/直辖市
+                                    </div>
+                                    <div class="profile-info-value border-top-none">
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown" class="btn dropdown-toggle">
+                                                <span id="bank_province_text">
+                                                    请选择
+                                                </span>
+                                                <span class="ace-icon fa fa-caret-down icon-on-right">
+                                                </span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-default" id="bank_province_ul" style="max-height:300px;overflow-y:scroll;">
+                                            </ul>
+                                            <input type="hidden" id="bank_province_code" value="">
+                                        </div>
+                                    </div>
+                                    <div class="profile-info-name border-top-none">
+                                        城市
+                                    </div>
+                                    <div class="profile-info-value border-top-none">
+                                        <div class="btn-group">
+                                            <button data-toggle="dropdown" class="btn dropdown-toggle">
+                                                <span id="bank_city_text">
+                                                    请选择
+                                                </span>
+                                                <span class="ace-icon fa fa-caret-down icon-on-right">
+                                                </span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-default" id="bank_city_ul" style="max-height:300px;overflow-y:scroll;">
+                                            </ul>
+                                            <input type="hidden" id="bank_city_code" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                        	
+                        	  <div class="col-xs-12">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name border-top-none">
+                                        开户行
+                                    </div>
+                                    <div class="profile-info-value border-top-none">
+				                        <!--<form onSubmit="return false;">
+				                             <span class="input-icon input-icon-right">
+				                                 <input type="text" id="OpneAA" onKeyPress="toSearch(this.value)" style="width:300px;">
+				                                 <i class="ace-icon fa fa-search" onClick="retrieve()">
+				                                 </i>
+				                                 <input type="hidden" id="plans" value="">
+				                                 <input type="hidden" id="OpenName" value="">
+				                             </span>
+				                        </form>-->
+
+				                        <div class="input-group" style="min-width: 400px;">
+											<form onSubmit="return false;">
+											<input type="text" class="form-control search-query" placeholder="" onKeyPress="toSearch()" id="bankName">
+											</form>
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-purple btn-sm"  onClick="bankSearch()">
+												查询
+												<i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+												</button>
+												<input type="hidden" id="BANKL" value="">
+				                                <input type="hidden" id="BANKA" value="">
+											</span>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                        	
+			               
+	                    </div>
+                        
+                        <div class="row" id="row_01" style="margin:0;margin-top:10px;width:100%;position:relative;z-index:2;">
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover" style="margin-bottom:0px;">
+                                <thead>
+                                    <tr>
+                                        <th class="col-xs-1 center ">
+                                            <label class="position-relative">
+                                            </label>
+                                        </th>
+                                        <th class="col-xs-3 center">
+                                            银行行号
+                                        </th>
+                                        <th class="col-xs-8 center">
+                                            银行名称
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="row" id="row_02" style="margin:0;width:100%;height:240px;position:relative;z-index:1;">
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover" style="margin-bottom:0px;">
+                                <tbody id="perLists">
+                            				
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row" id="row_03" style="margin:0;margin-top:-240px;width:100%;position:relative;z-index:2;background-color:#fff;">
+                            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" style="font-size:12px;">
+                                            <span style="color:#272727;">
+                                            <p style="margin:0;"><i class="ace-icon fa fa-exclamation-triangle bigger-120"style="color:red;">
+                                            </i>&nbsp;&nbsp;1.请根据开户行名称关键字搜索如：中国农业银行股份有限公司连云港天晴支行，可输入*农业*天晴*来搜索</p>
+
+                                            <p style="margin:0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.如果选择不到对应的支行 , 可以选择支行所属分行,依次类推 , 最高可选到市分行</p>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="row">
+                        		<div class="col-xs-1 col-sm-4"></div>
+                        		<div class="col-xs-10 col-sm-4 text-center">
+                        			<button class="btn btn-info" type="button" style="width:50%;" onclick="sureBank()"><i class="ace-icon fa fa-check bigger-110"></i>
+																	确定
+															</button>
+                        		</div>
+                        		<div class="col-xs-1 col-sm-4"></div>
+                        </div>
+                        <script type="text/javascript">
+                            var $path_assets = "./assets"; //this will be used in gritter alerts containing images
+                            
+                        </script>
+                    </div>
+                    <!-- /.page-content-area -->
+                </div>
+                <!-- /.page-content -->
+            </div>
+            <!-- /.main-content -->
+            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+                <i class="ace-icon fa fa-angle-double-up icon-only bigger-110">
+                </i>
+            </a>
+        </div>
+        <!-- /.main-container -->
+        <!-- basic scripts -->
+        <!--[if !IE]> -->
+            <script type="text/javascript">
+                window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>" + "<" + "/script>");
+            </script>
+            <!-- <![endif]-->
+            <!--[if IE]>
+                <script type="text/javascript">
+                    window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>" + "<" + "/script>");
+                </script>
+            <![endif]-->
+            <script type="text/javascript">
+                if ('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+            </script>
+            <script src="./assets/js/bootstrap.min.js">
+            </script>
+            <!-- page specific plugin scripts -->
+            <!--[if lte IE 8]>
+                <script src="./assets/js/excanvas.min.js">
+                </script>
+            <![endif]-->
+            <script src="./assets/js/jquery-ui.custom.min.js">
+            </script>
+            <script src="./assets/js/jquery.ui.touch-punch.min.js">
+            </script>
+            <script src="./assets/js/bootbox.min.js">
+            </script>
+            <script src="./assets/js/jquery.easypiechart.min.js">
+            </script>
+            <script src="./assets/js/jquery.gritter.min.js">
+            </script>
+            <script src="./assets/js/spin.min.js">
+            </script>
+            <!-- ace scripts -->
+            <script src="./assets/js/ace-elements.min.js">
+            </script>
+            <script src="./assets/js/ace.min.js">
+            </script>
+            <!-- inline scripts related to this page -->
+            <script type="text/javascript">
+                jQuery(function($) {
+                    var localCookie = document.cookie;
+            var cookie_user = '';
+            if(localCookie.length > 0 && localCookie.indexOf('userid')>-1){
+                localCookie = localCookie.split(';');
+                for(var lc in localCookie){
+                    if(localCookie[lc].indexOf('userid=')>-1){
+                        cookie_user = localCookie[lc];
+                        break;
+                    }
+                } 
+                
+                if(cookie_user == ''){
+                    var unique_id = $.gritter.add({
+                        title: '系统登录错误提示',
+                        text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                        sticky: true,
+                        time: '',
+                        class_name: 'gritter-info gritter-center'
+                    });
+                }else{
+                    cookie_user = trim(cookie_user).substring(7);
+                    localStorage.removeItem('pernrBase');
+                    localStorage.setItem('pernrBase',cookie_user);
+                }
+            }else{
+                var unique_id = $.gritter.add({
+                    title: '系统登录错误提示',
+                    text: '无法获取信息，请重新登录<p style="padding-top:14px;"><span class="col-sm-6"></span><span class="col-sm-6" style="text-align:right;"><button class="btn btn-xs btn-success" onclick="CloseGritter(this);WindowClose();"><i class="ace-icon fa fa-check"></i>确定</button></span></p>',
+                    sticky: true,
+                    time: '',
+                    class_name: 'gritter-info gritter-center'
+                });
+            }
+                    /**
+				$('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+				  console.log(e.target.getAttribute("href"));
+				})
+					
+				$('#accordion').on('shown.bs.collapse', function (e) {
+					console.log($(e.target).is('#collapseTwo'))
+				});
+				*/
+                    var Wrow2 = $("#row_02").outerWidth();
+                    $('#row_02').ace_scroll({
+                        size: 240,
+                        mouseWheelLock: true,
+                        styleClass: 'scroll-visible'
+                    });
+                    //$("#row_01").css({"width":Wrow2 - 17});
+                    //$("#row_03").css({"width":Wrow2 - 17});
+
+                    $('#myTab a[data-toggle="tab"]').on('shown.bs.tab',
+                    function(e) {
+                        if ($(e.target).attr('href') == "#home") drawChartNow();
+                    })
+
+                    /**
+					//go to next tab, without user clicking
+					$('#myTab > .active').next().find('> a').trigger('click');
+				*/
+
+                    $('#accordion-style').on('click',
+                    function(ev) {
+                        var target = $('input', ev.target);
+                        var which = parseInt(target.val());
+                        if (which == 2) $('#accordion').addClass('accordion-style2');
+                        else $('#accordion').removeClass('accordion-style2');
+                    });
+
+                    //$('[href="#collapseTwo"]').trigger('click');
+
+                    var oldie = /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase());
+                    $('.easy-pie-chart.percentage').each(function() {
+                        $(this).easyPieChart({
+                            barColor: $(this).data('color'),
+                            trackColor: '#EEEEEE',
+                            scaleColor: false,
+                            lineCap: 'butt',
+                            lineWidth: 8,
+                            animate: oldie ? false: 1000,
+                            size: 75
+                        }).css('color', $(this).data('color'));
+                    });
+
+                    $('[data-rel=tooltip]').tooltip();
+                    $('[data-rel=popover]').popover({
+                        html: true
+                    });
+
+                    $('#gritter-regular').on(ace.click_event,
+                    function() {
+                        $.gritter.add({
+                            title: 'This is a regular notice!',
+                            text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="blue">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+                            image: $path_assets + '/avatars/avatar1.png',
+                            sticky: false,
+                            time: '',
+                            class_name: (!$('#gritter-light').get(0).checked ? 'gritter-light': '')
+                        });
+
+                        return false;
+                    });
+
+                    $('#gritter-sticky').on(ace.click_event,
+                    function() {
+                        var unique_id = $.gritter.add({
+                            title: 'This is a sticky notice!',
+                            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="red">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+                            image: $path_assets + '/avatars/avatar.png',
+                            sticky: true,
+                            time: '',
+                            class_name: 'gritter-info' + (!$('#gritter-light').get(0).checked ? ' gritter-light': '')
+                        });
+
+                        return false;
+                    });
+
+                    $('#gritter-without-image').on(ace.click_event,
+                    function() {
+                        $.gritter.add({
+                            // (string | mandatory) the heading of the notification
+                            title: 'This is a notice without an image!',
+                            // (string | mandatory) the text inside the notification
+                            text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="orange">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+                            class_name: 'gritter-success' + (!$('#gritter-light').get(0).checked ? ' gritter-light': '')
+                        });
+
+                        return false;
+                    });
+
+                    $('#gritter-max3').on(ace.click_event,
+                    function() {
+                        $.gritter.add({
+                            title: 'This is a notice with a max of 3 on screen at one time!',
+                            text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="green">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+                            image: $path_assets + '/avatars/avatar3.png',
+                            sticky: false,
+                            before_open: function() {
+                                if ($('.gritter-item-wrapper').length >= 3) {
+                                    return false;
+                                }
+                            },
+                            class_name: 'gritter-warning' + (!$('#gritter-light').get(0).checked ? ' gritter-light': '')
+                        });
+
+                        return false;
+                    });
+
+                    $('#gritter-center').on(ace.click_event,
+                    function() {
+                        $.gritter.add({
+                            title: 'This is a centered notification',
+                            text: 'Just add a "gritter-center" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+                            class_name: 'gritter-info gritter-center' + (!$('#gritter-light').get(0).checked ? ' gritter-light': '')
+                        });
+
+                        return false;
+                    });
+
+                    $('#gritter-error').on(ace.click_event,
+                    function() {
+                        $.gritter.add({
+                            title: 'This is a warning notification',
+                            text: 'Just add a "gritter-light" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+                            class_name: 'gritter-error' + (!$('#gritter-light').get(0).checked ? ' gritter-light': '')
+                        });
+
+                        return false;
+                    });
+
+                    $("#gritter-remove").on(ace.click_event,
+                    function() {
+                        $.gritter.removeAll();
+                        return false;
+                    });
+
+                    ///////
+
+                    $("#bootbox-regular").on(ace.click_event,
+                    function() {
+                        bootbox.prompt("What is your name?",
+                        function(result) {
+                            if (result === null) {
+
+} else {
+
+}
+                        });
+                    });
+
+                    $("#bootbox-confirm").on(ace.click_event,
+                    function() {
+                        bootbox.confirm("Are you sure?",
+                        function(result) {
+                            if (result) {
+                                //
+                            }
+                        });
+                    });
+
+                    /**
+				$("#bootbox-confirm").on(ace.click_event, function() {
+					bootbox.confirm({
+						message: "Are you sure?",
+						buttons: {
+						  confirm: {
+							 label: "OK",
+							 className: "btn-primary btn-sm",
+						  },
+						  cancel: {
+							 label: "Cancel",
+							 className: "btn-sm",
+						  }
+						},
+						callback: function(result) {
+							if(result) alert(1)
+						}
+					  }
+					);
+				});
+			**/
+
+                    $("#bootbox-options").on(ace.click_event,
+                    function() {
+                        bootbox.dialog({
+                            message: "<span class='bigger-110'>I am a custom dialog with smaller buttons</span>",
+                            buttons: {
+                                "success": {
+                                    "label": "<i class='ace-icon fa fa-check'></i> Success!",
+                                    "className": "btn-sm btn-success",
+                                    "callback": function() {
+                                        //Example.show("great success");
+                                    }
+                                },
+                                "danger": {
+                                    "label": "Danger!",
+                                    "className": "btn-sm btn-danger",
+                                    "callback": function() {
+                                        //Example.show("uh oh, look out!");
+                                    }
+                                },
+                                "click": {
+                                    "label": "Click ME!",
+                                    "className": "btn-sm btn-primary",
+                                    "callback": function() {
+                                        //Example.show("Primary button");
+                                    }
+                                },
+                                "button": {
+                                    "label": "Just a button...",
+                                    "className": "btn-sm"
+                                }
+                            }
+                        });
+                    });
+
+                    $('#spinner-opts small').css({
+                        display: 'inline-block',
+                        width: '60px'
+                    })
+
+                    var slide_styles = ['', 'green', 'red', 'purple', 'orange', 'dark'];
+                    var ii = 0;
+                    $("#spinner-opts input[type=text]").each(function() {
+                        var $this = $(this);
+                        $this.hide().after('<span />');
+                        $this.next().addClass('ui-slider-small').addClass("inline ui-slider-" + slide_styles[ii++%slide_styles.length]).css({
+                            'width': '125px'
+                        }).slider({
+                            value: parseInt($this.val()),
+                            range: "min",
+                            animate: true,
+                            min: parseInt($this.data('min')),
+                            max: parseInt($this.data('max')),
+                            step: parseFloat($this.data('step')),
+                            slide: function(event, ui) {
+                                $this.val(ui.value);
+                                spinner_update();
+                            }
+                        });
+                    });
+
+                    $.fn.spin = function(opts) {
+                        this.each(function() {
+                            var $this = $(this),
+                            data = $this.data();
+
+                            if (data.spinner) {
+                                data.spinner.stop();
+                                delete data.spinner;
+                            }
+                            if (opts !== false) {
+                                data.spinner = new Spinner($.extend({
+                                    color: $this.css('color')
+                                },
+                                opts)).spin(this);
+                            }
+                        });
+                        return this;
+                    };
+
+                    function spinner_update() {
+                        var opts = {};
+                        $('#spinner-opts input[type=text]').each(function() {
+                            opts[this.name] = parseFloat(this.value);
+                        });
+                        $('#spinner-preview').spin(opts);
+                    }
+
+                    $('#id-pills-stacked').removeAttr('checked').on('click',
+                    function() {
+                        $('.nav-pills').toggleClass('nav-stacked');
+                    });
+
+                    //初始化页面数据
+                    $.ajaxSetup({
+                        contentType: 'application/json',
+                        async: false,
+                        error: function() {
+                            alert(errMsg1);
+                        },
+                        timeout: timeout
+                    });
+
+                    //初始化省
+                    var provinceJSON = submit_1_2('1', '');
+                    if (provinceJSON.status == '0') {
+                        var provinces = provinceJSON.T_BASE.item;
+                        var provincesLi = '';
+                        for (var k in provinces) {
+                            provincesLi += '<li>' + '<a href="#" onclick="chooseProvince(\''+provinces[k].ZNANM+'\',\''+provinces[k].ZID+'\')">' + provinces[k].ZNANM + '</a>' + '</li>';
+                        }
+
+                        $('#bank_province_ul').html(provincesLi);
+
+                    } else {
+                        layer.alert('省市区数据初始化异常，请联系管理员', 8);
+                    }
+
+                });
+            </script>
+            <!-- the following scripts are used in demo only for onpage help and you
+            don't need them -->
+            <link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+            <link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+            <script type="text/javascript">
+                ace.vars['base'] = '..';
+            </script>
+            <script src="./assets/js/ace/elements.onpage-help.js">
+            </script>
+            <script src="./assets/js/ace/ace.onpage-help.js">
+            </script>
+            <script src="./docs/assets/js/rainbow.js">
+            </script>
+            <script src="./docs/assets/js/language/generic.js">
+            </script>
+            <script src="./docs/assets/js/language/html.js">
+            </script>
+            <script src="./docs/assets/js/language/css.js">
+            </script>
+            <script src="./docs/assets/js/language/javascript.js">
+            </script>
+            <!--JWW-2014-10-09-->
+            <script type="text/javascript">
+                $(window.parent.document).find("iframe").load(function(){
+                    var main = $(window.parent.document).find("iframe");
+                    var mainheight = $(document).height();
+                    main.height(mainheight);
+                    main.css({"overflow":"hidden"});
+                    main.attr("scrolling","no");
+                });
+            </script>
+    </body>
+
+</html>

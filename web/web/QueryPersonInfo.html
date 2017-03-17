@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		<script src="jquery.min.js"></script>
+		<script>
+			$.ajaxSetup({ contentType: 'application/json' }); 
+			
+			function queryPersonInfo(){
+				var obj = {
+							    "P_PERNR": [
+							        {
+							            "item": {
+							                "PERNR": "08102406"
+							            }
+							        }
+							    ]
+						};
+						
+						$.post("/zhr/ZHR_GET_PER_EASY_INFO",
+							JSON.stringify(obj),
+							function(data){
+								console.log(data);
+								alert(data);
+								$('#dd1').html(data.toString());
+								$('#company').val(data.EASY_TAB.item[0].BUTXT);
+								$('#dept').val(data.EASY_TAB.item[0].BUMEN);
+								$('#name').val(data.EASY_TAB.item[0].NACHN);
+								$('#code').val(data.EASY_TAB.item[0].PERNR);
+						});
+			}
+			
+		</script>
+	</head>
+	<body aling="center">
+		<div style="margin:80px;">
+			员工信息:<br/>
+			<label>公司</label><input type="text" id="company" value="" readonly />	<br>
+			<label>部门</label>	<input type="text" id="dept" value="" readonly /><br>
+			<label>姓名</label><input type="text" id="name" value="" readonly />	<br>
+			<label>工号</label><input type="text" id="code" value="" readonly />	<br>
+			<input type="button" onclick="queryPersonInfo()" value="查询员工基本信息"/><br>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>remote soap test</title>
+		<script src="jquery.min.js"></script>
+		<script>
+			function soasTest(){
+				var obj = {};
+				obj.username = "wangdonghua";
+				$.getJSON('http://localhost:13338/xxx/xxx/default/LOGIN_TEST',
+				{arg1:'hellow world',arg2:'hello soap'},
+				function(data){
+					alert(data.RETURN_MESSAGE);
+				});
+			}
+			
+		</script>
+	</head>
+	<body>
+		hello world<br>
+		<input type="button" onclick="soasTest()" value="soadp test"/>
+	</body>
+</html>

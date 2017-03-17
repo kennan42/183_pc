@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>个人考勤</title>
+
+		<meta name="description" content="Common UI Features &amp; Elements" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="./assets/css/font-awesome.min.css" />
+
+		<!-- page specific plugin styles -->
+		<link rel="stylesheet" href="./assets/css/jquery-ui.custom.min.css" />
+		<link rel="stylesheet" href="./assets/css/jquery.gritter.css" />
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="./assets/css/ace-fonts.css" />
+	<link rel="stylesheet" href="./assets/css/bootstrap-timepicker.css" />
+		<!-- ace styles -->
+		<link rel="stylesheet" href="./assets/css/ace.min.css" id="main-ace-style" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="./assets/css/ace-part2.min.css" />
+		<![endif]-->
+		<link rel="stylesheet" href="./assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="./assets/css/ace-rtl.min.css" />
+
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="./assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+		<style>
+			/* some elements used in demo only */
+			.spinner-preview {
+				width: 100px;
+				height: 100px;
+				text-align: center;
+				margin-top: 60px;
+			}
+			
+			.dropdown-preview {
+				margin: 0 5px;
+				display: inline-block;
+			}
+			.dropdown-preview  > .dropdown-menu {
+				display: block;
+				position: static;
+				margin-bottom: 5px;
+			}
+			.w-left{
+				width:180px;
+			}
+			.border-top-none{
+				border-top:none;
+			}
+			.border-none{
+				border:none;
+			}
+		</style>
+
+		<!-- ace settings handler -->
+		<script src="./assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="./assets/js/html5shiv.min.js"></script>
+		<script src="./assets/js/respond.min.js"></script>
+		<![endif]-->
+		
+		<script src='./assets/js/jquery.min.js'></script>
+		<script src="./layer/layer.min.js"></script>
+		<script src="./myjs/backupNew.js?v=20141224"></script>
+        <script src="./myjs/lexus.js?v=20141224"></script>
+		
+		<script>
+			//关闭弹出层
+			function closeLay(){
+				var index = parent.layer.getFrameIndex(window.name);
+				parent.layer.close(index);
+			}
+			
+			//选择补签类型
+			function changeBQLX(lxName,lxId){
+				$('#bqlxShow').html(lxName);
+				$('#bqlxId').val(lxId);
+				if(lxId == 'P10'){
+					$('#timepicker1').removeAttr('disabled');
+					$('#timepicker2').attr('disabled',true);
+				}else if(lxId == 'P20'){
+					$('#timepicker1').attr('disabled',true);
+					$('#timepicker2').removeAttr('disabled');
+				}else{
+					$('#timepicker1').removeAttr('disabled');
+					$('#timepicker2').removeAttr('disabled');
+				}
+			}
+			
+			//选择补签事由
+			function changeBQSY(syName,syId){
+				$('#bqsyShow').html(syName);
+				$('#bqsyId').val(syId);
+			}
+				//选择补签事由
+			function changeBQSY1(syName,syId){
+				$('#bqsyShow1').html(syName);
+				$('#bqsyId1').val(syId);
+			}
+			
+			
+			//提交快捷异常说明
+			function tijiao(){
+				var bqsy = $('#bqsyId1').val();   //补签事由id  9001  9002
+				var t1 = $('#trueTime1').val();
+				var t2 = $('#trueTime2').val();
+				var t3 = $('#trueTime11').val();
+				var t4 = $('#trueTime22').val();
+				var showSY = $('#bqsyShow1').html();
+				if(bqsy == ''){
+					$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 5,
+								    	msg: '请选择补签事由'
+									}
+								});
+					//layer.alert('请选择补签事由',5);
+					return;
+				}
+				var pernr = localStorage.pernrBase?localStorage.pernrBase:'';
+				
+				
+					//上班卡
+					var paramJSon1 = {
+						"IT_P2011":{"item": [{
+															"PERNR":pernr,
+															"SATZA":'P10',
+															"LDATE":$('#dateToday').val(),
+															"LTIME":hm2hms6(t3==''?t1:t3),
+															"ABWGR":bqsy,
+															"TERID":''
+														}]
+														},
+						"P_BUSINESS_TYPE":'2011',
+						"P_TJ_PERNR":pernr
+					};
+				
+				
+				
+					//下班卡
+					var paramJSon2 = {
+						"IT_P2011":{"item": [{
+															"PERNR":pernr,
+															"SATZA":'P20',
+															"LDATE":$('#dateToday').val(),
+															"LTIME":hm2hms6(t4==''?t2:t4),
+															"ABWGR":bqsy,
+															"TERID":''
+														}]
+														},
+						"P_BUSINESS_TYPE":'2011',
+						"P_TJ_PERNR":pernr
+					};
+				
+				
+				//差旅卡
+					var paramJSon3 = {
+						"IT_P2002":{"item": [{
+															"PERNR":pernr,
+															"AWART":bqsy,
+															"BEGDA":$('#dateToday').val(),
+															"ENDDA":$('#dateToday').val(),
+															"BEGUZ":'',
+															"ENDUZ":'',
+															"ABWTG":'',
+															"STDAZ":'',
+															"ALLDF":'X',
+															"ADDRESS":'',
+															"REASON":''
+														}]
+														},
+						"P_BUSINESS_TYPE":'2002',
+						"P_FILL_FORM_PERNR":pernr
+					};
+					
+					
+					if(bqsy == '9999' || showSY == '出差'){
+						//出差的话走出差申请
+						var atJSON = submit_2_7(paramJSon3);
+						if(atJSON.status == '0'){
+							$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 9,
+								    	msg: '提交成功'
+									},
+									yes:function(){
+										parent.location.reload();
+									}
+								});
+							
+							$('#accordion').hide();
+						}else if(atJSON.status == '-2'){
+							layer.alert('请勿擅自修改请求信息，您的本次操作已被记录',8,function(){
+								window.close();
+							});
+							return;
+						}else{
+							if(atJSON.errMsg){
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: atJSON.errMsg
+									}
+								});
+								//layer.alert(atJSON.errMsg,8);
+							}else{
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: '提交失败，请稍后重试'
+									}
+								});
+								//layer.alert('提交失败，请稍后重试',8);
+							}
+						}
+						return;
+					}
+					
+					if($('#ifP10').val() == 'X' || (t3 !='' && t3 != t1)){
+						var clockSBJSON = submit_2_6(paramJSon1);
+					if(clockSBJSON.status == '0'){
+						if ($('#ifP20').val() == 'X' || (t4 != '' && t4 != t2)) {
+							
+						}else{
+							//layer.alert('提交成功',9);
+							$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 9,
+								    	msg: '提交成功'
+									},
+									yes:function(){
+										parent.location.reload();
+									}
+								});
+							$('#accordion').hide();
+						}
+							
+						}else{
+							if(clockSBJSON.errMsg){
+								//layer.alert(clockSBJSON.errMsg,8);
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: clockSBJSON.errMsg
+									}
+								});
+							}else{
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: '提交失败，请稍后重试'
+									}
+								});
+							}
+						}
+					}
+					
+					if ($('#ifP20').val() == 'X' || (t4 != '' && t4 != t2)) {
+						var clockSBJSON = submit_2_6(paramJSon2);
+					if(clockSBJSON.status == '0'){
+						$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 9,
+								    	msg: '提交成功'
+									},
+									yes:function(){
+										parent.location.reload();
+									}
+								});
+							//layer.alert('提交成功',9);
+							$('#accordion').hide();
+						}else{
+							if(clockSBJSON.errMsg){
+								//layer.alert(clockSBJSON.errMsg,8);
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: clockSBJSON.errMsg
+									}
+								});
+							}else{
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: '提交失败，请稍后重试'
+									}
+								});
+								//layer.alert('提交失败，请稍后重试',8);
+							}
+						}
+					}
+					
+			}
+			
+			
+			
+			
+			//提交补签卡
+			function submitAsk(){
+				var qklx = $('#bqlxId').val();  //补签类型id   P10  P20   P30
+				var bqsy = $('#bqsyId').val();   //补签事由id  9001  9002
+				var sbTime = $('#timepicker1').val();  //上班卡时间
+				var xbTime = $('#timepicker2').val();  //下班卡时间
+				if(qklx == 'P10' && sbTime.length<4){
+					$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 11,
+								    	msg: '请选择上班时间'
+									}
+								});
+					//layer.alert('请选择上班时间',11);
+					return;
+				}else if(qklx == 'P20' && xbTime.length<4){
+					$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 11,
+								    	msg: '请选择下班时间'
+									}
+								});
+					//layer.alert('请选择下班时间',11);
+					return;
+				}
+				else if(qklx == 'P30' && (sbTime.length<4 || xbTime.length<4)){
+					$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 11,
+								    	msg: '请选择上下班时间'
+									}
+								});
+					//layer.alert('请选择上下班时间',11);
+					return;
+				}
+				
+				if(bqsy == ''){
+					$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 5,
+								    	msg: '请选择补签事由'
+									}
+								});
+					//layer.alert('请选择补签事由',5);
+					return;
+				}
+				var pernr = localStorage.pernrBase?localStorage.pernrBase:'';
+				var showTime = '';
+				if($('#bqlxId').val() == 'P10'){
+					showTime = $('#timepicker1').val();
+				}else if($('#bqlxId').val() == 'P20'){
+					showTime = $('#timepicker2').val();
+				}else{
+					showTime = $('#timepicker1').val()+'　'+$('#timepicker2').val();
+				}
+				
+				var showLX = $('bqlxShow').html();
+				var showSY = $('#bqsyShow').html();
+				//上班卡
+				var paramJSon1 = {
+						"IT_P2011":{"item": [{
+															"PERNR":pernr,
+															"SATZA":'P10',
+															"LDATE":$('#dateToday').val(),
+															"LTIME":hm2hms6($('#timepicker1').val()),
+															"ABWGR":bqsy,
+															"TERID":''
+														}]
+														},
+						"P_BUSINESS_TYPE":'2011',
+						"P_TJ_PERNR":pernr
+					};
+					//下班卡
+				var paramJSon2 = {
+						"IT_P2011":{"item": [{
+															"PERNR":pernr,
+															"SATZA":'P20',
+															"LDATE":$('#dateToday').val(),
+															"LTIME":hm2hms6($('#timepicker2').val()),
+															"ABWGR":bqsy,
+															"TERID":''
+														}]
+														},
+						"P_BUSINESS_TYPE":'2011',
+						"P_TJ_PERNR":pernr
+					};
+					
+					//差旅卡
+					var paramJSon3 = {
+						"IT_P2002":{"item": [{
+															"PERNR":pernr,
+															"AWART":bqsy,
+															"BEGDA":$('#dateToday').val(),
+															"ENDDA":$('#dateToday').val(),
+															"BEGUZ":'',
+															"ENDUZ":'',
+															"ABWTG":'',
+															"STDAZ":'',
+															"ALLDF":'X',
+															"ADDRESS":'',
+															"REASON":''
+														}]
+														},
+						"P_BUSINESS_TYPE":'2002',
+						"P_FILL_FORM_PERNR":pernr
+					};
+					
+					if(bqsy == '9999' || showSY == '出差'){
+						//出差的话走出差申请
+						var atJSON = submit_2_7(paramJSon3);
+						if(atJSON.status == '0'){
+							var showList = '<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 补签类型 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>出差补签</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 补签时间 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+$('#dateToday1').val()+'</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 补签事由 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+showSY+'</span>'
+							+'</div>'
+							+'</div>';	
+							
+							$('#bqLists').html($('#bqLists').html()+($('#bqLists').html()==''?'':'<hr/>')+showList);
+							//layer.alert('提交成功',9);
+							$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 9,
+								    	msg: '提交成功'
+									},
+									yes:function(){
+										parent.location.reload();
+									}
+								});
+						}else if(atJSON.status == '-2'){
+								layer.alert('请勿擅自修改请求信息，您的本次操作已被记录',8,function(){
+									window.close();
+								});
+								return;
+							}else{
+							if(atJSON.errMsg){
+								//layer.alert(atJSON.errMsg,8);
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: atJSON.errMsg
+									}
+								});
+							}else{
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: '提交失败，请稍后重试'
+									}
+								});
+								//layer.alert('提交失败，请稍后重试',8);
+							}
+						}
+						return;
+					}
+				
+				
+				//上班或下班单次
+				if(qklx != 'P20'){  //不是下班卡的情况，肯定提交上班卡
+					var clockSBJSON = submit_2_6(paramJSon1);
+					if(clockSBJSON.status == '0'){
+							var showList = '<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 补签类型 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>上班卡</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 补签时间 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+$('#timepicker1').val()+'</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 补签事由 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+showSY+'</span>'
+							+'</div>'
+							+'</div>';	
+							
+							$('#bqLists').html($('#bqLists').html()+($('#bqLists').html()==''?'':'<hr/>')+showList);
+							//layer.alert('提交成功',9);
+							$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 9,
+								    	msg: '提交成功'
+									},
+									yes:function(){
+										parent.location.reload();
+									}
+								});
+								
+						}else{
+							if(clockSBJSON.errMsg){
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: clockSBJSON.errMsg
+									}
+								});
+								//layer.alert(clockSBJSON.errMsg,8);
+							}else{
+								//layer.alert('提交失败，请稍后重试',8);
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: '提交失败，请稍后重试'
+									}
+								});
+							}
+						}
+				}
+				
+				if(qklx != 'P10'){  //不是下班卡的情况，肯定提交上班卡
+					var clockSBJSON = submit_2_6(paramJSon2);
+					if(clockSBJSON.status == '0'){
+							var showList = '<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 补签类型 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>下班卡</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 补签时间 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+$('#timepicker2').val()+'</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 补签事由 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+showSY+'</span>'
+							+'</div>'
+							+'</div>';	
+							
+							$('#bqLists').html($('#bqLists').html()+($('#bqLists').html()==''?'':'<hr/>')+showList);
+							//layer.alert('提交成功',9);
+							$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 9,
+								    	msg: '提交成功'
+									},
+									yes:function(){
+										parent.location.reload();
+									}
+								});
+						}else{
+							if(clockSBJSON.errMsg){
+								//layer.alert(clockSBJSON.errMsg,8);
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: clockSBJSON.errMsg
+									}
+								});
+							}else{
+								$.layer({
+								    shade: [0],
+								    area: ['auto','auto'],
+									offset: ['100px', ''],
+									dialog: {
+								    	type: 8,
+								    	msg: '提交失败，请稍后重试'
+									}
+								});
+								//layer.alert('提交失败，请稍后重试',8);
+							}
+						}
+				}
+			}
+			
+			//修改实际工作时间
+			function changeTime(){
+				$.layer({
+				    type: 2,
+				    shadeClose: true,
+				    title: false,
+				    closeBtn: [0, false],
+				    shade: [0.8, '#000'],
+				    border: [0],
+				    offset: ['20px',''],
+				    area: ['50%','350px'],/* ($(window).height() - 50) +'px'*/
+				    iframe: {src: '/web/perAttTime.html'}
+				});
+				
+				
+			}
+		</script>
+	</head>
+
+	<body class="no-skin">
+
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container main_iframe_div" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<!-- /section:basics/sidebar -->
+			<div class="main-content">
+				<!-- #section:basics/content.breadcrumbs -->
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="breadcrumb">
+						<li>
+							<i class="ace-icon fa fa-home home-icon"></i>
+							<a href="#" id="title"></a>
+						</li>
+
+					</ul><!-- /.breadcrumb -->
+					<button class="btn border-none" style="float:right;" onclick="closeLay()">
+						<i class="glyphicon glyphicon-remove align-top"></i>
+					</button>
+				</div>
+
+				<!-- /section:basics/content.breadcrumbs -->
+				<div class="page-content">
+					<!-- #section:settings.box -->
+					
+
+					<!-- /section:settings.box -->
+					<div class="page-content-area">
+						
+
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="row">
+									<!-- 异常信息-->
+									<div class="col-sm-12">
+										<div id="accordion" class="accordion-style1 panel-group"  style="display:none">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title accordion-toggle" style="font-weight:normal;">
+														<!--<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+															<i class="bigger-110 ace-icon fa fa-angle-down" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															
+														</a>-->
+														&nbsp;异常处理
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse in" id="collapseOne1">
+													<div class="panel-body">
+														
+														<div class="profile-user-info" id="errLists1">
+															<span>您当日刷卡数据是 </span>
+															<span id="error_clock"></span>
+															<span> ，与您的计划工作时间比对后，存在考勤异常：</span>
+															<span id="error_info"></span>
+															<span>。</span>
+															
+															
+															<hr/>
+															<span>我是因为</span>
+															<span>
+																<div class="btn-group">
+																		<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+																			<span id="bqsyShow1">请选择</span>
+																			<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																		</button>
+						
+																		<ul class="dropdown-menu dropdown-info dropdown-menu-right" id="qkyyUL1" >
+																			
+																		</ul>
+																		<input type="hidden" id="bqsyId1" value="">
+																	</div>
+															</span>
+															<span>导致考勤异常，实际工作时间是</span>
+															<span id="error_time"></span>
+															<input type="hidden" id="trueTime1" value="">
+															<input type="hidden" id="trueTime2" value="">
+															<input type="hidden" id="trueTime11" value="">
+															<input type="hidden" id="trueTime22" value="">
+															<input type="hidden" id="ifP10" value="">
+															<input type="hidden" id="ifP20" value="">
+															<span><a onclick="changeTime()">（点此修改）</a></span>
+															<span>，特修正说明。</span>
+															<span></span>
+															  
+															<br/>
+															<button class="btn btn-info" type="button" onclick="tijiao()" style="height:40px;float:right;">
+																		<i class="ace-icon fa fa-check bigger-110"></i>
+																		提交
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											
+
+											
+										</div>
+									</div>
+									
+									
+									<!-- 补签信息 -->
+									<div class="col-sm-12">
+										<div id="accordionBQ" class="accordion-style1 panel-group">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapseOne">
+															<i class="bigger-110 ace-icon fa fa-angle-down" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															&nbsp;补签卡
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse " id="collapseOne">
+													<div class="panel-body">
+														<div class="profile-user-info" id="bqLists"></div>
+														<div class="profile-user-info profile-user-info-striped">
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 补签类型 </div>
+			
+																<div class="profile-info-value">
+																	<div class="btn-group">
+																		<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+																			<span id="bqlxShow">上班</span>
+																			<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																		</button>
+						
+																		<ul class="dropdown-menu dropdown-info dropdown-menu-right">
+																			<li>
+																				<a onclick="changeBQLX('上班','P10')">上班</a>
+																			</li>
+						
+																			<li>
+																				<a onclick="changeBQLX('下班','P20')">下班</a>
+																			</li>
+						
+																			<li>
+																				<a onclick="changeBQLX('上班和下班','P30')">上班和下班</a>
+																			</li>
+																		</ul>
+																		<input type="hidden" id="bqlxId" value="P10">
+																	</div>
+																</div>
+															</div>
+			
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 补签上班 </div>
+			
+																<div class="profile-info-value">
+																	<div class="input-group bootstrap-timepicker" style="width:102px">
+																		<input id="timepicker1" type="text" class="form-control">
+																		<span class="input-group-addon">
+																			<i class="fa fa-clock-o bigger-110"></i>
+																		</span>
+																	</div>
+																</div>
+															</div>
+			
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 补签下班 </div>
+			
+																<div class="profile-info-value">
+																	<div class="input-group bootstrap-timepicker" style="width:102px">
+																		<input id="timepicker2" disabled="true" type="text" class="form-control">
+																		<span class="input-group-addon">
+																			<i class="fa fa-clock-o bigger-110"></i>
+																		</span>
+																	</div>
+																</div>
+															</div>
+			
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 补签事由 </div>
+			
+																<div class="profile-info-value">
+																	<div class="btn-group">
+																		<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+																			<span id="bqsyShow">请选择</span>
+																			<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																		</button>
+						
+																		<ul class="dropdown-menu dropdown-info dropdown-menu-right" id="qkyyUL" >
+																			
+																		</ul>
+																		<input type="hidden" id="bqsyId" value="">
+																		<input type="hidden" id="dateToday" value="">
+																		<input type="hidden" id="dateToday1" value="">
+																	</div>
+																</div>
+															</div>
+			
+															<div class="profile-info-row">
+																<div class="profile-info-name" style="background-color:white">  </div>
+			
+																<div class="profile-info-value">
+																	<button class="btn btn-info" type="button" onclick="submitAsk()" style="height:40px;float:right;">
+																		<i class="ace-icon fa fa-check bigger-110"></i>
+																		保存
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											
+
+											
+										</div>
+										
+										
+										
+										<!--div id="accordion" class="accordion-style1 panel-group">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title accordion-toggle" style="font-weight:normal;">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+															<i class="bigger-110 ace-icon fa fa-angle-down" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															&nbsp;补签卡
+														</a>
+														
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse in" id="collapseOne">
+													<div class="panel-body">
+														<div class="profile-user-info" id="bqLists"></div>
+														<div class="profile-user-info profile-user-info-striped">
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 补签类型 </div>
+			
+																<div class="profile-info-value">
+																	<div class="btn-group">
+																		<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+																			<span id="bqlxShow">上班</span>
+																			<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																		</button>
+						
+																		<ul class="dropdown-menu dropdown-info dropdown-menu-right">
+																			<li>
+																				<a onclick="changeBQLX('上班','P10')">上班</a>
+																			</li>
+						
+																			<li>
+																				<a onclick="changeBQLX('下班','P20')">下班</a>
+																			</li>
+						
+																			<li>
+																				<a onclick="changeBQLX('上班和下班','P30')">上班和下班</a>
+																			</li>
+																		</ul>
+																		<input type="hidden" id="bqlxId" value="P10">
+																	</div>
+																</div>
+															</div>
+			
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 补签上班 </div>
+			
+																<div class="profile-info-value">
+																	<div class="input-group bootstrap-timepicker" style="width:102px">
+																		<input id="timepicker1" type="text" class="form-control">
+																		<span class="input-group-addon">
+																			<i class="fa fa-clock-o bigger-110"></i>
+																		</span>
+																	</div>
+																</div>
+															</div>
+			
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 补签下班 </div>
+			
+																<div class="profile-info-value">
+																	<div class="input-group bootstrap-timepicker" style="width:102px">
+																		<input id="timepicker2" disabled="true" type="text" class="form-control">
+																		<span class="input-group-addon">
+																			<i class="fa fa-clock-o bigger-110"></i>
+																		</span>
+																	</div>
+																</div>
+															</div>
+			
+															<div class="profile-info-row">
+																<div class="profile-info-name"> 补签事由 </div>
+			
+																<div class="profile-info-value">
+																	<div class="btn-group">
+																		<button data-toggle="dropdown" class="btn btn-info btn-sm dropdown-toggle">
+																			<span id="bqsyShow">请选择</span>
+																			<span class="ace-icon fa fa-caret-down icon-on-right"></span>
+																		</button>
+						
+																		<ul class="dropdown-menu dropdown-info dropdown-menu-right" id="qkyyUL" >
+																			
+																		</ul>
+																		<input type="hidden" id="bqsyId" value="">
+																		<input type="hidden" id="dateToday" value="">
+																		<input type="hidden" id="dateToday1" value="">
+																	</div>
+																</div>
+															</div>
+			
+															<div class="profile-info-row">
+																<div class="profile-info-name" style="background-color:white">  </div>
+			
+																<div class="profile-info-value">
+																	<button class="btn btn-info" type="button" onclick="submitAsk()" style="height:40px;float:right;">
+																		<i class="ace-icon fa fa-check bigger-110"></i>
+																		保存
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											
+
+											
+										</div-->
+									</div>
+									
+									
+									
+									
+									
+									<!-- 排班信息 -->
+									<div class="col-xs-6 col-sm-6">
+										<div id="accordion1" class="accordion-style1 panel-group">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse"  href="#collapsePB">
+															<i class="bigger-110 ace-icon fa fa-angle-down" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															&nbsp;排班信息
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse in" id="collapsePB">
+													<div class="panel-body">
+														<div class="profile-user-info" id="pbxxDiv">
+														</div>
+													</div>
+												</div>
+											</div>
+
+											
+
+											
+										</div>
+										
+										<!-- 差旅信息 -->
+									<div class="col-xs-12 col-sm-12" id="clDiv" style="display:none;padding:0">
+										<div id="accordion2" class="accordion-style1 panel-group">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapseCL">
+															<i class="bigger-110 ace-icon fa fa-angle-down" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															&nbsp;差旅信息
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse in" id="collapseCL">
+													<div class="panel-body">
+														<div class="profile-user-info" id="clxxDiv">
+														</div>
+													</div>
+												</div>
+											</div>
+
+											
+
+											
+										</div>
+									</div>
+									
+									<!-- 加班信息 -->
+									<div class="col-xs-12 col-sm-12" id="jbDiv" style="display:none;padding:0">
+										<div id="accordion4" class="accordion-style1 panel-group">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapseJB">
+															<i class="bigger-110 ace-icon fa fa-angle-down" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															&nbsp;加班信息
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse in" id="collapseJB">
+													<div class="panel-body">
+														<div class="profile-user-info" id="jbxxDiv">
+														</div>
+													</div>
+												</div>
+											</div>
+
+											
+
+											
+										</div>
+									</div>
+									</div>
+									
+									<!-- 刷卡信息 -->
+									<div class="col-xs-6 col-sm-6">
+										<div id="accordion1" class="accordion-style1 panel-group">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse"  href="#collapseSK">
+															<i class="bigger-110 ace-icon fa fa-angle-down" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															&nbsp;刷卡信息
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse in" id="collapseSK">
+													<div class="panel-body">
+														<div class="profile-user-info" id="skxxDiv">
+														</div>
+													</div>
+												</div>
+											</div>
+
+											
+
+											
+										</div>
+										
+										<!-- 休假信息 -->
+									<div class="col-xs-12 col-sm-12" id="xjDiv" style="display:none;padding:0">
+										<div id="accordion3" class="accordion-style1 panel-group">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a class="accordion-toggle collapsed" data-toggle="collapse" href="#collapseXJ">
+															<i class="bigger-110 ace-icon fa fa-angle-down" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
+															&nbsp;休假信息
+														</a>
+													</h4>
+												</div>
+
+												<div class="panel-collapse collapse in" id="collapseXJ">
+													<div class="panel-body">
+														<div class="profile-user-info" id="xjxxDiv">
+														</div>
+													</div>
+												</div>
+											</div>
+
+											
+
+											
+										</div>
+									</div>
+									</div>
+									
+									
+									
+									
+									
+									
+									
+															
+														</div>
+								
+								<script type="text/javascript">
+									var $path_assets = "./assets";//this will be used in gritter alerts containing images
+								</script>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content-area -->
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='./assets/js/jquery.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='./assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='./assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="./assets/js/bootstrap.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="./assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="./assets/js/jquery-ui.custom.min.js"></script>
+		<script src="./assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="./assets/js/bootbox.min.js"></script>
+		<script src="./assets/js/jquery.easypiechart.min.js"></script>
+		<script src="./assets/js/jquery.gritter.min.js"></script>
+		<script src="./assets/js/spin.min.js"></script>
+		<script src="./assets/js/date-time/bootstrap-timepicker.min.js"></script>
+		<!-- ace scripts -->
+		<script src="./assets/js/ace-elements.min.js"></script>
+		<script src="./assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+				/**
+				$('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+				  console.log(e.target.getAttribute("href"));
+				})
+					
+				$('#accordion').on('shown.bs.collapse', function (e) {
+					console.log($(e.target).is('#collapseTwo'))
+				});
+				*/
+				
+				$('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+					if($(e.target).attr('href') == "#home") drawChartNow();
+				})
+			
+				
+				/**
+					//go to next tab, without user clicking
+					$('#myTab > .active').next().find('> a').trigger('click');
+				*/
+			
+			
+				$('#accordion-style').on('click', function(ev){
+					var target = $('input', ev.target);
+					var which = parseInt(target.val());
+					if(which == 2) $('#accordion').addClass('accordion-style2');
+					 else $('#accordion').removeClass('accordion-style2');
+				});
+				
+				//$('[href="#collapseTwo"]').trigger('click');
+			
+			
+				var oldie = /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase());
+				$('.easy-pie-chart.percentage').each(function(){
+					$(this).easyPieChart({
+						barColor: $(this).data('color'),
+						trackColor: '#EEEEEE',
+						scaleColor: false,
+						lineCap: 'butt',
+						lineWidth: 8,
+						animate: oldie ? false : 1000,
+						size:75
+					}).css('color', $(this).data('color'));
+				});
+			
+				$('[data-rel=tooltip]').tooltip();
+				$('[data-rel=popover]').popover({html:true});
+			
+			
+				$('#gritter-regular').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a regular notice!',
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="blue">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar1.png',
+						sticky: false,
+						time: '',
+						class_name: (!$('#gritter-light').get(0).checked ? 'gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+				$('#gritter-sticky').on(ace.click_event, function(){
+					var unique_id = $.gritter.add({
+						title: 'This is a sticky notice!',
+						text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="red">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar.png',
+						sticky: true,
+						time: '',
+						class_name: 'gritter-info' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-without-image').on(ace.click_event, function(){
+					$.gritter.add({
+						// (string | mandatory) the heading of the notification
+						title: 'This is a notice without an image!',
+						// (string | mandatory) the text inside the notification
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="orange">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						class_name: 'gritter-success' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-max3').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a notice with a max of 3 on screen at one time!',
+						text: 'This will fade out after a certain amount of time. Vivamus eget tincidunt velit. Cum sociis natoque penatibus et <a href="#" class="green">magnis dis parturient</a> montes, nascetur ridiculus mus.',
+						image: $path_assets+'/avatars/avatar3.png',
+						sticky: false,
+						before_open: function(){
+							if($('.gritter-item-wrapper').length >= 3)
+							{
+								return false;
+							}
+						},
+						class_name: 'gritter-warning' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+			
+			
+				$('#gritter-center').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a centered notification',
+						text: 'Just add a "gritter-center" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+						class_name: 'gritter-info gritter-center' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+				
+				$('#gritter-error').on(ace.click_event, function(){
+					$.gritter.add({
+						title: 'This is a warning notification',
+						text: 'Just add a "gritter-light" class_name to your $.gritter.add or globally to $.gritter.options.class_name',
+						class_name: 'gritter-error' + (!$('#gritter-light').get(0).checked ? ' gritter-light' : '')
+					});
+			
+					return false;
+				});
+					
+			
+				$("#gritter-remove").on(ace.click_event, function(){
+					$.gritter.removeAll();
+					return false;
+				});
+					
+			
+				///////
+			
+			
+				$("#bootbox-regular").on(ace.click_event, function() {
+					bootbox.prompt("What is your name?", function(result) {
+						if (result === null) {
+							
+						} else {
+							
+						}
+					});
+				});
+					
+				$("#bootbox-confirm").on(ace.click_event, function() {
+					bootbox.confirm("Are you sure?", function(result) {
+						if(result) {
+							//
+						}
+					});
+				});
+				
+			/**
+				$("#bootbox-confirm").on(ace.click_event, function() {
+					bootbox.confirm({
+						message: "Are you sure?",
+						buttons: {
+						  confirm: {
+							 label: "OK",
+							 className: "btn-primary btn-sm",
+						  },
+						  cancel: {
+							 label: "Cancel",
+							 className: "btn-sm",
+						  }
+						},
+						callback: function(result) {
+							if(result) alert(1)
+						}
+					  }
+					);
+				});
+			**/
+					
+				$("#bootbox-options").on(ace.click_event, function() {
+					bootbox.dialog({
+						message: "<span class='bigger-110'>I am a custom dialog with smaller buttons</span>",
+						buttons: 			
+						{
+							"success" :
+							 {
+								"label" : "<i class='ace-icon fa fa-check'></i> Success!",
+								"className" : "btn-sm btn-success",
+								"callback": function() {
+									//Example.show("great success");
+								}
+							},
+							"danger" :
+							{
+								"label" : "Danger!",
+								"className" : "btn-sm btn-danger",
+								"callback": function() {
+									//Example.show("uh oh, look out!");
+								}
+							}, 
+							"click" :
+							{
+								"label" : "Click ME!",
+								"className" : "btn-sm btn-primary",
+								"callback": function() {
+									//Example.show("Primary button");
+								}
+							}, 
+							"button" :
+							{
+								"label" : "Just a button...",
+								"className" : "btn-sm"
+							}
+						}
+					});
+				});
+			
+			
+			
+				$('#spinner-opts small').css({display:'inline-block', width:'60px'})
+			
+				var slide_styles = ['', 'green','red','purple','orange', 'dark'];
+				var ii = 0;
+				$("#spinner-opts input[type=text]").each(function() {
+					var $this = $(this);
+					$this.hide().after('<span />');
+					$this.next().addClass('ui-slider-small').
+					addClass("inline ui-slider-"+slide_styles[ii++ % slide_styles.length]).
+					css({'width':'125px'}).slider({
+						value:parseInt($this.val()),
+						range: "min",
+						animate:true,
+						min: parseInt($this.data('min')),
+						max: parseInt($this.data('max')),
+						step: parseFloat($this.data('step')),
+						slide: function( event, ui ) {
+							$this.val(ui.value);
+							spinner_update();
+						}
+					});
+				});
+			
+			
+			
+			
+			
+				$.fn.spin = function(opts) {
+					this.each(function() {
+					  var $this = $(this),
+						  data = $this.data();
+			
+					  if (data.spinner) {
+						data.spinner.stop();
+						delete data.spinner;
+					  }
+					  if (opts !== false) {
+						data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
+					  }
+					});
+					return this;
+				};
+			
+				function spinner_update() {
+					var opts = {};
+					$('#spinner-opts input[type=text]').each(function() {
+						opts[this.name] = parseFloat(this.value);
+					});
+					$('#spinner-preview').spin(opts);
+				}
+			
+			
+			
+				$('#id-pills-stacked').removeAttr('checked').on('click', function(){
+					$('.nav-pills').toggleClass('nav-stacked');
+				});
+				
+				$('#timepicker1').timepicker({
+					minuteStep: 1,
+					showSeconds: false,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+				
+				$('#timepicker2').timepicker({
+					minuteStep: 1,
+					showSeconds: false,
+					showMeridian: false
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+			
+			//初始化页面数据
+$.ajaxSetup({
+	contentType: 'application/json',
+	async:false,
+	error:function(){
+		alert(errMsg1);
+	},
+	timeout:timeout
+ });
+ 		
+		var localHref = window.location.href;
+		var localParams = localHref.split('?')[1];
+		var localParam = localParams.split('&');
+		var y = localParam[0].substring(2);
+		var m = localParam[1].substring(2);
+		var d = localParam[2].substring(2);
+		var day = new Date(y,m-1,d).getDay();
+		//alert(weekArr[day]);
+		$('#dateToday').val(y+(m<10?'0':'')+m+(d<10?'0':'')+d);
+		$('#dateToday1').val(y+'-'+m+'-'+d+'　'+weekArr[day]);
+		var title = y+'-'+m+'-'+d+'　'+weekArr[day]+'　考勤信息';
+		$('#title').html(title);
+		
+		var date8 = y+(m<10?'0':'')+m+(d<10?'0':'')+d;
+		//获取异常信息
+		var errJSON = submit_2_5(date8,localStorage.pernrBase?localStorage.pernrBase:'');
+		if(errJSON.status == '0'){
+			//var errLists = errJSON.TIME_ERROR.item;
+			var listStr = '';
+//			for(var k in errLists){
+//				if(listStr != ''){
+//					listStr += '<div class="hr hr-dotted hr18"></div>';
+//				}
+//				
+//				listStr += '<div class="profile-info-row">'
+//				+'<div class="profile-info-name border-none"> 日工作安排 </div>'
+//				+'<div class="profile-info-value border-none">'
+//				+'<span>'+checkNoChar(errLists[k].DWS)+'</span>'
+//				+'</div>'
+//				+'</div>'
+//				+'<div class="profile-info-row">'
+//				+'<div class="profile-info-name border-none"> 当日刷卡数据 </div>'
+//				+'<div class="profile-info-value border-none">'
+//				+'<span>'+checkNoChar(errLists[k].CLOCK)+'</span>'
+//				+'</div>'
+//				+'</div>'
+//				+'<div class="profile-info-row">'
+//				+'<div class="profile-info-name border-none"> 异常信息 </div>'
+//				+'<div class="profile-info-value border-none">'
+//				+'<span>'+checkNoChar(errLists[k].ERROR_MESSAGE)+'</span>'
+//				+'</div>'
+//				+'</div>';											
+//																
+//			}
+		
+			if(undefined != errJSON.TIME_ERROR.item){
+				var errorItem = errJSON.TIME_ERROR.item[0];
+				$('#error_clock').html(checkNoChar(errorItem.CLOCK));
+				$('#error_info').html(checkNoChar(errorItem.ERROR_MESSAGE));
+				
+				//计算理论正常工作时间
+				var ifP10 = checkNoChar(errorItem.FLAG_1);
+				var ifP20 = checkNoChar(errorItem.FLAG_2);
+				var clockTime = checkNoChar(errorItem.CLOCK);
+				clockTimeArr = clockTime.split('-');
+				var trueTime = '';
+				var trueTime1 = '';
+				var trueTime2 = '';
+				$('#ifP10').val(ifP10);
+				$('#ifP20').val(ifP20);
+				if(ifP10 == 'X'){
+					trueTime1 = cutSecond(checkNoChar(errorItem.BEGUZ));
+					
+				}else{
+					trueTime1 = clockTimeArr[0];
+				}
+				if(ifP20 == 'X'){
+					trueTime2 = cutSecond(checkNoChar(errorItem.ENDUZ));
+				}else{
+					trueTime2 = clockTimeArr[1];
+				}
+				
+				$('#trueTime1').val(trueTime1);
+				$('#trueTime2').val(trueTime2);
+				$('#error_time').html(trueTime1+'-'+trueTime2);
+				
+				$('#accordion').show();
+			}
+			
+			//$('#errLists').html(listStr);
+			
+		}
+		
+		
+				var vaTypeJSON = submit_5_2('QKYY');
+				if(vaTypeJSON.status == '0'){
+					var typeLists = vaTypeJSON.T_CUST_LIST.item;
+					var typeLi = '';
+					var typeLi1 = '';
+					for(var k in typeLists){
+							typeLi += '<li>'
+							+'<a onclick="changeBQSY(\''+typeLists[k].VALUE_TXT+'\',\''+typeLists[k].VALUE+'\')">'+typeLists[k].VALUE_TXT+'</a>'
+							+'</li>';
+							typeLi1 += '<li>'
+							+'<a onclick="changeBQSY1(\''+typeLists[k].VALUE_TXT+'\',\''+typeLists[k].VALUE+'\')">'+typeLists[k].VALUE_TXT+'</a>'
+							+'</li>';
+						}
+					$('#qkyyUL').html(typeLi);
+					$('#qkyyUL1').html(typeLi1);
+				}else{
+					layer.alert("数据初始化异常",8);
+					//异常时置灰提交按钮
+					return;
+				}
+				
+				//初始化排班信息
+				var pbJSON = submit_2_8(date8,localStorage.pernrBase?localStorage.pernrBase:'');
+				var pbList = '';
+				if(pbJSON.status == '-1'){
+					pbList += '<div class="profile-info-row">'
+					+'<div class="profile-info-name border-none"> 无排班信息 </div>'
+					+'<div class="profile-info-value border-none">'
+					+'<span></span>'
+					+'</div>'
+					+'</div>';
+				}else{
+					var pbdata = pbJSON.TIME_DWS.item[0];
+					pbList += '<div class="profile-info-row">'
+					+'<div class="profile-info-name border-none"> 工作安排 </div>'
+					+'<div class="profile-info-value border-none">'
+					+'<span>'+checkNoChar(pbdata.DWS)+'</span>'
+					+'</div>'
+					+'</div>'
+					+'<div class="profile-info-row">'
+					+'<div class="profile-info-name border-none"> 工作时间 </div>'
+					+'<div class="profile-info-value border-none">'
+					+'<span>'+checkNoChar(pbdata.BEGUZ)+'~'+checkNoChar(pbdata.ENDUZ)+'</span>'
+					+'</div>'
+					+'</div>'
+					+'<div class="profile-info-row">'
+					+'<div class="profile-info-name border-none"> 休息时间 </div>'
+					+'<div class="profile-info-value border-none">'
+					+'<span>'+checkNoChar(pbdata.PBEG1)+'~'+checkNoChar(pbdata.PEND1)+'</span>'
+					+'</div>'
+					+'</div>';	
+				}
+				
+				$('#pbxxDiv').html(pbList);
+				
+				
+				//初始化刷卡信息
+				var skJSON = submit_2_12(date8,localStorage.pernrBase?localStorage.pernrBase:'');
+				var skList = '';
+				if(skJSON.status == '-1'){
+					skList += '<div class="profile-info-row">'
+					+'<div class="profile-info-name border-none"> 无刷卡数据 </div>'
+					+'<div class="profile-info-value border-none">'
+					+'<span></span>'
+					+'</div>'
+					+'</div>';
+				}else{
+					var skdata = skJSON.TIME_CLOCK.item[0];
+					var clockdata = checkNoChar(skdata.CLOCK);
+					clockdata = clockdata.split(',');
+					var clockStr = '';
+					for(var k in clockdata){
+						clockStr += clockdata[k]+'<br/>';
+					}
+					skList +='<div class="profile-info-row">'
+					+'<div class="profile-info-name border-none" style="vertical-align:top"> 刷卡数据 </div>'
+					+'<div class="profile-info-value border-none">'
+					+'<span>'+clockStr+'</span>'
+					+'</div>'
+					+'</div>'
+				}
+				
+				$('#skxxDiv').html(skList);
+				
+				
+				//初始化差旅信息
+				var clJSON = submit_2_9(date8,localStorage.pernrBase?localStorage.pernrBase:'');
+				var clList = '';
+				if(clJSON.status == '-1'){
+					clList += '<div class="profile-info-row">'
+					+'<div class="profile-info-name border-none"> 错误信息 </div>'
+					+'<div class="profile-info-value border-none">'
+					+'<span>获取差旅信息失败</span>'
+					+'</div>'
+					+'</div>';
+				}else{
+					$('#clDiv').show();
+					var cldata = clJSON.TIME_ATTENDANCE.item;
+					for(var k in cldata){
+						if(clList != ''){
+							clList += '<div class="hr hr-dotted hr18"></div>';
+						}
+						if(checkNoChar(cldata[k].ALLDF) != ''){
+							clList += '<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 差旅时间 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>全天</span>'
+							+'</div>'
+							+'</div>';
+						}else{
+							clList += '<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 差旅时间 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+checkNoChar(cldata[k].BEGUZ)+'~'+checkNoChar(cldata[k].ENDUZ)+'</span>'
+							+'</div>'
+							+'</div>';
+						}
+						
+						clList+='<div class="profile-info-row">'
+						+'<div class="profile-info-name border-none"> 差旅地点 </div>'
+						+'<div class="profile-info-value border-none">'
+						+'<span>'+checkNoChar(cldata[k].ADDRESS)+'</span>'
+						+'</div>'
+						+'</div>'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name border-none"> 差旅事由 </div>'
+						+'<div class="profile-info-value border-none">'
+						+'<span>'+checkNoChar(cldata[k].REASON)+'</span>'
+						+'</div>'
+						+'</div>'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name border-none"> 审批状态 </div>'
+						+'<div class="profile-info-value border-none">'
+						+'<span>'+checkApprovalStatus(checkNoChar(cldata[k].APPROVAL_STATUS))+'</span>'
+						+'</div>'
+						+'</div>';	
+					}
+					
+				}
+				
+				$('#clxxDiv').html(clList);
+				
+				//初始化休假信息
+				var xjJSON = submit_2_10(date8,localStorage.pernrBase?localStorage.pernrBase:'');
+				var xjList = '';
+				if(xjJSON.status == '-1'){
+					xjList += '<div class="profile-info-row">'
+					+'<div class="profile-info-name border-none"> 错误信息 </div>'
+					+'<div class="profile-info-value border-none">'
+					+'<span>获取休假信息失败</span>'
+					+'</div>'
+					+'</div>';
+				}else{
+					$('#xjDiv').show();
+					var xjdata = xjJSON.TIME_ABSENCE.item;
+					for(var k in xjdata){
+						if(xjList != ''){
+							xjList += '<div class="hr hr-dotted hr18"></div>';
+						}
+						if(checkNoChar(xjdata[k].ALLDF) != ''){
+							xjList += '<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 休假时间 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>全天</span>'
+							+'</div>'
+							+'</div>';
+						}else{
+							xjList += '<div class="profile-info-row">'
+							+'<div class="profile-info-name border-none"> 休假时间 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+checkNoChar(xjdata[k].BEGUZ)+'~'+checkNoChar(xjdata[k].ENDUZ)+'</span>'
+							+'</div>'
+							+'</div>';
+						}
+						
+						xjList+='<div class="profile-info-row">'
+						+'<div class="profile-info-name border-none"> 休假类型 </div>'
+						+'<div class="profile-info-value border-none">'
+						+'<span>'+checkNoChar(xjdata[k].ATEXT)+'</span>'
+						+'</div>'
+						+'</div>'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name border-none"> 休假事由 </div>'
+						+'<div class="profile-info-value border-none">'
+						+'<span>'+checkNoChar(xjdata[k].REASON)+'</span>'
+						+'</div>'
+						+'</div>'
+						+'<div class="profile-info-row">'
+						+'<div class="profile-info-name border-none"> 审批状态 </div>'
+						+'<div class="profile-info-value border-none">'
+						+'<span>'+checkApprovalStatus(checkNoChar(xjdata[k].APPROVAL_STATUS))+'</span>'
+						+'</div>'
+						+'</div>';	
+					}
+					
+				}
+				
+				$('#xjxxDiv').html(xjList);
+				
+				//初始化加班信息
+				var jbJSON = submit_2_11(date8,localStorage.pernrBase?localStorage.pernrBase:'');
+				var jbList = '';
+				if(jbJSON.status == '-1'){
+					jbList += '<div class="profile-info-row">'
+					+'<div class="profile-info-name border-none"> 错误信息 </div>'
+					+'<div class="profile-info-value border-none">'
+					+'<span>获取差旅信息失败</span>'
+					+'</div>'
+					+'</div>';
+				}else{
+					$('#jbDiv').show();
+					var jbdata = jbJSON.TIME_OVERTIME.item;
+					for(var k in jbdata){
+						if(jbList != ''){
+							jbList += '<div class="hr hr-dotted hr18"></div>';
+						}
+							jbList += '<div>'
+							+'<span style="font-size:25px;color:green">'+cutSecond(checkNoChar(jbdata[k].BEGUZ))+'~'+cutSecond(checkNoChar(jbdata[k].ENDUZ))+'</span>'
+							+'</div>'
+							+'<div class="profile-info-row" style="display:block">'
+							+'<div class="profile-info-name border-none" style="width:110px"> 加班类型 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+otTypeCon1(checkNoChar(jbdata[k].TYPE))+'</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="profile-info-row" style="display:block">'
+							+'<div class="profile-info-name border-none"> 报酬类型 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+payTypeCon1(checkNoChar(jbdata[k].VERSL))+'</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="profile-info-row" style="display:block">'
+							+'<div class="profile-info-name border-none"> 加班地点 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+(checkNoChar(jbdata[k].ZGSJB)?'公司内':'公司外')+'</span>'
+							+'</div>'
+							+'</div>'
+							+'<div class="profile-info-row" style="display:block">'
+							+'<div class="profile-info-name border-none"> 审批状态 </div>'
+							+'<div class="profile-info-value border-none">'
+							+'<span>'+checkApprovalStatus(checkNoChar(jbdata[k].APPROVAL_STATUS))+'</span>'
+							+'</div>'
+							+'</div>';	
+					}
+					
+				}
+				
+				$('#jbxxDiv').html(jbList);
+				
+				$('#timepicker1').val('');
+				$('#timepicker2').val('');
+		
+			});
+		</script>
+
+		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
+		<link rel="stylesheet" href="./assets/css/ace.onpage-help.css" />
+		<link rel="stylesheet" href="./docs/assets/js/themes/sunburst.css" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="./assets/js/ace/elements.onpage-help.js"></script>
+		<script src="./assets/js/ace/ace.onpage-help.js"></script>
+		<script src="./docs/assets/js/rainbow.js"></script>
+		<script src="./docs/assets/js/language/generic.js"></script>
+		<script src="./docs/assets/js/language/html.js"></script>
+		<script src="./docs/assets/js/language/css.js"></script>
+		<script src="./docs/assets/js/language/javascript.js"></script>
+		<!--JWW-2014-10-09-->
+		<script type="text/javascript">
+			$(window.parent.document).find("iframe").load(function(){
+				var main = $(window.parent.document).find("iframe");
+				var mainheight = $(document).height();
+				main.height(mainheight);
+			});
+			setInterval(function() {
+				var main = $(window.parent.document).find("iframe");
+				var mifH = $(".main_iframe_div").outerHeight();
+				//console.log(mifH);
+				main.height(mifH);
+			},10);
+		</script>
+	</body>
+</html>

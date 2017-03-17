@@ -1,0 +1,34 @@
+/*2014-01-29-JWW*/
+body{font-family:"Arial","Microsoft YaHei";color:#000;}
+h1,h2,h3,h4,h5,h6{font-family:"Microsoft YaHei";}
+li,ol,ul{list-style:none;}
+a:focus{outline:none;}
+.breadcrumbs{min-height:45px;}
+.page-header{border-bottom: 1px solid #438eb9;}
+.main-content{margin-left:0;}
+.table>thead>tr{color:#000;}
+span.labelTime{
+	padding:0 0.6em;line-height:19px;vertical-align:middle;
+}
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th{
+	background-color:#e1e4fa;
+}	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
